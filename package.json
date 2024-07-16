@@ -2,7 +2,10 @@
   "name": "@fv-sdk-demos/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "vite-demo": "npx nx serve vite-react-demo",
+    "next-demo": "npx nx dev next-demo"
+  },
   "private": true,
   "dependencies": {
     "@futureverse/auth": "^2.0.4",

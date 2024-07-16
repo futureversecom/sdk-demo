@@ -1,5 +1,5 @@
 {
-  "name": "react-vite-demo",
+  "name": "vite-react-demo",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/vite-react-demo/src",
   "projectType": "application",
