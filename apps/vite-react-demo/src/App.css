@@ -1,0 +1,274 @@
+html {
+  -webkit-text-size-adjust: 100%;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  line-height: 1.5;
+  tab-size: 4;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: inherit;
+  line-height: inherit;
+  margin: 0;
+  padding: 20px;
+}
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: currentColor;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    Liberation Mono, Courier New, monospace;
+}
+
+svg {
+  display: block;
+  vertical-align: middle;
+  shape-rendering: auto;
+  text-rendering: optimizeLegibility;
+}
+
+pre {
+  background-color: rgba(55, 65, 81, 1);
+  color: rgba(229, 231, 235, 1);
+  overflow: scroll;
+  padding: 8px;
+  border-radius: 8px;
+  margin: 0;
+}
+
+.spinner {
+  border: 4px solid rgb(15, 15, 15);
+  border-top: 4px solid #ffffff;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+h1 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+h2 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+
+pre {
+  max-height: 200px;
+  overflow: scroll;
+  width: 100%;
+  white-space: wrap;
+  font-size: 0.8rem;
+  word-break: break-all;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.mb-32 {
+  margin-bottom: 32px;
+}
+
+.mt-32 {
+  margin-top: 32px;
+}
+
+.grid {
+  display: grid;
+  width: 100%;
+  gap: 32px;
+}
+
+.gap-8 {
+  gap: 8px;
+}
+
+.gap-0 {
+  gap: 0px;
+}
+
+.small {
+  font-size: 0.6rem;
+  line-height: 1;
+}
+
+.builder-input {
+  height: 40px;
+  margin: 0;
+  padding: 4px 8px;
+}
+
+.p-8 {
+  padding: 8px;
+}
+
+.bg-grey {
+  background: #b0b0b0;
+}
+
+.grid.cols-1 {
+  grid-template-columns: 1fr;
+}
+
+.grid.cols-4 {
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.grid.cols-1-4 {
+  grid-template-columns: 80px auto;
+}
+
+.grid.cols-auto {
+  grid-template-columns: 60px 60px auto;
+}
+
+button {
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  margin: 0.5rem 0.25rem;
+  background-color: #e7e7e7;
+  transition: all 0.2s ease-in-out;
+}
+
+button.green {
+  background-color: #7bff00;
+}
+
+button.red {
+  background-color: #ff2600;
+}
+
+button.blue {
+  background-color: #2110bb;
+}
+
+button.green:hover {
+  background-color: #7bff009d;
+  cursor: pointer;
+}
+
+button.red:hover {
+  background-color: #ff260099;
+  cursor: pointer;
+}
+
+button.blue:hover {
+  background-color: #2110bbb0;
+  cursor: pointer;
+}
+
+
+button:hover {
+  background-color: #d1d2d7;
+  cursor: pointer;
+}
+
+select,
+input {
+  background-color: #d1d2d7;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  color: black;
+}
+
+.auto-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, auto));
+  gap: 16px;
+}
+
+.asset-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+}
+
+.gas-wrap {
+  width: 100%;
+  white-space: wrap;
+  font-size: 0.8rem;
+  word-break: break-all;
+  background-color: rgba(55, 65, 81, 1);
+  padding: 8px;
+  border-radius: 8px;
+  margin: 0;
+}
+
+.card {
+  color: #fff;
+  height: auto;
+  align-content: start;
+}
+
+.card .inner {
+  background-color: #141414;
+  box-shadow: 0 20px 16px -24px rgba(0, 0, 0, 0.8);
+  padding: 16px;
+  border-radius: 8px;
+  display: grid;
+  gap: 8px;
+}
+
+
+.card.disabled .inner * {
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+
+
+.card .spinner {
+  border: 4px solid #ffffff;
+  border-top: 4px solid #141414;
+}
+
+.card h1,
+.card h2,
+.card h3,
+.card h4,
+.card h5 {
+  color: #fff;
+  margin: 0;
+}
+
+.card label {
+  font-size: 0.7rem;
+  line-height: 1;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+
+.card button {
+  margin-top: 8px;
+}

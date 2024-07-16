@@ -1,0 +1,47 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    // "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    // "jsx": "react-jsx",
+    "allowJs": true,
+    "baseUrl": ".",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "types": ["vite/client"],
+
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "esModuleInterop": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "jsx": "preserve",
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/hooks": ["./src/hooks"],
+      "@/providers": ["./src/providers"],
+      "@/components": ["./src/components"],
+      "@/store/*": ["../../libs/store-shared/src/*"],
+      "@/ui/*": ["../../libs/ui-shared/src/*"],
+      "@fv-sdk-demos/store-shared": ["../../libs/store-shared/src/index.ts"],
+      "@fv-sdk-demos/ui-shared": ["../../libs/ui-shared/src/index.ts"]
+    }
+  },
+  "files": [],
+  "exclude": ["node_modules"],
+  "include": ["src"],
+  "extends": "../../tsconfig.base.json"
+}
