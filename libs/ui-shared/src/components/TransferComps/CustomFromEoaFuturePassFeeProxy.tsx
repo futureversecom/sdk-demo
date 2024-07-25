@@ -1,13 +1,9 @@
-import React from 'react';
 import { useAuth, useFutureverseSigner } from '@futureverse/auth-react';
 import { useCallback, useMemo, useState } from 'react';
 
 import { useTrnApi } from '../../providers/TRNProvider';
 
-import {
-  CustomExtrinsicBuilder,
-  TransactionBuilder,
-} from '@futureverse/transact';
+import { TransactionBuilder } from '@futureverse/transact';
 import { useRootStore } from '../../hooks/useRootStore';
 
 export default function CustomFromEoaFuturePassFeeProxy() {
@@ -58,18 +54,22 @@ export default function CustomFromEoaFuturePassFeeProxy() {
       setToSign(ethPayload.toString());
     };
 
-    const custom = new CustomExtrinsicBuilder(trnApi, signer, userSession.eoa);
-
     const extrinsic = trnApi.tx.nft.mint(709732, 1, addressToSend);
 
-    custom.extrinsic(extrinsic).addFuturePassAndFeeProxy({
-      futurePass: userSession.futurepass,
-      assetId: feeAssetId,
-      slippage: 5,
-    });
+    const builder = await TransactionBuilder.custom(
+      trnApi,
+      signer,
+      userSession.eoa
+    )
+      .extrinsic(extrinsic)
+      .addFuturePassAndFeeProxy({
+        futurePass: userSession.futurepass,
+        assetId: feeAssetId,
+        slippage: 5,
+      });
 
-    getExtrinsic(custom);
-    setCurrentBuilder(custom);
+    getExtrinsic(builder);
+    setCurrentBuilder(builder);
   }, [
     addressToSend,
     trnApi,
