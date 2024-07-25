@@ -1,5 +1,5 @@
 import {
-  CustomExtrinsicBuilder,
+  TransactionBuilder,
   ExtrinsicPayload,
   ExtrinsicResult,
 } from '@futureverse/transact';
@@ -19,7 +19,7 @@ export type RootState = {
         tokenDecimals: number;
       }
     | undefined;
-  currentBuilder: CustomExtrinsicBuilder | null;
+  currentBuilder: TransactionBuilder | null;
 };
 
 export type RootActions = {
@@ -33,7 +33,7 @@ export type RootActions = {
     gasFee: string;
     tokenDecimals: number;
   }) => void;
-  setCurrentBuilder: (currentBuilder: CustomExtrinsicBuilder) => void;
+  setCurrentBuilder: (currentBuilder: TransactionBuilder) => void;
   resetState: () => void;
 };
 
@@ -62,7 +62,7 @@ export const createRootStore = (initState: RootState = defaultInitState) => {
       gasFee: string;
       tokenDecimals: number;
     }) => set({ gas }),
-    setCurrentBuilder: (currentBuilder: CustomExtrinsicBuilder) =>
+    setCurrentBuilder: (currentBuilder: TransactionBuilder) =>
       set({ currentBuilder }),
     resetState: () =>
       set({

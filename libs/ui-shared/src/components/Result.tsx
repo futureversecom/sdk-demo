@@ -1,5 +1,5 @@
-import { useRootStore } from '@fv-sdk-demos/store-shared';
 import React from 'react';
+import { useRootStore } from '../hooks/useRootStore';
 
 export default function Result() {
   const { result } = useRootStore(state => state);

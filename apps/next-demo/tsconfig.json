@@ -26,9 +26,7 @@
       "@/hooks": ["./src/hooks"],
       "@/providers": ["./src/providers"],
       "@/components": ["./src/components"],
-      "@/store/*": ["../../libs/store-shared/src/*"],
       "@/ui/*": ["../../libs/ui-shared/src/*"],
-      "@fv-sdk-demos/store-shared": ["../../libs/store-shared/src/index.ts"],
       "@fv-sdk-demos/ui-shared": ["../../libs/ui-shared/src/index.ts"]
     },
     "plugins": [

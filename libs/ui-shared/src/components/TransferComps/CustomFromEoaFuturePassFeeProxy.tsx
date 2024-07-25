@@ -2,14 +2,15 @@ import React from 'react';
 import { useAuth, useFutureverseSigner } from '@futureverse/auth-react';
 import { useCallback, useMemo, useState } from 'react';
 
-import { ethers } from 'ethers';
 import { useTrnApi } from '../../providers/TRNProvider';
-import { ASSET_DECIMALS } from '../../helpers';
 
-import { TransactionBuilder } from '@futureverse/transact';
+import {
+  CustomExtrinsicBuilder,
+  TransactionBuilder,
+} from '@futureverse/transact';
 import { useRootStore } from '../../hooks/useRootStore';
 
-export default function AssetFromEoa() {
+export default function CustomFromEoaFuturePassFeeProxy() {
   const { userSession } = useAuth();
 
   const {
@@ -29,8 +30,8 @@ export default function AssetFromEoa() {
   const { trnApi } = useTrnApi();
   const signer = useFutureverseSigner();
 
-  const [assetId, setAssetId] = useState<number>(1);
-  const [amountToSend, setAmountToSend] = useState<number>(1);
+  const [feeAssetId, setFeeAssetId] = useState<number>(1);
+
   const [addressToSend, setAddressToSend] = useState<string>('');
 
   const createBuilder = useCallback(async () => {
@@ -57,30 +58,24 @@ export default function AssetFromEoa() {
       setToSign(ethPayload.toString());
     };
 
-    const valueToSend = ethers.parseUnits(
-      amountToSend.toString(),
-      ASSET_DECIMALS[assetId]
-    );
+    const custom = new CustomExtrinsicBuilder(trnApi, signer, userSession.eoa);
 
-    const builder = await TransactionBuilder.asset(
-      trnApi,
-      signer,
-      userSession.eoa,
-      assetId
-    ).transfer({
-      destinationAddress: addressToSend,
-      amount: parseInt(valueToSend.toString()),
+    const extrinsic = trnApi.tx.nft.mint(709732, 1, addressToSend);
+
+    custom.extrinsic(extrinsic).addFuturePassAndFeeProxy({
+      futurePass: userSession.futurepass,
+      assetId: feeAssetId,
+      slippage: 5,
     });
 
-    getExtrinsic(builder);
-    setCurrentBuilder(builder);
+    getExtrinsic(custom);
+    setCurrentBuilder(custom);
   }, [
+    addressToSend,
     trnApi,
     signer,
     userSession,
-    amountToSend,
-    assetId,
-    addressToSend,
+    feeAssetId,
     setCurrentBuilder,
     setPayload,
     setToSign,
@@ -91,42 +86,7 @@ export default function AssetFromEoa() {
     <div className={`card ${disable ? 'disabled' : ''}`}>
       <div className="inner">
         <div className="row">
-          <h3>Send From EOA</h3>
-        </div>
-        <div className="row">
-          <label>
-            Amount
-            <input
-              type="number"
-              value={amountToSend}
-              min={1}
-              className="w-full builder-input"
-              onChange={e => {
-                resetState();
-                setAmountToSend(Number(e.target.value));
-              }}
-              disabled={disable}
-            />
-          </label>
-        </div>
-        <div className="row">
-          <label>
-            Currency
-            <select
-              value={assetId}
-              className="w-full builder-input"
-              onChange={e => {
-                resetState();
-                setAssetId(Number(e.target.value));
-              }}
-              disabled={disable}
-            >
-              <option value={1}>ROOT</option>
-              <option value={2}>XRP</option>
-              <option value={3172}>SYLO</option>
-              <option value={17508}>ASTO</option>
-            </select>
-          </label>
+          <h3>Mint Nft Using Custom Extrinsic</h3>
         </div>
         <div className="row">
           <label>
@@ -141,6 +101,24 @@ export default function AssetFromEoa() {
               }}
               disabled={disable}
             />
+          </label>
+        </div>
+        <div className="row">
+          <label>
+            Gas Token
+            <select
+              value={feeAssetId}
+              className="w-full builder-input"
+              disabled={disable}
+              onChange={e => {
+                resetState();
+                setFeeAssetId(Number(e.target.value));
+              }}
+            >
+              <option value={1}>ROOT</option>
+              <option value={3172}>SYLO</option>
+              <option value={17508}>ASTO</option>
+            </select>
           </label>
         </div>
         <div className="row">

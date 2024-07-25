@@ -9,7 +9,7 @@ import {
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { TrnApiProvider } from './TRNProvider';
-import { RootStoreProvider } from '@fv-sdk-demos/store-shared';
+import { RootStoreProvider } from './RootStoreProvider';
 
 // This is a demo application
 const clientId = 'v3KyIBYRhIl0EZrUh_26a';

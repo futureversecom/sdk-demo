@@ -1,12 +1,14 @@
-import { useAuth } from '@futureverse/auth-react';
-import { CustomExtrinsicBuilder } from '@futureverse/transact';
+import React from 'react';
+
+import { useAuth, useFutureverseSigner } from '@futureverse/auth-react';
+import { TransactionBuilder } from '@futureverse/transact';
 import { useCallback, useMemo, useState } from 'react';
 
 import { ethers } from 'ethers';
-import { useCustomExtrinsicBuilder } from '../../hooks';
+
 import { useTrnApi } from '../../providers/TRNProvider';
 import { ASSET_DECIMALS } from '../../helpers';
-import { useRootStore } from '@fv-sdk-demos/store-shared';
+import { useRootStore } from '../../hooks/useRootStore';
 
 export default function AssetFromFuturePassFeeProxy() {
   const { userSession } = useAuth();
@@ -27,15 +29,22 @@ export default function AssetFromFuturePassFeeProxy() {
 
   const { trnApi } = useTrnApi();
 
+  const signer = useFutureverseSigner();
+
   const [assetId, setAssetId] = useState<number>(1);
   const [feeAssetId, setFeeAssetId] = useState<number>(1);
   const [amountToSend, setAmountToSend] = useState<number>(1);
   const [addressToSend, setAddressToSend] = useState<string>('');
 
-  const customExtrinsicBuilder = useCustomExtrinsicBuilder();
+  const createBuilder = useCallback(async () => {
+    console.log(addressToSend, trnApi, signer, userSession);
 
-  const createCustomBuilder = useCallback(async () => {
-    const getExtrinsic = async (builder: CustomExtrinsicBuilder) => {
+    if (!trnApi || !signer || !userSession) {
+      console.log('Missing trnApi, signer or userSession');
+      return;
+    }
+
+    const getExtrinsic = async (builder: TransactionBuilder) => {
       console.log('Getting Extrinsic');
 
       const gasEstimate = await builder?.getGasFees();
@@ -51,48 +60,41 @@ export default function AssetFromFuturePassFeeProxy() {
       setToSign(ethPayload.toString());
     };
 
-    if (!customExtrinsicBuilder || !userSession) {
-      return null;
-    }
-    console.log('Creating Custom Extrinsic');
-    console.log('customExtrinsicBuilder', customExtrinsicBuilder);
-
     const valueToSend = ethers.parseUnits(
       amountToSend.toString(),
       ASSET_DECIMALS[assetId]
     );
 
-    const extrinsic = trnApi?.tx?.assetsExt?.transfer(
-      assetId,
-      addressToSend,
-      valueToSend.toString(),
-      true
-    );
+    const builder = await TransactionBuilder.asset(
+      trnApi,
+      signer,
+      userSession.eoa,
+      assetId
+    )
+      .transfer({
+        destinationAddress: addressToSend,
+        amount: parseInt(valueToSend.toString()),
+      })
+      .addFuturePassAndFeeProxy({
+        futurePass: userSession.futurepass,
+        assetId: feeAssetId,
+        slippage: 5,
+      });
 
-    if (!extrinsic) {
-      return;
-    }
-
-    await customExtrinsicBuilder.extrinsic(extrinsic).addFuturePassAndFeeProxy({
-      futurePass: userSession.futurepass,
-      assetId: feeAssetId,
-      slippage: 5,
-    });
-
-    getExtrinsic(customExtrinsicBuilder);
-    setCurrentBuilder(customExtrinsicBuilder);
+    getExtrinsic(builder);
+    setCurrentBuilder(builder);
   }, [
-    addressToSend,
+    trnApi,
+    signer,
+    userSession,
     amountToSend,
     assetId,
-    customExtrinsicBuilder,
+    addressToSend,
     feeAssetId,
     setCurrentBuilder,
-    setGas,
     setPayload,
     setToSign,
-    trnApi?.tx?.assetsExt,
-    userSession,
+    setGas,
   ]);
 
   return (
@@ -175,7 +177,7 @@ export default function AssetFromFuturePassFeeProxy() {
             disabled={disable}
             onClick={() => {
               resetState();
-              createCustomBuilder();
+              createBuilder();
             }}
           >
             Start Transfer

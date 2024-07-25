@@ -14,7 +14,8 @@ import {
 } from '../components';
 
 import { useAuth } from '@futureverse/auth-react';
-import { useRootStore } from '@fv-sdk-demos/store-shared';
+import { useRootStore } from '../hooks/useRootStore';
+import { CustomFromEoaFuturePassFeeProxy } from './TransferComps';
 
 export default function Transfer() {
   const isMounted = useIsMounted();
@@ -38,12 +39,13 @@ export default function Transfer() {
 
   return (
     <>
-      <h1>Send Funds</h1>
+      <h1>Examples</h1>
       <div className="auto-grid">
         <AssetFromEoa />
         <AssetFromFuturePass />
         <AssetFromEoaFeeProxy />
         <AssetFromFuturePassFeeProxy />
+        <CustomFromEoaFuturePassFeeProxy />
       </div>
       <div className="auto-grid">
         {gas && (

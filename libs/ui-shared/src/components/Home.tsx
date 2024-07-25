@@ -1,48 +1,22 @@
-import { useAuth, useConnector } from '@futureverse/auth-react';
+import { ConnectorId, useAuth, useConnector } from '@futureverse/auth-react';
 
-import { useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
-import { ConnectorId, SignInOptions, SignInType } from '@futureverse/auth';
+
 import { useQuery } from '@tanstack/react-query';
 
 import { ethers } from 'ethers';
 import { useTrnApi } from '../providers';
 import { useIsMounted } from '../hooks';
 
-type ConnectorMap = Record<ConnectorId, SignInType>;
-const connectorIdType: ConnectorMap = {
-  metaMaskSDK: 'eoa',
-  coinbaseWalletSDK: 'eoa',
-  xaman: 'eoa',
-  walletConnect: 'eoa',
-  futureverseCustodialEmail: 'email',
-  futureverseCustodialFacebook: 'facebook',
-  futureverseCustodialGoogle: 'google',
-};
-
 export default function Home({ title }: { title: string }) {
   const isMounted = useIsMounted();
 
-  const { signIn, userSession, authMethod } = useAuth();
-  const { connector, address } = useAccount();
-  const { connect, disconnect, isConnected } = useConnector();
+  const {  userSession, authMethod } = useAuth();
+  const { connector } = useAccount();
+  const { connectAndSignIn, disconnect, isConnected, connectors } =
+    useConnector();
 
   const { trnApi } = useTrnApi();
-
-  const [account, setAccount] = useState<
-    SignInOptions & { connector?: string }
-  >({
-    type: 'eoa',
-  });
-
-  useEffect(() => {
-    setAccount(prev => ({
-      ...prev,
-      type: connectorIdType[connector?.id as ConnectorId],
-      address: address as string,
-      connector: connector?.id,
-    }));
-  }, [connector, address]);
 
   const getBalance = async (address: string, assetId: number) => {
     const balanceData = await trnApi?.rpc.assetsExt.freeBalance(
@@ -93,109 +67,34 @@ export default function Home({ title }: { title: string }) {
 
       <div>
         {userSession == null ? (
-          <>
-            <div>
+          <div>
+            {connectors.map(connector => (
+              <button
+                key={connector.id}
+                onClick={() =>
+                  connectAndSignIn(connector.id as ConnectorId, 'popup')
+                }
+              >
+                {connector.icon && (
+                  // eslint-disable-next-line
+                  <img src={connector.icon} width={20} height={20} />
+                )}
+                Connect {connector.name}
+              </button>
+            ))}
+
+            {isConnected && (
               <button
                 onClick={() => {
-                  connect('xaman').then(accounts => {
-                    setAccount({
-                      type: 'eoa',
-                      address: accounts[0],
-                      connector: 'xaman',
-                    });
-                  });
+                  if (connector?.id) {
+                    disconnect();
+                  }
                 }}
               >
-                Connect Xaman
+                Disconnect
               </button>
-              <button
-                onClick={() => {
-                  connect('metaMaskSDK').then(accounts => {
-                    setAccount({
-                      type: 'eoa',
-                      address: accounts[0],
-                      connector: 'metaMaskSDK',
-                    });
-                  });
-                }}
-              >
-                Connect Metamask
-              </button>
-              <button
-                onClick={() => {
-                  connect('walletConnect').then(accounts => {
-                    setAccount({
-                      type: 'eoa',
-                      address: accounts[0],
-                      connector: 'walletConnect',
-                    });
-                  });
-                }}
-              >
-                Connect Wallet Connect
-              </button>
-              <button
-                onClick={() => {
-                  connect('coinbaseWalletSDK').then(accounts => {
-                    setAccount({
-                      type: 'eoa',
-                      address: accounts[0],
-                      connector: 'coinbaseWalletSDK',
-                    });
-                  });
-                }}
-              >
-                Connect Coinbase
-              </button>
-              {isConnected && (
-                <button
-                  onClick={() => {
-                    if (connector?.id) {
-                      disconnect();
-                    }
-                  }}
-                >
-                  Disconnect
-                </button>
-              )}
-            </div>
-            {account.address && account.connector ? (
-              <>
-                <pre>
-                  Connector: {account.connector}
-                  <br />
-                  Address: {account.address}
-                </pre>
-                <button onClick={() => signIn(account, 'popup')}>
-                  Sign In FuturePass
-                </button>
-              </>
-            ) : (
-              <>
-                <button
-                  onClick={() => {
-                    connect('futureverseCustodialEmail');
-                  }}
-                >
-                  Sign In Email
-                </button>
-                <button
-                  onClick={() => {
-                    connect('futureverseCustodialGoogle');
-                  }}
-                >
-                  Sign In Google
-                </button>
-                <button
-                  onClick={() => {
-                    connect('futureverseCustodialFacebook');
-                  }}
-                >
-                  Sign In Facebook
-                </button>
-              </>
             )}
-          </>
+          </div>
         ) : (
           <>
             <div className="asset-grid">
