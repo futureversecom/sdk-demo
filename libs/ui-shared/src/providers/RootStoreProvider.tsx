@@ -1,3 +1,4 @@
+import React from 'react';
 import { createRootStore } from '../store';
 import { type ReactNode, createContext, useRef } from 'react';
 

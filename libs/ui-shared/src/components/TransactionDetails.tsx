@@ -2,7 +2,7 @@ import React from 'react';
 import { ExtrinsicResult } from '@futureverse/transact';
 import { ethers } from 'ethers';
 import { useCallback } from 'react';
-import { useRootStore } from '@fv-sdk-demos/store-shared';
+import { useRootStore } from '../hooks/useRootStore';
 
 export default function TransactionDetails() {
   const {

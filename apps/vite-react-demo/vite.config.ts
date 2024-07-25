@@ -2,6 +2,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
+import commonjs from '@rollup/plugin-commonjs';
 
 export default defineConfig({
   root: __dirname,
@@ -17,7 +18,7 @@ export default defineConfig({
     host: 'localhost',
   },
 
-  plugins: [react(), nxViteTsPaths()],
+  plugins: [commonjs(), react(), nxViteTsPaths()],
 
   // Uncomment this if you are using workers.
   // worker: {
@@ -35,6 +36,7 @@ export default defineConfig({
         'react',
         'react-dom',
         '@futureverse/signer',
+        '@futureverse/transact',
         '@futureverse/auth',
         '@futureverse/auth-react',
       ],

@@ -15,8 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@fv-sdk-demos/store-shared": ["libs/store-shared/src/index.ts"],
-      "@fv-sdk-demos/ui-shared": ["libs/ui-shared/src/index.ts"]
+      "@fv-sdk-demos/ui-shared": ["./libs/ui-shared/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
