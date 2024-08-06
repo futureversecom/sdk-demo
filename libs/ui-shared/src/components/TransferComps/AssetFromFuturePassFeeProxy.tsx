@@ -102,6 +102,7 @@ export default function AssetFromFuturePassFeeProxy() {
       <div className="inner">
         <div className="row">
           <h3>Send From FuturePass Using Fee Proxy</h3>
+          <small>{userSession.futurepass}</small>
         </div>
         <div className="row">
           <label>

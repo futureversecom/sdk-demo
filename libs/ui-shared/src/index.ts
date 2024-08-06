@@ -9,6 +9,7 @@ import {
   Result,
   TransactionDetails,
   Transfer,
+  Spinner,
 } from './components';
 import { useIsMounted } from './hooks';
 
@@ -27,4 +28,5 @@ export {
   TransactionDetails,
   Transfer,
   useIsMounted,
+  Spinner,
 };

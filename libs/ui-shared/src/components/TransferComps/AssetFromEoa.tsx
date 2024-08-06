@@ -92,6 +92,7 @@ export default function AssetFromEoa() {
       <div className="inner">
         <div className="row">
           <h3>Send From EOA</h3>
+          <small>{userSession.eoa}</small>
         </div>
         <div className="row">
           <label>

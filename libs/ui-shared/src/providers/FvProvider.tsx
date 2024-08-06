@@ -33,6 +33,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         xamanApiKey={xamanAPIKey}
         walletConnectProjectId={walletConnectProjectId}
         authClient={authClient}
+        ssr={true}
       >
         <TrnApiProvider network="porcini">
           <RootStoreProvider>

@@ -1,5 +1,5 @@
 import { useAuth, useFutureverseSigner } from '@futureverse/auth-react';
-import { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import { useTrnApi } from '../../providers/TRNProvider';
 
@@ -87,10 +87,11 @@ export default function CustomFromEoaFuturePassFeeProxy() {
       <div className="inner">
         <div className="row">
           <h3>Mint Nft Using Custom Extrinsic</h3>
+          <small>{userSession.futurepass}</small>
         </div>
         <div className="row">
           <label>
-            Send To
+            Mint To
             <input
               type="text"
               value={addressToSend}
@@ -130,7 +131,7 @@ export default function CustomFromEoaFuturePassFeeProxy() {
             }}
             disabled={disable}
           >
-            Start Transfer
+            Mint Token
           </button>
         </div>
       </div>

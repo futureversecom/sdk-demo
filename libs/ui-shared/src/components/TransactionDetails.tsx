@@ -57,15 +57,16 @@ export default function TransactionDetails() {
             {toSign && (
               <div className="grid cols-1  gap-0">
                 <div className="w-full">Message To Sign</div>
-                <pre>{toSign}</pre>
+                <span className="pre">{toSign}</span>
               </div>
             )}
             {payload && (
               <>
-                <div className="grid cols-1  gap-0">
+                <div className="grid cols-1 gap-0">
                   <div>TRN Message</div>
-
-                  <pre>{JSON.stringify(payload, null, 2)}</pre>
+                  <pre className="pre">
+                    {JSON.stringify(payload.trnPayload, null, 2)}
+                  </pre>
                 </div>
 
                 {!signed && (

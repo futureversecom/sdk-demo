@@ -1,6 +1,5 @@
+import React from 'react';
 import { ConnectorId, useAuth, useConnector } from '@futureverse/auth-react';
-
-import { useAccount } from 'wagmi';
 
 import { useQuery } from '@tanstack/react-query';
 
@@ -8,12 +7,15 @@ import { ethers } from 'ethers';
 import { useTrnApi } from '../providers';
 import { useIsMounted } from '../hooks';
 
-export default function Home({ title }: { title: string }) {
-  const isMounted = useIsMounted();
+import { useAccount } from 'wagmi';
 
-  const {  userSession, authMethod } = useAuth();
-  const { connector } = useAccount();
-  const { connectAndSignIn, disconnect, isConnected, connectors } =
+export default function Home({ title }: { title: string }) {
+  const { address } = useAccount();
+
+  const isMounted = useIsMounted();
+  const { userSession, authMethod } = useAuth();
+
+  const { connectAndSignIn, disconnect, isConnected, connectors, connector } =
     useConnector();
 
   const { trnApi } = useTrnApi();
@@ -68,18 +70,18 @@ export default function Home({ title }: { title: string }) {
       <div>
         {userSession == null ? (
           <div>
-            {connectors.map(connector => (
+            {connectors.map(conn => (
               <button
-                key={connector.id}
+                key={conn.id}
                 onClick={() =>
-                  connectAndSignIn(connector.id as ConnectorId, 'popup')
+                  connectAndSignIn(conn.id as ConnectorId, 'popup')
                 }
               >
-                {connector.icon && (
+                {conn.icon && (
                   // eslint-disable-next-line
-                  <img src={connector.icon} width={20} height={20} />
+                  <img src={conn.icon} width={20} height={20} />
                 )}
-                Connect {connector.name}
+                Connect {conn.name}
               </button>
             ))}
 
@@ -112,6 +114,7 @@ export default function Home({ title }: { title: string }) {
                 <div className="inner">
                   <h2>EOA</h2>
                   <div className="row">User EOA: {userSession.eoa}</div>
+                  <div className="row">User Address from Wagmi: {address}</div>
                   <div className="row">
                     User Balance: {xrpBalanceOnTrn.data ?? 'loading'} XRP
                   </div>

@@ -29,6 +29,7 @@ a {
   text-decoration: inherit;
 }
 
+span.pre,
 pre {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     Liberation Mono, Courier New, monospace;
@@ -41,14 +42,17 @@ svg {
   text-rendering: optimizeLegibility;
 }
 
+span.pre,
 pre {
   background-color: rgba(55, 65, 81, 1);
   color: rgba(229, 231, 235, 1);
   overflow: scroll;
+
   padding: 8px;
   border-radius: 8px;
   margin: 0;
 }
+
 
 .spinner {
   border: 4px solid rgb(15, 15, 15);
@@ -81,13 +85,12 @@ h2 {
 }
 
 
+span.pre,
 pre {
   max-height: 200px;
   overflow: scroll;
   width: 100%;
-  white-space: wrap;
   font-size: 0.8rem;
-  word-break: break-all;
   padding: 8px;
   border-radius: 8px;
 }
@@ -204,7 +207,7 @@ input {
 
 .auto-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, auto));
+  grid-template-columns: repeat(auto-fill, minmax(400px, auto));
   gap: 16px;
 }
 
@@ -271,4 +274,25 @@ input {
 
 .card button {
   margin-top: 8px;
+}
+
+
+.string {
+  color: green;
+}
+
+.number {
+  color: darkorange;
+}
+
+.boolean {
+  color: blue;
+}
+
+.null {
+  color: magenta;
+}
+
+.key {
+  color: red;
 }

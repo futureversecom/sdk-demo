@@ -71,7 +71,7 @@ export default function AssetFromFuturePass() {
         destinationAddress: addressToSend,
         amount: parseInt(valueToSend.toString()),
       })
-      .addFuturePass(userSession.futurePass);
+      .addFuturePass(userSession.futurepass);
 
     getExtrinsic(builder);
     setCurrentBuilder(builder);
@@ -88,11 +88,14 @@ export default function AssetFromFuturePass() {
     setGas,
   ]);
 
+  console.log('userSession', userSession);
+
   return (
     <div className={`card ${disable ? 'disabled' : ''}`}>
       <div className="inner">
         <div className="row">
           <h3>Send From FuturePass</h3>
+          <small>{userSession.futurepass}</small>
         </div>
         <div className="row">
           <label>

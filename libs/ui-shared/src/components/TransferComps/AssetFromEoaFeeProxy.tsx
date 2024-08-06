@@ -96,6 +96,7 @@ export default function AssetFromEoaFeeProxy() {
       <div className="inner">
         <div className="row">
           <h3>Send From EOA Using Fee Proxy</h3>
+          <small>{userSession.eoa}</small>
         </div>
         <div className="row">
           <label>
