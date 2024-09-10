@@ -14,7 +14,7 @@ export const authClient = new FutureverseAuthClient({
   redirectUri: `${
     typeof window !== 'undefined' ? window.location.href : ''
   }login`,
-  signInFlow: 'popup',
+  signInFlow: 'redirect',
 });
 export const queryClient = new QueryClient();
 
