@@ -16,6 +16,8 @@ export default function TransactionDetails() {
     setResult,
     signed,
     sent,
+    setError,
+    error,
   } = useRootStore(state => state);
 
   const onSign = useCallback(() => {
@@ -29,13 +31,16 @@ export default function TransactionDetails() {
   }, [setSent]);
 
   const signExtrinsic = useCallback(async () => {
-    console.log('currentBuilder', currentBuilder);
-
     if (toSign && currentBuilder) {
-      const result = await currentBuilder?.signAndSend({ onSign, onSend });
-      setResult(result as ExtrinsicResult);
+      try {
+        const result = await currentBuilder.signAndSend({ onSign, onSend });
+        setResult(result as ExtrinsicResult);
+      } catch (e) {
+        console.error(e);
+        setError(e.message);
+      }
     }
-  }, [currentBuilder, onSend, onSign, setResult, toSign]);
+  }, [currentBuilder, onSend, onSign, setError, setResult, toSign]);
   return (
     gas && (
       <>
@@ -80,7 +85,27 @@ export default function TransactionDetails() {
               </>
             )}
             {signed && <div>Extrinsic Has Been Signed</div>}
-            {signed && !result && <div className="spinner" />}
+            {signed && !result && !error && <div className="spinner" />}
+            {error && (
+              <div
+                className="error"
+                style={{
+                  background: 'rgba(223, 19, 19, 0.445)',
+                  padding: '8px',
+                  borderRadius: '8px',
+                }}
+              >
+                <div
+                  className="error-title"
+                  style={{ fontWeight: '700', fontSize: '14px' }}
+                >
+                  There has been an error...
+                </div>
+                <div className="error-message" style={{ fontSize: '12px' }}>
+                  {error}
+                </div>
+              </div>
+            )}
             {sent && <div>Extrinsic Sent</div>}
           </div>
         </div>

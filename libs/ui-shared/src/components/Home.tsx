@@ -1,22 +1,19 @@
 import React from 'react';
-import { ConnectorId, useAuth, useConnector } from '@futureverse/auth-react';
+import { useAuth } from '@futureverse/auth-react';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { ethers } from 'ethers';
 import { useTrnApi } from '../providers';
 import { useIsMounted } from '../hooks';
 
 import { useAccount } from 'wagmi';
+import { formatUnits } from 'viem';
 
 export default function Home({ title }: { title: string }) {
   const { address } = useAccount();
 
   const isMounted = useIsMounted();
   const { userSession, authMethod } = useAuth();
-
-  const { connectAndSignIn, disconnect, isConnected, connectors, connector } =
-    useConnector();
 
   const { trnApi } = useTrnApi();
 
@@ -27,10 +24,8 @@ export default function Home({ title }: { title: string }) {
     );
 
     const balance = balanceData
-      ? ethers.formatUnits(balanceData?.toString(), 6)
+      ? formatUnits(BigInt(balanceData.toHuman()), 6)
       : 0;
-
-    console.log('Balance:', balance);
 
     return balance;
   };
@@ -68,36 +63,7 @@ export default function Home({ title }: { title: string }) {
       <h1>{title}</h1>
 
       <div>
-        {userSession == null ? (
-          <div>
-            {connectors.map(conn => (
-              <button
-                key={conn.id}
-                onClick={() =>
-                  connectAndSignIn(conn.id as ConnectorId, 'popup')
-                }
-              >
-                {conn.icon && (
-                  // eslint-disable-next-line
-                  <img src={conn.icon} width={20} height={20} />
-                )}
-                Connect {conn.name}
-              </button>
-            ))}
-
-            {isConnected && (
-              <button
-                onClick={() => {
-                  if (connector?.id) {
-                    disconnect();
-                  }
-                }}
-              >
-                Disconnect
-              </button>
-            )}
-          </div>
-        ) : (
+        {userSession && (
           <>
             <div className="asset-grid">
               <div className="card">

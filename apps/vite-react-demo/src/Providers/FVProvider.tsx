@@ -1,20 +1,20 @@
-'use client';
-
 import React from 'react';
 
-import { QueryClientProvider } from '@tanstack/react-query';
-
-import { authClient, getWagmiConfig, queryClient } from './config';
-import { RootStoreProvider, TrnApiProvider } from '@fv-sdk-demos/ui-shared';
-
-import { DarkTheme, Theme } from '@futureverse/auth-ui';
-
-import { State } from 'wagmi';
 import {
   FutureverseAuthProvider,
   FutureverseWagmiProvider,
+} from '@futureverse/auth-react';
+
+import { QueryClientProvider } from '@tanstack/react-query';
+import { authClient, getWagmiConfig, queryClient } from './config';
+
+import { State } from 'wagmi';
+import {
+  Theme,
+  DarkTheme,
   FutureverseAuthUiProvider,
-} from '@/components/client-components';
+} from '@futureverse/auth-ui';
+import { RootStoreProvider, TrnApiProvider } from '@fv-sdk-demos/ui-shared';
 
 const customTheme: Theme = {
   ...DarkTheme,
@@ -33,11 +33,11 @@ export default function Providers({
 }) {
   return (
     <QueryClientProvider client={queryClient}>
-      <TrnApiProvider network="porcini">
-        <FutureverseWagmiProvider
-          getWagmiConfig={getWagmiConfig}
-          initialState={initialWagmiState}
-        >
+      <FutureverseWagmiProvider
+        getWagmiConfig={getWagmiConfig}
+        initialState={initialWagmiState}
+      >
+        <TrnApiProvider network="porcini">
           <RootStoreProvider>
             <FutureverseAuthProvider authClient={authClient}>
               <FutureverseAuthUiProvider
@@ -48,8 +48,8 @@ export default function Providers({
               </FutureverseAuthUiProvider>
             </FutureverseAuthProvider>
           </RootStoreProvider>
-        </FutureverseWagmiProvider>
-      </TrnApiProvider>
+        </TrnApiProvider>
+      </FutureverseWagmiProvider>
     </QueryClientProvider>
   );
 }

@@ -1,12 +1,14 @@
 'use client';
 
 import { useAuth, useConnector } from '@futureverse/auth-react';
+import { useFutureverseAuthUiProvider } from '@futureverse/auth-ui';
 import Link from 'next/link';
 import React from 'react';
 
 export default function Header() {
   const { userSession, signOut } = useAuth();
   const { disconnect, isConnected } = useConnector();
+  const { openLogin } = useFutureverseAuthUiProvider();
 
   return (
     <div role="navigation">
@@ -15,7 +17,8 @@ export default function Header() {
           display: 'flex',
           flexDirection: 'row',
           width: '100%',
-          justifyContent: 'flex-start',
+          justifyContent: 'space-between',
+          alignItems: 'center',
           listStyleType: 'none',
           margin: 0,
           padding: 0,
@@ -24,10 +27,18 @@ export default function Header() {
         <li style={{}}>
           <Link href="/">Account Info</Link>
         </li>
+        {!userSession && (
+          <button onClick={() => openLogin()} className="green">
+            Log In
+          </button>
+        )}
         {userSession && (
           <>
             <li style={{ padding: '0 16px' }}>
-              <Link href="/transfer">Transfer Funds</Link>
+              <Link href="/extrinsics">Extrinsics</Link>
+            </li>
+            <li style={{ padding: '0 16px' }}>
+              <Link href="/evm">EVM</Link>
             </li>
             <li
               style={{

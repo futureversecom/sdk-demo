@@ -1,58 +1,39 @@
-import { useAuth, useFutureverseSigner } from '@futureverse/auth-react';
+import { useAuth } from '@futureverse/auth-react';
 import React, { useCallback, useMemo, useState } from 'react';
 
 import { useTrnApi } from '../../providers/TRNProvider';
+import { useFutureverseSigner } from '../../hooks/useFutureverseSigner';
 
 import { TransactionBuilder } from '@futureverse/transact';
 import { useRootStore } from '../../hooks/useRootStore';
 
+import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
+
 export default function CustomFromEoaFuturePassFeeProxy() {
   const { userSession } = useAuth();
 
-  const {
-    setGas,
-    setPayload,
-    setToSign,
-    resetState,
-    setCurrentBuilder,
-    signed,
-    result,
-  } = useRootStore(state => state);
+  const { resetState, setCurrentBuilder, signed, result, error } = useRootStore(
+    state => state
+  );
 
   const disable = useMemo(() => {
-    return signed && !result;
-  }, [signed, result]);
+    return signed && !result && !error;
+  }, [signed, result, error]);
 
   const { trnApi } = useTrnApi();
   const signer = useFutureverseSigner();
+
+  const getExtrinsic = useGetExtrinsic();
 
   const [feeAssetId, setFeeAssetId] = useState<number>(1);
 
   const [addressToSend, setAddressToSend] = useState<string>('');
 
   const createBuilder = useCallback(async () => {
-    console.log(addressToSend, trnApi, signer, userSession);
-
     if (!trnApi || !signer || !userSession) {
       console.log('Missing trnApi, signer or userSession');
       return;
     }
-
-    const getExtrinsic = async (builder: TransactionBuilder) => {
-      console.log('Getting Extrinsic');
-
-      const gasEstimate = await builder?.getGasFees();
-      if (gasEstimate) {
-        setGas(gasEstimate);
-      }
-      const payloads = await builder?.getPayloads();
-      if (!payloads) {
-        return;
-      }
-      setPayload(payloads);
-      const { ethPayload } = payloads;
-      setToSign(ethPayload.toString());
-    };
 
     const extrinsic = trnApi.tx.nft.mint(709732, 1, addressToSend);
 
@@ -76,10 +57,8 @@ export default function CustomFromEoaFuturePassFeeProxy() {
     signer,
     userSession,
     feeAssetId,
+    getExtrinsic,
     setCurrentBuilder,
-    setPayload,
-    setToSign,
-    setGas,
   ]);
 
   return (
@@ -87,7 +66,7 @@ export default function CustomFromEoaFuturePassFeeProxy() {
       <div className="inner">
         <div className="row">
           <h3>Mint Nft Using Custom Extrinsic</h3>
-          <small>{userSession.futurepass}</small>
+          <small>{userSession?.futurepass}</small>
         </div>
         <div className="row">
           <label>

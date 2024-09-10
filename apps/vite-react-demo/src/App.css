@@ -81,13 +81,13 @@ h2 {
 }
 
 
+
+span.pre,
 pre {
   max-height: 200px;
   overflow: scroll;
   width: 100%;
-  white-space: wrap;
   font-size: 0.8rem;
-  word-break: break-all;
   padding: 8px;
   border-radius: 8px;
 }
@@ -204,7 +204,7 @@ input {
 
 .auto-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, auto));
+  grid-template-columns: repeat(auto-fill, minmax(400px, auto));
   gap: 16px;
 }
 
@@ -271,4 +271,25 @@ input {
 
 .card button {
   margin-top: 8px;
+}
+
+
+.string {
+  color: green;
+}
+
+.number {
+  color: darkorange;
+}
+
+.boolean {
+  color: blue;
+}
+
+.null {
+  color: magenta;
+}
+
+.key {
+  color: red;
 }

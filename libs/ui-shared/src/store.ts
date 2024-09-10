@@ -1,7 +1,7 @@
 import {
-  TransactionBuilder,
   ExtrinsicPayload,
   ExtrinsicResult,
+  RootTransactionBuilder,
 } from '@futureverse/transact';
 
 import { createStore } from 'zustand/vanilla';
@@ -19,7 +19,8 @@ export type RootState = {
         tokenDecimals: number;
       }
     | undefined;
-  currentBuilder: TransactionBuilder | null;
+  currentBuilder: RootTransactionBuilder | null;
+  error: string | null;
 };
 
 export type RootActions = {
@@ -33,8 +34,9 @@ export type RootActions = {
     gasFee: string;
     tokenDecimals: number;
   }) => void;
-  setCurrentBuilder: (currentBuilder: TransactionBuilder) => void;
+  setCurrentBuilder: (currentBuilder: RootTransactionBuilder) => void;
   resetState: () => void;
+  setError: (error: string) => void;
 };
 
 export type RootStore = RootState & RootActions;
@@ -47,10 +49,11 @@ export const defaultInitState: RootState = {
   result: null,
   gas: undefined,
   currentBuilder: null,
+  error: null,
 };
 
 export const createRootStore = (initState: RootState = defaultInitState) => {
-  return createStore<RootStore>()((set) => ({
+  return createStore<RootStore>()(set => ({
     ...initState,
     setToSign: (toSign: string) => set({ toSign }),
     setPayload: (payload: ExtrinsicPayload) => set({ payload }),
@@ -62,7 +65,7 @@ export const createRootStore = (initState: RootState = defaultInitState) => {
       gasFee: string;
       tokenDecimals: number;
     }) => set({ gas }),
-    setCurrentBuilder: (currentBuilder: TransactionBuilder) =>
+    setCurrentBuilder: (currentBuilder: RootTransactionBuilder) =>
       set({ currentBuilder }),
     resetState: () =>
       set({
@@ -72,6 +75,8 @@ export const createRootStore = (initState: RootState = defaultInitState) => {
         sent: false,
         result: null,
         gas: undefined,
+        error: null,
       }),
+    setError: (error: string) => set({ error }),
   }));
 };

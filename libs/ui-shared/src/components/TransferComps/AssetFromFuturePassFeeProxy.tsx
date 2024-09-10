@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useAuth, useFutureverseSigner } from '@futureverse/auth-react';
+import { useAuth } from '@futureverse/auth-react';
 import { TransactionBuilder } from '@futureverse/transact';
 import { useCallback, useMemo, useState } from 'react';
 
@@ -9,27 +9,26 @@ import { ethers } from 'ethers';
 import { useTrnApi } from '../../providers/TRNProvider';
 import { ASSET_DECIMALS } from '../../helpers';
 import { useRootStore } from '../../hooks/useRootStore';
+import { useFutureverseSigner } from '../../hooks/useFutureverseSigner';
+
+import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
 
 export default function AssetFromFuturePassFeeProxy() {
   const { userSession } = useAuth();
 
-  const {
-    setGas,
-    setPayload,
-    setToSign,
-    resetState,
-    setCurrentBuilder,
-    signed,
-    result,
-  } = useRootStore(state => state);
+  const { resetState, setCurrentBuilder, signed, result, error } = useRootStore(
+    state => state
+  );
 
   const disable = useMemo(() => {
-    return signed && !result;
-  }, [signed, result]);
+    return signed && !result && !error;
+  }, [signed, result, error]);
 
   const { trnApi } = useTrnApi();
 
   const signer = useFutureverseSigner();
+
+  const getExtrinsic = useGetExtrinsic();
 
   const [assetId, setAssetId] = useState<number>(1);
   const [feeAssetId, setFeeAssetId] = useState<number>(1);
@@ -37,28 +36,10 @@ export default function AssetFromFuturePassFeeProxy() {
   const [addressToSend, setAddressToSend] = useState<string>('');
 
   const createBuilder = useCallback(async () => {
-    console.log(addressToSend, trnApi, signer, userSession);
-
     if (!trnApi || !signer || !userSession) {
       console.log('Missing trnApi, signer or userSession');
       return;
     }
-
-    const getExtrinsic = async (builder: TransactionBuilder) => {
-      console.log('Getting Extrinsic');
-
-      const gasEstimate = await builder?.getGasFees();
-      if (gasEstimate) {
-        setGas(gasEstimate);
-      }
-      const payloads = await builder?.getPayloads();
-      if (!payloads) {
-        return;
-      }
-      setPayload(payloads);
-      const { ethPayload } = payloads;
-      setToSign(ethPayload.toString());
-    };
 
     const valueToSend = ethers.parseUnits(
       amountToSend.toString(),
@@ -84,17 +65,15 @@ export default function AssetFromFuturePassFeeProxy() {
     getExtrinsic(builder);
     setCurrentBuilder(builder);
   }, [
+    addressToSend,
     trnApi,
     signer,
     userSession,
     amountToSend,
     assetId,
-    addressToSend,
     feeAssetId,
+    getExtrinsic,
     setCurrentBuilder,
-    setPayload,
-    setToSign,
-    setGas,
   ]);
 
   return (
@@ -102,7 +81,7 @@ export default function AssetFromFuturePassFeeProxy() {
       <div className="inner">
         <div className="row">
           <h3>Send From FuturePass Using Fee Proxy</h3>
-          <small>{userSession.futurepass}</small>
+          <small>{userSession?.futurepass}</small>
         </div>
         <div className="row">
           <label>

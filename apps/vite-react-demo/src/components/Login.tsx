@@ -10,9 +10,7 @@ export default function Login() {
   );
 
   useEffect(() => {
-    const userStateChange = (user: UserSession) => {
-      console.log('userStateChange', user);
-
+    const userStateChange = (user: UserSession | undefined) => {
       if (user) {
         setSignInState(true);
       }

@@ -1,30 +1,29 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import { useAuth, useFutureverseSigner } from '@futureverse/auth-react';
+import React from 'react';
+import { useCallback, useMemo, useState } from 'react';
+import { useAuth } from '@futureverse/auth-react';
 import { TransactionBuilder } from '@futureverse/transact';
 
 import { ethers } from 'ethers';
 import { useTrnApi } from '../../providers/TRNProvider';
 import { ASSET_DECIMALS } from '../../helpers';
 import { useRootStore } from '../../hooks/useRootStore';
+import { useFutureverseSigner } from '../../hooks/useFutureverseSigner';
+import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
 
 export default function AssetFromFuturePass() {
   const { userSession } = useAuth();
 
-  const {
-    setGas,
-    setPayload,
-    setToSign,
-    resetState,
-    setCurrentBuilder,
-    signed,
-    result,
-  } = useRootStore(state => state);
+  const { resetState, setCurrentBuilder, signed, result, error } = useRootStore(
+    state => state
+  );
 
   const disable = useMemo(() => {
-    return signed && !result;
-  }, [signed, result]);
+    return signed && !result && !error;
+  }, [signed, result, error]);
 
   const { trnApi } = useTrnApi();
+
+  const getExtrinsic = useGetExtrinsic();
 
   const signer = useFutureverseSigner();
 
@@ -33,28 +32,10 @@ export default function AssetFromFuturePass() {
   const [addressToSend, setAddressToSend] = useState<string>('');
 
   const createBuilder = useCallback(async () => {
-    console.log(addressToSend, trnApi, signer, userSession);
-
     if (!trnApi || !signer || !userSession) {
       console.log('Missing trnApi, signer or userSession');
       return;
     }
-
-    const getExtrinsic = async (builder: TransactionBuilder) => {
-      console.log('Getting Extrinsic');
-
-      const gasEstimate = await builder?.getGasFees();
-      if (gasEstimate) {
-        setGas(gasEstimate);
-      }
-      const payloads = await builder?.getPayloads();
-      if (!payloads) {
-        return;
-      }
-      setPayload(payloads);
-      const { ethPayload } = payloads;
-      setToSign(ethPayload.toString());
-    };
 
     const valueToSend = ethers.parseUnits(
       amountToSend.toString(),
@@ -76,26 +57,22 @@ export default function AssetFromFuturePass() {
     getExtrinsic(builder);
     setCurrentBuilder(builder);
   }, [
+    addressToSend,
     trnApi,
     signer,
     userSession,
     amountToSend,
     assetId,
-    addressToSend,
+    getExtrinsic,
     setCurrentBuilder,
-    setPayload,
-    setToSign,
-    setGas,
   ]);
-
-  console.log('userSession', userSession);
 
   return (
     <div className={`card ${disable ? 'disabled' : ''}`}>
       <div className="inner">
         <div className="row">
           <h3>Send From FuturePass</h3>
-          <small>{userSession.futurepass}</small>
+          <small>{userSession?.futurepass}</small>
         </div>
         <div className="row">
           <label>

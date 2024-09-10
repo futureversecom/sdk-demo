@@ -1,3 +1,5 @@
 import { useIsMounted } from './useIsMounted';
+import { useGetExtrinsic } from './useGetExtrinsic';
+import { useGetCount } from './useGetCount';
 
-export { useIsMounted };
+export { useIsMounted, useGetExtrinsic, useGetCount };
