@@ -4,7 +4,7 @@ import { polygonAmoy, sepolia, mainnet } from 'viem/chains';
 import { QueryClient } from '@tanstack/react-query';
 import { cookieStorage, createStorage } from 'wagmi';
 
-const clientId = 'zqmb2I6JT3dlAVzF5VOc9';
+const clientId = 'gwMnJVc6-gGHR3mQcSq-A';
 const walletConnectProjectId = '8b9b9cf8501efbce91cd5a15157c01c4';
 const xamanAPIKey = '5376fa18-f6d8-45d6-98df-cfdbc6b3b62b';
 
