@@ -25,6 +25,7 @@ export const getWagmiConfig = async () => {
     authClient,
     ssr: true,
     chains: [mainnet, sepolia, polygonAmoy],
+    //@ts-expect-error - storage is not in the types
     storage: createStorage({
       storage: cookieStorage,
     }),
