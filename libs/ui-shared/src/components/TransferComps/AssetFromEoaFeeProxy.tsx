@@ -5,7 +5,7 @@ import { TransactionBuilder } from '@futureverse/transact';
 import { useCallback, useMemo, useState } from 'react';
 import { useFutureverseSigner } from '../../hooks/useFutureverseSigner';
 
-import { ethers } from 'ethers';
+import { parseUnits } from 'viem';
 import { useTrnApi } from '../../providers/TRNProvider';
 import { ASSET_DECIMALS } from '../../helpers';
 import { useRootStore } from '../../hooks/useRootStore';
@@ -38,7 +38,7 @@ export default function AssetFromEoaFeeProxy() {
       return;
     }
 
-    const valueToSend = ethers.parseUnits(
+    const valueToSend = parseUnits(
       amountToSend.toString(),
       ASSET_DECIMALS[assetId]
     );

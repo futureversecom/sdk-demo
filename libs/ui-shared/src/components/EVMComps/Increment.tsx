@@ -1,10 +1,8 @@
 import { useAuth } from '@futureverse/auth-react';
-import { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { useFutureverseSigner } from '../../hooks/useFutureverseSigner';
 
-import { ethers } from 'ethers';
 import { useTrnApi } from '../../providers/TRNProvider';
-import { ASSET_DECIMALS } from '../../helpers';
 
 import { TransactionBuilder } from '@futureverse/transact';
 import { useRootStore } from '../../hooks/useRootStore';
@@ -29,10 +27,11 @@ export default function Increment() {
 
   const getExtrinsic = useGetExtrinsic();
 
-  const { data: contractData, refetch } = useGetCount(
-    TestContractAddress,
-    TestContractAbi
-  );
+  const {
+    data: contractData,
+    refetch,
+    isFetching,
+  } = useGetCount(TestContractAddress, TestContractAbi);
 
   const createBuilder = useCallback(async () => {
     if (!trnApi || !signer || !userSession) {
@@ -71,10 +70,15 @@ export default function Increment() {
           <h3>Increment Counter From EOA</h3>
           <small>{userSession?.eoa}</small>
         </div>
-        {contractData && (
+        {isFetching && (
+          <div className="row">
+            <h3>Loading Counter...</h3>
+          </div>
+        )}
+        {contractData !== null && (
           <div className="row">
             <h3>Current Counter</h3>
-            <small>{contractData.toString()}</small>
+            <small>{contractData?.toString()}</small>
           </div>
         )}
         <div className="row">

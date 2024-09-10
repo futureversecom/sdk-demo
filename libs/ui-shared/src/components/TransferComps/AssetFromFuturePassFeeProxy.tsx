@@ -4,7 +4,7 @@ import { useAuth } from '@futureverse/auth-react';
 import { TransactionBuilder } from '@futureverse/transact';
 import { useCallback, useMemo, useState } from 'react';
 
-import { ethers } from 'ethers';
+import { parseUnits } from 'viem';
 
 import { useTrnApi } from '../../providers/TRNProvider';
 import { ASSET_DECIMALS } from '../../helpers';
@@ -41,7 +41,7 @@ export default function AssetFromFuturePassFeeProxy() {
       return;
     }
 
-    const valueToSend = ethers.parseUnits(
+    const valueToSend = parseUnits(
       amountToSend.toString(),
       ASSET_DECIMALS[assetId]
     );

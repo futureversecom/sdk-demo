@@ -3,7 +3,8 @@ import { useCallback, useMemo, useState } from 'react';
 import { useAuth } from '@futureverse/auth-react';
 import { TransactionBuilder } from '@futureverse/transact';
 
-import { ethers } from 'ethers';
+import { parseUnits } from 'viem';
+
 import { useTrnApi } from '../../providers/TRNProvider';
 import { ASSET_DECIMALS } from '../../helpers';
 import { useRootStore } from '../../hooks/useRootStore';
@@ -37,7 +38,7 @@ export default function AssetFromFuturePass() {
       return;
     }
 
-    const valueToSend = ethers.parseUnits(
+    const valueToSend = parseUnits(
       amountToSend.toString(),
       ASSET_DECIMALS[assetId]
     );

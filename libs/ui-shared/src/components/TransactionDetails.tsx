@@ -1,8 +1,9 @@
 import React from 'react';
 import { ExtrinsicResult } from '@futureverse/transact';
-import { ethers } from 'ethers';
+
 import { useCallback } from 'react';
 import { useRootStore } from '../hooks/useRootStore';
+import { formatUnits } from 'viem';
 
 export default function TransactionDetails() {
   const {
@@ -35,7 +36,7 @@ export default function TransactionDetails() {
       try {
         const result = await currentBuilder.signAndSend({ onSign, onSend });
         setResult(result as ExtrinsicResult);
-      } catch (e) {
+      } catch (e: any) {
         console.error(e);
         setError(e.message);
       }
@@ -55,7 +56,7 @@ export default function TransactionDetails() {
                 <div>Gas Token Decimals: {gas.tokenDecimals}</div>
                 <div>
                   Gas Token Decimals Formatted:{' '}
-                  {ethers.formatUnits(gas.gasFee, gas.tokenDecimals)}
+                  {formatUnits(BigInt(gas.gasFee), gas.tokenDecimals)}
                 </div>
               </div>
             </div>

@@ -3,13 +3,13 @@ import { useAuth } from '@futureverse/auth-react';
 import { useCallback, useMemo, useState } from 'react';
 import { useFutureverseSigner } from '../../hooks/useFutureverseSigner';
 
-import { ethers } from 'ethers';
 import { useTrnApi } from '../../providers/TRNProvider';
 import { ASSET_DECIMALS } from '../../helpers';
 
 import { TransactionBuilder } from '@futureverse/transact';
 import { useRootStore } from '../../hooks/useRootStore';
 import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
+import { parseUnits } from 'viem';
 
 export default function AssetFromEoa() {
   const { userSession } = useAuth();
@@ -37,7 +37,7 @@ export default function AssetFromEoa() {
       return;
     }
 
-    const valueToSend = ethers.parseUnits(
+    const valueToSend = parseUnits(
       amountToSend.toString(),
       ASSET_DECIMALS[assetId]
     );
