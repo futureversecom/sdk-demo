@@ -11,7 +11,7 @@ export default {
   ignoredRouteFiles: ['**/.*'],
   appDirectory: 'app',
   assetsBuildDirectory: 'public/build',
-  serverBuildPath: 'build/index.js',
+  // serverBuildPath: 'build/index.js',
   publicPath: '/build/',
   serverModuleFormat: 'esm',
   devServerPort: 4100,
