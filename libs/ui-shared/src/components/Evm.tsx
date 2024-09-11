@@ -13,7 +13,7 @@ export default function Transfer() {
   const isMounted = useIsMounted();
 
   const { userSession } = useAuth();
-  const { gas, result, resetState } = useRootStore(state => state);
+  const { gas, resetState } = useRootStore(state => state);
 
   useEffect(() => {
     return () => {

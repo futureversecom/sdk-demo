@@ -1,9 +1,6 @@
-import React from 'react';
-
 import { useEffect } from 'react';
 
 import TransactionDetails from './TransactionDetails';
-import Result from './Result';
 import { useIsMounted } from '../hooks';
 
 import {
