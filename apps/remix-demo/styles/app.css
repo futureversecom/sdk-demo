@@ -424,7 +424,6 @@ input {
   display: flex;
   flex-direction: column;
   max-height: calc(100% - 64px);
-  // width: calc(100vw - 64px);
   width: calc(100% - 64px);
   max-width: 600px;
   overflow: visible;

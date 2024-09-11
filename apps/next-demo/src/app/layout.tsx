@@ -7,8 +7,8 @@ import { Providers } from '@/Providers';
 import Header from '@/components/Header';
 
 export const metadata: Metadata = {
-  title: 'Futureverse Sdks: React Demo',
-  description: 'Futureverse Sdks: React Demo',
+  title: 'Futureverse Sdks: Next Demo',
+  description: 'Futureverse Sdks: Next Demo',
 };
 
 export default function RootLayout({

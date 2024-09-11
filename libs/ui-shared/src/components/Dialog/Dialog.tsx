@@ -1,5 +1,4 @@
 import React from 'react';
-import '../Dialog/dialog.scss';
 
 type DialogProps = React.HTMLAttributes<HTMLDivElement> & {
   children: React.ReactNode;
