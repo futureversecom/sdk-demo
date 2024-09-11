@@ -1,0 +1,18 @@
+{
+  "builds": [
+    {
+      "src": "apps/remix-demo/api/**/*.ts",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "apps/remix-demo/app/**/*.{js,jsx,ts,tsx}",
+      "use": "@vercel/remix"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ]
+}
