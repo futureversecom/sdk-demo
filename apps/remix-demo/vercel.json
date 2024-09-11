@@ -12,7 +12,8 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/apps/remix-demo/app/$1"
+      "dest": "/$1"
     }
-  ]
+  ],
+  "outputDirectory": "apps/remix-demo/public"
 }
