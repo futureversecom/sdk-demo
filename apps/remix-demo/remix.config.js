@@ -9,7 +9,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
  */
 export default {
   ignoredRouteFiles: ['**/.*'],
-  appDirectory: 'app',
+  appDirectory: 'apps/remix-demo/app',
   assetsBuildDirectory: 'public/build',
   publicPath: '/build/',
   serverBuildPath: 'build/index.js',
