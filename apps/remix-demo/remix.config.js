@@ -10,9 +10,9 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 export default {
   ignoredRouteFiles: ['**/.*'],
   appDirectory: 'app',
-  browserBuildDirectory: 'public/build',
+  assetsBuildDirectory: 'public/build',
   publicPath: '/build/',
-  serverBuildDirectory: 'build',
+  serverBuildPath: 'build/index.js',
   serverModuleFormat: 'esm',
   devServerPort: 4100,
   watchPaths: () => createWatchPaths(__dirname),
