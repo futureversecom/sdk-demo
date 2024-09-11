@@ -31,6 +31,7 @@ export default function Increment() {
     data: contractData,
     refetch,
     isFetching,
+    isLoading,
   } = useGetCount(TestContractAddress, TestContractAbi);
 
   const createBuilder = useCallback(async () => {
@@ -70,17 +71,16 @@ export default function Increment() {
           <h3>Increment Counter From EOA</h3>
           <small>{userSession?.eoa}</small>
         </div>
-        {isFetching && (
-          <div className="row">
-            <h3>Loading Counter...</h3>
-          </div>
-        )}
-        {contractData !== null && (
-          <div className="row">
-            <h3>Current Counter</h3>
-            <small>{contractData?.toString()}</small>
-          </div>
-        )}
+        <div className="row">
+          <h3>Current Counter</h3>
+          <small>
+            {isFetching || isLoading
+              ? 'Fetching Current Count...'
+              : contractData
+              ? contractData?.toString()
+              : ''}{' '}
+          </small>
+        </div>
         <div className="row">
           <button
             className="w-full builder-input green"

@@ -10,19 +10,21 @@ import { authClient, getWagmiConfig, queryClient } from './config';
 
 import { State } from 'wagmi';
 import {
-  Theme,
+  type ThemeConfig,
   DarkTheme,
-  FutureverseAuthUiProvider,
+  AuthUiProvider,
 } from '@futureverse/auth-ui';
 import { RootStoreProvider, TrnApiProvider } from '@fv-sdk-demos/ui-shared';
+import type { NetworkName } from '@therootnetwork/api';
 
-const customTheme: Theme = {
+const customTheme: ThemeConfig = {
   ...DarkTheme,
-  images: {
-    // logo: '/images/logo.svg',
-    backgroundImage: undefined,
-  },
+  defaultAuthOption: 'web3',
 };
+
+const network = (process.env.NEXT_PUBLIC_NETWORK ?? 'porcini') as
+  | NetworkName
+  | undefined;
 
 export default function Providers({
   children,
@@ -37,15 +39,12 @@ export default function Providers({
         getWagmiConfig={getWagmiConfig}
         initialState={initialWagmiState}
       >
-        <TrnApiProvider network="porcini">
+        <TrnApiProvider network={network}>
           <RootStoreProvider>
             <FutureverseAuthProvider authClient={authClient}>
-              <FutureverseAuthUiProvider
-                theme={customTheme}
-                authClient={authClient}
-              >
+              <AuthUiProvider themeConfig={customTheme} authClient={authClient}>
                 {children}
-              </FutureverseAuthUiProvider>
+              </AuthUiProvider>
             </FutureverseAuthProvider>
           </RootStoreProvider>
         </TrnApiProvider>

@@ -7,22 +7,23 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { authClient, getWagmiConfig, queryClient } from './config';
 import { RootStoreProvider, TrnApiProvider } from '@fv-sdk-demos/ui-shared';
 
-import { DarkTheme, Theme } from '@futureverse/auth-ui';
+import { AuthUiProvider, DarkTheme, ThemeConfig } from '@futureverse/auth-ui';
 
 import { State } from 'wagmi';
 import {
   FutureverseAuthProvider,
   FutureverseWagmiProvider,
-  FutureverseAuthUiProvider,
 } from '@/components/client-components';
+import type { NetworkName } from '@therootnetwork/api';
 
-const customTheme: Theme = {
+const customTheme: ThemeConfig = {
   ...DarkTheme,
-  images: {
-    // logo: '/images/logo.svg',
-    backgroundImage: undefined,
-  },
+  defaultAuthOption: 'web3',
 };
+
+const network = (process.env.NEXT_PUBLIC_NETWORK ?? 'porcini') as
+  | NetworkName
+  | undefined;
 
 export default function Providers({
   children,
@@ -33,19 +34,16 @@ export default function Providers({
 }) {
   return (
     <QueryClientProvider client={queryClient}>
-      <TrnApiProvider network="porcini">
+      <TrnApiProvider network={network}>
         <FutureverseWagmiProvider
           getWagmiConfig={getWagmiConfig}
           initialState={initialWagmiState}
         >
           <RootStoreProvider>
             <FutureverseAuthProvider authClient={authClient}>
-              <FutureverseAuthUiProvider
-                theme={customTheme}
-                authClient={authClient}
-              >
+              <AuthUiProvider themeConfig={customTheme} authClient={authClient}>
                 {children}
-              </FutureverseAuthUiProvider>
+              </AuthUiProvider>
             </FutureverseAuthProvider>
           </RootStoreProvider>
         </FutureverseWagmiProvider>

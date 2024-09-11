@@ -21,7 +21,7 @@ export default function Transfer() {
   const isMounted = useIsMounted();
 
   const { userSession } = useAuth();
-  const { gas, result, resetState } = useRootStore(state => state);
+  const { gas, resetState } = useRootStore(state => state);
 
   useEffect(() => {
     return () => {
@@ -51,11 +51,6 @@ export default function Transfer() {
         {gas && (
           <div className="w-full">
             <TransactionDetails />
-          </div>
-        )}
-        {result && (
-          <div className="w-full">
-            <Result />
           </div>
         )}
       </div>

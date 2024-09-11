@@ -12,7 +12,7 @@ import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
 import { TestContractAbi, TestContractAddress } from '../../lib/test-contract';
 import { useGetCount } from '../../hooks';
 
-export default function Decrement() {
+export default function DecrementFPass() {
   const { userSession } = useAuth();
 
   const { resetState, setCurrentBuilder, signed, result, error } = useRootStore(
@@ -52,7 +52,7 @@ export default function Decrement() {
       abi: TestContractAbi,
       functionName: 'decrement',
       args: undefined,
-      fromFuturePass: false,
+      fromFuturePass: true,
     });
 
     getExtrinsic(builder);
@@ -69,10 +69,9 @@ export default function Decrement() {
     <div className={`card ${disable ? 'disabled' : ''}`}>
       <div className="inner">
         <div className="row">
-          <h3>Decrement Counter From EOA</h3>
-          <small>{userSession?.eoa}</small>
+          <h3>Decrement Counter From FuturePass</h3>
+          <small>{userSession?.futurepass}</small>
         </div>
-
         <div className="row">
           <h3>Current Counter</h3>
           <small>
@@ -83,7 +82,6 @@ export default function Decrement() {
               : ''}{' '}
           </small>
         </div>
-
         <div className="row">
           <button
             className="w-full builder-input green"

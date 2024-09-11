@@ -1,6 +1,5 @@
-import React from 'react';
 import { useAuth } from '@futureverse/auth-react';
-import { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { useFutureverseSigner } from '../../hooks/useFutureverseSigner';
 
 import { useTrnApi } from '../../providers/TRNProvider';
@@ -12,7 +11,7 @@ import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
 import { TestContractAbi, TestContractAddress } from '../../lib/test-contract';
 import { useGetCount } from '../../hooks';
 
-export default function Decrement() {
+export default function IncrementFPass() {
   const { userSession } = useAuth();
 
   const { resetState, setCurrentBuilder, signed, result, error } = useRootStore(
@@ -50,9 +49,9 @@ export default function Decrement() {
 
     await builder.writeContract({
       abi: TestContractAbi,
-      functionName: 'decrement',
+      functionName: 'increment',
       args: undefined,
-      fromFuturePass: false,
+      fromFuturePass: true,
     });
 
     getExtrinsic(builder);
@@ -69,10 +68,9 @@ export default function Decrement() {
     <div className={`card ${disable ? 'disabled' : ''}`}>
       <div className="inner">
         <div className="row">
-          <h3>Decrement Counter From EOA</h3>
-          <small>{userSession?.eoa}</small>
+          <h3>Increment Counter From FuturePass</h3>
+          <small>{userSession?.futurepass}</small>
         </div>
-
         <div className="row">
           <h3>Current Counter</h3>
           <small>
@@ -83,7 +81,6 @@ export default function Decrement() {
               : ''}{' '}
           </small>
         </div>
-
         <div className="row">
           <button
             className="w-full builder-input green"
@@ -93,7 +90,7 @@ export default function Decrement() {
             }}
             disabled={disable}
           >
-            Decrement Counter
+            Increment Counter
           </button>
         </div>
       </div>

@@ -2,6 +2,8 @@
 
 import { UserSession } from '@futureverse/auth';
 import { useAuth } from '@futureverse/auth-react';
+import { Spinner } from '@fv-sdk-demos/ui-shared';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function Login() {
@@ -10,10 +12,13 @@ export default function Login() {
     undefined
   );
 
+  const router = useRouter();
+
   useEffect(() => {
     const userStateChange = (user: UserSession | undefined) => {
       if (user) {
         setSignInState(true);
+        router.push('/');
       }
       if (!user) {
         setSignInState(false);
@@ -24,7 +29,7 @@ export default function Login() {
     return () => {
       authClient.removeUserStateListener(userStateChange);
     };
-  }, [authClient]);
+  }, [authClient, router]);
 
   if (signInState === true) {
     return <div>Authenticated</div>;
@@ -32,5 +37,9 @@ export default function Login() {
   if (signInState === false) {
     return <div>Not Authenticated</div>;
   }
-  return <div>Authenticating...</div>;
+  return (
+    <div>
+      <Spinner /> Authenticating...
+    </div>
+  );
 }

@@ -3,6 +3,7 @@ import Transfer from './Transfer';
 import Result from './Result';
 import Spinner from './Spinner';
 import Evm from './Evm';
+import { Dialog } from './Dialog/Dialog';
 
 import {
   AssetFromEoa,
@@ -28,4 +29,5 @@ export {
   Result,
   TransactionDetails,
   Spinner,
+  Dialog,
 };

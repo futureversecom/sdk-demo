@@ -4,7 +4,7 @@ import { useAuth } from '@futureverse/auth-react';
 import { useQuery } from '@tanstack/react-query';
 
 import { useTrnApi } from '../providers';
-import { useIsMounted } from '../hooks';
+import { useIsMounted, useRnsResolveAddress } from '../hooks';
 
 import { useAccount } from 'wagmi';
 import { formatUnits } from 'viem';
@@ -13,7 +13,7 @@ export default function Home({ title }: { title: string }) {
   const { address } = useAccount();
 
   const isMounted = useIsMounted();
-  const { userSession, authMethod } = useAuth();
+  const { userSession, authMethod, authClient } = useAuth();
 
   const { trnApi } = useTrnApi();
 
@@ -54,6 +54,15 @@ export default function Home({ title }: { title: string }) {
     enabled: !!trnApi && !!userSession && !!userSession?.futurepass,
   });
 
+  const { data: eoaRns, isFetching: eoaFetching } = useRnsResolveAddress(
+    userSession?.eoa as string,
+    authClient
+  );
+  const { data: fPassRns, isFetching: fPassFetching } = useRnsResolveAddress(
+    userSession?.futurepass as string,
+    authClient
+  );
+
   if (!isMounted) {
     return <div>Loading...</div>;
   }
@@ -81,6 +90,17 @@ export default function Home({ title }: { title: string }) {
                   <h2>EOA</h2>
                   <div className="row">User EOA: {userSession.eoa}</div>
                   <div className="row">User Address from Wagmi: {address}</div>
+                  {eoaFetching && (
+                    <div className="row">User Address RNS: Fetching RNS</div>
+                  )}
+                  {!eoaFetching && !eoaRns && (
+                    <div className="row">
+                      User Address RNS: No RNS set for Eoa
+                    </div>
+                  )}
+                  {eoaRns && (
+                    <div className="row">User Address RNS: {eoaRns}</div>
+                  )}
                   <div className="row">
                     User Balance: {xrpBalanceOnTrn.data ?? 'loading'} XRP
                   </div>
@@ -95,6 +115,18 @@ export default function Home({ title }: { title: string }) {
                   <div className="row">
                     User FuturePass: {userSession.futurepass}
                   </div>
+                  {fPassFetching && (
+                    <div className="row">User Address RNS: Fetching RNS</div>
+                  )}
+                  {!fPassFetching && !fPassRns && (
+                    <div className="row">
+                      User Address RNS: No RNS set for FuturePass
+                    </div>
+                  )}
+
+                  {fPassRns && (
+                    <div className="row">User Address RNS: {fPassRns}</div>
+                  )}
                   <div className="row">
                     User Balance: {xrpBalanceOnTrnFp.data ?? 'loading'} XRP
                   </div>

@@ -10,6 +10,7 @@ import { Increment, Decrement } from '../components';
 
 import { useAuth } from '@futureverse/auth-react';
 import { useRootStore } from '../hooks/useRootStore';
+import { CustomEvm, DecrementFPass, IncrementFPass } from './EVMComps';
 
 export default function Transfer() {
   const isMounted = useIsMounted();
@@ -36,17 +37,15 @@ export default function Transfer() {
       <h1>Examples</h1>
       <div className="auto-grid">
         <Increment />
+        <IncrementFPass />
         <Decrement />
+        <DecrementFPass />
+        <CustomEvm />
       </div>
       <div className="auto-grid">
         {gas && (
           <div className="w-full">
             <TransactionDetails />
-          </div>
-        )}
-        {result && (
-          <div className="w-full">
-            <Result />
           </div>
         )}
       </div>

@@ -33,7 +33,7 @@ export function useGetCount(TestContractAddress: any, TestContractAbi: any) {
         data: contractReturnData.toHex(),
       });
 
-      return returnData as bigint;
+      return (returnData as bigint).toString();
     },
     enabled: !!trnApi && !!signer && !!userSession,
     refetchInterval: 30000,

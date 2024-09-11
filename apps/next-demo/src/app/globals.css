@@ -296,3 +296,55 @@ input {
 .key {
   color: red;
 }
+
+.span-4 {
+  grid-column: 1/-1;
+}
+
+.custom-evm {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 100%;
+}
+
+.col-2 {
+  grid-column: span 1;
+}
+
+@media screen and (min-width: 992px) {
+  .custom-evm {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .col-2 {
+    grid-column: span 2;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .custom-evm {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
+  .col-2 {
+    grid-column: span 1;
+  }
+}
+
+/* @media screen and (min-width: 1200px) {
+  .custom-evm {
+    grid-template-columns: repeat(4, 1fr);
+
+  }
+
+  .span-4 {
+    grid-column: span 4;
+  }
+
+} */
+
+
+
+/* .builder-input {
+  margin-top: 4px;
+} */
