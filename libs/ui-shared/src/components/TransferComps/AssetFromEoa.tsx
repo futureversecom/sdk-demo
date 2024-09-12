@@ -10,6 +10,7 @@ import { TransactionBuilder } from '@futureverse/transact';
 import { useRootStore } from '../../hooks/useRootStore';
 import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
 import { parseUnits } from 'viem';
+import { shortAddress } from '../../lib/utils';
 
 export default function AssetFromEoa() {
   const { userSession } = useAuth();
@@ -29,7 +30,9 @@ export default function AssetFromEoa() {
 
   const [assetId, setAssetId] = useState<number>(1);
   const [amountToSend, setAmountToSend] = useState<number>(1);
-  const [addressToSend, setAddressToSend] = useState<string>('');
+  const [addressToSend, setAddressToSend] = useState<string>(
+    userSession?.futurepass ?? ''
+  );
 
   const createBuilder = useCallback(async () => {
     if (!trnApi || !signer || !userSession) {
@@ -70,7 +73,7 @@ export default function AssetFromEoa() {
       <div className="inner">
         <div className="row">
           <h3>Send From EOA</h3>
-          <small>{userSession?.eoa}</small>
+          <small>{shortAddress(userSession?.eoa ?? '')}</small>
         </div>
         <div className="row">
           <label>

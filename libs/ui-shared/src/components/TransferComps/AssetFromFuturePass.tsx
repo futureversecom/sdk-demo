@@ -10,6 +10,7 @@ import { ASSET_DECIMALS } from '../../helpers';
 import { useRootStore } from '../../hooks/useRootStore';
 import { useFutureverseSigner } from '../../hooks/useFutureverseSigner';
 import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
+import { shortAddress } from '../../lib/utils';
 
 export default function AssetFromFuturePass() {
   const { userSession } = useAuth();
@@ -30,7 +31,9 @@ export default function AssetFromFuturePass() {
 
   const [assetId, setAssetId] = useState<number>(1);
   const [amountToSend, setAmountToSend] = useState<number>(1);
-  const [addressToSend, setAddressToSend] = useState<string>('');
+  const [addressToSend, setAddressToSend] = useState<string>(
+    userSession?.eoa ?? ''
+  );
 
   const createBuilder = useCallback(async () => {
     if (!trnApi || !signer || !userSession) {
@@ -73,7 +76,7 @@ export default function AssetFromFuturePass() {
       <div className="inner">
         <div className="row">
           <h3>Send From FuturePass</h3>
-          <small>{userSession?.futurepass}</small>
+          <small>{shortAddress(userSession?.futurepass ?? '')}</small>
         </div>
         <div className="row">
           <label>

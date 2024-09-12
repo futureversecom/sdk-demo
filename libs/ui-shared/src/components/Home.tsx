@@ -8,6 +8,7 @@ import { useIsMounted, useRnsResolveAddress, useTransactQuery } from '../hooks';
 
 import { useAccount } from 'wagmi';
 import { formatUnits } from 'viem';
+import { shortAddress } from '../lib/utils';
 
 const ASTO_ASSET_ID = 17508;
 const SYLO_ASSET_ID = 3172;
@@ -122,90 +123,121 @@ export default function Home({ title }: { title: string }) {
                 </div>
               </div>
             </div>
-            <div className="auto-grid mt-32">
-              <div className="card">
-                <div className="inner">
-                  <h2>EOA</h2>
-                  <div className="row">User EOA: {userSession.eoa}</div>
-                  <div className="row">User Address from Wagmi: {address}</div>
-                  {eoaFetching && (
-                    <div className="row">User Address RNS: Fetching RNS</div>
-                  )}
-                  {!eoaFetching && !eoaRns && (
+            <div className="auto-grid " style={{ marginTop: '16px' }}>
+              <div>
+                <h2>EOA</h2>
+                <div className="card">
+                  <div className="inner">
+                    <small style={{ textTransform: 'uppercase' }}>
+                      Addresses
+                    </small>
                     <div className="row">
-                      User Address RNS: No RNS set for Eoa
+                      User EOA: {shortAddress(userSession.eoa)}
                     </div>
-                  )}
-                  {eoaRns && (
-                    <div className="row">User Address RNS: {eoaRns}</div>
-                  )}
-                  <div className="row">
-                    XRP Balance:{' '}
-                    {formatter.format(Number(xrpBalanceOnTrn.data ?? 0)) ??
-                      'loading'}{' '}
-                    XRP
+                    <div className="row">
+                      User Address from Wagmi:{' '}
+                      {shortAddress(address?.toString() ?? '')}
+                    </div>
+                    {eoaFetching && (
+                      <div className="row">User Address RNS: Fetching RNS</div>
+                    )}
+                    {!eoaFetching && !eoaRns && (
+                      <div className="row">
+                        User Address RNS: No RNS set for Eoa
+                      </div>
+                    )}
+                    {eoaRns && (
+                      <div className="row">User Address RNS: {eoaRns}</div>
+                    )}
                   </div>
-                  <div className="row">
-                    ROOT Balance:{' '}
-                    {formatter.format(Number(rootBalanceOnTrn.data ?? 0)) ??
-                      'loading'}{' '}
-                    ROOT
-                  </div>
-                  <div className="row">
-                    ASTO Balance:{' '}
-                    {formatter.format(Number(astoBalanceOnTrn.data ?? 0)) ??
-                      'loading'}{' '}
-                    ASTO
-                  </div>
-                  <div className="row">
-                    SYLO Balance:{' '}
-                    {formatter.format(Number(syloBalanceOnTrn.data ?? 0)) ??
-                      'loading'}{' '}
-                    SYLO
+                </div>
+                <div className="card" style={{ marginTop: '16px' }}>
+                  <div className="inner">
+                    <small style={{ textTransform: 'uppercase' }}>
+                      Balances
+                    </small>
+
+                    <div className="row">
+                      XRP Balance:{' '}
+                      {formatter.format(Number(xrpBalanceOnTrn.data ?? 0)) ??
+                        'loading'}{' '}
+                      XRP
+                    </div>
+                    <div className="row">
+                      ROOT Balance:{' '}
+                      {formatter.format(Number(rootBalanceOnTrn.data ?? 0)) ??
+                        'loading'}{' '}
+                      ROOT
+                    </div>
+                    <div className="row">
+                      ASTO Balance:{' '}
+                      {formatter.format(Number(astoBalanceOnTrn.data ?? 0)) ??
+                        'loading'}{' '}
+                      ASTO
+                    </div>
+                    <div className="row">
+                      SYLO Balance:{' '}
+                      {formatter.format(Number(syloBalanceOnTrn.data ?? 0)) ??
+                        'loading'}{' '}
+                      SYLO
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="card">
-                <div className="inner">
-                  <h2>FuturePass</h2>
-                  <div className="row">
-                    User FuturePass: {userSession.futurepass}
-                  </div>
-                  {fPassFetching && (
-                    <div className="row">User Address RNS: Fetching RNS</div>
-                  )}
-                  {!fPassFetching && !fPassRns && (
-                    <div className="row">
-                      User Address RNS: No RNS set for FuturePass
-                    </div>
-                  )}
+              <div className="">
+                <h2>FuturePass</h2>
 
-                  {fPassRns && (
-                    <div className="row">User Address RNS: {fPassRns}</div>
-                  )}
-                  <div className="row">
-                    XRP Balance:{' '}
-                    {formatter.format(Number(xrpBalanceOnTrnFp.data ?? 0)) ??
-                      'loading'}{' '}
-                    XRP
+                <div className="card">
+                  <div className="inner">
+                    <small style={{ textTransform: 'uppercase' }}>
+                      Addresses
+                    </small>
+                    <div className="row">
+                      User FuturePass: {shortAddress(userSession.futurepass)}
+                    </div>
+                    {fPassFetching && (
+                      <div className="row">User Address RNS: Fetching RNS</div>
+                    )}
+                    {!fPassFetching && !fPassRns && (
+                      <div className="row">
+                        User Address RNS: No RNS set for FuturePass
+                      </div>
+                    )}
+
+                    {fPassRns && (
+                      <div className="row">User Address RNS: {fPassRns}</div>
+                    )}
                   </div>
-                  <div className="row">
-                    ROOT Balance:{' '}
-                    {formatter.format(Number(rootBalanceOnTrnFp.data ?? 0)) ??
-                      'loading'}{' '}
-                    ROOT
-                  </div>
-                  <div className="row">
-                    ASTO Balance:{' '}
-                    {formatter.format(Number(astoBalanceOnTrnFp.data ?? 0)) ??
-                      'loading'}{' '}
-                    ASTO
-                  </div>
-                  <div className="row">
-                    SYLO Balance:{' '}
-                    {formatter.format(Number(syloBalanceOnTrnFp.data ?? 0)) ??
-                      'loading'}{' '}
-                    SYLO
+                </div>
+                <div className="card" style={{ marginTop: '16px' }}>
+                  <div className="inner">
+                    <small style={{ textTransform: 'uppercase' }}>
+                      Balances
+                    </small>
+                    <div className="row">
+                      XRP Balance:{' '}
+                      {formatter.format(Number(xrpBalanceOnTrnFp.data ?? 0)) ??
+                        'loading'}{' '}
+                      XRP
+                    </div>
+                    <div className="row">
+                      ROOT Balance:{' '}
+                      {formatter.format(Number(rootBalanceOnTrnFp.data ?? 0)) ??
+                        'loading'}{' '}
+                      ROOT
+                    </div>
+                    <div className="row">
+                      ASTO Balance:{' '}
+                      {formatter.format(Number(astoBalanceOnTrnFp.data ?? 0)) ??
+                        'loading'}{' '}
+                      ASTO
+                    </div>
+                    <div className="row">
+                      SYLO Balance:{' '}
+                      {formatter.format(Number(syloBalanceOnTrnFp.data ?? 0)) ??
+                        'loading'}{' '}
+                      SYLO
+                    </div>
                   </div>
                 </div>
               </div>

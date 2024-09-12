@@ -11,6 +11,7 @@ import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
 
 import { TestContractAbi, TestContractAddress } from '../../lib/test-contract';
 import { useGetCount } from '../../hooks';
+import { shortAddress } from '../../lib/utils';
 
 export default function Decrement() {
   const { userSession } = useAuth();
@@ -70,7 +71,7 @@ export default function Decrement() {
       <div className="inner">
         <div className="row">
           <h3>Decrement Counter From EOA</h3>
-          <small>{userSession?.eoa}</small>
+          <small>{shortAddress(userSession?.eoa ?? '')}</small>
         </div>
 
         <div className="row">

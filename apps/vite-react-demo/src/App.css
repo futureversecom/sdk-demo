@@ -217,7 +217,7 @@ input {
 
 .auto-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, auto));
+  grid-template-columns: repeat(auto-fill, minmax(50%, auto));
   gap: 16px;
 }
 
@@ -402,6 +402,10 @@ input {
 }
 
 @media screen and (min-width: 992px) {
+  .auto-grid {
+    grid-template-columns: repeat(auto-fill, minmax(400px, auto));
+  }
+
   .desktop-nav {
     display: flex;
   }

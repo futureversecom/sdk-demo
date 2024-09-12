@@ -10,6 +10,7 @@ import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
 
 import { TestContractAbi, TestContractAddress } from '../../lib/test-contract';
 import { useGetCount } from '../../hooks';
+import { shortAddress } from '../../lib/utils';
 
 export default function IncrementFPass() {
   const { userSession } = useAuth();
@@ -69,7 +70,7 @@ export default function IncrementFPass() {
       <div className="inner">
         <div className="row">
           <h3>Increment Counter From FuturePass</h3>
-          <small>{userSession?.futurepass}</small>
+          <small>{shortAddress(userSession?.futurepass ?? '')}</small>
         </div>
         <div className="row">
           <h3>Current Counter</h3>

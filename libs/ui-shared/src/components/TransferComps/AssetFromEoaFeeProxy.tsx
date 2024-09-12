@@ -10,6 +10,7 @@ import { useTrnApi } from '../../providers/TRNProvider';
 import { ASSET_DECIMALS } from '../../helpers';
 import { useRootStore } from '../../hooks/useRootStore';
 import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
+import { shortAddress } from '../../lib/utils';
 
 export default function AssetFromEoaFeeProxy() {
   const { userSession } = useAuth();
@@ -30,7 +31,9 @@ export default function AssetFromEoaFeeProxy() {
   const [assetId, setAssetId] = useState<number>(1);
   const [feeAssetId, setFeeAssetId] = useState<number>(1);
   const [amountToSend, setAmountToSend] = useState<number>(1);
-  const [addressToSend, setAddressToSend] = useState<string>('');
+  const [addressToSend, setAddressToSend] = useState<string>(
+    userSession?.futurepass ?? ''
+  );
 
   const createBuilder = useCallback(async () => {
     if (!trnApi || !signer || !userSession) {
@@ -74,7 +77,7 @@ export default function AssetFromEoaFeeProxy() {
       <div className="inner">
         <div className="row">
           <h3>Send From EOA Using Fee Proxy</h3>
-          <small>{userSession?.eoa}</small>
+          <small>{shortAddress(userSession?.eoa ?? '')}</small>
         </div>
         <div className="row">
           <label>

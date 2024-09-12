@@ -10,6 +10,7 @@ import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
 
 import { TestContractAbi, TestContractAddress } from '../../lib/test-contract';
 import { useGetCount } from '../../hooks';
+import { shortAddress } from '../../lib/utils';
 
 export default function Increment() {
   const { userSession } = useAuth();
@@ -69,7 +70,7 @@ export default function Increment() {
       <div className="inner">
         <div className="row">
           <h3>Increment Counter From EOA</h3>
-          <small>{userSession?.eoa}</small>
+          <small>{shortAddress(userSession?.eoa ?? '')}</small>
         </div>
         <div className="row">
           <h3>Current Counter</h3>

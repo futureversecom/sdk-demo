@@ -12,6 +12,7 @@ import { useRootStore } from '../../hooks/useRootStore';
 import { useFutureverseSigner } from '../../hooks/useFutureverseSigner';
 
 import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
+import { shortAddress } from '../../lib/utils';
 
 export default function AssetFromFuturePassFeeProxy() {
   const { userSession } = useAuth();
@@ -33,7 +34,9 @@ export default function AssetFromFuturePassFeeProxy() {
   const [assetId, setAssetId] = useState<number>(1);
   const [feeAssetId, setFeeAssetId] = useState<number>(1);
   const [amountToSend, setAmountToSend] = useState<number>(1);
-  const [addressToSend, setAddressToSend] = useState<string>('');
+  const [addressToSend, setAddressToSend] = useState<string>(
+    userSession?.eoa ?? ''
+  );
 
   const createBuilder = useCallback(async () => {
     if (!trnApi || !signer || !userSession) {
@@ -81,7 +84,7 @@ export default function AssetFromFuturePassFeeProxy() {
       <div className="inner">
         <div className="row">
           <h3>Send From FuturePass Using Fee Proxy</h3>
-          <small>{userSession?.futurepass}</small>
+          <small>{shortAddress(userSession?.futurepass ?? '')}</small>
         </div>
         <div className="row">
           <label>

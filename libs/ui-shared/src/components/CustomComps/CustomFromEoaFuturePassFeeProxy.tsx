@@ -8,6 +8,7 @@ import { TransactionBuilder } from '@futureverse/transact';
 import { useRootStore } from '../../hooks/useRootStore';
 
 import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
+import { shortAddress } from '../../lib/utils';
 
 export default function CustomFromEoaFuturePassFeeProxy() {
   const { userSession } = useAuth();
@@ -27,7 +28,9 @@ export default function CustomFromEoaFuturePassFeeProxy() {
 
   const [feeAssetId, setFeeAssetId] = useState<number>(1);
 
-  const [addressToSend, setAddressToSend] = useState<string>('');
+  const [addressToSend, setAddressToSend] = useState<string>(
+    userSession?.eoa ?? ''
+  );
 
   const createBuilder = useCallback(async () => {
     if (!trnApi || !signer || !userSession) {
@@ -66,7 +69,7 @@ export default function CustomFromEoaFuturePassFeeProxy() {
       <div className="inner">
         <div className="row">
           <h3>Mint Nft Using Custom Extrinsic</h3>
-          <small>{userSession?.futurepass}</small>
+          <small>{shortAddress(userSession?.futurepass ?? '')}</small>
         </div>
         <div className="row">
           <label>
