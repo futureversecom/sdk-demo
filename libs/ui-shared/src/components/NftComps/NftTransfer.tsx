@@ -94,6 +94,7 @@ export default function NftTransfer() {
     trnApi,
     signer,
     userSession,
+    addressToSend,
     serialNumber,
     fromWallet,
     getExtrinsic,
