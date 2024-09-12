@@ -112,7 +112,7 @@ export default function Home({ title }: { title: string }) {
       <div>
         {userSession && (
           <>
-            <div className="asset-grid">
+            <div className="auto-grid">
               <div className="card">
                 <div className="inner" style={{ gridColumn: 'span 2' }}>
                   <div className="row">Authentication Method: {authMethod}</div>
@@ -122,7 +122,7 @@ export default function Home({ title }: { title: string }) {
                 </div>
               </div>
             </div>
-            <div className="asset-grid mt-32">
+            <div className="auto-grid mt-32">
               <div className="card">
                 <div className="inner">
                   <h2>EOA</h2>
