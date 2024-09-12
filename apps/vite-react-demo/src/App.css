@@ -445,3 +445,8 @@ input {
     margin: 0px;
   }
 }
+
+div.sdk-demo-dialog .spinner {
+  border-color: #7bff00;
+  border-top-color: transparent;
+}

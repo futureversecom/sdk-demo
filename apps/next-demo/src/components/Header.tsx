@@ -35,10 +35,16 @@ export default function Header() {
               <Link href="/">Account Info</Link>
             </li>
             <li style={{ padding: '0 16px' }}>
-              <Link href="/extrinsics">Extrinsics</Link>
+              <Link href="/assets">Assets</Link>
+            </li>
+            <li style={{ padding: '0 16px' }}>
+              <Link href="/nft">NFT</Link>
             </li>
             <li style={{ padding: '0 16px' }}>
               <Link href="/evm">EVM</Link>
+            </li>
+            <li style={{ padding: '0 16px' }}>
+              <Link href="/custom">Custom</Link>
             </li>
             <li
               style={{

@@ -19,6 +19,10 @@ import type { NetworkName } from '@therootnetwork/api';
 const customTheme: ThemeConfig = {
   ...DarkTheme,
   defaultAuthOption: 'web3',
+  images: {
+    backgroundImage:
+      'https://fastly.picsum.photos/id/786/1940/1080.jpg?hmac=NY4pqOLnEx0a0SFjMyCcTNPYOc6H8fTXXaTzFKlAcLU',
+  },
 };
 
 const network = (process.env.NEXT_PUBLIC_NETWORK ?? 'porcini') as

@@ -9,8 +9,10 @@ import {
   Result,
   TransactionDetails,
   Transfer,
+  Custom,
   Spinner,
   Evm,
+  Nft,
 } from './components';
 import { useIsMounted } from './hooks';
 
@@ -37,4 +39,6 @@ export {
   collectionIdToAddress,
   TestContractAddress,
   TestContractAbi,
+  Custom,
+  Nft,
 };

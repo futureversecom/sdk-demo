@@ -12,7 +12,6 @@ import {
 
 import { useAuth } from '@futureverse/auth-react';
 import { useRootStore } from '../hooks/useRootStore';
-import { CustomFromEoaFuturePassFeeProxy } from './TransferComps';
 
 export default function Transfer() {
   const isMounted = useIsMounted();
@@ -27,7 +26,7 @@ export default function Transfer() {
   }, [resetState]);
 
   if (!userSession) {
-    return <h1>Sign in to send funds</h1>;
+    return <h1>Sign in to interact with assets</h1>;
   }
 
   if (!isMounted) {
@@ -36,13 +35,12 @@ export default function Transfer() {
 
   return (
     <>
-      <h1>Examples</h1>
+      <h1>Asset Demo</h1>
       <div className="auto-grid">
         <AssetFromEoa />
         <AssetFromFuturePass />
         <AssetFromEoaFeeProxy />
         <AssetFromFuturePassFeeProxy />
-        <CustomFromEoaFuturePassFeeProxy />
       </div>
       <div className="auto-grid">
         {gas && (

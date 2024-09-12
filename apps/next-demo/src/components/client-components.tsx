@@ -10,11 +10,13 @@ import { DarkTheme, AuthUiProvider, LightTheme } from '@futureverse/auth-ui';
 import {
   Home,
   Transfer,
+  Custom,
   AssetFromEoa,
   AssetFromEoaFeeProxy,
   AssetFromFuturePass,
   AssetFromFuturePassFeeProxy,
   Evm,
+  Nft,
 } from '@fv-sdk-demos/ui-shared';
 
 export {
@@ -30,4 +32,6 @@ export {
   DarkTheme,
   AuthUiProvider,
   LightTheme,
+  Custom,
+  Nft,
 };

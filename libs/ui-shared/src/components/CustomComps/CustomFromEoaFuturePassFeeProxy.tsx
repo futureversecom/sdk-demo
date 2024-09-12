@@ -42,7 +42,7 @@ export default function CustomFromEoaFuturePassFeeProxy() {
       signer,
       userSession.eoa
     )
-      .extrinsic(extrinsic)
+      .fromExtrinsic(extrinsic)
       .addFuturePassAndFeeProxy({
         futurePass: userSession.futurepass,
         assetId: feeAssetId,

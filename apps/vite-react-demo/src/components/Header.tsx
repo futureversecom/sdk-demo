@@ -33,7 +33,10 @@ export default function Header() {
               <Link to="/">Account Info</Link>
             </li>
             <li style={{ padding: '0 16px' }}>
-              <Link to="/extrinsics">Extrinsics</Link>
+              <Link to="/assets">Assets</Link>
+            </li>
+            <li style={{ padding: '0 16px' }}>
+              <Link to="/custom">Custom</Link>
             </li>
             <li style={{ padding: '0 16px' }}>
               <Link to="/evm">EVM</Link>

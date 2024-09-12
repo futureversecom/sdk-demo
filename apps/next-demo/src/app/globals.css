@@ -436,3 +436,107 @@ input {
     margin: 0px;
   }
 }
+
+div.sdk-demo-dialog .spinner {
+  border-color: #7bff00;
+  border-top-color: transparent;
+}
+
+
+/* div.fvaui-dialog {
+  --blur: 0;
+  --fvaui-primaryColor: rgba(243, 236, 236, 1);
+  --fvaui-textColor: #fff;
+}
+
+div.fvaui-dialog .fvaui-button-close {
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+}
+
+div.fvaui-dialog .fvaui-button-close:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+div.fvaui-card {
+  background-color: rgba(243, 236, 236, 0.2);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: all 0.4s ease-in-out;
+}
+
+div.fvaui-dialog .fvaui-dialog-container .fvaui-dialog-content {
+  transition: all .3s cubic-bezier(.4, 0, .2, 1) 0ms;
+}
+
+div.fvaui-dialog-content:hover {
+  transform: scale(1.05);
+}
+
+div.fvaui-dialog-content:hover .fvaui-card {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+p.fvaui-typography-caption {
+  color: var(--fvaui-textColor);
+}
+
+button:not(.fvaui-button-secondary) p.fvaui-typography,
+button .fvaui-web3authbutton-container {
+  display: none;
+}
+
+div.fvaui-custodialauthoptions-social,
+div.fvaui-web3authoptions-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+div.fvaui-custodialauthoptions-social .fvaui-iconWrapper {
+  width: 32px !important;
+}
+
+div.fvaui-custodialauthoptions-container {
+  gap: 16px
+}
+
+div.fvaui-web3authoptions-container .fvaui-button-web3auth img,
+div.fvaui-web3authoptions-container .fvaui-iconWrapper svg,
+div.fvaui-web3authoptions-container .fvaui-iconWrapper {
+  width: 32px !important;
+}
+
+div.fvaui-custodialauthoptions-container .fvaui-button-secondary {
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+div.fvaui-custodialauthoptions-social .fvaui-button,
+div.fvaui-web3authoptions-container .fvaui-button {
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  width: auto;
+  height: auto;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+div.fvaui-custodialauthoptions-social .fvaui-button:hover,
+div.fvaui-web3authoptions-container .fvaui-button:hover {
+  background-color: rgba(255, 255, 255, 0.2)
+}
+
+
+button.fvaui-button-secondary:hover .fvaui-iconWrapper {
+  color: #000;
+  fill: #000;
+}
+
+*/
