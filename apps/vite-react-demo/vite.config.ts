@@ -41,8 +41,8 @@ export default defineConfig({
         // '@futureverse/transact',
         // '@futureverse/auth',
         // '@futureverse/auth-react',
-        // '@futureverse/wagmi-connectors',
-        '@walletconnect/utils',
+        '@futureverse/wagmi-connectors',
+        // '@walletconnect/utils',
       ],
     },
     commonjsOptions: {
