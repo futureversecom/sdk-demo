@@ -29,10 +29,21 @@ export default defineConfig({
     'process.env': {},
   },
   base: './',
+  optimizeDeps: {
+    include: [
+      '@futureverse/signer',
+      '@futureverse/transact',
+      '@futureverse/auth',
+      '@futureverse/auth-react',
+      '@futureverse/wagmi-connectors',
+      '@walletconnect/utils',
+    ],
+  },
   build: {
     outDir: '../../dist/apps/vite-react-demo',
     emptyOutDir: true,
     reportCompressedSize: true,
+
     rollupOptions: {
       external: [
         // 'react',
