@@ -1,9 +1,6 @@
-import React from 'react';
-
 import { useEffect } from 'react';
 
 import TransactionDetails from './TransactionDetails';
-import Result from './Result';
 import { useIsMounted } from '../hooks';
 
 import {
@@ -15,13 +12,12 @@ import {
 
 import { useAuth } from '@futureverse/auth-react';
 import { useRootStore } from '../hooks/useRootStore';
-import { CustomFromEoaFuturePassFeeProxy } from './TransferComps';
 
 export default function Transfer() {
   const isMounted = useIsMounted();
 
   const { userSession } = useAuth();
-  const { gas, result, resetState } = useRootStore(state => state);
+  const { gas, resetState } = useRootStore(state => state);
 
   useEffect(() => {
     return () => {
@@ -30,7 +26,7 @@ export default function Transfer() {
   }, [resetState]);
 
   if (!userSession) {
-    return <h1>Sign in to send funds</h1>;
+    return <h1>Sign in to interact with assets</h1>;
   }
 
   if (!isMounted) {
@@ -39,23 +35,17 @@ export default function Transfer() {
 
   return (
     <>
-      <h1>Examples</h1>
+      <h1>Asset Demo</h1>
       <div className="auto-grid">
         <AssetFromEoa />
         <AssetFromFuturePass />
         <AssetFromEoaFeeProxy />
         <AssetFromFuturePassFeeProxy />
-        <CustomFromEoaFuturePassFeeProxy />
       </div>
       <div className="auto-grid">
         {gas && (
           <div className="w-full">
             <TransactionDetails />
-          </div>
-        )}
-        {result && (
-          <div className="w-full">
-            <Result />
           </div>
         )}
       </div>

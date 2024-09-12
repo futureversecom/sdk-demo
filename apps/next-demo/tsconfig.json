@@ -26,7 +26,6 @@
       "@/hooks": ["./src/hooks"],
       "@/providers": ["./src/providers"],
       "@/components": ["./src/components"],
-      "@/ui/*": ["../../libs/ui-shared/src/*"],
       "@fv-sdk-demos/ui-shared": ["../../libs/ui-shared/src/index.ts"]
     },
     "plugins": [
@@ -43,7 +42,8 @@
     "../../apps/next-demo/.next/types/**/*.ts",
     "../../dist/apps/next-demo/.next/types/**/*.ts",
     "next-env.d.ts",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "src/components/Header.tsx"
   ],
   "exclude": ["node_modules", "jest.config.ts", "**/*.spec.ts", "**/*.test.ts"]
 }

@@ -1,63 +1,43 @@
 import React from 'react';
-import { useAuth, useFutureverseSigner } from '@futureverse/auth-react';
+import { useAuth } from '@futureverse/auth-react';
 import { useCallback, useMemo, useState } from 'react';
+import { useFutureverseSigner } from '../../hooks/useFutureverseSigner';
 
-import { ethers } from 'ethers';
 import { useTrnApi } from '../../providers/TRNProvider';
 import { ASSET_DECIMALS } from '../../helpers';
 
 import { TransactionBuilder } from '@futureverse/transact';
 import { useRootStore } from '../../hooks/useRootStore';
+import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
+import { parseUnits } from 'viem';
 
 export default function AssetFromEoa() {
   const { userSession } = useAuth();
 
-  const {
-    setGas,
-    setPayload,
-    setToSign,
-    resetState,
-    setCurrentBuilder,
-    signed,
-    result,
-  } = useRootStore(state => state);
+  const { resetState, setCurrentBuilder, signed, result, error } = useRootStore(
+    state => state
+  );
 
   const disable = useMemo(() => {
-    return signed && !result;
-  }, [signed, result]);
+    return signed && !result && !error;
+  }, [signed, result, error]);
 
   const { trnApi } = useTrnApi();
   const signer = useFutureverseSigner();
+
+  const getExtrinsic = useGetExtrinsic();
 
   const [assetId, setAssetId] = useState<number>(1);
   const [amountToSend, setAmountToSend] = useState<number>(1);
   const [addressToSend, setAddressToSend] = useState<string>('');
 
   const createBuilder = useCallback(async () => {
-    console.log(addressToSend, trnApi, signer, userSession);
-
     if (!trnApi || !signer || !userSession) {
       console.log('Missing trnApi, signer or userSession');
       return;
     }
 
-    const getExtrinsic = async (builder: TransactionBuilder) => {
-      console.log('Getting Extrinsic');
-
-      const gasEstimate = await builder?.getGasFees();
-      if (gasEstimate) {
-        setGas(gasEstimate);
-      }
-      const payloads = await builder?.getPayloads();
-      if (!payloads) {
-        return;
-      }
-      setPayload(payloads);
-      const { ethPayload } = payloads;
-      setToSign(ethPayload.toString());
-    };
-
-    const valueToSend = ethers.parseUnits(
+    const valueToSend = parseUnits(
       amountToSend.toString(),
       ASSET_DECIMALS[assetId]
     );
@@ -75,16 +55,14 @@ export default function AssetFromEoa() {
     getExtrinsic(builder);
     setCurrentBuilder(builder);
   }, [
+    addressToSend,
     trnApi,
     signer,
     userSession,
     amountToSend,
     assetId,
-    addressToSend,
+    getExtrinsic,
     setCurrentBuilder,
-    setPayload,
-    setToSign,
-    setGas,
   ]);
 
   return (
@@ -92,6 +70,7 @@ export default function AssetFromEoa() {
       <div className="inner">
         <div className="row">
           <h3>Send From EOA</h3>
+          <small>{userSession?.eoa}</small>
         </div>
         <div className="row">
           <label>

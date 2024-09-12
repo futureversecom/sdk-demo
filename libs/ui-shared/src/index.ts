@@ -1,5 +1,5 @@
 import { ASSET_DECIMALS, NETWORK_PROVIDER } from './helpers';
-import { Providers, TrnApiProvider, useTrnApi } from './providers';
+import { TrnApiProvider, useTrnApi, RootStoreProvider } from './providers';
 import {
   AssetFromEoa,
   AssetFromEoaFeeProxy,
@@ -9,15 +9,23 @@ import {
   Result,
   TransactionDetails,
   Transfer,
+  Custom,
+  Spinner,
+  Evm,
+  Nft,
 } from './components';
 import { useIsMounted } from './hooks';
 
+import { collectionIdToAddress } from './lib/utils';
+import { TestContractAddress, TestContractAbi } from './lib/test-contract';
+
 export {
+  Evm,
   ASSET_DECIMALS,
   NETWORK_PROVIDER,
-  Providers,
   TrnApiProvider,
   useTrnApi,
+  RootStoreProvider,
   AssetFromEoa,
   AssetFromEoaFeeProxy,
   AssetFromFuturePass,
@@ -27,4 +35,10 @@ export {
   TransactionDetails,
   Transfer,
   useIsMounted,
+  Spinner,
+  collectionIdToAddress,
+  TestContractAddress,
+  TestContractAbi,
+  Custom,
+  Nft,
 };

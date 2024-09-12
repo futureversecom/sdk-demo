@@ -1,15 +1,14 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+
 import './globals.css';
 
+import { GeistSans } from 'geist/font/sans';
+import { Providers } from '@/Providers';
 import Header from '@/components/Header';
-import { Providers } from '@/client-components';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Futureverse Sdks: React Demo',
-  description: 'Futureverse Sdks: React Demo',
+  title: 'Futureverse Sdks: Next Demo',
+  description: 'Futureverse Sdks: Next Demo',
 };
 
 export default function RootLayout({
@@ -18,8 +17,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" suppressHydrationWarning>
+      <body className={GeistSans.className}>
         <Providers>
           <Header />
           {children}

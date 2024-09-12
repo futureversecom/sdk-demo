@@ -1,8 +1,10 @@
 import './App.css';
 import React from 'react';
 import { Routes, Route, Outlet } from 'react-router-dom';
+
+import { Evm, Home, Transfer, Custom } from '@fv-sdk-demos/ui-shared';
+import Login from './components/Login';
 import Header from './components/Header';
-import { Home, Transfer } from '@fv-sdk-demos/ui-shared';
 
 export default function App() {
   return (
@@ -12,8 +14,10 @@ export default function App() {
           index
           element={<Home title="Welcome to the SDK Demo in Vite React" />}
         />
-        <Route path="transfer" element={<Transfer />} />
-        <Route path="login" element={<div>Authenticating...</div>} />
+        <Route path="assets" element={<Transfer />} />
+        <Route path="custom" element={<Custom />} />
+        <Route path="evm" element={<Evm />} />
+        <Route path="login" element={<Login />} />
       </Route>
     </Routes>
   );

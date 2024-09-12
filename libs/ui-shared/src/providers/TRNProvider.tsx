@@ -1,3 +1,5 @@
+'use client';
+
 import React, { type ReactNode, useContext, createContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { ApiPromise } from '@polkadot/api';
@@ -36,6 +38,7 @@ export function TrnApiProvider({
       });
     },
     retry: false,
+    structuralSharing: false,
   });
   const trnApi = data ?? null;
 
