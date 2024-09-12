@@ -1,5 +1,5 @@
 import { useAuth } from '@futureverse/auth-react';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useTrnApi } from '../../providers/TRNProvider';
 import { useFutureverseSigner } from '../../hooks/useFutureverseSigner';
@@ -45,13 +45,25 @@ export default function NftTransfer() {
   const [feeAssetId, setFeeAssetId] = useState<number>(2);
 
   const [serialNumber, setSerialNumber] = useState<string>('');
+
   const [addressToSend, setAddressToSend] = useState<string>(
     userSession?.futurepass || ''
   );
 
+  useEffect(() => {
+    if (ownedTokens && ownedTokens.length > 0) {
+      setSerialNumber(ownedTokens[0].toString());
+    }
+  }, [ownedTokens]);
+
   const createBuilder = useCallback(async () => {
     if (!trnApi || !signer || !userSession) {
       console.log('Missing trnApi, signer or userSession');
+      return;
+    }
+
+    if (serialNumber === '') {
+      console.log('Missing serial number');
       return;
     }
 
