@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAuth } from '@futureverse/auth-react';
 import { useCallback, useMemo, useState } from 'react';
-import { useFutureverseSigner } from '../../hooks/useFutureverseSigner';
+import { useFutureverseSigner } from '@futureverse/auth-react';
 
 import { useTrnApi } from '../../providers/TRNProvider';
 import { ASSET_DECIMALS } from '../../helpers';

@@ -9,7 +9,7 @@ import { parseUnits } from 'viem';
 import { useTrnApi } from '../../providers/TRNProvider';
 import { ASSET_DECIMALS } from '../../helpers';
 import { useRootStore } from '../../hooks/useRootStore';
-import { useFutureverseSigner } from '../../hooks/useFutureverseSigner';
+import { useFutureverseSigner } from '@futureverse/auth-react';
 
 import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
 import { shortAddress } from '../../lib/utils';

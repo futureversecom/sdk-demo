@@ -3,7 +3,7 @@ import React from 'react';
 import { useAuth } from '@futureverse/auth-react';
 import { TransactionBuilder } from '@futureverse/transact';
 import { useCallback, useMemo, useState } from 'react';
-import { useFutureverseSigner } from '../../hooks/useFutureverseSigner';
+import { useFutureverseSigner } from '@futureverse/auth-react';
 
 import { parseUnits } from 'viem';
 import { useTrnApi } from '../../providers/TRNProvider';

@@ -2,7 +2,7 @@ import { useAuth } from '@futureverse/auth-react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useTrnApi } from '../../providers/TRNProvider';
-import { useFutureverseSigner } from '../../hooks/useFutureverseSigner';
+import { useFutureverseSigner } from '@futureverse/auth-react';
 
 import { TransactionBuilder } from '@futureverse/transact';
 import { useRootStore } from '../../hooks/useRootStore';

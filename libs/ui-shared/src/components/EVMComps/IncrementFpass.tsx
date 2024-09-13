@@ -1,6 +1,6 @@
 import { useAuth } from '@futureverse/auth-react';
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { useFutureverseSigner } from '../../hooks/useFutureverseSigner';
+import { useFutureverseSigner } from '@futureverse/auth-react';
 
 import { useTrnApi } from '../../providers/TRNProvider';
 
