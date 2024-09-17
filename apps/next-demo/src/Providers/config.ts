@@ -1,7 +1,7 @@
-import { createWagmiConfig } from '@futureverse/wagmi-connectors';
 import { FutureverseAuthClient } from '@futureverse/auth-react/auth';
-import { polygonAmoy, sepolia, mainnet } from 'viem/chains';
+import { createWagmiConfig } from '@futureverse/wagmi-connectors';
 import { QueryClient } from '@tanstack/react-query';
+import { mainnet, polygonAmoy, sepolia } from 'viem/chains';
 import { cookieStorage, createStorage } from 'wagmi';
 
 const clientId = '8qcla8Wnv-g9Jd3YsTeDa';
@@ -29,7 +29,6 @@ export const getWagmiConfig = async () => {
     authClient,
     ssr: true,
     chains: [mainnet, sepolia, polygonAmoy],
-    //@ts-expect-error - storage is not in the types
     storage: createStorage({
       storage: cookieStorage,
     }),
