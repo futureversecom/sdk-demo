@@ -521,7 +521,107 @@ input {
   }
 }
 
+
 div.sdk-demo-dialog .spinner {
   border-color: #7bff00;
   border-top-color: transparent;
+}
+
+.copy-code-btn,
+.close-code-btn {
+  position: absolute;
+  top: calc(16px + 8px);
+  right: calc(16px + 8px);
+  padding: 8px;
+  cursor: pointer;
+}
+
+.copy-code-btn {
+  right: calc(16px + 8px + 54px);
+}
+
+.code-viewer {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.code-view {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 100vh;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  padding: 16px;
+  cursor: pointer;
+}
+
+.code-view pre {
+  height: 100%;
+  max-height: none;
+  padding: 16px !important;
+  padding-top: 0 !important
+}
+
+.code-btn {
+  padding: 8px;
+}
+
+.code-btn svg {
+  fill: #000;
+  width: 16px;
+  height: 16px;
+}
+
+@media screen and (min-width: 481px) {
+  .code-view {
+    padding: 24px;
+  }
+
+  .copy-code-btn,
+  .close-code-btn {
+    top: calc(24px + 8px);
+    right: calc(24px + 8px);
+  }
+
+  .copy-code-btn {
+    right: calc(24px + 8px + 54px);
+  }
+
+}
+
+@media screen and (min-width: 992px) {
+  .code-view {
+    padding: 32px;
+  }
+
+  .copy-code-btn,
+  .close-code-btn {
+    top: calc(32px + 8px);
+    right: calc(32px + 8px);
+  }
+
+  .copy-code-btn {
+    right: calc(32px + 8px + 54px);
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .code-view {
+    padding: 64px;
+  }
+
+  .copy-code-btn,
+  .close-code-btn {
+    top: calc(64px + 8px);
+    right: calc(64px + 8px);
+  }
+
+  .copy-code-btn {
+    right: calc(64px + 8px + 54px);
+  }
 }
