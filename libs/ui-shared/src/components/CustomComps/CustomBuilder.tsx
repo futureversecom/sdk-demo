@@ -5,12 +5,11 @@ import { useTrnApi } from '../../providers/TRNProvider';
 import { useFutureverseSigner } from '@futureverse/auth-react';
 
 import { useRootStore } from '../../hooks/useRootStore';
+import { useCustomExtrinsicBuilder } from '../../hooks/useCustomExtrinsicBuilder';
 
 import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
 import { shortAddress } from '../../lib/utils';
-import { useCustomExtrinsicBuilder } from '../../hooks/useCustomExtrinsicBuilder';
 import CodeView from '../CodeView';
-import { TransactionBuilder } from '@futureverse/transact';
 
 const codeString = `
 import { useAuth } from '@futureverse/auth-react';
@@ -503,11 +502,11 @@ export default function CustomBuilderComp() {
   const { trnApi } = useTrnApi();
   const signer = useFutureverseSigner();
 
-  // const builder = useCustomExtrinsicBuilder({
-  //   trnApi,
-  //   walletAddress: userSession?.eoa ?? '',
-  //   signer,
-  // });
+  const builder = useCustomExtrinsicBuilder({
+    trnApi,
+    walletAddress: userSession?.eoa ?? '',
+    signer,
+  });
 
   const { resetState, setCurrentBuilder, signed, result, error } = useRootStore(
     state => state
@@ -709,14 +708,6 @@ export default function CustomBuilderComp() {
       }
     });
   };
-
-  const builder = useMemo(() => {
-    if (!trnApi || !signer || !userSession) {
-      return null;
-    }
-
-    return TransactionBuilder.custom(trnApi, signer, userSession.eoa);
-  }, [trnApi, signer, userSession]);
 
   const createBuilder = useCallback(async () => {
     if (!trnApi || !signer || !userSession || !builder) {
