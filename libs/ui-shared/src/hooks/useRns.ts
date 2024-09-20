@@ -1,4 +1,4 @@
-import { FutureverseAuthClient } from '@futureverse/auth';
+import type { FutureverseAuthClient } from '@futureverse/auth';
 import { getAddressFromRns, getRnsFromAddress } from '../lib/rns';
 import { useQuery } from '@tanstack/react-query';
 import type { Chain } from 'viem';
@@ -44,3 +44,5 @@ export const useRnsResolveAddress = (
     refetchOnWindowFocus: false,
   });
 };
+
+
