@@ -25,7 +25,7 @@ import { useTrnApi } from '../../providers/TRNProvider';
 import { ASSET_DECIMALS } from '../../helpers';
 import { useRootStore } from '../../hooks/useRootStore';
 import { useFutureverseSigner } from '@futureverse/auth-react';
-import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
+
 import { shortAddress } from '../../lib/utils';
 import CodeView from '../CodeView';
 
@@ -42,8 +42,6 @@ export default function AssetFromFuturePass() {
 
   const { trnApi } = useTrnApi();
 
-  const getExtrinsic = useGetExtrinsic();
-
   const signer = useFutureverseSigner();
 
   const [assetId, setAssetId] = useState<number>(1);
@@ -51,6 +49,20 @@ export default function AssetFromFuturePass() {
   const [addressToSend, setAddressToSend] = useState<string>(
     userSession?.eoa ?? ''
   );
+
+  const getExtrinsic = async (builder: RootTransactionBuilder) => {
+    const gasEstimate = await builder?.getGasFees();
+    if (gasEstimate) {
+      setGas(gasEstimate);
+    }
+    const payloads = await builder?.getPayloads();
+    if (!payloads) {
+      return;
+    }
+    setPayload(payloads);
+    const { ethPayload } = payloads;
+    setToSign(ethPayload.toString());
+  };
 
   const createBuilder = useCallback(async () => {
     if (!trnApi || !signer || !userSession) {
