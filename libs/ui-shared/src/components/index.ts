@@ -1,6 +1,7 @@
 import Home from './Home';
 import Transfer from './Transfer';
 import Custom from './Custom';
+import CustomBuilder from './CustomBuilder';
 import Result from './Result';
 import Spinner from './Spinner';
 import Evm from './Evm';
@@ -16,7 +17,10 @@ import {
 
 import { NftMint } from './NftComps';
 
-import { CustomFromEoaFuturePassFeeProxy } from './CustomComps';
+import {
+  CustomFromEoaFuturePassFeeProxy,
+  CustomBuilderComp,
+} from './CustomComps';
 
 import { Increment, Decrement } from './EVMComps';
 
@@ -38,6 +42,8 @@ export {
   Dialog,
   CustomFromEoaFuturePassFeeProxy,
   Custom,
+  CustomBuilder,
+  CustomBuilderComp,
   Nft,
   NftMint,
 };

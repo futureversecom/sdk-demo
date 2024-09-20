@@ -11,6 +11,8 @@ import {
   Home,
   Transfer,
   Custom,
+  CustomBuilder,
+  CustomBuilderComp,
   AssetFromEoa,
   AssetFromEoaFeeProxy,
   AssetFromFuturePass,
@@ -33,5 +35,7 @@ export {
   AuthUiProvider,
   LightTheme,
   Custom,
+  CustomBuilder,
+  CustomBuilderComp,
   Nft,
 };

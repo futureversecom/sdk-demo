@@ -10,6 +10,8 @@ import {
   TransactionDetails,
   Transfer,
   Custom,
+  CustomBuilder,
+  CustomBuilderComp,
   Spinner,
   Evm,
   Nft,
@@ -40,5 +42,7 @@ export {
   TestContractAddress,
   TestContractAbi,
   Custom,
+  CustomBuilder,
+  CustomBuilderComp,
   Nft,
 };

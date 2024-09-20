@@ -5,9 +5,9 @@ import { useIsMounted } from '../hooks';
 
 import { useAuth } from '@futureverse/auth-react';
 import { useRootStore } from '../hooks/useRootStore';
-import { NftBurn, NftMint, NftTransfer } from './NftComps';
+import { CustomBuilderComp } from './CustomComps';
 
-export default function Nft() {
+export default function CustomBuilder() {
   const isMounted = useIsMounted();
 
   const { userSession } = useAuth();
@@ -29,11 +29,9 @@ export default function Nft() {
 
   return (
     <>
-      <h1>NFT Demos</h1>
+      <h1>Custom Extrinsic Builder Demo</h1>
       <div className="auto-grid">
-        <NftMint />
-        <NftTransfer />
-        <NftBurn />
+        <CustomBuilderComp />
       </div>
       <div className="auto-grid">
         {gas && (
