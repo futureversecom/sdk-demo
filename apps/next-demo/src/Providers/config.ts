@@ -4,9 +4,9 @@ import { polygonAmoy, sepolia, mainnet } from 'viem/chains';
 import { QueryClient } from '@tanstack/react-query';
 import { cookieStorage, createStorage } from 'wagmi';
 
-const clientId = '8qcla8Wnv-g9Jd3YsTeDa';
-const walletConnectProjectId = '8b9b9cf8501efbce91cd5a15157c01c4';
-const xamanAPIKey = '5376fa18-f6d8-45d6-98df-cfdbc6b3b62b';
+const clientId = process.env.NEXT_PUBLIC_CLIENT_ID as string;
+const walletConnectProjectId = process.env.NEXT_PUBLIC_WALLET_CONNECT as string;
+const xamanAPIKey = process.env.NEXT_PUBLIC_XAMAN_API as string;
 
 export const authClient = new FutureverseAuthClient({
   clientId,

@@ -146,12 +146,12 @@ export default function CustomBuilderComp() {
             {
               name: 'collectionId',
               type: 'number',
-              defaultValue: 630884,
+              defaultValue: 292964,
             },
             {
               name: 'serialNumbers',
               type: '[number, number][]',
-              defaultValue: '[1, 1]',
+              defaultValue: '[[1, 1]]',
             },
             {
               name: 'walletAddress',
@@ -165,12 +165,12 @@ export default function CustomBuilderComp() {
             {
               name: 'collectionId',
               type: 'number',
-              defaultValue: 630884,
+              defaultValue: 292964,
             },
             {
               name: 'serialNumbers',
               type: '[number, number][]',
-              defaultValue: '[1, 1]',
+              defaultValue: '[[1, 1]]',
             },
             {
               name: 'walletAddress',
@@ -184,12 +184,12 @@ export default function CustomBuilderComp() {
             {
               name: 'collectionId',
               type: 'number',
-              defaultValue: 630884,
+              defaultValue: 292964,
             },
             {
               name: 'serialNumbers',
               type: '[number, number][]',
-              defaultValue: '[1, 1]',
+              defaultValue: '[[1, 1]]',
             },
           ],
         },
@@ -600,12 +600,12 @@ export default function CustomBuilderComp() {
             {
               name: 'collectionId',
               type: 'number',
-              defaultValue: 630884,
+              defaultValue: 292964,
             },
             {
               name: 'serialNumbers',
               type: '[number, number][]',
-              defaultValue: '[1, 1]',
+              defaultValue: '[[1, 1]]',
             },
             {
               name: 'walletAddress',
@@ -619,12 +619,12 @@ export default function CustomBuilderComp() {
             {
               name: 'collectionId',
               type: 'number',
-              defaultValue: 630884,
+              defaultValue: 292964,
             },
             {
               name: 'serialNumbers',
               type: '[number, number][]',
-              defaultValue: '[1, 1]',
+              defaultValue: '[[1, 1]]',
             },
             {
               name: 'walletAddress',
@@ -638,12 +638,12 @@ export default function CustomBuilderComp() {
             {
               name: 'collectionId',
               type: 'number',
-              defaultValue: 630884,
+              defaultValue: 292964,
             },
             {
               name: 'serialNumbers',
               type: '[number, number][]',
-              defaultValue: '[1, 1]',
+              defaultValue: '[[1, 1]]',
             },
           ],
         },
