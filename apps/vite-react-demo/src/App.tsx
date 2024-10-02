@@ -5,7 +5,7 @@ import { Routes, Route, Outlet } from 'react-router-dom';
 import {
   Evm,
   Home,
-  Transfer,
+  Assets,
   Custom,
   Nft,
   CustomBuilder,
@@ -21,7 +21,7 @@ export default function App() {
           index
           element={<Home title="Welcome to the SDK Demo in Vite React" />}
         />
-        <Route path="assetTx" element={<Transfer />} />
+        <Route path="assetTx" element={<Assets />} />
         <Route path="customTx" element={<Custom />} />
         <Route path="CustomBuilder" element={<CustomBuilder />} />
         <Route path="evmTx" element={<Evm />} />

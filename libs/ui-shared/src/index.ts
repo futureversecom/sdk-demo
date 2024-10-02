@@ -15,6 +15,8 @@ import {
   Spinner,
   Evm,
   Nft,
+  AssetTransfer,
+  Assets,
 } from './components';
 import { useIsMounted } from './hooks';
 
@@ -45,4 +47,6 @@ export {
   CustomBuilder,
   CustomBuilderComp,
   Nft,
+  AssetTransfer,
+  Assets,
 };

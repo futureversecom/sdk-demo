@@ -7,6 +7,7 @@ import Spinner from './Spinner';
 import Evm from './Evm';
 import Nft from './Nft';
 import { Dialog } from './Dialog/Dialog';
+import Assets from './Assets';
 
 import {
   AssetFromEoa,
@@ -14,6 +15,8 @@ import {
   AssetFromFuturePass,
   AssetFromFuturePassFeeProxy,
 } from './TransferComps';
+
+import { AssetTransfer } from './Assets/index';
 
 import { NftMint } from './NftComps';
 
@@ -46,4 +49,6 @@ export {
   CustomBuilderComp,
   Nft,
   NftMint,
+  AssetTransfer,
+  Assets,
 };

@@ -2,16 +2,11 @@ import React, { useEffect } from 'react';
 
 import TransactionDetails from './TransactionDetails';
 import { useIsMounted } from '../hooks';
-
-import {
-  AssetFromFuturePassFeeProxy,
-  AssetFromFuturePass,
-} from '../components';
-
+import { AssetTransfer } from '../components';
 import { useAuth } from '@futureverse/auth-react';
 import { useRootStore } from '../hooks/useRootStore';
 
-export default function Transfer() {
+export default function Assets() {
   const isMounted = useIsMounted();
 
   const { userSession } = useAuth();
@@ -35,8 +30,7 @@ export default function Transfer() {
     <>
       <h1>Asset Demo</h1>
       <div className="auto-grid">
-        <AssetFromFuturePass />
-        <AssetFromFuturePassFeeProxy />
+        <AssetTransfer />
       </div>
       <div className="auto-grid">
         {gas && (

@@ -250,7 +250,6 @@ input {
   cursor: not-allowed;
 }
 
-
 .card .spinner {
   border: 4px solid #ffffff;
   border-top: 4px solid #141414;
@@ -515,6 +514,10 @@ input {
 div.sdk-demo-dialog .spinner {
   border-color: #7bff00;
   border-top-color: transparent;
+}
+
+button.disabled {
+  cursor: not-allowed !important;
 }
 
 .copy-code-btn,

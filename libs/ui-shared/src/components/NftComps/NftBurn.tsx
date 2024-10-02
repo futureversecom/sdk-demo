@@ -1,4 +1,4 @@
-import { useAuth } from '@futureverse/auth-react';
+import { useAuth, useConnector } from '@futureverse/auth-react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useTrnApi } from '../../providers/TRNProvider';
@@ -10,9 +10,10 @@ import { useRootStore } from '../../hooks/useRootStore';
 import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
 import { useGetTokens } from '../../hooks';
 import CodeView from '../CodeView';
+import SendFrom from '../SendFrom';
 
 const codeString = `
-import { useAuth } from '@futureverse/auth-react';
+import { useAuth, useConnector } from '@futureverse/auth-react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useTrnApi } from '../../providers/TRNProvider';
@@ -24,11 +25,14 @@ import { useRootStore } from '../../hooks/useRootStore';
 import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
 import { useGetTokens } from '../../hooks';
 import CodeView from '../CodeView';
+import SendFrom from '../SendFrom';
+
 
 const collectionId = 709732;
 
 export default function NftBurn() {
-  const { userSession } = useAuth();
+  const { userSession, authMethod } = useAuth();
+  const { connector } = useConnector();
 
   const { resetState, setCurrentBuilder, signed, result, error } = useRootStore(
     state => state
@@ -43,7 +47,13 @@ export default function NftBurn() {
 
   const getExtrinsic = useGetExtrinsic();
 
-  const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>('eoa');
+  const shouldShowEoa = useMemo(() => {
+    return connector?.id !== 'xaman' || authMethod !== 'eoa';
+  }, [connector, authMethod]);
+
+  const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
+    shouldShowEoa ? 'eoa' : 'fpass'
+  );
 
   const {
     data: ownedTokens,
@@ -124,28 +134,21 @@ export default function NftBurn() {
   ]);
 
   return (
-    <div>
+    <div className={\`card \${disable ? 'disabled' : ''}\`}>
       <div className="inner">
         <CodeView code={codeString}>
           <h3>Burn Nft</h3>
           <small>Collection ID: {collectionId}</small>
         </CodeView>
         <div className="row">
-          <label>
-            Burn From
-            <select
-              value={fromWallet}
-              className="w-full builder-input"
-              disabled={disable}
-              onChange={e => {
-                resetState();
-                setFromWallet(e.target.value as 'eoa' | 'fpass');
-              }}
-            >
-              <option value="eoa">EOA</option>
-              <option value="fpass">FuturePass</option>
-            </select>
-          </label>
+          <SendFrom
+            label="Burn From"
+            shouldShowEoa={shouldShowEoa}
+            setFromWallet={setFromWallet}
+            fromWallet={fromWallet}
+            resetState={resetState}
+            disable={disable}
+          />
         </div>
         <div className="row">
           <label>
@@ -214,7 +217,8 @@ export default function NftBurn() {
 const collectionId = 709732;
 
 export default function NftBurn() {
-  const { userSession } = useAuth();
+  const { userSession, authMethod } = useAuth();
+  const { connector } = useConnector();
 
   const { resetState, setCurrentBuilder, signed, result, error } = useRootStore(
     state => state
@@ -229,7 +233,13 @@ export default function NftBurn() {
 
   const getExtrinsic = useGetExtrinsic();
 
-  const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>('eoa');
+  const shouldShowEoa = useMemo(() => {
+    return connector?.id !== 'xaman' || authMethod !== 'eoa';
+  }, [connector, authMethod]);
+
+  const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
+    shouldShowEoa ? 'eoa' : 'fpass'
+  );
 
   const {
     data: ownedTokens,
@@ -317,21 +327,14 @@ export default function NftBurn() {
           <small>Collection ID: {collectionId}</small>
         </CodeView>
         <div className="row">
-          <label>
-            Burn From
-            <select
-              value={fromWallet}
-              className="w-full builder-input"
-              disabled={disable}
-              onChange={e => {
-                resetState();
-                setFromWallet(e.target.value as 'eoa' | 'fpass');
-              }}
-            >
-              <option value="eoa">EOA</option>
-              <option value="fpass">FuturePass</option>
-            </select>
-          </label>
+          <SendFrom
+            label="Burn From"
+            shouldShowEoa={shouldShowEoa}
+            setFromWallet={setFromWallet}
+            fromWallet={fromWallet}
+            resetState={resetState}
+            disable={disable}
+          />
         </div>
         <div className="row">
           <label>

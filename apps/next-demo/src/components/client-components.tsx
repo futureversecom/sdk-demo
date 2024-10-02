@@ -19,6 +19,8 @@ import {
   AssetFromFuturePassFeeProxy,
   Evm,
   Nft,
+  AssetTransfer,
+  Assets,
 } from '@fv-sdk-demos/ui-shared';
 
 export {
@@ -38,4 +40,6 @@ export {
   CustomBuilder,
   CustomBuilderComp,
   Nft,
+  AssetTransfer,
+  Assets,
 };
