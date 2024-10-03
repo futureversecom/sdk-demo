@@ -43,11 +43,6 @@ export default function Home({ title }: { title: string }) {
   const { userSession, authMethod, authClient } = useAuth();
   const { connector } = useConnector();
 
-  console.log('userSession', userSession);
-  console.log('authClient', authClient);
-  console.log('authMethod', authMethod);
-  console.log('connector', connector?.id);
-
   const { trnApi } = useTrnApi();
 
   const transactionQuery = useTransactQuery();
@@ -325,11 +320,6 @@ export default function Home({ title }: { title: string }) {
   const isMounted = useIsMounted();
   const { userSession, authMethod, authClient } = useAuth();
   const { connector } = useConnector();
-
-  console.log('userSession', userSession);
-  console.log('authClient', authClient);
-  console.log('authMethod', authMethod);
-  console.log('connector', connector?.id);
 
   const { trnApi } = useTrnApi();
 

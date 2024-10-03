@@ -122,14 +122,6 @@ export default function CustomEvm() {
       return null;
     }
 
-    console.log('Creating EVM Builder');
-    console.log('Contract Address:', evmContractAddress);
-    console.log('Function Name:', evmFunctionName);
-    console.log('Abi:', evmAbi);
-    console.log('Args:', evmArgs);
-    console.log('Use FuturePass:', evmUseFuturePass);
-    console.log('Asset Id:', assetId);
-
     const evmBuilder = await TransactionBuilder.evm(
       trnApi,
       signer,
