@@ -1,4 +1,3 @@
-import React from 'react';
 import { useAuth, useConnector } from '@futureverse/auth-react';
 
 import { useQuery } from '@tanstack/react-query';
@@ -7,7 +6,6 @@ import { useTrnApi } from '../providers';
 import { useIsMounted, useRnsResolveAddress, useTransactQuery } from '../hooks';
 
 import { useAccount } from 'wagmi';
-import { formatUnits } from 'viem';
 import { getBalance, shortAddress } from '../lib/utils';
 import CodeView from './CodeView';
 
