@@ -175,9 +175,11 @@ export default function Home({ title }: { title: string }) {
                   <h2>EOA</h2>
                   <div className="card">
                     <div className="inner">
-                      <small style={{ textTransform: 'uppercase' }}>
+                      <span
+                        style={{ display: 'inline-block', fontSize: '0.8rem', textTransform: 'uppercase' }}
+                      >
                         Addresses
-                      </small>
+                      </span>
                       <div className="row">
                         User EOA: {shortAddress(userSession.eoa)}
                       </div>
@@ -202,9 +204,11 @@ export default function Home({ title }: { title: string }) {
                   </div>
                   <div className="card" style={{ marginTop: '16px' }}>
                     <div className="inner">
-                      <small style={{ textTransform: 'uppercase' }}>
+                      <span
+                        style={{ display: 'inline-block', fontSize: '0.8rem', textTransform: 'uppercase' }}
+                      >
                         Balances
-                      </small>
+                      </span>
 
                       <div className="row">
                         XRP Balance:{' '}
@@ -239,9 +243,11 @@ export default function Home({ title }: { title: string }) {
 
                 <div className="card">
                   <div className="inner">
-                    <small style={{ textTransform: 'uppercase' }}>
+                    <span
+                      style={{ display: 'inline-block', fontSize: '0.8rem', textTransform: 'uppercase' }}
+                    >
                       Addresses
-                    </small>
+                    </span>
                     <div className="row">
                       User FuturePass: {shortAddress(userSession.futurepass)}
                     </div>
@@ -261,9 +267,11 @@ export default function Home({ title }: { title: string }) {
                 </div>
                 <div className="card" style={{ marginTop: '16px' }}>
                   <div className="inner">
-                    <small style={{ textTransform: 'uppercase' }}>
+                    <span
+                      style={{ display: 'inline-block', fontSize: '0.8rem', textTransform: 'uppercase' }}
+                    >
                       Balances
-                    </small>
+                    </span>
                     <div className="row">
                       XRP Balance:{' '}
                       {formatter.format(Number(xrpBalanceOnTrnFp.data ?? 0)) ??
@@ -473,9 +481,15 @@ export default function Home({ title }: { title: string }) {
                   <h2>EOA</h2>
                   <div className="card">
                     <div className="inner">
-                      <small style={{ textTransform: 'uppercase' }}>
+                      <span
+                        style={{
+                          display: 'inline-block',
+                          fontSize: '0.8rem',
+                          textTransform: 'uppercase',
+                        }}
+                      >
                         Addresses
-                      </small>
+                      </span>
                       <div className="row">
                         User EOA: {shortAddress(userSession.eoa)}
                       </div>
@@ -500,9 +514,15 @@ export default function Home({ title }: { title: string }) {
                   </div>
                   <div className="card" style={{ marginTop: '16px' }}>
                     <div className="inner">
-                      <small style={{ textTransform: 'uppercase' }}>
+                      <span
+                        style={{
+                          display: 'inline-block',
+                          fontSize: '0.8rem',
+                          textTransform: 'uppercase',
+                        }}
+                      >
                         Balances
-                      </small>
+                      </span>
 
                       <div className="row">
                         XRP Balance:{' '}
@@ -537,9 +557,15 @@ export default function Home({ title }: { title: string }) {
 
                 <div className="card">
                   <div className="inner">
-                    <small style={{ textTransform: 'uppercase' }}>
+                    <span
+                      style={{
+                        display: 'inline-block',
+                        fontSize: '0.8rem',
+                        textTransform: 'uppercase',
+                      }}
+                    >
                       Addresses
-                    </small>
+                    </span>
                     <div className="row">
                       User FuturePass: {shortAddress(userSession.futurepass)}
                     </div>
@@ -559,9 +585,15 @@ export default function Home({ title }: { title: string }) {
                 </div>
                 <div className="card" style={{ marginTop: '16px' }}>
                   <div className="inner">
-                    <small style={{ textTransform: 'uppercase' }}>
+                    <span
+                      style={{
+                        display: 'inline-block',
+                        fontSize: '0.8rem',
+                        textTransform: 'uppercase',
+                      }}
+                    >
                       Balances
-                    </small>
+                    </span>
                     <div className="row">
                       XRP Balance:{' '}
                       {formatter.format(Number(xrpBalanceOnTrnFp.data ?? 0)) ??

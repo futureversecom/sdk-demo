@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import TransactionDetails from './TransactionDetails';
 import { useIsMounted } from '../hooks';
@@ -7,7 +7,7 @@ import { Increment, Decrement } from '../components';
 
 import { useAuth } from '@futureverse/auth-react';
 import { useRootStore } from '../hooks/useRootStore';
-import { CustomEvm, DecrementFPass, IncrementFPass } from './EVMComps';
+import { CustomEvm } from './EVMComps';
 
 export default function Transfer() {
   const isMounted = useIsMounted();
@@ -34,9 +34,7 @@ export default function Transfer() {
       <h1>EVM Demo</h1>
       <div className="auto-grid">
         <Increment />
-        <IncrementFPass />
         <Decrement />
-        <DecrementFPass />
         <CustomEvm />
       </div>
       <div className="auto-grid">

@@ -42,7 +42,12 @@ export const AddressToSend: React.FC<AddressToSendProps> = ({
         }}
         disabled={disable}
       />
-      <small className="text-red-500">{addressInputError}</small>
+      <span
+        style={{ display: 'inline-block', fontSize: '0.8rem' }}
+        className="text-red-500"
+      >
+        {addressInputError}
+      </span>
     </label>
   );
 };

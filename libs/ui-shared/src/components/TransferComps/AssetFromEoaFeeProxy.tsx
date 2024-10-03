@@ -108,7 +108,9 @@ export default function AssetFromEoaFeeProxy() {
         <div className="row">
           <CodeView code={codeString}>
             <h3>Send From EOA Using Fee Proxy</h3>
-            <small>{shortAddress(userSession?.eoa ?? '')}</small>
+            <span
+              style={{ display: 'inline-block', fontSize: '0.8rem' }}
+            >{shortAddress(userSession?.eoa ?? '')}</span>
           </CodeView>
         </div>
         <div className="row">
@@ -263,7 +265,9 @@ export default function AssetFromEoaFeeProxy() {
         <div className="row">
           <CodeView code={codeString}>
             <h3>Send From EOA Using Fee Proxy</h3>
-            <small>{shortAddress(userSession?.eoa ?? '')}</small>
+            <span style={{ display: 'inline-block', fontSize: '0.8rem' }}>
+              {shortAddress(userSession?.eoa ?? '')}
+            </span>
           </CodeView>
         </div>
         <div className="row">

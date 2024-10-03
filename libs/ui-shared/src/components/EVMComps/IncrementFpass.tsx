@@ -87,19 +87,23 @@ export default function IncrementFPass() {
       <div className="inner">
         <CodeView code={codeString}>
           <h3>Increment Counter From FuturePass</h3>
-          <small>{shortAddress(userSession?.futurepass ?? '')}</small>
+          <span
+              style={{ display: 'inline-block', fontSize: '0.8rem' }}
+            >{shortAddress(userSession?.futurepass ?? '')}</span>
         </CodeView>
         <div className="row">
           <div>
             <strong>Current Counter</strong>
           </div>
-          <small>
+          <span
+              style={{ display: 'inline-block', fontSize: '0.8rem' }}
+            >
             {isFetching || isLoading
               ? 'Fetching Current Count...'
               : contractData
               ? contractData?.toString()
               : ''}{' '}
-          </small>
+          </span>
         </div>
         <div className="row">
           <button
@@ -177,19 +181,21 @@ export default function IncrementFPass() {
       <div className="inner">
         <CodeView code={codeString}>
           <h3>Increment Counter From FuturePass</h3>
-          <small>{shortAddress(userSession?.futurepass ?? '')}</small>
+          <span style={{ display: 'inline-block', fontSize: '0.8rem' }}>
+            {shortAddress(userSession?.futurepass ?? '')}
+          </span>
         </CodeView>
         <div className="row">
           <div>
             <strong>Current Counter</strong>
           </div>
-          <small>
+          <span style={{ display: 'inline-block', fontSize: '0.8rem' }}>
             {isFetching || isLoading
               ? 'Fetching Current Count...'
               : contractData
               ? contractData?.toString()
               : ''}{' '}
-          </small>
+          </span>
         </div>
         <div className="row">
           <button

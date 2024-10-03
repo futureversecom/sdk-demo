@@ -20,7 +20,6 @@ import { useFutureverseSigner } from '@futureverse/auth-react';
 
 import { useRootStore } from '../../hooks/useRootStore';
 
-import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
 import { shortAddress } from '../../lib/utils';
 import { useCustomExtrinsicBuilder } from '../../hooks/useCustomExtrinsicBuilder';
 import CodeView from '../CodeView';
@@ -212,7 +211,19 @@ export default function CustomBuilderComp() {
     return signed && !result && !error;
   }, [signed, result, error]);
 
-  const getExtrinsic = useGetExtrinsic();
+  const getExtrinsic = async (builder: RootTransactionBuilder) => {
+    const gasEstimate = await builder?.getGasFees();
+    if (gasEstimate) {
+      setGas(gasEstimate);
+    }
+    const payloads = await builder?.getPayloads();
+    if (!payloads) {
+      return;
+    }
+    setPayload(payloads);
+    const { ethPayload } = payloads;
+    setToSign(ethPayload.toString());
+  };
 
   const [feeAssetId, setFeeAssetId] = useState<number>(1);
 
@@ -324,7 +335,11 @@ export default function CustomBuilderComp() {
       <div className="inner">
         <CodeView code={codeString}>
           <h3>Custom Extrinsic Builder</h3>
-          <small>{shortAddress(userSession?.futurepass ?? '')}</small>
+          <span
+              style={{ display: 'inline-block', fontSize: '0.8rem' }}
+          >
+              {shortAddress(userSession?.futurepass ?? '')}
+          </span>
         </CodeView>
         <div className="row">
           <label>
@@ -779,7 +794,9 @@ export default function CustomBuilderComp() {
       <div className="inner">
         <CodeView code={codeString}>
           <h3>Custom Extrinsic Builder</h3>
-          <small>{shortAddress(userSession?.futurepass ?? '')}</small>
+          <span style={{ display: 'inline-block', fontSize: '0.8rem' }}>
+            {shortAddress(userSession?.futurepass ?? '')}
+          </span>
         </CodeView>
         <div className="row">
           <label>
@@ -906,8 +923,8 @@ export default function CustomBuilderComp() {
                       setFeeAssetId(Number(e.target.value));
                     }}
                   >
-                    <option value={1}>ROOT</option>
                     <option value={2}>XRP</option>
+                    <option value={1}>ROOT</option>
                     <option value={3172}>SYLO</option>
                     <option value={17508}>ASTO</option>
                   </select>

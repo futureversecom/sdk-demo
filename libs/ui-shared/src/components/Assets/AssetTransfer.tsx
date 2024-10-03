@@ -18,6 +18,7 @@ import { AddressToSend } from '../AddressToSend';
 import SendFrom from '../SendFrom';
 import { useTransactQuery } from '../../hooks';
 import { useQuery } from '@tanstack/react-query';
+import SliderInput from '../SliderInput';
 
 const codeString = `
 import React from 'react';
@@ -85,7 +86,7 @@ export default function AssetTransfer() {
   const [addressToSend, setAddressToSend] = useState<string>(
     (fromWallet === 'eoa' ? userSession?.futurepass : userSession?.eoa) ?? ''
   );
-
+  const [slippage, setSlippage] = useState<string>('5');
   const [addressInputError, setAddressInputError] = useState<string>('');
 
   const transactionQuery = useTransactQuery();
@@ -176,11 +177,14 @@ export default function AssetTransfer() {
         <div className="row">
           <CodeView code={codeString}>
             <h3>Transfer Assets</h3>
-            <small>{shortAddress(userSession?.futurepass ?? '')}</small>
+            <span
+              style={{ display: 'inline-block', fontSize: '0.8rem' }}
+            >{shortAddress(userSession?.futurepass ?? '')}</span>
           </CodeView>
         </div>
         <div className="row">
           <SendFrom
+            label="Transfer From"
             shouldShowEoa={shouldShowEoa}
             setFromWallet={setFromWallet}
             fromWallet={fromWallet}
@@ -204,9 +208,15 @@ export default function AssetTransfer() {
               }}
             />
           </label>
-          {!isFetching && !userBalance && <small></small>}
-          {isFetching && <small>Checking User Balance...</small>}
-          {userBalance && <small>Balance: {userBalance}</small>}
+          {!isFetching && !userBalance && <span
+              style={{ display: 'inline-block', fontSize: '0.8rem' }}
+            ></span>}
+          {isFetching && <span
+              style={{ display: 'inline-block', fontSize: '0.8rem' }}
+            >Checking User Balance...</span>}
+          {userBalance && <span
+              style={{ display: 'inline-block', fontSize: '0.8rem' }}
+            >Balance: {userBalance}</span>}
         </div>
         <div className="row">
           <label>
@@ -253,6 +263,16 @@ export default function AssetTransfer() {
             </select>
           </label>
         </div>
+        {feeAssetId !== 2 && <div className="row">
+            <SliderInput
+              sliderValue={5}
+              setSliderValue={5}
+              minValue={0}
+              sliderStep={0.1}
+              maxValue={15}
+              resetState={resetState}
+            />
+          </div>}
         <div className="row">
           <button
             className={\`w-full builder-input green \${
@@ -307,6 +327,7 @@ export default function AssetTransfer() {
     (fromWallet === 'eoa' ? userSession?.futurepass : userSession?.eoa) ?? ''
   );
 
+  const [slippage, setSlippage] = useState<string>('5');
   const [addressInputError, setAddressInputError] = useState<string>('');
 
   const transactionQuery = useTransactQuery();
@@ -362,7 +383,7 @@ export default function AssetTransfer() {
         await builder.addFuturePassAndFeeProxy({
           futurePass: userSession.futurepass,
           assetId: feeAssetId,
-          slippage: 5,
+          slippage: Number(slippage),
         });
       }
     }
@@ -371,7 +392,7 @@ export default function AssetTransfer() {
       if (feeAssetId !== 2) {
         await builder.addFeeProxy({
           assetId: feeAssetId,
-          slippage: 5,
+          slippage: Number(slippage),
         });
       }
     }
@@ -389,6 +410,7 @@ export default function AssetTransfer() {
     getExtrinsic,
     setCurrentBuilder,
     feeAssetId,
+    slippage,
   ]);
 
   return (
@@ -397,11 +419,14 @@ export default function AssetTransfer() {
         <div className="row">
           <CodeView code={codeString}>
             <h3>Transfer Assets</h3>
-            <small>{shortAddress(userSession?.futurepass ?? '')}</small>
+            <span style={{ display: 'inline-block', fontSize: '0.8rem' }}>
+              {shortAddress(userSession?.futurepass ?? '')}
+            </span>
           </CodeView>
         </div>
         <div className="row">
           <SendFrom
+            label="Transfer From"
             shouldShowEoa={shouldShowEoa}
             setFromWallet={setFromWallet}
             fromWallet={fromWallet}
@@ -425,9 +450,21 @@ export default function AssetTransfer() {
               }}
             />
           </label>
-          {!isFetching && !userBalance && <small></small>}
-          {isFetching && <small>Checking User Balance...</small>}
-          {userBalance && <small>Balance: {userBalance}</small>}
+          {!isFetching && !userBalance && (
+            <span
+              style={{ display: 'inline-block', fontSize: '0.8rem' }}
+            ></span>
+          )}
+          {isFetching && (
+            <span style={{ display: 'inline-block', fontSize: '0.8rem' }}>
+              Checking User Balance...
+            </span>
+          )}
+          {userBalance && (
+            <span style={{ display: 'inline-block', fontSize: '0.8rem' }}>
+              Balance: {userBalance}
+            </span>
+          )}
         </div>
         <div className="row">
           <label>
@@ -474,6 +511,18 @@ export default function AssetTransfer() {
             </select>
           </label>
         </div>
+        {feeAssetId !== 2 && (
+          <div className="row">
+            <SliderInput
+              sliderValue={slippage}
+              setSliderValue={setSlippage}
+              minValue={0}
+              sliderStep={0.1}
+              maxValue={15}
+              resetState={resetState}
+            />
+          </div>
+        )}
         <div className="row">
           <button
             className={`w-full builder-input green ${

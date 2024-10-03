@@ -11,6 +11,7 @@ import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
 import { useGetTokens } from '../../hooks';
 import CodeView from '../CodeView';
 import SendFrom from '../SendFrom';
+import SliderInput from '../SliderInput';
 
 const codeString = `
 import { useAuth, useConnector } from '@futureverse/auth-react';
@@ -22,7 +23,6 @@ import { useFutureverseSigner } from '@futureverse/auth-react';
 import { TransactionBuilder } from '@futureverse/transact';
 import { useRootStore } from '../../hooks/useRootStore';
 
-import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
 import { useGetTokens } from '../../hooks';
 import CodeView from '../CodeView';
 import SendFrom from '../SendFrom';
@@ -45,7 +45,19 @@ export default function NftBurn() {
   const { trnApi } = useTrnApi();
   const signer = useFutureverseSigner();
 
-  const getExtrinsic = useGetExtrinsic();
+  const getExtrinsic = async (builder: RootTransactionBuilder) => {
+    const gasEstimate = await builder?.getGasFees();
+    if (gasEstimate) {
+      setGas(gasEstimate);
+    }
+    const payloads = await builder?.getPayloads();
+    if (!payloads) {
+      return;
+    }
+    setPayload(payloads);
+    const { ethPayload } = payloads;
+    setToSign(ethPayload.toString());
+  };
 
   const shouldShowEoa = useMemo(() => {
     return connector?.id !== 'xaman' || authMethod !== 'eoa';
@@ -68,6 +80,7 @@ export default function NftBurn() {
   );
 
   const [feeAssetId, setFeeAssetId] = useState<number>(2);
+  const [slippage, setSlippage] = useState<string>('5');
 
   const [serialNumber, setSerialNumber] = useState<string>('');
 
@@ -138,7 +151,9 @@ export default function NftBurn() {
       <div className="inner">
         <CodeView code={codeString}>
           <h3>Burn Nft</h3>
-          <small>Collection ID: {collectionId}</small>
+          <span
+              style={{ display: 'inline-block', fontSize: '0.8rem' }}
+            >Collection ID: {collectionId}</span>
         </CodeView>
         <div className="row">
           <SendFrom
@@ -196,6 +211,18 @@ export default function NftBurn() {
             </select>
           </label>
         </div>
+        {feeAssetId !== 2 && (
+          <div className="row">
+            <SliderInput
+              sliderValue={slippage}
+              setSliderValue={setSlippage}
+              minValue={0}
+              sliderStep={0.1}
+              maxValue={15}
+              resetState={resetState}
+            />
+          </div>
+        )}
         <div className="row">
           <button
             className="w-full builder-input green"
@@ -233,6 +260,7 @@ export default function NftBurn() {
 
   const getExtrinsic = useGetExtrinsic();
 
+  const [slippage, setSlippage] = useState<string>('5');
   const shouldShowEoa = useMemo(() => {
     return connector?.id !== 'xaman' || authMethod !== 'eoa';
   }, [connector, authMethod]);
@@ -324,7 +352,9 @@ export default function NftBurn() {
       <div className="inner">
         <CodeView code={codeString}>
           <h3>Burn Nft</h3>
-          <small>Collection ID: {collectionId}</small>
+          <span style={{ display: 'inline-block', fontSize: '0.8rem' }}>
+            Collection ID: {collectionId}
+          </span>
         </CodeView>
         <div className="row">
           <SendFrom
@@ -382,6 +412,18 @@ export default function NftBurn() {
             </select>
           </label>
         </div>
+        {feeAssetId !== 2 && (
+          <div className="row">
+            <SliderInput
+              sliderValue={slippage}
+              setSliderValue={setSlippage}
+              minValue={0}
+              sliderStep={0.1}
+              maxValue={15}
+              resetState={resetState}
+            />
+          </div>
+        )}
         <div className="row">
           <button
             className="w-full builder-input green"

@@ -23,6 +23,7 @@ import { NftMint } from './NftComps';
 import {
   CustomFromEoaFuturePassFeeProxy,
   CustomBuilderComp,
+  CustomExtrinsic,
 } from './CustomComps';
 
 import { Increment, Decrement } from './EVMComps';
@@ -47,6 +48,7 @@ export {
   Custom,
   CustomBuilder,
   CustomBuilderComp,
+  CustomExtrinsic,
   Nft,
   NftMint,
   AssetTransfer,

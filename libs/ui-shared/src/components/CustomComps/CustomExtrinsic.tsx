@@ -8,12 +8,11 @@ import { TransactionBuilder } from '@futureverse/transact';
 import { useRootStore } from '../../hooks/useRootStore';
 
 import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
+import { shortAddress } from '../../lib/utils';
 import CodeView from '../CodeView';
+import SliderInput from '../SliderInput';
 import SendFrom from '../SendFrom';
 import { AddressToSend } from '../AddressToSend';
-import SliderInput from '../SliderInput';
-
-const collectionId = 709732;
 
 const codeString = `
 import { useAuth, useConnector } from '@futureverse/auth-react';
@@ -25,13 +24,13 @@ import { useFutureverseSigner } from '@futureverse/auth-react';
 import { TransactionBuilder } from '@futureverse/transact';
 import { useRootStore } from '../../hooks/useRootStore';
 
+import { shortAddress } from '../../lib/utils';
 import CodeView from '../CodeView';
+import SliderInput from '../SliderInput';
 import SendFrom from '../SendFrom';
 import { AddressToSend } from '../AddressToSend';
 
-const collectionId = 709732;
-
-export default function NftMint() {
+export default function CustomExtrinsic() {
   const { userSession, authMethod } = useAuth();
   const { connector } = useConnector();
 
@@ -68,8 +67,7 @@ export default function NftMint() {
     shouldShowEoa ? 'eoa' : 'fpass'
   );
 
-  const [mintQty, setMintQty] = useState<number>(1);
-  const [feeAssetId, setFeeAssetId] = useState<number>(2);
+  const [feeAssetId, setFeeAssetId] = useState<number>(1);
   const [slippage, setSlippage] = useState<string>('5');
   const [addressInputError, setAddressInputError] = useState<string>('');
 
@@ -77,71 +75,71 @@ export default function NftMint() {
     (fromWallet === 'eoa' ? userSession?.futurepass : userSession?.eoa) ?? ''
   );
 
-  const buttonDisabled = useMemo(() => {
-    return disable || addressInputError !== '';
-  }, [disable, addressInputError]);
-
   const createBuilder = useCallback(async () => {
     if (!trnApi || !signer || !userSession) {
       console.log('Missing trnApi, signer or userSession');
       return;
     }
 
-    const nft = await TransactionBuilder.nft(
+    const extrinsic = trnApi.tx.nft.mint(709732, 1, addressToSend);
+
+    const builder = await TransactionBuilder.custom(
       trnApi,
       signer,
-      userSession.eoa,
-      collectionId
-    ).mint({
-      walletAddress: addressToSend,
-      quantity: mintQty,
-    });
+      userSession.eoa
+    ).fromExtrinsic(extrinsic);
 
     if (fromWallet === 'fpass') {
       if (feeAssetId === 2) {
-        nft.addFuturePass(userSession.futurepass);
+        builder.addFuturePass(userSession.futurepass);
       }
 
       if (feeAssetId !== 2) {
-        await nft.addFuturePassAndFeeProxy({
+        await builder.addFuturePassAndFeeProxy({
           futurePass: userSession.futurepass,
           assetId: feeAssetId,
-          slippage: 5,
+          slippage: Number(slippage),
         });
       }
     }
 
     if (fromWallet === 'eoa') {
       if (feeAssetId !== 2) {
-        await nft.addFeeProxy({
+        await builder.addFeeProxy({
           assetId: feeAssetId,
-          slippage: 5,
+          slippage: Number(slippage),
         });
       }
     }
 
-    getExtrinsic(nft);
-    setCurrentBuilder(nft);
+    getExtrinsic(builder);
+    setCurrentBuilder(builder);
   }, [
+    addressToSend,
     trnApi,
     signer,
     userSession,
-    addressToSend,
-    mintQty,
-    fromWallet,
+    feeAssetId,
     getExtrinsic,
     setCurrentBuilder,
-    feeAssetId,
   ]);
 
+  const buttonDisabled = useMemo(() => {
+    return disable || addressInputError !== '';
+  }, [disable, addressInputError]);
+
   return (
-    <div className={/\`card \${disable ? 'disabled' : ''}\`}>
+    <div className={\`card \${disable ? 'disabled' : ''}\`}>
       <div className="inner">
         <CodeView code={codeString}>
-          <h3>Mint Nft</h3>
-          <span
-              style={{ display: 'inline-block', fontSize: '0.8rem' }}
-            >Collection ID: {collectionId}</span>
+          <h3>Mint Nft Using Custom Extrinsic Builder</h3>
+          <span style={{ display: 'inline-block', fontSize: '0.8rem' }}>
+            {shortAddress(
+              (fromWallet === 'eoa'
+                ? userSession?.eoa
+                : userSession?.futurepass) ?? ''
+            )}
+          </span>
         </CodeView>
         <div className="row">
           <SendFrom
@@ -151,6 +149,7 @@ export default function NftMint() {
             fromWallet={fromWallet}
             resetState={resetState}
             disable={disable}
+            setAddressToSend={setAddressToSend}
           />
         </div>
         <div className="row">
@@ -163,21 +162,6 @@ export default function NftMint() {
             disable={disable}
             resetState={resetState}
           />
-        </div>
-        <div className="row">
-          <label>
-            Mint Qty
-            <input
-              type="text"
-              value={mintQty}
-              className="w-full builder-input"
-              onChange={e => {
-                resetState();
-                setMintQty(Number(e.target.value) || 1);
-              }}
-              disabled={disable}
-            />
-          </label>
         </div>
         <div className="row">
           <label>
@@ -230,7 +214,7 @@ export default function NftMint() {
 }
 `;
 
-export default function NftMint() {
+export default function CustomExtrinsic() {
   const { userSession, authMethod } = useAuth();
   const { connector } = useConnector();
 
@@ -255,17 +239,13 @@ export default function NftMint() {
     shouldShowEoa ? 'eoa' : 'fpass'
   );
 
-  const [mintQty, setMintQty] = useState<number>(1);
-  const [feeAssetId, setFeeAssetId] = useState<number>(2);
-  const [addressInputError, setAddressInputError] = useState<string>('');
+  const [feeAssetId, setFeeAssetId] = useState<number>(1);
   const [slippage, setSlippage] = useState<string>('5');
+  const [addressInputError, setAddressInputError] = useState<string>('');
+
   const [addressToSend, setAddressToSend] = useState<string>(
     (fromWallet === 'eoa' ? userSession?.futurepass : userSession?.eoa) ?? ''
   );
-
-  const buttonDisabled = useMemo(() => {
-    return disable || addressInputError !== '';
-  }, [disable, addressInputError]);
 
   const createBuilder = useCallback(async () => {
     if (!trnApi || !signer || !userSession) {
@@ -273,60 +253,64 @@ export default function NftMint() {
       return;
     }
 
-    const nft = await TransactionBuilder.nft(
+    const extrinsic = trnApi.tx.nft.mint(709732, 1, addressToSend);
+
+    const builder = await TransactionBuilder.custom(
       trnApi,
       signer,
-      userSession.eoa,
-      collectionId
-    ).mint({
-      walletAddress: addressToSend,
-      quantity: mintQty,
-    });
+      userSession.eoa
+    ).fromExtrinsic(extrinsic);
 
     if (fromWallet === 'fpass') {
       if (feeAssetId === 2) {
-        nft.addFuturePass(userSession.futurepass);
+        builder.addFuturePass(userSession.futurepass);
       }
 
       if (feeAssetId !== 2) {
-        await nft.addFuturePassAndFeeProxy({
+        await builder.addFuturePassAndFeeProxy({
           futurePass: userSession.futurepass,
           assetId: feeAssetId,
-          slippage: 5,
+          slippage: Number(slippage),
         });
       }
     }
 
     if (fromWallet === 'eoa') {
       if (feeAssetId !== 2) {
-        await nft.addFeeProxy({
+        await builder.addFeeProxy({
           assetId: feeAssetId,
-          slippage: 5,
+          slippage: Number(slippage),
         });
       }
     }
 
-    getExtrinsic(nft);
-    setCurrentBuilder(nft);
+    getExtrinsic(builder);
+    setCurrentBuilder(builder);
   }, [
+    addressToSend,
     trnApi,
     signer,
     userSession,
-    addressToSend,
-    mintQty,
-    fromWallet,
+    feeAssetId,
     getExtrinsic,
     setCurrentBuilder,
-    feeAssetId,
   ]);
+
+  const buttonDisabled = useMemo(() => {
+    return disable || addressInputError !== '';
+  }, [disable, addressInputError]);
 
   return (
     <div className={`card ${disable ? 'disabled' : ''}`}>
       <div className="inner">
         <CodeView code={codeString}>
-          <h3>Mint Nft</h3>
+          <h3>Mint Nft Using Custom Extrinsic Builder</h3>
           <span style={{ display: 'inline-block', fontSize: '0.8rem' }}>
-            Collection ID: {collectionId}
+            {shortAddress(
+              (fromWallet === 'eoa'
+                ? userSession?.eoa
+                : userSession?.futurepass) ?? ''
+            )}
           </span>
         </CodeView>
         <div className="row">
@@ -337,6 +321,7 @@ export default function NftMint() {
             fromWallet={fromWallet}
             resetState={resetState}
             disable={disable}
+            setAddressToSend={setAddressToSend}
           />
         </div>
         <div className="row">
@@ -349,21 +334,6 @@ export default function NftMint() {
             disable={disable}
             resetState={resetState}
           />
-        </div>
-        <div className="row">
-          <label>
-            Mint Qty
-            <input
-              type="text"
-              value={mintQty}
-              className="w-full builder-input"
-              onChange={e => {
-                resetState();
-                setMintQty(Number(e.target.value) || 1);
-              }}
-              disabled={disable}
-            />
-          </label>
         </div>
         <div className="row">
           <label>
