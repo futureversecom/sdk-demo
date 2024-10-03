@@ -83,7 +83,9 @@ export default function CustomFromEoaFuturePassFeeProxy() {
       <div className="inner">
         <div className="row">
           <h3>Mint Nft Using Custom Extrinsic</h3>
-          <small>{shortAddress(userSession?.futurepass ?? '')}</small>
+          <span
+              style={{ display: 'inline-block', fontSize: '0.8rem' }}
+            >{shortAddress(userSession?.futurepass ?? '')}</span>
         </div>
         <div className="row">
           <label>
@@ -112,9 +114,10 @@ export default function CustomFromEoaFuturePassFeeProxy() {
                 setFeeAssetId(Number(e.target.value));
               }}
             >
-              <option value={1}>ROOT</option>
-              <option value={3172}>SYLO</option>
-              <option value={17508}>ASTO</option>
+                    <option value={2}>XRP</option>
+                    <option value={1}>ROOT</option>
+                    <option value={3172}>SYLO</option>
+                    <option value={17508}>ASTO</option>
             </select>
           </label>
         </div>
@@ -195,7 +198,9 @@ export default function CustomFromEoaFuturePassFeeProxy() {
       <div className="inner">
         <CodeView code={codeString}>
           <h3>Mint Nft Using Custom Extrinsic</h3>
-          <small>{shortAddress(userSession?.futurepass ?? '')}</small>
+          <span style={{ display: 'inline-block', fontSize: '0.8rem' }}>
+            {shortAddress(userSession?.futurepass ?? '')}
+          </span>
         </CodeView>
         <div className="row">
           <label>
@@ -224,6 +229,7 @@ export default function CustomFromEoaFuturePassFeeProxy() {
                 setFeeAssetId(Number(e.target.value));
               }}
             >
+              <option value={2}>XRP</option>
               <option value={1}>ROOT</option>
               <option value={3172}>SYLO</option>
               <option value={17508}>ASTO</option>

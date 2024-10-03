@@ -103,6 +103,11 @@ const Menu: React.FC<MenuProps> = ({ setIsOpen }) => {
           Custom
         </Link>
       </li>
+      <li>
+        <Link onClick={() => setIsOpen(false)} to="/custom-builder">
+          Custom Builder
+        </Link>
+      </li>
     </>
   );
 };

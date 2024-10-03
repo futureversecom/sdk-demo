@@ -2,14 +2,11 @@ import React, { useEffect } from 'react';
 
 import TransactionDetails from './TransactionDetails';
 import { useIsMounted } from '../hooks';
-
-import { Increment, Decrement } from '../components';
-
+import { AssetTransfer } from '../components';
 import { useAuth } from '@futureverse/auth-react';
 import { useRootStore } from '../hooks/useRootStore';
-import { CustomEvm } from './EVMComps';
 
-export default function Transfer() {
+export default function Assets() {
   const isMounted = useIsMounted();
 
   const { userSession } = useAuth();
@@ -22,7 +19,7 @@ export default function Transfer() {
   }, [resetState]);
 
   if (!userSession) {
-    return <h1>Sign in to interact with the EVM Pallet</h1>;
+    return <h1>Sign in to interact with assets</h1>;
   }
 
   if (!isMounted) {
@@ -31,11 +28,9 @@ export default function Transfer() {
 
   return (
     <>
-      <h1>EVM Demo</h1>
+      <h1>Asset Demo</h1>
       <div className="auto-grid">
-        <Increment />
-        <Decrement />
-        <CustomEvm />
+        <AssetTransfer />
       </div>
       <div className="auto-grid">
         {gas && (

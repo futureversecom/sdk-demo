@@ -1,11 +1,9 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import TransactionDetails from './TransactionDetails';
 import { useIsMounted } from '../hooks';
 
 import {
-  AssetFromEoa,
-  AssetFromEoaFeeProxy,
   AssetFromFuturePassFeeProxy,
   AssetFromFuturePass,
 } from '../components';
@@ -37,9 +35,7 @@ export default function Transfer() {
     <>
       <h1>Asset Demo</h1>
       <div className="auto-grid">
-        <AssetFromEoa />
         <AssetFromFuturePass />
-        <AssetFromEoaFeeProxy />
         <AssetFromFuturePassFeeProxy />
       </div>
       <div className="auto-grid">

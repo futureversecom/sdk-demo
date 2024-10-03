@@ -5,7 +5,7 @@ import { useIsMounted } from '../hooks';
 
 import { useAuth } from '@futureverse/auth-react';
 import { useRootStore } from '../hooks/useRootStore';
-import { CustomFromEoaFuturePassFeeProxy } from './CustomComps';
+import { CustomExtrinsic } from './CustomComps';
 
 export default function Custom() {
   const isMounted = useIsMounted();
@@ -31,7 +31,7 @@ export default function Custom() {
     <>
       <h1>Custom Extrinsic Demo</h1>
       <div className="auto-grid">
-        <CustomFromEoaFuturePassFeeProxy />
+        <CustomExtrinsic />
       </div>
       <div className="auto-grid">
         {gas && (

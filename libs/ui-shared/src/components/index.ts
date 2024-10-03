@@ -7,6 +7,7 @@ import Spinner from './Spinner';
 import Evm from './Evm';
 import Nft from './Nft';
 import { Dialog } from './Dialog/Dialog';
+import Assets from './Assets';
 
 import {
   AssetFromEoa,
@@ -15,11 +16,14 @@ import {
   AssetFromFuturePassFeeProxy,
 } from './TransferComps';
 
+import { AssetTransfer } from './Assets/index';
+
 import { NftMint } from './NftComps';
 
 import {
   CustomFromEoaFuturePassFeeProxy,
   CustomBuilderComp,
+  CustomExtrinsic,
 } from './CustomComps';
 
 import { Increment, Decrement } from './EVMComps';
@@ -44,6 +48,9 @@ export {
   Custom,
   CustomBuilder,
   CustomBuilderComp,
+  CustomExtrinsic,
   Nft,
   NftMint,
+  AssetTransfer,
+  Assets,
 };

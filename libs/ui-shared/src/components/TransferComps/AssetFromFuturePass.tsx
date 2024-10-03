@@ -106,7 +106,9 @@ export default function AssetFromFuturePass() {
         <div className="row">
           <CodeView code={codeString}>
             <h3>Send From FuturePass</h3>
-            <small>{shortAddress(userSession?.futurepass ?? '')}</small>
+            <span
+              style={{ display: 'inline-block', fontSize: '0.8rem' }}
+            >{shortAddress(userSession?.futurepass ?? '')}</span>
           </CodeView>
         </div>
         <div className="row">
@@ -242,7 +244,9 @@ export default function AssetFromFuturePass() {
         <div className="row">
           <CodeView code={codeString}>
             <h3>Send From FuturePass</h3>
-            <small>{shortAddress(userSession?.futurepass ?? '')}</small>
+            <span style={{ display: 'inline-block', fontSize: '0.8rem' }}>
+              {shortAddress(userSession?.futurepass ?? '')}
+            </span>
           </CodeView>
         </div>
         <div className="row">

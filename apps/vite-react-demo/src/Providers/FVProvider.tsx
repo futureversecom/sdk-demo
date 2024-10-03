@@ -19,16 +19,6 @@ import type { NetworkName } from '@therootnetwork/api';
 
 const customTheme: ThemeConfig = {
   ...DarkTheme,
-  colors: {
-    ...DarkTheme.colors,
-    backgroundColor: '#7bff00',
-    primaryColor: '#1121024b',
-    secondaryColor: '#000000',
-    borderColor: '#112102',
-    socialPrimaryColor: '#e9dfdf0',
-    socialSecondaryColor: '#112102',
-    textColor: '#121211',
-  },
   defaultAuthOption: 'web3',
 };
 

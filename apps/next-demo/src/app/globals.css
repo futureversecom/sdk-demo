@@ -250,7 +250,6 @@ input {
   cursor: not-allowed;
 }
 
-
 .card .spinner {
   border: 4px solid #ffffff;
   border-top: 4px solid #141414;
@@ -517,6 +516,51 @@ div.sdk-demo-dialog .spinner {
   border-top-color: transparent;
 }
 
+button.disabled {
+  cursor: not-allowed !important;
+}
+
+input[type="range"] {
+  width: 100%;
+  height: 0px;
+  border-radius: 6px;
+  outline: 0;
+}
+
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 18px;
+  width: 18px;
+  border-radius: 3px;
+  background: #7bff00;
+  border-radius: 50%;
+  border: 0;
+  cursor: pointer;
+}
+
+/* All the same stuff for Firefox */
+input[type=range]::-moz-range-thumb {
+  height: 18px;
+  width: 18px;
+  border-radius: 3px;
+  background: #7bff00;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* All the same stuff for IE */
+input[type=range]::-ms-thumb {
+  height: 18px;
+  width: 18px;
+  border-radius: 3px;
+  background: #7bff00;
+  border-radius: 50%;
+  border: 0;
+  cursor: pointer;
+}
+
 .copy-code-btn,
 .close-code-btn {
   position: absolute;
@@ -548,6 +592,7 @@ div.sdk-demo-dialog .spinner {
   backdrop-filter: blur(8px);
   padding: 16px;
   cursor: pointer;
+  z-index: 999;
 }
 
 .code-view pre {

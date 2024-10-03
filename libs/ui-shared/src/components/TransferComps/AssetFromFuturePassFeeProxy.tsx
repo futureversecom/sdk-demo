@@ -115,7 +115,9 @@ export default function AssetFromFuturePassFeeProxy() {
         <div className="row">
           <CodeView code={codeString}>
             <h3>Send From FuturePass Using Fee Proxy</h3>
-            <small>{shortAddress(userSession?.futurepass ?? '')}</small>
+            <span
+              style={{ display: 'inline-block', fontSize: '0.8rem' }}
+            >{shortAddress(userSession?.futurepass ?? '')}</span>
           </CodeView>
         </div>
         <div className="row">
@@ -275,7 +277,9 @@ export default function AssetFromFuturePassFeeProxy() {
         <div className="row">
           <CodeView code={codeString}>
             <h3>Send From FuturePass Using Fee Proxy</h3>
-            <small>{shortAddress(userSession?.futurepass ?? '')}</small>
+            <span style={{ display: 'inline-block', fontSize: '0.8rem' }}>
+              {shortAddress(userSession?.futurepass ?? '')}
+            </span>
           </CodeView>
         </div>
         <div className="row">

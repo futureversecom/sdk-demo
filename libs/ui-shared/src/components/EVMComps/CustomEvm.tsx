@@ -8,6 +8,7 @@ import { useTrnApi } from '../../providers/TRNProvider';
 import { useRootStore } from '../../hooks/useRootStore';
 import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
 import { TransactionBuilder } from '@futureverse/transact';
+import SliderInput from '../SliderInput';
 
 export default function CustomEvm() {
   const { userSession } = useAuth();
@@ -19,7 +20,7 @@ export default function CustomEvm() {
   const [evmUseFuturePass, setEvmUseFuturePass] = useState(false);
   const [evmArgs, setEvmArgs] = useState('');
   const [evmFunctionName, setEvmFunctionName] = useState('increment');
-  const [slippage, setSlippage] = useState('');
+  const [slippage, setSlippage] = useState('5');
   const [evmAbi, setEvmAbi] = useState(
     JSON.stringify([
       {
@@ -278,27 +279,25 @@ export default function CustomEvm() {
                     setAssetId(Number(e.target.value));
                   }}
                 >
-                  <option value={2}>Xrp</option>
-                  <option value={1}>Root</option>
-                  <option value={3172}>Sylo</option>
+                  <option value={2}>XRP</option>
+                  <option value={1}>ROOT</option>
+                  <option value={3172}>SYLO</option>
                   <option value={17508}>ASTO</option>
                 </select>
               </label>
             </div>
-            <div className="row">
-              <label>
-                Slippage
-                <input
-                  name="slippage"
-                  value={slippage}
-                  onChange={e => {
-                    resetState();
-                    setSlippage(e.target.value);
-                  }}
-                  className="w-full builder-input"
+            {assetId !== 2 && (
+              <div className="row">
+                <SliderInput
+                  sliderValue={slippage}
+                  setSliderValue={setSlippage}
+                  minValue={0}
+                  sliderStep={0.1}
+                  maxValue={15}
+                  resetState={resetState}
                 />
-              </label>
-            </div>
+              </div>
+            )}
           </div>
           <div className="col span-4">
             <div className="row">

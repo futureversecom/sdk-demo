@@ -12,9 +12,12 @@ import {
   Custom,
   CustomBuilder,
   CustomBuilderComp,
+  CustomExtrinsic,
   Spinner,
   Evm,
   Nft,
+  AssetTransfer,
+  Assets,
 } from './components';
 import { useIsMounted } from './hooks';
 
@@ -44,5 +47,8 @@ export {
   Custom,
   CustomBuilder,
   CustomBuilderComp,
+  CustomExtrinsic,
   Nft,
+  AssetTransfer,
+  Assets,
 };
