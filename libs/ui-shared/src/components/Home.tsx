@@ -1,3 +1,4 @@
+import React from 'react';
 import { useAuth, useConnector } from '@futureverse/auth-react';
 
 import { useQuery } from '@tanstack/react-query';

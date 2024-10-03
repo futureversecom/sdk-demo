@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, CSSProperties } from 'react';
 
 type SendFromProps = {
   sliderValue: string;
@@ -19,6 +19,21 @@ export default function SliderInput({
   resetState,
   label = 'Slippage',
 }: SendFromProps) {
+  const bgRender: CSSProperties = useMemo(() => {
+    return {
+      position: 'absolute',
+      width: `calc(${(Number(sliderValue) * 100) / maxValue}%)`,
+      height: '2px',
+      backgroundColor: '#7bff00',
+      padding: '0',
+      marginTop: '8px',
+      marginBottom: '8px',
+      left: 0,
+      top: 0,
+      zIndex: 1,
+    };
+  }, [maxValue, sliderValue]);
+
   return (
     <label>
       <div style={{ marginTop: '8px', marginBottom: '8px' }}>{label}</div>
@@ -52,20 +67,7 @@ export default function SliderInput({
             }}
             value={sliderValue}
           />
-          <div
-            style={{
-              position: 'absolute',
-              width: `calc(${(Number(sliderValue) * 100) / maxValue}%)`,
-              height: '2px',
-              backgroundColor: '#7bff00',
-              padding: '0',
-              marginTop: '8px',
-              marginBottom: '8px',
-              left: 0,
-              top: 0,
-              zIndex: 1,
-            }}
-          ></div>
+          <div style={bgRender}></div>
         </div>
         <div
           style={{

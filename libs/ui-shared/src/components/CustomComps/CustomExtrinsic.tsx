@@ -1,5 +1,5 @@
 import { useAuth, useConnector } from '@futureverse/auth-react';
-import React, { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { useTrnApi } from '../../providers/TRNProvider';
 import { useFutureverseSigner } from '@futureverse/auth-react';
@@ -8,7 +8,6 @@ import { TransactionBuilder } from '@futureverse/transact';
 import { useRootStore } from '../../hooks/useRootStore';
 
 import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
-import { shortAddress } from '../../lib/utils';
 import CodeView from '../CodeView';
 import SliderInput from '../SliderInput';
 import SendFrom from '../SendFrom';

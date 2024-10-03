@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useAuth, useConnector } from '@futureverse/auth-react';
 import { TransactionBuilder } from '@futureverse/transact';
 import { useCallback, useMemo, useState } from 'react';
@@ -12,7 +10,7 @@ import { useRootStore } from '../../hooks/useRootStore';
 import { useFutureverseSigner } from '@futureverse/auth-react';
 
 import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
-import { getBalance, shortAddress } from '../../lib/utils';
+import { getBalance } from '../../lib/utils';
 import CodeView from '../CodeView';
 import { AddressToSend } from '../AddressToSend';
 import SendFrom from '../SendFrom';

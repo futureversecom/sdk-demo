@@ -8,7 +8,6 @@ import { useRootStore } from '../../hooks/useRootStore';
 import { useCustomExtrinsicBuilder } from '../../hooks/useCustomExtrinsicBuilder';
 
 import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
-import { shortAddress } from '../../lib/utils';
 import CodeView from '../CodeView';
 import { isAddress } from 'viem';
 import SliderInput from '../SliderInput';
