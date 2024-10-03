@@ -177,9 +177,6 @@ export default function AssetTransfer() {
         <div className="row">
           <CodeView code={codeString}>
             <h3>Transfer Assets</h3>
-            <span
-              style={{ display: 'inline-block', fontSize: '0.8rem' }}
-            >{shortAddress(userSession?.futurepass ?? '')}</span>
           </CodeView>
         </div>
         <div className="row">
@@ -419,9 +416,6 @@ export default function AssetTransfer() {
         <div className="row">
           <CodeView code={codeString}>
             <h3>Transfer Assets</h3>
-            <span style={{ display: 'inline-block', fontSize: '0.8rem' }}>
-              {shortAddress(userSession?.futurepass ?? '')}
-            </span>
           </CodeView>
         </div>
         <div className="row">

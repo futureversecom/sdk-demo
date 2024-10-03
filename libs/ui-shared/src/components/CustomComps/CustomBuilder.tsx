@@ -10,6 +10,8 @@ import { useCustomExtrinsicBuilder } from '../../hooks/useCustomExtrinsicBuilder
 import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
 import { shortAddress } from '../../lib/utils';
 import CodeView from '../CodeView';
+import { isAddress } from 'viem';
+import SliderInput from '../SliderInput';
 
 const codeString = `
 import { useAuth } from '@futureverse/auth-react';
@@ -295,13 +297,13 @@ export default function CustomBuilderComp() {
         await builder.addFuturePassAndFeeProxy({
           futurePass: userSession.futurepass,
           assetId: feeAssetId,
-          slippage: 5,
+          slippage: Number(slippage),
         });
       }
       if (!useFuturePass) {
         await builder.addFeeProxy({
           assetId: feeAssetId,
-          slippage: 5,
+          slippage: Number(slippage),
         });
       }
     }
@@ -335,11 +337,6 @@ export default function CustomBuilderComp() {
       <div className="inner">
         <CodeView code={codeString}>
           <h3>Custom Extrinsic Builder</h3>
-          <span
-              style={{ display: 'inline-block', fontSize: '0.8rem' }}
-          >
-              {shortAddress(userSession?.futurepass ?? '')}
-          </span>
         </CodeView>
         <div className="row">
           <label>
@@ -498,6 +495,7 @@ type Argument = {
   name: string;
   type: string;
   defaultValue: string | number | boolean;
+  validation?: 'address' | 'number' | 'string' | 'boolean';
 };
 
 type Method = {
@@ -541,6 +539,7 @@ export default function CustomBuilderComp() {
               name: 'walletAddress',
               type: 'string',
               defaultValue: userSession?.eoa ?? '',
+              validation: 'address',
             },
             {
               name: 'amount',
@@ -572,6 +571,7 @@ export default function CustomBuilderComp() {
               name: 'walletAddress',
               type: 'string',
               defaultValue: userSession?.eoa ?? '',
+              validation: 'address',
             },
           ],
         },
@@ -591,6 +591,7 @@ export default function CustomBuilderComp() {
               name: 'walletAddress',
               type: 'string',
               defaultValue: userSession?.eoa ?? '',
+              validation: 'address',
             },
           ],
         },
@@ -626,6 +627,7 @@ export default function CustomBuilderComp() {
               name: 'walletAddress',
               type: 'string',
               defaultValue: userSession?.eoa ?? '',
+              validation: 'address',
             },
           ],
         },
@@ -645,6 +647,7 @@ export default function CustomBuilderComp() {
               name: 'walletAddress',
               type: 'string',
               defaultValue: userSession?.eoa ?? '',
+              validation: 'address',
             },
           ],
         },
@@ -684,6 +687,7 @@ export default function CustomBuilderComp() {
   const getExtrinsic = useGetExtrinsic();
 
   const [feeAssetId, setFeeAssetId] = useState<number>(1);
+  const [slippage, setSlippage] = useState<string>('5');
 
   const [useFuturePass, setUseFuturePass] = useState(true);
 
@@ -691,6 +695,8 @@ export default function CustomBuilderComp() {
   const [method, setMethod] = useState<keyof Method | null>(null);
 
   const [formValues, setFormValues] = useState<{ [key: string]: string }>({});
+
+  const [addressError, setAddressError] = useState<string | null>(null);
 
   useEffect(() => {
     if (pallet && method) {
@@ -753,13 +759,13 @@ export default function CustomBuilderComp() {
         await builder.addFuturePassAndFeeProxy({
           futurePass: userSession.futurepass,
           assetId: feeAssetId,
-          slippage: 5,
+          slippage: Number(slippage),
         });
       }
       if (!useFuturePass) {
         await builder.addFeeProxy({
           assetId: feeAssetId,
-          slippage: 5,
+          slippage: Number(slippage),
         });
       }
     }
@@ -779,14 +785,17 @@ export default function CustomBuilderComp() {
     getExtrinsic,
     setCurrentBuilder,
     useFuturePass,
+    slippage,
   ]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormValues(prevValues => ({
-      ...prevValues,
-      [name]: value,
-    }));
+    setFormValues(prevValues => {
+      return {
+        ...prevValues,
+        [name]: value,
+      };
+    });
   };
 
   return (
@@ -794,9 +803,6 @@ export default function CustomBuilderComp() {
       <div className="inner">
         <CodeView code={codeString}>
           <h3>Custom Extrinsic Builder</h3>
-          <span style={{ display: 'inline-block', fontSize: '0.8rem' }}>
-            {shortAddress(userSession?.futurepass ?? '')}
-          </span>
         </CodeView>
         <div className="row">
           <label>
@@ -869,10 +875,34 @@ export default function CustomBuilderComp() {
                     type="text"
                     className="w-full builder-input"
                     disabled={disable}
-                    onChange={handleInputChange}
+                    onChange={e => {
+                      if (arg.validation === 'address') {
+                        if (e.target.value.length !== 42) {
+                          setAddressError('Address is too long');
+                        }
+                        if (!isAddress(e.target.value)) {
+                          setAddressError('Invalid address');
+                        }
+                        if (
+                          isAddress(e.target.value) &&
+                          e.target.value.length === 42
+                        ) {
+                          setAddressError(null);
+                        }
+                      }
+                      handleInputChange(e);
+                    }}
                     name={arg.name}
                     value={formValues[arg.name] ?? ''}
                   />
+                  {arg.validation === 'address' && addressError && (
+                    <span
+                      style={{ display: 'inline-block', fontSize: '0.8rem' }}
+                      className="text-red-500"
+                    >
+                      {addressError}
+                    </span>
+                  )}
                 </label>
               </div>
             ))}
@@ -930,14 +960,28 @@ export default function CustomBuilderComp() {
                   </select>
                 </label>
               </div>
+              {feeAssetId !== 2 && (
+                <div className="row">
+                  <SliderInput
+                    sliderValue={slippage}
+                    setSliderValue={setSlippage}
+                    minValue={0}
+                    sliderStep={0.1}
+                    maxValue={15}
+                    resetState={resetState}
+                  />
+                </div>
+              )}
               <div className="row">
                 <button
-                  className="w-full builder-input green"
+                  className={`w-full builder-input green ${
+                    disable || !!addressError ? 'disabled' : ''
+                  }`}
                   onClick={() => {
                     resetState();
                     createBuilder();
                   }}
-                  disabled={disable}
+                  disabled={disable || !!addressError}
                   style={{ textTransform: 'capitalize' }}
                 >
                   {method} {pallet}

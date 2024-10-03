@@ -164,9 +164,6 @@ export default function NftTransfer() {
       <div className="inner">
         <CodeView code={codeString}>
           <h3>Transfer Nft</h3>
-          <span
-              style={{ display: 'inline-block', fontSize: '0.8rem' }}
-            >Collection ID: {collectionId}</span>
         </CodeView>
         <div className="row">
           <SendFrom
@@ -387,9 +384,6 @@ export default function NftTransfer() {
       <div className="inner">
         <CodeView code={codeString}>
           <h3>Transfer Nft</h3>
-          <span style={{ display: 'inline-block', fontSize: '0.8rem' }}>
-            Collection ID: {collectionId}
-          </span>
         </CodeView>
         <div className="row">
           <SendFrom

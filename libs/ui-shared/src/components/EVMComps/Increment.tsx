@@ -133,9 +133,6 @@ export default function Increment() {
       <div className="inner">
         <CodeView code={codeString}>
           <h3>Increment Counter</h3>
-          <span style={{ display: 'block', fontSize: '0.8rem' }}>
-            {shortAddress(userSession?.eoa ?? '')}
-          </span>
         </CodeView>
 
         <div className="row">
@@ -334,9 +331,6 @@ export default function Increment() {
       <div className="inner">
         <CodeView code={codeString}>
           <h3>Increment Counter</h3>
-          <span style={{ display: 'block', fontSize: '0.8rem' }}>
-            {shortAddress(userSession?.eoa ?? '')}
-          </span>
         </CodeView>
 
         <div className="row">

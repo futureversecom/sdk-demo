@@ -23,7 +23,7 @@ export default function App() {
         />
         <Route path="assetTx" element={<Assets />} />
         <Route path="customTx" element={<Custom />} />
-        <Route path="CustomBuilder" element={<CustomBuilder />} />
+        <Route path="custom-builder" element={<CustomBuilder />} />
         <Route path="evmTx" element={<Evm />} />
         <Route path="nftTx" element={<Nft />} />
         <Route path="login" element={<Login />} />

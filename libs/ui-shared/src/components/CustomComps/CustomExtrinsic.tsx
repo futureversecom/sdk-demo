@@ -115,13 +115,15 @@ export default function CustomExtrinsic() {
     getExtrinsic(builder);
     setCurrentBuilder(builder);
   }, [
-    addressToSend,
     trnApi,
     signer,
     userSession,
-    feeAssetId,
+    addressToSend,
+    fromWallet,
     getExtrinsic,
     setCurrentBuilder,
+    feeAssetId,
+    slippage,
   ]);
 
   const buttonDisabled = useMemo(() => {
@@ -133,13 +135,6 @@ export default function CustomExtrinsic() {
       <div className="inner">
         <CodeView code={codeString}>
           <h3>Mint Nft Using Custom Extrinsic Builder</h3>
-          <span style={{ display: 'inline-block', fontSize: '0.8rem' }}>
-            {shortAddress(
-              (fromWallet === 'eoa'
-                ? userSession?.eoa
-                : userSession?.futurepass) ?? ''
-            )}
-          </span>
         </CodeView>
         <div className="row">
           <SendFrom
@@ -287,13 +282,15 @@ export default function CustomExtrinsic() {
     getExtrinsic(builder);
     setCurrentBuilder(builder);
   }, [
-    addressToSend,
     trnApi,
     signer,
     userSession,
-    feeAssetId,
+    addressToSend,
+    fromWallet,
     getExtrinsic,
     setCurrentBuilder,
+    feeAssetId,
+    slippage,
   ]);
 
   const buttonDisabled = useMemo(() => {
@@ -305,13 +302,6 @@ export default function CustomExtrinsic() {
       <div className="inner">
         <CodeView code={codeString}>
           <h3>Mint Nft Using Custom Extrinsic Builder</h3>
-          <span style={{ display: 'inline-block', fontSize: '0.8rem' }}>
-            {shortAddress(
-              (fromWallet === 'eoa'
-                ? userSession?.eoa
-                : userSession?.futurepass) ?? ''
-            )}
-          </span>
         </CodeView>
         <div className="row">
           <SendFrom
