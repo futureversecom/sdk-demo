@@ -1,5 +1,6 @@
+'use client';
 import { Nft } from '@/components/client-components';
 
-export default async function Page() {
+export default function Page() {
   return <Nft />;
 }

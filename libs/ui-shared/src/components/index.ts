@@ -19,6 +19,14 @@ import {
 import { AssetTransfer } from './Assets/index';
 
 import { NftMint } from './NftComps';
+import { Header } from './Header';
+import { Footer } from './Footer';
+import { Navigation, MenuProps, LogOut } from './Navigation';
+import DropDownMenu from './DropDownMenu';
+
+import { DocumentationIcon } from './DocumentationIcon';
+import { FVIcon } from './FVIcon';
+import { GithubIcon } from './GithubIcon';
 
 import {
   CustomFromEoaFuturePassFeeProxy,
@@ -53,4 +61,14 @@ export {
   NftMint,
   AssetTransfer,
   Assets,
+  Header,
+  Footer,
+  Navigation,
+  DropDownMenu,
+  DocumentationIcon,
+  FVIcon,
+  GithubIcon,
+  LogOut,
 };
+
+export type { MenuProps };

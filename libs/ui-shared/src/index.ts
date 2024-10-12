@@ -18,8 +18,14 @@ import {
   Nft,
   AssetTransfer,
   Assets,
+  Header,
+  Navigation,
+  DropDownMenu,
+  type MenuProps,
+  LogOut,
+  Footer,
 } from './components';
-import { useIsMounted } from './hooks';
+import { useIsMounted, useIsMobile } from './hooks';
 
 import { collectionIdToAddress } from './lib/utils';
 import { TestContractAddress, TestContractAbi } from './lib/test-contract';
@@ -40,6 +46,7 @@ export {
   TransactionDetails,
   Transfer,
   useIsMounted,
+  useIsMobile,
   Spinner,
   collectionIdToAddress,
   TestContractAddress,
@@ -51,4 +58,11 @@ export {
   Nft,
   AssetTransfer,
   Assets,
+  Header,
+  Footer,
+  Navigation,
+  DropDownMenu,
+  LogOut,
 };
+
+export type { MenuProps };

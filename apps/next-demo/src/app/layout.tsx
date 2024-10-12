@@ -4,11 +4,12 @@ import './globals.css';
 
 import { GeistSans } from 'geist/font/sans';
 import { Providers } from '@/Providers';
-import Header from '@/components/Header';
 
 import { headers } from 'next/headers';
 import { getWagmiConfig } from '@/Providers/config';
 import { cookieToInitialState } from 'wagmi';
+import { HeaderWrap } from '@/components/HeaderWrap';
+import { Footer } from '@/components/client-components';
 
 export const metadata: Metadata = {
   title: 'Futureverse Sdks: Next Demo',
@@ -27,8 +28,11 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={GeistSans.className}>
         <Providers initialWagmiState={initialState}>
-          <Header />
-          {children}
+          <div className="body-wrap">
+            <HeaderWrap />
+            <div className="inner">{children}</div>
+            <Footer />
+          </div>
         </Providers>
       </body>
     </html>

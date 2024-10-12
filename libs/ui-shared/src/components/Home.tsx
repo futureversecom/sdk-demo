@@ -445,9 +445,12 @@ export default function Home({ title }: { title: string }) {
   return (
     <div>
       <div className="row">
-        <CodeView code={codeString}>
-          <h1>{title}</h1>
-        </CodeView>
+        {userSession && (
+          <CodeView code={codeString}>
+            <h1>{title}</h1>
+          </CodeView>
+        )}
+        {!userSession && <h1>{title}</h1>}
       </div>
 
       <div>

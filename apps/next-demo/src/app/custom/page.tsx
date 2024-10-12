@@ -1,5 +1,6 @@
+'use client';
 import { Custom } from '@/components/client-components';
 
-export default async function Page() {
+export default function Page() {
   return <Custom />;
 }

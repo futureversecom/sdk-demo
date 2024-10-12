@@ -1,6 +1,6 @@
 import './App.css';
 import React from 'react';
-import { Routes, Route, Outlet } from 'react-router-dom';
+import { Routes, Route, Outlet, Link } from 'react-router-dom';
 
 import {
   Evm,
@@ -9,9 +9,12 @@ import {
   Custom,
   Nft,
   CustomBuilder,
+  Header,
+  useIsMobile,
+  Footer,
 } from '@fv-sdk-demos/ui-shared';
 import Login from './components/Login';
-import Header from './components/Header';
+import Nav, { MobileMenu } from './components/Nav';
 
 export default function App() {
   return (
@@ -33,10 +36,26 @@ export default function App() {
 }
 
 function Layout() {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const isMobile = useIsMobile();
+
+  console.log('isMobile', isMobile);
+
   return (
-    <div>
-      <Header />
-      <Outlet />
+    <div className="body-wrap">
+      <Header
+        Nav={() => <Nav setIsOpen={setIsOpen} isOpen={isOpen} />}
+        Logo={() => (
+          <Link to="/">
+            <img src="/images/FvLogo.svg" alt="Logo" />
+          </Link>
+        )}
+      />
+      {isOpen && isMobile && <MobileMenu setIsOpen={setIsOpen} />}
+      <div className="inner">
+        <Outlet />
+      </div>
+      <Footer />
     </div>
   );
 }

@@ -5,6 +5,7 @@ import { useRnsResolveAddress, useRnsResolveRns } from './useRns';
 import { useTransactQuery } from './useTransactQuery';
 import { useTransact } from './useTransact';
 import { useGetTokens } from './useGetTokens';
+import { useIsMobile } from './useIsMobile';
 
 export {
   useIsMounted,
@@ -15,4 +16,5 @@ export {
   useTransactQuery,
   useTransact,
   useGetTokens,
+  useIsMobile,
 };
