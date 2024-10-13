@@ -5,10 +5,13 @@ import Nav, { MobileMenu } from './Nav';
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import useIsAuthed from '@/hooks/useIsAuthed';
 
 export const HeaderWrap = () => {
   const [isOpen, setIsOpen] = useState(false);
   const isMobile = useIsMobile(992);
+
+  useIsAuthed({ redirectUrl: '/' });
 
   console.log('isMobile', isMobile);
 

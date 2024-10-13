@@ -35,7 +35,7 @@ export default function Transfer() {
       <div className="auto-grid">
         <Increment />
         <Decrement />
-        <CustomEvm />
+        {/* <CustomEvm /> */}
       </div>
       <div className="auto-grid">
         {gas && (

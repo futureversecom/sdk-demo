@@ -602,7 +602,7 @@ input[type=range]::-ms-thumb {
 }
 
 .copy-code-btn {
-  right: calc(16px + 8px + 54px);
+  right: calc(16px + 8px + 44px);
 }
 
 .code-viewer {
@@ -642,6 +642,19 @@ input[type=range]::-ms-thumb {
   width: 16px;
   height: 16px;
 }
+
+.code-view button {
+  margin-top: 8px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+}
+
+.code-view button svg {
+  height: 16px;
+  width: auto;
+}
+
 
 .body-wrap {
   display: flex;
@@ -959,7 +972,7 @@ nav li {
   }
 
   .copy-code-btn {
-    right: calc(24px + 8px + 54px);
+    right: calc(64px + 8px + 4px)
   }
 
 }
@@ -976,7 +989,7 @@ nav li {
   }
 
   .copy-code-btn {
-    right: calc(32px + 8px + 54px);
+    right: calc(32px + 8px + 44px);
   }
 }
 
@@ -992,7 +1005,7 @@ nav li {
   }
 
   .copy-code-btn {
-    right: calc(64px + 8px + 54px);
+    right: calc(64px + 8px + 44px);
   }
 }
 

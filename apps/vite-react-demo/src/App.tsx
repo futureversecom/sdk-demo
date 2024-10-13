@@ -15,6 +15,7 @@ import {
 } from '@fv-sdk-demos/ui-shared';
 import Login from './components/Login';
 import Nav, { MobileMenu } from './components/Nav';
+import useIsAuthed from './hooks/useIsAuthed';
 
 export default function App() {
   return (
@@ -39,7 +40,7 @@ function Layout() {
   const [isOpen, setIsOpen] = React.useState(false);
   const isMobile = useIsMobile();
 
-  console.log('isMobile', isMobile);
+  useIsAuthed({ redirectUrl: '/' });
 
   return (
     <div className="body-wrap">

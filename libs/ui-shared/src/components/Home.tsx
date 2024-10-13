@@ -9,6 +9,7 @@ import { useIsMounted, useRnsResolveAddress, useTransactQuery } from '../hooks';
 import { useAccount } from 'wagmi';
 import { getBalance, shortAddress } from '../lib/utils';
 import CodeView from './CodeView';
+import { LogIn } from './Navigation';
 
 const codeString = `
 import React from 'react';
@@ -454,6 +455,20 @@ export default function Home({ title }: { title: string }) {
       </div>
 
       <div>
+        {!userSession && (
+          <div className="auto-grid">
+            <div className="card">
+              <div className="inner">
+                <h3>
+                  Connect with your FuturePass to interact with the SDK
+                  Playground
+                </h3>
+                <LogIn />
+              </div>
+            </div>
+          </div>
+        )}
+
         {userSession && (
           <>
             <div className="auto-grid">
