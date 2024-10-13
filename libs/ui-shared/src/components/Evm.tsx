@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 import TransactionDetails from './TransactionDetails';
 import { useIsMounted } from '../hooks';
@@ -7,7 +7,6 @@ import { Increment, Decrement } from '../components';
 
 import { useAuth } from '@futureverse/auth-react';
 import { useRootStore } from '../hooks/useRootStore';
-import { CustomEvm } from './EVMComps';
 
 export default function Transfer() {
   const isMounted = useIsMounted();
