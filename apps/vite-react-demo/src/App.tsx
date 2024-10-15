@@ -1,7 +1,7 @@
 import './App.css';
 import React from 'react';
 import { Routes, Route, Outlet, Link } from 'react-router-dom';
-
+import { useLocation as useReactRouterLocation } from 'react-router-dom';
 import {
   Evm,
   Home,
@@ -12,6 +12,7 @@ import {
   Header,
   useIsMobile,
   Footer,
+  LogoIcon,
 } from '@fv-sdk-demos/ui-shared';
 import Login from './components/Login';
 import Nav, { MobileMenu } from './components/Nav';
@@ -39,7 +40,7 @@ export default function App() {
 function Layout() {
   const [isOpen, setIsOpen] = React.useState(false);
   const isMobile = useIsMobile();
-
+  const reactRouterLocation = useReactRouterLocation();
   useIsAuthed({ redirectUrl: '/' });
 
   return (
@@ -48,7 +49,7 @@ function Layout() {
         Nav={() => <Nav setIsOpen={setIsOpen} isOpen={isOpen} />}
         Logo={() => (
           <Link to="/">
-            <img src="/images/FvLogo.svg" alt="Logo" />
+            <LogoIcon />
           </Link>
         )}
       />
@@ -56,7 +57,7 @@ function Layout() {
       <div className="inner">
         <Outlet />
       </div>
-      <Footer />
+      <Footer pathName={reactRouterLocation.pathname} />
     </div>
   );
 }

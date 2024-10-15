@@ -6,69 +6,47 @@ import Result from './Result';
 import Spinner from './Spinner';
 import Evm from './Evm';
 import Nft from './Nft';
-import { Dialog } from './Dialog/Dialog';
 import Assets from './Assets';
+import DropDownMenu from './DropDownMenu';
+import TransactionDetails from './TransactionDetails';
 
-import {
+export { Dialog } from './Dialog/Dialog';
+export {
   AssetFromEoa,
   AssetFromEoaFeeProxy,
   AssetFromFuturePass,
   AssetFromFuturePassFeeProxy,
 } from './TransferComps';
 
-import { AssetTransfer } from './Assets/index';
+export { AssetTransfer } from './Assets/index';
 
-import { NftMint } from './NftComps';
-import { Header } from './Header';
-import { Footer } from './Footer';
-import { Navigation, MenuProps, LogOut } from './Navigation';
-import DropDownMenu from './DropDownMenu';
+export { NftMint } from './NftComps';
+export { Header } from './Header';
+export { Footer } from './Footer';
+export { Navigation, type MenuProps, LogOut } from './Navigation';
 
-import { DocumentationIcon } from './DocumentationIcon';
-import { FVIcon } from './FVIcon';
-import { GithubIcon } from './GithubIcon';
+export * from './Icons';
 
-import {
+export { DocumentationLink } from './DocumentationLink';
+
+export {
   CustomFromEoaFuturePassFeeProxy,
   CustomBuilderComp,
   CustomExtrinsic,
 } from './CustomComps';
 
-import { Increment, Decrement } from './EVMComps';
-
-import TransactionDetails from './TransactionDetails';
+export { Increment, Decrement } from './EVMComps';
 
 export {
   Evm,
   Home,
-  Increment,
-  Decrement,
   Transfer,
-  AssetFromEoa,
-  AssetFromEoaFeeProxy,
-  AssetFromFuturePass,
-  AssetFromFuturePassFeeProxy,
   Result,
   TransactionDetails,
   Spinner,
-  Dialog,
-  CustomFromEoaFuturePassFeeProxy,
   Custom,
   CustomBuilder,
-  CustomBuilderComp,
-  CustomExtrinsic,
   Nft,
-  NftMint,
-  AssetTransfer,
   Assets,
-  Header,
-  Footer,
-  Navigation,
   DropDownMenu,
-  DocumentationIcon,
-  FVIcon,
-  GithubIcon,
-  LogOut,
 };
-
-export type { MenuProps };

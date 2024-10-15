@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  DocumentationLink,
   DropDownMenu,
   LogOut,
   MenuProps,
@@ -27,36 +28,39 @@ const TransactMenu = ({
   setIsOpen?: Dispatch<SetStateAction<boolean>>;
 }) => {
   return (
-    <ul className="dropdown-content">
-      <li>
-        <Link onClick={() => setIsOpen && setIsOpen(false)} href="/assets">
-          Assets
-        </Link>
-      </li>
-      <li>
-        <Link onClick={() => setIsOpen && setIsOpen(false)} href="/nft">
-          NFT
-        </Link>
-      </li>
-      <li>
-        <Link onClick={() => setIsOpen && setIsOpen(false)} href="/evm">
-          EVM
-        </Link>
-      </li>
-      <li>
-        <Link onClick={() => setIsOpen && setIsOpen(false)} href="/custom">
-          Custom
-        </Link>
-      </li>
-      <li>
-        <Link
-          onClick={() => setIsOpen && setIsOpen(false)}
-          href="/custom-builder"
-        >
-          Extrinsic Builder
-        </Link>
-      </li>
-    </ul>
+    <>
+      <ul className="dropdown-content">
+        <li>
+          <Link onClick={() => setIsOpen && setIsOpen(false)} href="/assets">
+            Assets
+          </Link>
+        </li>
+        <li>
+          <Link onClick={() => setIsOpen && setIsOpen(false)} href="/nft">
+            NFT
+          </Link>
+        </li>
+        <li>
+          <Link onClick={() => setIsOpen && setIsOpen(false)} href="/evm">
+            EVM
+          </Link>
+        </li>
+        <li>
+          <Link onClick={() => setIsOpen && setIsOpen(false)} href="/custom">
+            Custom
+          </Link>
+        </li>
+        <li>
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/custom-builder"
+          >
+            Extrinsic Builder
+          </Link>
+        </li>
+      </ul>
+      <DocumentationLink link="https://docs.futureverse.com/dev/transact" />
+    </>
   );
 };
 export const Menu: React.FC<MenuProps> = ({ setIsOpen }) => {
@@ -69,21 +73,24 @@ export const Menu: React.FC<MenuProps> = ({ setIsOpen }) => {
       </li>
       <DropDownMenu title="Auth SDK">
         <ul className="dropdown-content">
-          <li>Coming Soon</li>
+          <li className="no-hover">Coming Soon</li>
         </ul>
+        <DocumentationLink link="https://docs.futureverse.com/dev/auth" />
       </DropDownMenu>
       <DropDownMenu title="Transact SDK">
         <TransactMenu setIsOpen={setIsOpen} />
       </DropDownMenu>
       <DropDownMenu title="Asset Register SDK">
         <ul className="dropdown-content">
-          <li>Coming Soon</li>
+          <li className="no-hover">Coming Soon</li>
         </ul>
+        <DocumentationLink link="https://docs.futureverse.com/dev/assets" />
       </DropDownMenu>
       <DropDownMenu title="Swappables SDK">
         <ul className="dropdown-content">
-          <li>Coming Soon</li>
+          <li className="no-hover">Coming Soon</li>
         </ul>
+        <DocumentationLink link="https://docs.futureverse.com/dev/platform-tools/swappables-engine" />
       </DropDownMenu>
     </>
   );
@@ -104,8 +111,9 @@ export const MobileMenu: React.FC<MenuProps> = ({ setIsOpen }) => {
         <li>
           <div className="sectionTitle">Auth SDK</div>
           <ul>
-            <li>Coming Soon</li>
+            <li className="no-hover">Coming Soon</li>
           </ul>
+          <DocumentationLink link="https://docs.futureverse.com/dev/auth" />
         </li>
         <li>
           <div className="sectionTitle">Transact SDK</div>
@@ -114,14 +122,16 @@ export const MobileMenu: React.FC<MenuProps> = ({ setIsOpen }) => {
         <li>
           <div className="sectionTitle">Asset Register SDK</div>
           <ul>
-            <li>Coming Soon</li>
+            <li className="no-hover">Coming Soon</li>
           </ul>
+          <DocumentationLink link="https://docs.futureverse.com/dev/assets" />
         </li>
         <li>
           <div className="sectionTitle">Swappables SDK</div>
           <ul>
-            <li>Coming Soon</li>
+            <li className="no-hover">Coming Soon</li>
           </ul>
+          <DocumentationLink link="https://docs.futureverse.com/dev/platform-tools/swappables-engine" />
         </li>
         <LogOut />
       </ul>

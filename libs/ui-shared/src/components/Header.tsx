@@ -1,6 +1,6 @@
 import React from 'react';
-import { DocumentationIcon } from './DocumentationIcon';
-import { GithubIcon } from './GithubIcon';
+import { DocumentationIcon } from './Icons/DocumentationIcon';
+import { GithubIcon } from './Icons/GithubIcon';
 
 export function Header({ Nav, Logo }: { Nav: React.FC; Logo: React.FC }) {
   return (

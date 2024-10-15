@@ -1,13 +1,25 @@
-import React from 'react';
-import { DocumentationIcon } from './DocumentationIcon';
-import { GithubIcon } from './GithubIcon';
-import { FVIcon } from './FVIcon';
+import { DocumentationIcon } from './Icons/DocumentationIcon';
+import { GithubIcon } from './Icons/GithubIcon';
+import { FVIcon } from './Icons/FVIcon';
+import { RootIcon } from './Icons';
 
-export function Footer() {
+export function Footer({ pathName }: { pathName: string }) {
+  console.log('pathName', pathName);
+
   return (
     <footer className="footer">
       <div className="footer__nav">
         <div className="footer__nav_icons">
+          <a
+            href="https://therootnetwork.com/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <div className="icon">
+              <RootIcon />
+            </div>
+            <div className="icon-text">The Root Network</div>
+          </a>
           <a href="https://futureverse.com/" target="_blank" rel="noreferrer">
             <div className="icon">
               <FVIcon />

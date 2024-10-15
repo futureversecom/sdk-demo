@@ -21,6 +21,7 @@ const DropDownMenu: React.FC<DropDownMenuProps> = ({ title, children }) => {
     >
       <button className="dropdown-button">{title}</button>
       {isOpen && <div className="dropdown-inner">{children}</div>}
+      {/* <div className="dropdown-inner">{children}</div> */}
     </li>
   );
 };

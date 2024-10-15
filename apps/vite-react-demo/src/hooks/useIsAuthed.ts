@@ -13,17 +13,11 @@ export default function useIsAuthed({ redirectUrl }: { redirectUrl: string }) {
   );
 
   useEffect(() => {
-    console.log('isFetchingSession', isFetchingSession);
-    console.log('userSession', userSession);
-    console.log('redirectUrl', redirectUrl);
-    console.log('location', location);
-
     if (
       !isFetchingSession &&
       !userSession &&
       location.pathname !== redirectUrl
     ) {
-      console.log('redirecting to', redirectUrl);
       navigate(redirectUrl);
     }
   }, [isFetchingSession, userSession, redirectUrl, location, navigate]);

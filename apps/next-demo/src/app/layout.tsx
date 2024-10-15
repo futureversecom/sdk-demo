@@ -9,7 +9,7 @@ import { headers } from 'next/headers';
 import { getWagmiConfig } from '@/Providers/config';
 import { cookieToInitialState } from 'wagmi';
 import { HeaderWrap } from '@/components/HeaderWrap';
-import { Footer } from '@/components/client-components';
+import FooterWrap from '@/components/FooterWrap';
 
 export const metadata: Metadata = {
   title: 'Futureverse Sdks: Next Demo',
@@ -31,7 +31,7 @@ export default async function RootLayout({
           <div className="body-wrap">
             <HeaderWrap />
             <div className="inner">{children}</div>
-            <Footer />
+            <FooterWrap />
           </div>
         </Providers>
       </body>
