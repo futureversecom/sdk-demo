@@ -36,22 +36,22 @@ const TransactMenu = ({
     <>
       <ul className="dropdown-content">
         <li>
-          <Link onClick={() => setIsOpen && setIsOpen(false)} to="/assets">
+          <Link onClick={() => setIsOpen && setIsOpen(false)} to="/assetTx">
             Assets
           </Link>
         </li>
         <li>
-          <Link onClick={() => setIsOpen && setIsOpen(false)} to="/nft">
+          <Link onClick={() => setIsOpen && setIsOpen(false)} to="/nftTx">
             NFT
           </Link>
         </li>
         <li>
-          <Link onClick={() => setIsOpen && setIsOpen(false)} to="/evm">
+          <Link onClick={() => setIsOpen && setIsOpen(false)} to="/evmTx">
             EVM
           </Link>
         </li>
         <li>
-          <Link onClick={() => setIsOpen && setIsOpen(false)} to="/custom">
+          <Link onClick={() => setIsOpen && setIsOpen(false)} to="/customTx">
             Custom
           </Link>
         </li>

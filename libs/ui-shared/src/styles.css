@@ -1189,7 +1189,7 @@ nav li {
 }
 
 .transactions.no-txs .transactions-inner {
-  justify-content: flex-start;
+  justify-content: center;
   align-items: flex-start;
 }
 

@@ -14,7 +14,7 @@ import SendFrom from '../SendFrom';
 import SliderInput from '../SliderInput';
 
 const codeString = `
-import { useAuth, useConnector } from '@futureverse/auth-react';
+import { useAuth } from '@futureverse/auth-react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useTrnApi } from '../../providers/TRNProvider';
@@ -23,16 +23,14 @@ import { useFutureverseSigner } from '@futureverse/auth-react';
 import { TransactionBuilder } from '@futureverse/transact';
 import { useRootStore } from '../../hooks/useRootStore';
 
-import { useGetTokens } from '../../hooks';
+import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
+import { useGetTokens, useShouldShowEoa } from '../../hooks';
 import CodeView from '../CodeView';
 import SendFrom from '../SendFrom';
-
-
-const collectionId = 709732;
+import SliderInput from '../SliderInput';
 
 export default function NftBurn() {
-  const { userSession, authMethod } = useAuth();
-  const { connector } = useConnector();
+  const { userSession } = useAuth();
 
   const { resetState, setCurrentBuilder, signed, result, error } = useRootStore(
     state => state
@@ -45,23 +43,12 @@ export default function NftBurn() {
   const { trnApi } = useTrnApi();
   const signer = useFutureverseSigner();
 
-  const getExtrinsic = async (builder: RootTransactionBuilder) => {
-    const gasEstimate = await builder?.getGasFees();
-    if (gasEstimate) {
-      setGas(gasEstimate);
-    }
-    const payloads = await builder?.getPayloads();
-    if (!payloads) {
-      return;
-    }
-    setPayload(payloads);
-    const { ethPayload } = payloads;
-    setToSign(ethPayload.toString());
-  };
+  const getExtrinsic = useGetExtrinsic();
 
-  const shouldShowEoa = useMemo(() => {
-    return connector?.id !== 'xaman' || authMethod !== 'eoa';
-  }, [connector, authMethod]);
+  const [collectionId, setCollectionId] = useState<number>(709732);
+  const [slippage, setSlippage] = useState<string>('5');
+
+  const shouldShowEoa = useShouldShowEoa();
 
   const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
     shouldShowEoa ? 'eoa' : 'fpass'
@@ -76,11 +63,11 @@ export default function NftBurn() {
       ? fromWallet === 'fpass'
         ? userSession?.futurepass
         : userSession?.eoa
-      : ''
+      : '',
+    collectionId
   );
 
   const [feeAssetId, setFeeAssetId] = useState<number>(2);
-  const [slippage, setSlippage] = useState<string>('5');
 
   const [serialNumber, setSerialNumber] = useState<string>('');
 
@@ -112,7 +99,7 @@ export default function NftBurn() {
 
     if (fromWallet === 'fpass') {
       if (feeAssetId === 2) {
-        nft.addFuturePass(userSession.futurepass);
+        await nft.addFuturePass(userSession.futurepass);
       }
 
       if (feeAssetId !== 2) {
@@ -140,11 +127,16 @@ export default function NftBurn() {
     signer,
     userSession,
     serialNumber,
+    collectionId,
     fromWallet,
     getExtrinsic,
     setCurrentBuilder,
     feeAssetId,
   ]);
+
+  const buttonDisabled = useMemo(() => {
+    return disable || ownedTokens?.length === 0;
+  }, [disable, ownedTokens]);
 
   return (
     <div className={\`card \${disable ? 'disabled' : ''}\`}>
@@ -161,6 +153,21 @@ export default function NftBurn() {
             resetState={resetState}
             disable={disable}
           />
+        </div>
+        <div className="row">
+          <label>
+            Collection Id
+            <input
+              type="text"
+              value={collectionId.toString()}
+              className="w-full builder-input"
+              onChange={e => {
+                resetState();
+                setCollectionId(Number(e.target.value) || 1);
+              }}
+              disabled={disable}
+            />
+          </label>
         </div>
         <div className="row">
           <label>
@@ -184,7 +191,7 @@ export default function NftBurn() {
                 ))}
               </select>
             ) : (
-              <span>No Owned Tokens</span>
+              <span> - No Owned Tokens</span>
             )}
           </label>
         </div>
@@ -227,7 +234,7 @@ export default function NftBurn() {
               resetState();
               createBuilder();
             }}
-            disabled={disable}
+            disabled={buttonDisabled}
           >
             Burn Token
           </button>
@@ -308,7 +315,7 @@ export default function NftBurn() {
 
     if (fromWallet === 'fpass') {
       if (feeAssetId === 2) {
-        nft.addFuturePass(userSession.futurepass);
+        await nft.addFuturePass(userSession.futurepass);
       }
 
       if (feeAssetId !== 2) {

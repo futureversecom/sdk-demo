@@ -15,10 +15,11 @@ import { shortAddress } from '../../lib/utils';
 import CodeView from '../CodeView';
 import SliderInput from '../SliderInput';
 import SendFrom from '../SendFrom';
+import { ExternalLink } from '../Icons';
 
 const codeString = `
 import React, { useState } from 'react';
-import { useAuth, useConnector } from '@futureverse/auth-react';
+import { useAuth } from '@futureverse/auth-react';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useFutureverseSigner } from '@futureverse/auth-react';
 
@@ -26,26 +27,23 @@ import { useTrnApi } from '../../providers/TRNProvider';
 
 import { TransactionBuilder } from '@futureverse/transact';
 import { useRootStore } from '../../hooks/useRootStore';
+import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
 
 import { TestContractAbi, TestContractAddress } from '../../lib/test-contract';
-import { useGetCount } from '../../hooks';
+import { useGetCount, useShouldShowEoa } from '../../hooks';
 import { shortAddress } from '../../lib/utils';
 import CodeView from '../CodeView';
 import SliderInput from '../SliderInput';
 import SendFrom from '../SendFrom';
 
-
 export default function Decrement() {
-  const { userSession, authMethod } = useAuth();
-  const { connector } = useConnector();
+  const { userSession } = useAuth();
 
   const { resetState, setCurrentBuilder, signed, result, error } = useRootStore(
     state => state
   );
 
-  const shouldShowEoa = useMemo(() => {
-    return connector?.id !== 'xaman' || authMethod !== 'eoa';
-  }, [connector, authMethod]);
+  const shouldShowEoa = useShouldShowEoa();
 
   const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
     shouldShowEoa ? 'eoa' : 'fpass'
@@ -61,19 +59,7 @@ export default function Decrement() {
   const { trnApi } = useTrnApi();
   const signer = useFutureverseSigner();
 
-  const getExtrinsic = async (builder: RootTransactionBuilder) => {
-    const gasEstimate = await builder?.getGasFees();
-    if (gasEstimate) {
-      setGas(gasEstimate);
-    }
-    const payloads = await builder?.getPayloads();
-    if (!payloads) {
-      return;
-    }
-    setPayload(payloads);
-    const { ethPayload } = payloads;
-    setToSign(ethPayload.toString());
-  };
+  const getExtrinsic = useGetExtrinsic();
 
   const {
     data: contractData,
@@ -140,7 +126,7 @@ export default function Decrement() {
             <strong>Contract</strong>
           </div>
           <a
-            href=\`https://porcini.rootscan.io/addresses/\${TestContractAddress}/contract\`}
+            href={\`https://porcini.rootscan.io/addresses/\${TestContractAddress}/contract\`}
             target="_blank"
             rel="noreferrer"
           >
@@ -152,25 +138,17 @@ export default function Decrement() {
               }}
             >
               View {shortAddress(TestContractAddress ?? '')} on Rootscan
-              <svg
-                width="16px"
-                height="16px"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                style={{ marginLeft: '4px', display: 'inline-flex' }}
+              <div
+                style={{
+                  width: '18px',
+                  display: 'inline-block',
+                  marginLeft: '4px',
+                  top: '3px',
+                  position: 'relative',
+                }}
               >
-                <g id="Interface / External_Link">
-                  <path
-                    id="Vector"
-                    d="M10.0002 5H8.2002C7.08009 5 6.51962 5 6.0918 5.21799C5.71547 5.40973 5.40973 5.71547 5.21799 6.0918C5 6.51962 5 7.08009 5 8.2002V15.8002C5 16.9203 5 17.4801 5.21799 17.9079C5.40973 18.2842 5.71547 18.5905 6.0918 18.7822C6.5192 19 7.07899 19 8.19691 19H15.8031C16.921 19 17.48 19 17.9074 18.7822C18.2837 18.5905 18.5905 18.2839 18.7822 17.9076C19 17.4802 19 16.921 19 15.8031V14M20 9V4M20 4H15M20 4L13 11"
-                    stroke="#fff"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </g>
-              </svg>
+                <ExternalLink />
+              </div>
             </span>
           </a>
         </div>
@@ -347,25 +325,17 @@ export default function Decrement() {
               }}
             >
               View {shortAddress(TestContractAddress ?? '')} on Rootscan
-              <svg
-                width="16px"
-                height="16px"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                style={{ marginLeft: '4px', display: 'inline-flex' }}
+              <div
+                style={{
+                  width: '18px',
+                  display: 'inline-block',
+                  marginLeft: '4px',
+                  top: '3px',
+                  position: 'relative',
+                }}
               >
-                <g id="Interface / External_Link">
-                  <path
-                    id="Vector"
-                    d="M10.0002 5H8.2002C7.08009 5 6.51962 5 6.0918 5.21799C5.71547 5.40973 5.40973 5.71547 5.21799 6.0918C5 6.51962 5 7.08009 5 8.2002V15.8002C5 16.9203 5 17.4801 5.21799 17.9079C5.40973 18.2842 5.71547 18.5905 6.0918 18.7822C6.5192 19 7.07899 19 8.19691 19H15.8031C16.921 19 17.48 19 17.9074 18.7822C18.2837 18.5905 18.5905 18.2839 18.7822 17.9076C19 17.4802 19 16.921 19 15.8031V14M20 9V4M20 4H15M20 4L13 11"
-                    stroke="#fff"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </g>
-              </svg>
+                <ExternalLink />
+              </div>
             </span>
           </a>
         </div>

@@ -15,7 +15,7 @@ import SendFrom from '../SendFrom';
 import SliderInput from '../SliderInput';
 
 const codeString = `
-import { useAuth, useConnector } from '@futureverse/auth-react';
+import { useAuth } from '@futureverse/auth-react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useTrnApi } from '../../providers/TRNProvider';
@@ -24,16 +24,16 @@ import { useFutureverseSigner } from '@futureverse/auth-react';
 import { TransactionBuilder } from '@futureverse/transact';
 import { useRootStore } from '../../hooks/useRootStore';
 
-import { useGetTokens } from '../../hooks';
+import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
+import { useGetTokens, useShouldShowEoa } from '../../hooks';
 import CodeView from '../CodeView';
 import { AddressToSend } from '../AddressToSend';
 import SendFrom from '../SendFrom';
+import SliderInput from '../SliderInput';
 
-const collectionId = 709732;
 
 export default function NftTransfer() {
-  const { userSession, authMethod } = useAuth();
-  const { connector } = useConnector();
+  const { userSession } = useAuth();
 
   const { resetState, setCurrentBuilder, signed, result, error } = useRootStore(
     state => state
@@ -46,23 +46,11 @@ export default function NftTransfer() {
   const { trnApi } = useTrnApi();
   const signer = useFutureverseSigner();
 
-  const getExtrinsic = async (builder: RootTransactionBuilder) => {
-    const gasEstimate = await builder?.getGasFees();
-    if (gasEstimate) {
-      setGas(gasEstimate);
-    }
-    const payloads = await builder?.getPayloads();
-    if (!payloads) {
-      return;
-    }
-    setPayload(payloads);
-    const { ethPayload } = payloads;
-    setToSign(ethPayload.toString());
-  };
+  const getExtrinsic = useGetExtrinsic();
 
-  const shouldShowEoa = useMemo(() => {
-    return connector?.id !== 'xaman' || authMethod !== 'eoa';
-  }, [connector, authMethod]);
+  const shouldShowEoa = useShouldShowEoa();
+
+  const [collectionId, setCollectionId] = useState<number>(709732);
 
   const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
     shouldShowEoa ? 'eoa' : 'fpass'
@@ -77,21 +65,23 @@ export default function NftTransfer() {
       ? fromWallet === 'fpass'
         ? userSession?.futurepass
         : userSession?.eoa
-      : ''
+      : '',
+    collectionId
   );
 
   const [feeAssetId, setFeeAssetId] = useState<number>(2);
+
   const [slippage, setSlippage] = useState<string>('5');
   const [serialNumber, setSerialNumber] = useState<string>('');
 
   const [addressInputError, setAddressInputError] = useState<string>('');
   const [addressToSend, setAddressToSend] = useState<string>(
-    (fromWallet === 'eoa' ? userSession?.futurepass : userSession?.eoa) ?? ''
+    (fromWallet === 'eoa' ? userSession?.eoa : userSession?.futurepass) ?? ''
   );
 
   const buttonDisabled = useMemo(() => {
-    return disable || addressInputError !== '';
-  }, [disable, addressInputError]);
+    return disable || addressInputError !== '' || ownedTokens?.length === 0;
+  }, [disable, addressInputError, ownedTokens]);
 
   useEffect(() => {
     if (ownedTokens && ownedTokens.length > 0) {
@@ -122,7 +112,7 @@ export default function NftTransfer() {
 
     if (fromWallet === 'fpass') {
       if (feeAssetId === 2) {
-        nft.addFuturePass(userSession.futurepass);
+        await nft.addFuturePass(userSession.futurepass);
       }
 
       if (feeAssetId !== 2) {
@@ -149,8 +139,9 @@ export default function NftTransfer() {
     trnApi,
     signer,
     userSession,
-    addressToSend,
     serialNumber,
+    collectionId,
+    addressToSend,
     fromWallet,
     getExtrinsic,
     setCurrentBuilder,
@@ -174,15 +165,19 @@ export default function NftTransfer() {
           />
         </div>
         <div className="row">
-          <AddressToSend
-            label="Transfer To"
-            addressToSend={addressToSend}
-            setAddressToSend={setAddressToSend}
-            addressInputError={addressInputError}
-            setAddressInputError={setAddressInputError}
-            disable={disable}
-            resetState={resetState}
-          />
+          <label>
+            Collection Id
+            <input
+              type="text"
+              value={collectionId.toString()}
+              className="w-full builder-input"
+              onChange={e => {
+                resetState();
+                setCollectionId(Number(e.target.value) || 1);
+              }}
+              disabled={disable}
+            />
+          </label>
         </div>
         <div className="row">
           <label>
@@ -206,11 +201,22 @@ export default function NftTransfer() {
                 ))}
               </select>
             ) : (
-              <span>No Owned Tokens</span>
+              <span> - No Owned Tokens</span>
             )}
           </label>
         </div>
 
+        <div className="row">
+          <AddressToSend
+            label="Transfer To"
+            addressToSend={addressToSend}
+            setAddressToSend={setAddressToSend}
+            addressInputError={addressInputError}
+            setAddressInputError={setAddressInputError}
+            disable={disable}
+            resetState={resetState}
+          />
+        </div>
         <div className="row">
           <label>
             Gas Token
@@ -260,6 +266,7 @@ export default function NftTransfer() {
     </div>
   );
 }
+
 `;
 
 export default function NftTransfer() {
@@ -342,7 +349,7 @@ export default function NftTransfer() {
 
     if (fromWallet === 'fpass') {
       if (feeAssetId === 2) {
-        nft.addFuturePass(userSession.futurepass);
+        await nft.addFuturePass(userSession.futurepass);
       }
 
       if (feeAssetId !== 2) {

@@ -15,7 +15,7 @@ import SliderInput from '../SliderInput';
 import { useShouldShowEoa } from '../../hooks';
 
 const codeString = `
-import { useAuth, useConnector } from '@futureverse/auth-react';
+import { useAuth } from '@futureverse/auth-react';
 import React, { useCallback, useMemo, useState } from 'react';
 
 import { useTrnApi } from '../../providers/TRNProvider';
@@ -24,15 +24,15 @@ import { useFutureverseSigner } from '@futureverse/auth-react';
 import { TransactionBuilder } from '@futureverse/transact';
 import { useRootStore } from '../../hooks/useRootStore';
 
+import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
 import CodeView from '../CodeView';
 import SendFrom from '../SendFrom';
 import { AddressToSend } from '../AddressToSend';
-
-const collectionId = 709732;
+import SliderInput from '../SliderInput';
+import { useShouldShowEoa } from '../../hooks';
 
 export default function NftMint() {
-  const { userSession, authMethod } = useAuth();
-  const { connector } = useConnector();
+  const { userSession } = useAuth();
 
   const { resetState, setCurrentBuilder, signed, result, error } = useRootStore(
     state => state
@@ -45,33 +45,19 @@ export default function NftMint() {
   const { trnApi } = useTrnApi();
   const signer = useFutureverseSigner();
 
-  const getExtrinsic = async (builder: RootTransactionBuilder) => {
-    const gasEstimate = await builder?.getGasFees();
-    if (gasEstimate) {
-      setGas(gasEstimate);
-    }
-    const payloads = await builder?.getPayloads();
-    if (!payloads) {
-      return;
-    }
-    setPayload(payloads);
-    const { ethPayload } = payloads;
-    setToSign(ethPayload.toString());
-  };
+  const getExtrinsic = useGetExtrinsic();
 
-  const shouldShowEoa = useMemo(() => {
-    return connector?.id !== 'xaman' || authMethod !== 'eoa';
-  }, [connector, authMethod]);
+  const shouldShowEoa = useShouldShowEoa();
 
   const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
     shouldShowEoa ? 'eoa' : 'fpass'
   );
 
+  const [collectionId, setCollectionId] = useState<number>(709732);
   const [mintQty, setMintQty] = useState<number>(1);
   const [feeAssetId, setFeeAssetId] = useState<number>(2);
-  const [slippage, setSlippage] = useState<string>('5');
   const [addressInputError, setAddressInputError] = useState<string>('');
-
+  const [slippage, setSlippage] = useState<string>('5');
   const [addressToSend, setAddressToSend] = useState<string>(
     (fromWallet === 'eoa' ? userSession?.eoa : userSession?.futurepass) ?? ''
   );
@@ -98,7 +84,7 @@ export default function NftMint() {
 
     if (fromWallet === 'fpass') {
       if (feeAssetId === 2) {
-        nft.addFuturePass(userSession.futurepass);
+        await nft.addFuturePass(userSession.futurepass);
       }
 
       if (feeAssetId !== 2) {
@@ -125,6 +111,7 @@ export default function NftMint() {
     trnApi,
     signer,
     userSession,
+    collectionId,
     addressToSend,
     mintQty,
     fromWallet,
@@ -134,7 +121,7 @@ export default function NftMint() {
   ]);
 
   return (
-    <div className={/\`card \${disable ? 'disabled' : ''}\`}>
+    <div className={\`card \${disable ? 'disabled' : ''}\`}>
       <div className="inner">
         <CodeView code={codeString}>
           <h3>Mint Nft</h3>
@@ -150,15 +137,19 @@ export default function NftMint() {
           />
         </div>
         <div className="row">
-          <AddressToSend
-            label="Mint To"
-            addressToSend={addressToSend}
-            setAddressToSend={setAddressToSend}
-            addressInputError={addressInputError}
-            setAddressInputError={setAddressInputError}
-            disable={disable}
-            resetState={resetState}
-          />
+          <label>
+            Collection collectionId
+            <input
+              type="text"
+              value={collectionId.toString()}
+              className="w-full builder-input"
+              onChange={e => {
+                resetState();
+                setCollectionId(Number(e.target.value) || 1);
+              }}
+              disabled={disable}
+            />
+          </label>
         </div>
         <div className="row">
           <label>
@@ -174,6 +165,17 @@ export default function NftMint() {
               disabled={disable}
             />
           </label>
+        </div>
+        <div className="row">
+          <AddressToSend
+            label="Mint To"
+            addressToSend={addressToSend}
+            setAddressToSend={setAddressToSend}
+            addressInputError={addressInputError}
+            setAddressInputError={setAddressInputError}
+            disable={disable}
+            resetState={resetState}
+          />
         </div>
         <div className="row">
           <label>
@@ -279,7 +281,7 @@ export default function NftMint() {
 
     if (fromWallet === 'fpass') {
       if (feeAssetId === 2) {
-        nft.addFuturePass(userSession.futurepass);
+        await nft.addFuturePass(userSession.futurepass);
       }
 
       if (feeAssetId !== 2) {
