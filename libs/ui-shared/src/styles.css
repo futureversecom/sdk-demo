@@ -276,6 +276,9 @@ input {
   gap: 8px;
 }
 
+.card .inner .row>button {
+  padding: 12px 16px;
+}
 
 .card.disabled .inner * {
   opacity: 0.75;
@@ -425,7 +428,7 @@ input {
 
 @media screen and (min-width: 992px) {
   .auto-grid {
-    grid-template-columns: repeat(auto-fill, minmax(400px, auto));
+    grid-template-columns: repeat(auto-fill, minmax(480px, auto));
   }
 
   .desktop-nav {
@@ -459,8 +462,8 @@ input {
   --blur: 5px;
   position: fixed;
   inset: 0px;
-  backdrop-filter: blur(var(--blur));
   -webkit-backdrop-filter: blur(var(--blur));
+  backdrop-filter: blur(var(--blur));
   z-index: 49;
   background-color: transparent;
   transition: all 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
@@ -621,6 +624,7 @@ input[type=range]::-ms-thumb {
   height: 100vh;
   transform: translate(-50%, -50%);
   background: rgba(0, 0, 0, 0.4);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   padding: 16px;
   cursor: pointer;
@@ -632,6 +636,12 @@ input[type=range]::-ms-thumb {
   max-height: none;
   padding: 16px !important;
   padding-top: 0 !important
+}
+
+.code-viewer .buttons {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
 }
 
 .code-btn {
@@ -682,6 +692,7 @@ input[type=range]::-ms-thumb {
   border-radius: 16px;
   position: sticky;
   top: 20px;
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   box-shadow:
     0px 0.4px 0.3px -28px rgba(0, 0, 0, 0.059),
@@ -827,6 +838,7 @@ nav li {
   z-index: 999;
   display: flex;
   flex-direction: column;
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
 }
 
@@ -911,11 +923,16 @@ nav li {
   text-align: center;
   justify-content: center;
   display: inline-flex;
-  background: var(--bg);
-  padding: 4px 8px;
+  /* background: var(--bg); */
+  /* padding: 4px 8px; */
   margin-top: 4px;
   margin-bottom: 8px;
   font-size: 10px;
+}
+
+.mobile-container-outer .mobile-container li .documentation-link a,
+.mobile-container-outer .mobile-container li .documentation-link .docs-link a {
+  border-radius: 8px;
 }
 
 .dropdown-menu {
@@ -938,6 +955,24 @@ nav li {
   flex-direction: row;
 }
 
+.dropdown-menu.wallet-dropdown {
+  padding: 8px 0
+}
+
+.dropdown-menu.wallet-dropdown .dropdown-inner {
+  padding-top: 10px;
+  width: 100%;
+}
+
+.dropdown-menu.wallet-dropdown .wallet-dropdown-inner {
+  padding: 0;
+  width: 100%;
+  display: flex;
+  justify-content: stretch;
+  background: var(--header-grey);
+  border-radius: 8px;
+}
+
 .dropdown-button {
   cursor: pointer;
   appearance: none;
@@ -950,10 +985,30 @@ nav li {
   width: 100%;
 }
 
+.dropdown-button.green {
+  padding: 8px;
+  margin: 0;
+}
+
+.dropdown-inner button.green {
+  cursor: pointer;
+  width: 100%;
+  margin: 0;
+  padding: 12px 16px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.mobile-container .dropdown-menu.wallet-dropdown .dropdown-inner {
+  padding-top: 0;
+}
+
+
 .dropdown-content {
   flex-direction: column;
   gap: 8px;
   background: var(--header-grey);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   border-radius: 8px;
   padding: 8px;
@@ -969,6 +1024,15 @@ nav li {
   text-align: left;
   align-items: start;
   justify-content: center;
+  padding: 0;
+  background-color: transparent;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.dropdown-content li a {
+  list-style: none;
+  text-align: left;
   padding: 4px 8px;
   background-color: transparent;
   border-radius: 4px;
@@ -984,10 +1048,9 @@ nav li {
   height: 16px;
 }
 
-.dropdown-content li:not(.no-hover):hover {
+.dropdown-content li:not(.no-hover) a:hover {
   background: var(--cta-hover);
   color: var(--white);
-  backdrop-filter: blur(8px);
 }
 
 .dropdown-inner>*:first-child {
@@ -1023,6 +1086,38 @@ nav li {
 .documentation-link:hover,
 .documentation-link:hover .docs-link {
   background-color: var(--cta-hover);
+}
+
+.address-row {
+  display: flex;
+  flex-direction: column;
+}
+
+.address-row .title {
+  font-weight: 700;
+}
+
+.address-row .content {
+  word-break: break-word;
+  white-space: wrap;
+  display: inline-flex;
+}
+
+.copy-text {
+  display: flex;
+  flex-direction: row;
+  line-height: 1.3;
+  align-items: center;
+  gap: 4px;
+}
+
+.copy-text .icon {
+  cursor: pointer;
+}
+
+.copy-text .icon svg {
+  color: white;
+  width: 24px;
 }
 
 
@@ -1093,8 +1188,8 @@ div.fvaui-dialog .fvaui-button-close:hover {
 
 div.fvaui-card {
   background-color: rgba(243, 236, 236, 0.2);
-  backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
   transition: all 0.4s ease-in-out;
 }
 
@@ -1107,8 +1202,8 @@ div.fvaui-dialog-content:hover {
 }
 
 div.fvaui-dialog-content:hover .fvaui-card {
-  backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
 }
 
 p.fvaui-typography-caption {

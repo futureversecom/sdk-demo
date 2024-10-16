@@ -11,6 +11,7 @@ import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
 import CodeView from '../CodeView';
 import { isAddress } from 'viem';
 import SliderInput from '../SliderInput';
+import { useShouldShowEoa } from '../../hooks';
 
 const codeString = `
 import { useAuth } from '@futureverse/auth-react';
@@ -513,6 +514,7 @@ export default function CustomBuilderComp() {
   const { userSession } = useAuth();
   const { trnApi } = useTrnApi();
   const signer = useFutureverseSigner();
+  const shouldShowEoa = useShouldShowEoa();
 
   const builder = useCustomExtrinsicBuilder({
     trnApi,
@@ -537,7 +539,7 @@ export default function CustomBuilderComp() {
             {
               name: 'walletAddress',
               type: 'string',
-              defaultValue: userSession?.eoa ?? '',
+              defaultValue: shouldShowEoa ? userSession?.eoa ?? '' : '',
               validation: 'address',
             },
             {
@@ -569,7 +571,7 @@ export default function CustomBuilderComp() {
             {
               name: 'walletAddress',
               type: 'string',
-              defaultValue: userSession?.eoa ?? '',
+              defaultValue: userSession?.futurepass ?? '',
               validation: 'address',
             },
           ],
@@ -589,7 +591,7 @@ export default function CustomBuilderComp() {
             {
               name: 'walletAddress',
               type: 'string',
-              defaultValue: userSession?.eoa ?? '',
+              defaultValue: userSession?.futurepass ?? '',
               validation: 'address',
             },
           ],
@@ -625,7 +627,7 @@ export default function CustomBuilderComp() {
             {
               name: 'walletAddress',
               type: 'string',
-              defaultValue: userSession?.eoa ?? '',
+              defaultValue: userSession?.futurepass ?? '',
               validation: 'address',
             },
           ],
@@ -645,7 +647,7 @@ export default function CustomBuilderComp() {
             {
               name: 'walletAddress',
               type: 'string',
-              defaultValue: userSession?.eoa ?? '',
+              defaultValue: userSession?.futurepass ?? '',
               validation: 'address',
             },
           ],
@@ -677,7 +679,7 @@ export default function CustomBuilderComp() {
         },
       },
     };
-  }, [userSession?.eoa]);
+  }, [shouldShowEoa, userSession?.eoa, userSession?.futurepass]);
 
   const disable = useMemo(() => {
     return signed && !result && !error;

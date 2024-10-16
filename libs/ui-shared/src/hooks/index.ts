@@ -6,3 +6,6 @@ export { useTransactQuery } from './useTransactQuery';
 export { useTransact } from './useTransact';
 export { useGetTokens } from './useGetTokens';
 export { useIsMobile } from './useIsMobile';
+export { useCurrentPath } from './useCurrentPath';
+export { useShouldShowEoa } from './useShouldShowEoa';
+export { useCopyToClipboard } from './useCopyToClipboard';

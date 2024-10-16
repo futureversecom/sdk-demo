@@ -71,6 +71,15 @@ export const Menu: React.FC<MenuProps> = ({ setIsOpen }) => {
           Account Info
         </Link>
       </li>
+      <li>
+        <a
+          href="https://faucet.rootnet.cloud"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Porcini Faucet
+        </a>
+      </li>
       <DropDownMenu title="Auth SDK">
         <ul className="dropdown-content">
           <li className="no-hover">Coming Soon</li>

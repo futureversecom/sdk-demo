@@ -8,7 +8,7 @@ import { TransactionBuilder } from '@futureverse/transact';
 import { useRootStore } from '../../hooks/useRootStore';
 
 import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
-import { useGetTokens } from '../../hooks';
+import { useGetTokens, useShouldShowEoa } from '../../hooks';
 import CodeView from '../CodeView';
 import SendFrom from '../SendFrom';
 import SliderInput from '../SliderInput';
@@ -238,11 +238,8 @@ export default function NftBurn() {
 }
 `;
 
-const collectionId = 709732;
-
 export default function NftBurn() {
-  const { userSession, authMethod } = useAuth();
-  const { connector } = useConnector();
+  const { userSession } = useAuth();
 
   const { resetState, setCurrentBuilder, signed, result, error } = useRootStore(
     state => state
@@ -257,10 +254,10 @@ export default function NftBurn() {
 
   const getExtrinsic = useGetExtrinsic();
 
+  const [collectionId, setCollectionId] = useState<number>(709732);
   const [slippage, setSlippage] = useState<string>('5');
-  const shouldShowEoa = useMemo(() => {
-    return connector?.id !== 'xaman' || authMethod !== 'eoa';
-  }, [connector, authMethod]);
+
+  const shouldShowEoa = useShouldShowEoa();
 
   const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
     shouldShowEoa ? 'eoa' : 'fpass'
@@ -275,7 +272,8 @@ export default function NftBurn() {
       ? fromWallet === 'fpass'
         ? userSession?.futurepass
         : userSession?.eoa
-      : ''
+      : '',
+    collectionId
   );
 
   const [feeAssetId, setFeeAssetId] = useState<number>(2);
@@ -338,11 +336,16 @@ export default function NftBurn() {
     signer,
     userSession,
     serialNumber,
+    collectionId,
     fromWallet,
     getExtrinsic,
     setCurrentBuilder,
     feeAssetId,
   ]);
+
+  const buttonDisabled = useMemo(() => {
+    return disable || ownedTokens?.length === 0;
+  }, [disable, ownedTokens]);
 
   return (
     <div className={`card ${disable ? 'disabled' : ''}`}>
@@ -359,6 +362,21 @@ export default function NftBurn() {
             resetState={resetState}
             disable={disable}
           />
+        </div>
+        <div className="row">
+          <label>
+            Collection Id
+            <input
+              type="text"
+              value={collectionId.toString()}
+              className="w-full builder-input"
+              onChange={e => {
+                resetState();
+                setCollectionId(Number(e.target.value) || 1);
+              }}
+              disabled={disable}
+            />
+          </label>
         </div>
         <div className="row">
           <label>
@@ -382,7 +400,7 @@ export default function NftBurn() {
                 ))}
               </select>
             ) : (
-              <span>No Owned Tokens</span>
+              <span> - No Owned Tokens</span>
             )}
           </label>
         </div>
@@ -425,7 +443,7 @@ export default function NftBurn() {
               resetState();
               createBuilder();
             }}
-            disabled={disable}
+            disabled={buttonDisabled}
           >
             Burn Token
           </button>

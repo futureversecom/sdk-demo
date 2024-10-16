@@ -1,4 +1,3 @@
-import React from 'react';
 import { useAuth, useConnector } from '@futureverse/auth-react';
 
 import { useQuery } from '@tanstack/react-query';
@@ -7,12 +6,12 @@ import { useTrnApi } from '../providers';
 import { useIsMounted, useRnsResolveAddress, useTransactQuery } from '../hooks';
 
 import { useAccount } from 'wagmi';
-import { getBalance, shortAddress } from '../lib/utils';
+import { getBalance } from '../lib/utils';
 import CodeView from './CodeView';
 import { LogIn } from './Navigation';
+import { CopyText } from './CopyText';
 
 const codeString = `
-import React from 'react';
 import { useAuth, useConnector } from '@futureverse/auth-react';
 
 import { useQuery } from '@tanstack/react-query';
@@ -21,9 +20,10 @@ import { useTrnApi } from '../providers';
 import { useIsMounted, useRnsResolveAddress, useTransactQuery } from '../hooks';
 
 import { useAccount } from 'wagmi';
-import { formatUnits } from 'viem';
-import { shortAddress } from '../lib/utils';
+import { getBalance } from '../lib/utils';
 import CodeView from './CodeView';
+import { LogIn } from './Navigation';
+import { CopyText } from './CopyText';
 
 const ASTO_ASSET_ID = 17508;
 const SYLO_ASSET_ID = 3172;
@@ -48,85 +48,108 @@ export default function Home({ title }: { title: string }) {
 
   const transactionQuery = useTransactQuery();
 
-  const getBalance = async (address: string, assetId: number) => {
-    const balance = await transactionQuery?.checkBalance({
-      walletAddress: address,
-      assetId: assetId,
-    });
-
-    return balance
-      ? formatUnits(BigInt(balance?.balance), balance?.decimals)
-      : '0';
-  };
-
   const xrpBalanceOnTrn = useQuery({
     queryKey: ['balance', userSession?.eoa, 2],
-    queryFn: async () => getBalance(userSession?.eoa as string, 2),
+    queryFn: async () =>
+      getBalance(transactionQuery, userSession?.eoa as string, 2),
     enabled:
       !!trnApi &&
       !!userSession &&
       !!userSession?.eoa &&
       connector?.id !== 'xaman' &&
-      authMethod === 'eoa',
+      authMethod === 'eoa' &&
+      !!transactionQuery,
   });
 
   const xrpBalanceOnTrnFp = useQuery({
     queryKey: ['balance', userSession?.futurepass, 2],
-    queryFn: async () => getBalance(userSession?.futurepass as string, 2),
-    enabled: !!trnApi && !!userSession && !!userSession?.futurepass,
+    queryFn: async () =>
+      getBalance(transactionQuery, userSession?.futurepass as string, 2),
+    enabled:
+      !!trnApi &&
+      !!userSession &&
+      !!userSession?.futurepass &&
+      !!transactionQuery,
   });
 
   const rootBalanceOnTrn = useQuery({
     queryKey: ['balance', userSession?.eoa, 1],
-    queryFn: async () => getBalance(userSession?.eoa as string, 1),
+    queryFn: async () =>
+      getBalance(transactionQuery, userSession?.eoa as string, 1),
     enabled:
       !!trnApi &&
       !!userSession &&
       !!userSession?.eoa &&
       connector?.id !== 'xaman' &&
-      authMethod === 'eoa',
+      authMethod === 'eoa' &&
+      !!transactionQuery,
   });
 
   const rootBalanceOnTrnFp = useQuery({
     queryKey: ['balance', userSession?.futurepass, 1],
-    queryFn: async () => getBalance(userSession?.futurepass as string, 1),
-    enabled: !!trnApi && !!userSession && !!userSession?.futurepass,
+    queryFn: async () =>
+      getBalance(transactionQuery, userSession?.futurepass as string, 1),
+    enabled:
+      !!trnApi &&
+      !!userSession &&
+      !!userSession?.futurepass &&
+      !!transactionQuery,
   });
 
   const astoBalanceOnTrn = useQuery({
     queryKey: ['balance', userSession?.eoa, ASTO_ASSET_ID],
-    queryFn: async () => getBalance(userSession?.eoa as string, ASTO_ASSET_ID),
+    queryFn: async () =>
+      getBalance(transactionQuery, userSession?.eoa as string, ASTO_ASSET_ID),
     enabled:
       !!trnApi &&
       !!userSession &&
       !!userSession?.eoa &&
       connector?.id !== 'xaman' &&
-      authMethod === 'eoa',
+      authMethod === 'eoa' &&
+      !!transactionQuery,
   });
 
   const astoBalanceOnTrnFp = useQuery({
     queryKey: ['balance', userSession?.futurepass, ASTO_ASSET_ID],
     queryFn: async () =>
-      getBalance(userSession?.futurepass as string, ASTO_ASSET_ID),
-    enabled: !!trnApi && !!userSession && !!userSession?.futurepass,
+      getBalance(
+        transactionQuery,
+        userSession?.futurepass as string,
+        ASTO_ASSET_ID
+      ),
+    enabled:
+      !!trnApi &&
+      !!userSession &&
+      !!userSession?.futurepass &&
+      !!transactionQuery,
   });
 
   const syloBalanceOnTrn = useQuery({
     queryKey: ['balance', userSession?.eoa, SYLO_ASSET_ID],
-    queryFn: async () => getBalance(userSession?.eoa as string, SYLO_ASSET_ID),
+    queryFn: async () =>
+      getBalance(transactionQuery, userSession?.eoa as string, SYLO_ASSET_ID),
     enabled:
       !!trnApi &&
       !!userSession &&
       !!userSession?.eoa &&
       connector?.id !== 'xaman' &&
-      authMethod === 'eoa',
+      authMethod === 'eoa' &&
+      !!transactionQuery,
   });
 
   const syloBalanceOnTrnFp = useQuery({
     queryKey: ['balance', userSession?.futurepass, SYLO_ASSET_ID],
     queryFn: async () =>
-      getBalance(userSession?.futurepass as string, SYLO_ASSET_ID),
-    enabled: !!trnApi && !!userSession && !!userSession?.futurepass,
+      getBalance(
+        transactionQuery,
+        userSession?.futurepass as string,
+        SYLO_ASSET_ID
+      ),
+    enabled:
+      !!trnApi &&
+      !!userSession &&
+      !!userSession?.futurepass &&
+      !!transactionQuery,
   });
 
   const { data: eoaRns, isFetching: eoaFetching } = useRnsResolveAddress(
@@ -145,12 +168,28 @@ export default function Home({ title }: { title: string }) {
   return (
     <div>
       <div className="row">
-        <CodeView code={codeString}>
-          <h1>{title}</h1>
-        </CodeView>
+        {userSession && (
+          <CodeView code={codeString}>
+            <h1>{title}</h1>
+          </CodeView>
+        )}
+        {!userSession && <h1>{title}</h1>}
       </div>
 
       <div>
+        {!userSession && (
+          <div className="auto-grid">
+            <div className="card">
+              <div className="inner">
+                <h3>
+                  Connect with your Pass to interact with the SDK Playground
+                </h3>
+                <LogIn />
+              </div>
+            </div>
+          </div>
+        )}
+
         {userSession && (
           <>
             <div className="auto-grid">
@@ -171,36 +210,45 @@ export default function Home({ title }: { title: string }) {
                   <div className="card">
                     <div className="inner">
                       <span
-                        style={{ display: 'inline-block', fontSize: '0.8rem', textTransform: 'uppercase' }}
+                        style={{
+                          display: 'inline-block',
+                          fontSize: '0.8rem',
+                          textTransform: 'uppercase',
+                        }}
                       >
                         Addresses
                       </span>
-                      <div className="row">
-                        User EOA: {shortAddress(userSession.eoa)}
+                      <div className="row address-row">
+                        <div className="title">User EOA</div>
+                        <CopyText text={userSession.eoa}>
+                          {userSession.eoa}
+                        </CopyText>
                       </div>
-                      <div className="row">
-                        User Address from Wagmi:{' '}
-                        {shortAddress(address?.toString() ?? '')}
+                      <div className="row address-row">
+                        <div className="title">User Address from Wagmi</div>
+                        <CopyText text={address?.toString() ?? ''}>
+                          {address?.toString() ?? ''}
+                        </CopyText>
                       </div>
-                      {eoaFetching && (
-                        <div className="row">
-                          User Address RNS: Fetching RNS
-                        </div>
-                      )}
-                      {!eoaFetching && !eoaRns && (
-                        <div className="row">
-                          User Address RNS: No RNS set for Eoa
-                        </div>
-                      )}
-                      {eoaRns && (
-                        <div className="row">User Address RNS: {eoaRns}</div>
-                      )}
+
+                      <div className="row address-row">
+                        <div className="title">User Address RNS</div>
+                        {eoaFetching && <div className="row">Fetching RNS</div>}
+                        {!eoaFetching && !eoaRns && (
+                          <div className="row">No RNS set for Eoa</div>
+                        )}
+                        {eoaRns && <CopyText text={eoaRns}>{eoaRns}</CopyText>}
+                      </div>
                     </div>
                   </div>
                   <div className="card" style={{ marginTop: '16px' }}>
                     <div className="inner">
                       <span
-                        style={{ display: 'inline-block', fontSize: '0.8rem', textTransform: 'uppercase' }}
+                        style={{
+                          display: 'inline-block',
+                          fontSize: '0.8rem',
+                          textTransform: 'uppercase',
+                        }}
                       >
                         Balances
                       </span>
@@ -234,36 +282,45 @@ export default function Home({ title }: { title: string }) {
                 </div>
               )}
               <div className="">
-                <h2>FuturePass</h2>
+                <h2>Pass.Online</h2>
 
                 <div className="card">
                   <div className="inner">
                     <span
-                      style={{ display: 'inline-block', fontSize: '0.8rem', textTransform: 'uppercase' }}
+                      style={{
+                        display: 'inline-block',
+                        fontSize: '0.8rem',
+                        textTransform: 'uppercase',
+                      }}
                     >
                       Addresses
                     </span>
-                    <div className="row">
-                      User FuturePass: {shortAddress(userSession.futurepass)}
+                    <div className="row address-row">
+                      <div className="title">User Pass Address</div>
+                      <CopyText text={userSession.futurepass}>
+                        {userSession.futurepass}
+                      </CopyText>
                     </div>
-                    {fPassFetching && (
-                      <div className="row">User Address RNS: Fetching RNS</div>
-                    )}
-                    {!fPassFetching && !fPassRns && (
-                      <div className="row">
-                        User Address RNS: No RNS set for FuturePass
-                      </div>
-                    )}
-
-                    {fPassRns && (
-                      <div className="row">User Address RNS: {fPassRns}</div>
-                    )}
+                    <div className="row address-row">
+                      <div className="title">User Address RNS</div>
+                      {fPassFetching && <div className="row">Fetching RNS</div>}
+                      {!fPassFetching && !fPassRns && (
+                        <div className="row">No RNS set for Eoa</div>
+                      )}
+                      {fPassRns && (
+                        <CopyText text={fPassRns}>{fPassRns}</CopyText>
+                      )}
+                    </div>
                   </div>
                 </div>
                 <div className="card" style={{ marginTop: '16px' }}>
                   <div className="inner">
                     <span
-                      style={{ display: 'inline-block', fontSize: '0.8rem', textTransform: 'uppercase' }}
+                      style={{
+                        display: 'inline-block',
+                        fontSize: '0.8rem',
+                        textTransform: 'uppercase',
+                      }}
                     >
                       Balances
                     </span>
@@ -460,8 +517,7 @@ export default function Home({ title }: { title: string }) {
             <div className="card">
               <div className="inner">
                 <h3>
-                  Connect with your FuturePass to interact with the SDK
-                  Playground
+                  Connect with your Pass to interact with the SDK Playground
                 </h3>
                 <LogIn />
               </div>
@@ -497,26 +553,27 @@ export default function Home({ title }: { title: string }) {
                       >
                         Addresses
                       </span>
-                      <div className="row">
-                        User EOA: {shortAddress(userSession.eoa)}
+                      <div className="row address-row">
+                        <div className="title">User EOA</div>
+                        <CopyText text={userSession.eoa}>
+                          {userSession.eoa}
+                        </CopyText>
                       </div>
-                      <div className="row">
-                        User Address from Wagmi:{' '}
-                        {shortAddress(address?.toString() ?? '')}
+                      <div className="row address-row">
+                        <div className="title">User Address from Wagmi</div>
+                        <CopyText text={address?.toString() ?? ''}>
+                          {address?.toString() ?? ''}
+                        </CopyText>
                       </div>
-                      {eoaFetching && (
-                        <div className="row">
-                          User Address RNS: Fetching RNS
-                        </div>
-                      )}
-                      {!eoaFetching && !eoaRns && (
-                        <div className="row">
-                          User Address RNS: No RNS set for Eoa
-                        </div>
-                      )}
-                      {eoaRns && (
-                        <div className="row">User Address RNS: {eoaRns}</div>
-                      )}
+
+                      <div className="row address-row">
+                        <div className="title">User Address RNS</div>
+                        {eoaFetching && <div className="row">Fetching RNS</div>}
+                        {!eoaFetching && !eoaRns && (
+                          <div className="row">No RNS set for Eoa</div>
+                        )}
+                        {eoaRns && <CopyText text={eoaRns}>{eoaRns}</CopyText>}
+                      </div>
                     </div>
                   </div>
                   <div className="card" style={{ marginTop: '16px' }}>
@@ -560,7 +617,7 @@ export default function Home({ title }: { title: string }) {
                 </div>
               )}
               <div className="">
-                <h2>FuturePass</h2>
+                <h2>Pass.Online</h2>
 
                 <div className="card">
                   <div className="inner">
@@ -573,21 +630,22 @@ export default function Home({ title }: { title: string }) {
                     >
                       Addresses
                     </span>
-                    <div className="row">
-                      User FuturePass: {shortAddress(userSession.futurepass)}
+                    <div className="row address-row">
+                      <div className="title">User Pass Address</div>
+                      <CopyText text={userSession.futurepass}>
+                        {userSession.futurepass}
+                      </CopyText>
                     </div>
-                    {fPassFetching && (
-                      <div className="row">User Address RNS: Fetching RNS</div>
-                    )}
-                    {!fPassFetching && !fPassRns && (
-                      <div className="row">
-                        User Address RNS: No RNS set for FuturePass
-                      </div>
-                    )}
-
-                    {fPassRns && (
-                      <div className="row">User Address RNS: {fPassRns}</div>
-                    )}
+                    <div className="row address-row">
+                      <div className="title">User Address RNS</div>
+                      {fPassFetching && <div className="row">Fetching RNS</div>}
+                      {!fPassFetching && !fPassRns && (
+                        <div className="row">No RNS set for Eoa</div>
+                      )}
+                      {fPassRns && (
+                        <CopyText text={fPassRns}>{fPassRns}</CopyText>
+                      )}
+                    </div>
                   </div>
                 </div>
                 <div className="card" style={{ marginTop: '16px' }}>

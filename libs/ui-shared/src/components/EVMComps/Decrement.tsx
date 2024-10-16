@@ -10,7 +10,7 @@ import { useRootStore } from '../../hooks/useRootStore';
 import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
 
 import { TestContractAbi, TestContractAddress } from '../../lib/test-contract';
-import { useGetCount } from '../../hooks';
+import { useGetCount, useShouldShowEoa } from '../../hooks';
 import { shortAddress } from '../../lib/utils';
 import CodeView from '../CodeView';
 import SliderInput from '../SliderInput';
@@ -246,16 +246,13 @@ export default function Decrement() {
 `;
 
 export default function Decrement() {
-  const { userSession, authMethod } = useAuth();
-  const { connector } = useConnector();
+  const { userSession } = useAuth();
 
   const { resetState, setCurrentBuilder, signed, result, error } = useRootStore(
     state => state
   );
 
-  const shouldShowEoa = useMemo(() => {
-    return connector?.id !== 'xaman' || authMethod !== 'eoa';
-  }, [connector, authMethod]);
+  const shouldShowEoa = useShouldShowEoa();
 
   const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
     shouldShowEoa ? 'eoa' : 'fpass'

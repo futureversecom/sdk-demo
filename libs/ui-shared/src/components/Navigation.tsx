@@ -1,6 +1,8 @@
 import { useAuth, useConnector } from '@futureverse/auth-react';
 import { useAuthUi } from '@futureverse/auth-ui';
 import React, { Dispatch, SetStateAction } from 'react';
+import DropDownMenu from './DropDownMenu';
+import { shortAddress } from '../lib/utils';
 
 export interface MenuProps {
   setIsOpen?: Dispatch<SetStateAction<boolean>>;
@@ -57,19 +59,25 @@ export const LogIn = () => {
 };
 
 export const LogOut = () => {
-  const { signOut } = useAuth();
+  const { signOut, userSession } = useAuth();
   const { disconnect, isConnected } = useConnector();
   return (
-    <li>
-      <button
-        onClick={() => {
-          isConnected && disconnect();
-          signOut({ flow: 'redirect' });
-        }}
-        className="green"
-      >
-        Log Out
-      </button>
-    </li>
+    <DropDownMenu
+      title={shortAddress(userSession?.futurepass ?? '', 6, 4)}
+      buttonClasses="green"
+      classes="wallet-dropdown"
+    >
+      <div className="wallet-dropdown-inner">
+        <button
+          onClick={() => {
+            isConnected && disconnect();
+            signOut({ flow: 'redirect' });
+          }}
+          className="green"
+        >
+          Log Out
+        </button>
+      </div>
+    </DropDownMenu>
   );
 };

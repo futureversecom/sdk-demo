@@ -1,6 +1,6 @@
-import { useAuth, useConnector } from '@futureverse/auth-react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { TransactionBuilder } from '@futureverse/transact';
-import { useCallback, useMemo, useState } from 'react';
+import { useAuth, useConnector } from '@futureverse/auth-react';
 
 import { parseUnits } from 'viem';
 
@@ -14,7 +14,7 @@ import { getBalance } from '../../lib/utils';
 import CodeView from '../CodeView';
 import { AddressToSend } from '../AddressToSend';
 import SendFrom from '../SendFrom';
-import { useTransactQuery } from '../../hooks';
+import { useShouldShowEoa, useTransactQuery } from '../../hooks';
 import { useQuery } from '@tanstack/react-query';
 import SliderInput from '../SliderInput';
 
@@ -41,8 +41,7 @@ import { useQuery } from '@tanstack/react-query';
 
 
 export default function AssetTransfer() {
-  const { userSession, authMethod } = useAuth();
-  const { connector } = useConnector();
+  const { userSession } = useAuth();
 
   const { resetState, setCurrentBuilder, signed, result, error } = useRootStore(
     state => state
@@ -70,9 +69,7 @@ export default function AssetTransfer() {
     setToSign(ethPayload.toString());
   };
 
-  const shouldShowEoa = useMemo(() => {
-    return connector?.id !== 'xaman' || authMethod !== 'eoa';
-  }, [connector, authMethod]);
+  const shouldShowEoa = useShouldShowEoa();
 
   const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
     shouldShowEoa ? 'eoa' : 'fpass'
@@ -290,8 +287,7 @@ export default function AssetTransfer() {
 `;
 
 export default function AssetTransfer() {
-  const { userSession, authMethod } = useAuth();
-  const { connector } = useConnector();
+  const { userSession } = useAuth();
 
   const { resetState, setCurrentBuilder, signed, result, error } = useRootStore(
     state => state
@@ -307,9 +303,7 @@ export default function AssetTransfer() {
 
   const getExtrinsic = useGetExtrinsic();
 
-  const shouldShowEoa = useMemo(() => {
-    return connector?.id !== 'xaman' || authMethod !== 'eoa';
-  }, [connector, authMethod]);
+  const shouldShowEoa = useShouldShowEoa();
 
   const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
     shouldShowEoa ? 'eoa' : 'fpass'
@@ -319,7 +313,11 @@ export default function AssetTransfer() {
   const [feeAssetId, setFeeAssetId] = useState<number>(1);
   const [amountToSend, setAmountToSend] = useState<number>(1);
   const [addressToSend, setAddressToSend] = useState<string>(
-    (fromWallet === 'eoa' ? userSession?.futurepass : userSession?.eoa) ?? ''
+    (fromWallet === 'eoa'
+      ? userSession?.futurepass
+      : shouldShowEoa
+      ? userSession?.eoa
+      : '') ?? ''
   );
 
   const [slippage, setSlippage] = useState<string>('5');
@@ -459,6 +457,16 @@ export default function AssetTransfer() {
           )}
         </div>
         <div className="row">
+          <AddressToSend
+            addressToSend={addressToSend}
+            setAddressToSend={setAddressToSend}
+            addressInputError={addressInputError}
+            setAddressInputError={setAddressInputError}
+            disable={disable}
+            resetState={resetState}
+          />
+        </div>
+        <div className="row">
           <label>
             Amount
             <input
@@ -473,16 +481,6 @@ export default function AssetTransfer() {
               }}
             />
           </label>
-        </div>
-        <div className="row">
-          <AddressToSend
-            addressToSend={addressToSend}
-            setAddressToSend={setAddressToSend}
-            addressInputError={addressInputError}
-            setAddressInputError={setAddressInputError}
-            disable={disable}
-            resetState={resetState}
-          />
         </div>
         <div className="row">
           <label>
