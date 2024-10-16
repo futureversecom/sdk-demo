@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAuth, useConnector } from '@futureverse/auth-react';
+import { useAuth } from '@futureverse/auth-react';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useFutureverseSigner } from '@futureverse/auth-react';
 

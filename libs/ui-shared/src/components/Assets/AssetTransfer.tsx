@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { TransactionBuilder } from '@futureverse/transact';
-import { useAuth, useConnector } from '@futureverse/auth-react';
+import { useAuth } from '@futureverse/auth-react';
 
 import { parseUnits } from 'viem';
 
