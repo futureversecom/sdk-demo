@@ -1,8 +1,7 @@
-import { useAuth, useConnector } from '@futureverse/auth-react';
+import { useAuth } from '@futureverse/auth-react';
 import { useAuthUi } from '@futureverse/auth-ui';
 import React, { Dispatch, SetStateAction } from 'react';
 import DropDownMenu from './DropDownMenu';
-import { shortAddress } from '../lib/utils';
 
 export interface MenuProps {
   setIsOpen?: Dispatch<SetStateAction<boolean>>;

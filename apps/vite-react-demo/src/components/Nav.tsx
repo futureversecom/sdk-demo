@@ -7,7 +7,6 @@ import {
   DropDownMenu,
   MenuProps,
   Navigation,
-  polkadotLinks,
   ResourceMenu,
   shortAddress,
   swappablesLinks,

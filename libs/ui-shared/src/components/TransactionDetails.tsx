@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { ExtrinsicResult } from '@futureverse/transact';
 
 import { useCallback } from 'react';

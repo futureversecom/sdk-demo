@@ -877,8 +877,8 @@ nav li {
   overflow: scroll;
 
   gap: 16px;
-  align-items: end;
-  text-align: end;
+  align-items: flex-end;
+  text-align: flex-end;
 }
 
 .mobile-container-outer .close {
@@ -887,7 +887,7 @@ nav li {
   padding: 8px 16px;
   line-height: 1;
   display: inline-flex;
-  align-self: end;
+  align-self: flex-end;
   background: var(--cta);
   color: var(--white);
   margin: 20px;
@@ -916,9 +916,9 @@ nav li {
 .mobile-container-outer .mobile-container .dropdown-content li {
   margin: 0;
   padding: 0;
-  text-align: end;
+  text-align: flex-end;
   flex-direction: column;
-  align-items: end;
+  align-items: flex-end;
 }
 
 
@@ -931,7 +931,7 @@ nav li {
 .mobile-container-outer .mobile-container li,
 .mobile-container-outer .mobile-container li * {
   margin: 0;
-  text-align: end;
+  text-align: flex-end;
 }
 
 .mobile-container-outer .mobile-container li .documentation-link,
