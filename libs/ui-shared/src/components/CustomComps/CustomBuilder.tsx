@@ -938,7 +938,9 @@ export default function CustomBuilderComp() {
                     }}
                   >
                     <option value={'true'}>Use FuturePass</option>
-                    <option value={'false'}>Do Not Use FuturePass</option>
+                    {shouldShowEoa && (
+                      <option value={'false'}>Do Not Use FuturePass</option>
+                    )}
                   </select>
                 </label>
               </div>
