@@ -21,6 +21,7 @@ export type RootState = {
     | undefined;
   currentBuilder: RootTransactionBuilder | null;
   error: string | null;
+  signedCallback: (() => void) | undefined;
 };
 
 export type RootActions = {
@@ -37,6 +38,7 @@ export type RootActions = {
   setCurrentBuilder: (currentBuilder: RootTransactionBuilder) => void;
   resetState: () => void;
   setError: (error: string) => void;
+  setSignedCallback: ((signedCallback: () => void) => void) | undefined;
 };
 
 export type RootStore = RootState & RootActions;
@@ -50,6 +52,7 @@ export const defaultInitState: RootState = {
   gas: undefined,
   currentBuilder: null,
   error: null,
+  signedCallback: undefined,
 };
 
 export const createRootStore = (initState: RootState = defaultInitState) => {
@@ -78,5 +81,7 @@ export const createRootStore = (initState: RootState = defaultInitState) => {
         error: null,
       }),
     setError: (error: string) => set({ error }),
+    setSignedCallback: (signedCallback: (() => void) | undefined) =>
+      set({ signedCallback }),
   }));
 };

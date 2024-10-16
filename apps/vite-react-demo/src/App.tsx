@@ -13,6 +13,7 @@ import {
   useIsMobile,
   Footer,
   LogoIcon,
+  BatchAll,
 } from '@fv-sdk-demos/ui-shared';
 import Login from './components/Login';
 import Nav, { MobileMenu } from './components/Nav';
@@ -31,6 +32,7 @@ export default function App() {
         <Route path="custom-builder" element={<CustomBuilder />} />
         <Route path="evmTx" element={<Evm />} />
         <Route path="nftTx" element={<Nft />} />
+        <Route path="batchall" element={<BatchAll />} />
         <Route path="login" element={<Login />} />
       </Route>
     </Routes>

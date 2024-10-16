@@ -1,12 +1,19 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { Link } from 'react-router-dom';
 import {
+  assetLinks,
+  authDocLinks,
   DocumentationLink,
   DropDownMenu,
-  LogOut,
   MenuProps,
   Navigation,
+  polkadotLinks,
+  ResourceMenu,
+  shortAddress,
+  swappablesLinks,
+  transactLinks,
 } from '@fv-sdk-demos/ui-shared';
+import { useAuth, useConnector } from '@futureverse/auth-react';
 
 export default function Nav({
   isOpen,
@@ -29,23 +36,28 @@ const TransactMenu = ({
     <>
       <ul className="dropdown-content">
         <li>
-          <Link onClick={() => setIsOpen && setIsOpen(false)} to="/assetTx">
+          <Link onClick={() => setIsOpen && setIsOpen(false)} to="/assets">
             Assets
           </Link>
         </li>
         <li>
-          <Link onClick={() => setIsOpen && setIsOpen(false)} to="/nftTx">
+          <Link onClick={() => setIsOpen && setIsOpen(false)} to="/nft">
             NFT
           </Link>
         </li>
         <li>
-          <Link onClick={() => setIsOpen && setIsOpen(false)} to="/evmTx">
+          <Link onClick={() => setIsOpen && setIsOpen(false)} to="/evm">
             EVM
           </Link>
         </li>
         <li>
-          <Link onClick={() => setIsOpen && setIsOpen(false)} to="/customTx">
+          <Link onClick={() => setIsOpen && setIsOpen(false)} to="/custom">
             Custom
+          </Link>
+        </li>
+        <li>
+          <Link onClick={() => setIsOpen && setIsOpen(false)} to="/batchall">
+            Batch
           </Link>
         </li>
         <li>
@@ -57,26 +69,28 @@ const TransactMenu = ({
           </Link>
         </li>
       </ul>
-      <DocumentationLink link="https://docs.futureverse.com/dev/transact" />
+      <DocumentationLink links={transactLinks} navName="transact" />
     </>
   );
 };
-
 export const Menu: React.FC<MenuProps> = ({ setIsOpen }) => {
+  const { signOut, userSession } = useAuth();
+  const { disconnect, isConnected } = useConnector();
+
   return (
     <>
-      <li>
-        <Link onClick={() => setIsOpen && setIsOpen(false)} to="/">
-          Account Info
-        </Link>
-      </li>
-
       <DropDownMenu title="Auth SDK">
         <ul className="dropdown-content">
           <li className="no-hover">Coming Soon</li>
         </ul>
-        <DocumentationLink link="https://docs.futureverse.com/dev/auth" />
+        <DocumentationLink links={authDocLinks} navName="auth" />
       </DropDownMenu>
+      {/* <DropDownMenu title="Polkadot SDK">
+        <ul className="dropdown-content">
+          <li className="no-hover">Coming Soon</li>
+        </ul>
+        <DocumentationLink links={polkadotLinks} navName="polkadot" />
+      </DropDownMenu> */}
       <DropDownMenu title="Transact SDK">
         <TransactMenu setIsOpen={setIsOpen} />
       </DropDownMenu>
@@ -84,19 +98,47 @@ export const Menu: React.FC<MenuProps> = ({ setIsOpen }) => {
         <ul className="dropdown-content">
           <li className="no-hover">Coming Soon</li>
         </ul>
-        <DocumentationLink link="https://docs.futureverse.com/dev/assets" />
+        <DocumentationLink links={assetLinks} navName="assets" />
       </DropDownMenu>
       <DropDownMenu title="Swappables SDK">
         <ul className="dropdown-content">
           <li className="no-hover">Coming Soon</li>
         </ul>
-        <DocumentationLink link="https://docs.futureverse.com/dev/platform-tools/swappables-engine" />
+        <DocumentationLink links={swappablesLinks} navName="swappables" />
+      </DropDownMenu>
+      <ResourceMenu />
+      <DropDownMenu
+        title={shortAddress(userSession?.futurepass ?? '', 6, 4)}
+        buttonClasses="green"
+        classes="wallet-dropdown"
+      >
+        <ul className="dropdown-content">
+          <li>
+            <Link onClick={() => setIsOpen && setIsOpen(false)} to="/">
+              Account Info
+            </Link>
+          </li>
+          <li className="wallet-dropdown-inner">
+            <button
+              onClick={() => {
+                isConnected && disconnect();
+                signOut({ flow: 'redirect' });
+              }}
+              className="green"
+            >
+              Log Out
+            </button>
+          </li>
+        </ul>
       </DropDownMenu>
     </>
   );
 };
 
 export const MobileMenu: React.FC<MenuProps> = ({ setIsOpen }) => {
+  const { signOut } = useAuth();
+  const { disconnect, isConnected } = useConnector();
+
   return (
     <div className="mobile-container-outer">
       <div className="close" onClick={() => setIsOpen && setIsOpen(false)}>
@@ -108,13 +150,21 @@ export const MobileMenu: React.FC<MenuProps> = ({ setIsOpen }) => {
             Account Info
           </Link>
         </li>
+
         <li>
           <div className="sectionTitle">Auth SDK</div>
           <ul>
             <li className="no-hover">Coming Soon</li>
           </ul>
-          <DocumentationLink link="https://docs.futureverse.com/dev/auth" />
+          <DocumentationLink links={authDocLinks} navName="auth" />
         </li>
+        {/* <li>
+          <div className="sectionTitle">Polkadot SDK</div>
+          <ul>
+            <li className="no-hover">Coming Soon</li>
+          </ul>
+          <DocumentationLink links={polkadotLinks} navName="polkadot" />
+        </li> */}
         <li>
           <div className="sectionTitle">Transact SDK</div>
           <TransactMenu setIsOpen={setIsOpen} />
@@ -124,16 +174,31 @@ export const MobileMenu: React.FC<MenuProps> = ({ setIsOpen }) => {
           <ul>
             <li className="no-hover">Coming Soon</li>
           </ul>
-          <DocumentationLink link="https://docs.futureverse.com/dev/assets" />
+          <DocumentationLink links={assetLinks} navName="assets" />
         </li>
         <li>
           <div className="sectionTitle">Swappables SDK</div>
           <ul>
             <li className="no-hover">Coming Soon</li>
           </ul>
-          <DocumentationLink link="https://docs.futureverse.com/dev/platform-tools/swappables-engine" />
+          <DocumentationLink links={swappablesLinks} navName="swappables" />
         </li>
-        <LogOut />
+        <li>
+          <ResourceMenu />
+        </li>
+        <li>
+          <div className="wallet-dropdown-inner">
+            <button
+              onClick={() => {
+                isConnected && disconnect();
+                signOut({ flow: 'redirect' });
+              }}
+              className="green"
+            >
+              Log Out
+            </button>
+          </div>
+        </li>
       </ul>
     </div>
   );

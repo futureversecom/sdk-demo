@@ -9,6 +9,7 @@ import Nft from './Nft';
 import Assets from './Assets';
 import DropDownMenu from './DropDownMenu';
 import TransactionDetails from './TransactionDetails';
+import BatchAll from './BatchAll';
 
 export { Dialog } from './Dialog/Dialog';
 export {
@@ -18,12 +19,14 @@ export {
   AssetFromFuturePassFeeProxy,
 } from './TransferComps';
 
+export { Batch } from './Batch';
+
 export { AssetTransfer } from './Assets/index';
 
 export { NftMint } from './NftComps';
 export { Header } from './Header';
 export { Footer } from './Footer';
-export { Navigation, type MenuProps, LogOut } from './Navigation';
+export { Navigation, type MenuProps, ResourceMenu } from './Navigation';
 
 export * from './Icons';
 
@@ -48,5 +51,6 @@ export {
   CustomBuilder,
   Nft,
   Assets,
+  BatchAll,
   DropDownMenu,
 };

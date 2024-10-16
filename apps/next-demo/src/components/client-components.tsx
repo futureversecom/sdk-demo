@@ -23,6 +23,7 @@ import {
   Assets,
   Header,
   Footer,
+  BatchAll,
 } from '@fv-sdk-demos/ui-shared';
 
 export {
@@ -46,4 +47,5 @@ export {
   Assets,
   Header,
   Footer,
+  BatchAll,
 };
