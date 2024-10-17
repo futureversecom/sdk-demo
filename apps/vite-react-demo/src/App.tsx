@@ -27,12 +27,13 @@ export default function App() {
           index
           element={<Home title="Welcome to the SDK Demo in Vite React" />}
         />
-        <Route path="assetTx" element={<Assets />} />
-        <Route path="customTx" element={<Custom />} />
-        <Route path="custom-builder" element={<CustomBuilder />} />
-        <Route path="evmTx" element={<Evm />} />
-        <Route path="nftTx" element={<Nft />} />
-        <Route path="batchall" element={<BatchAll />} />
+        <Route path="transact/assets" element={<Assets />} />
+        <Route path="transact/batch-all" element={<BatchAll />} />
+        <Route path="transact/custom" element={<Custom />} />
+        <Route path="transact/custom-builder" element={<CustomBuilder />} />
+        <Route path="transact/evm" element={<Evm />} />
+        <Route path="transact/nft" element={<Nft />} />
+        <Route path="transact/sft" element={<Nft />} />
         <Route path="login" element={<Login />} />
       </Route>
     </Routes>

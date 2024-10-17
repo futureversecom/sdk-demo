@@ -6,10 +6,11 @@ import {
   authDocLinks,
   DocumentationLink,
   DropDownMenu,
+  evmLinks,
+  ExternalLink,
   MenuProps,
   Navigation,
-  ResourceMenu,
-  ResourceMenuMobile,
+  polkadotLinks,
   shortAddress,
   swappablesLinks,
   transactLinks,
@@ -38,27 +39,50 @@ const TransactMenu = ({
     <>
       <ul className="dropdown-content">
         <li>
-          <Link onClick={() => setIsOpen && setIsOpen(false)} href="/assets">
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/transact/assets"
+          >
             Assets
           </Link>
         </li>
         <li>
-          <Link onClick={() => setIsOpen && setIsOpen(false)} href="/nft">
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/transact/nft"
+          >
             NFT
           </Link>
         </li>
         <li>
-          <Link onClick={() => setIsOpen && setIsOpen(false)} href="/evm">
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/transact/sft"
+          >
+            SFT
+          </Link>
+        </li>
+        <li>
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/transact/evm"
+          >
             EVM
           </Link>
         </li>
         <li>
-          <Link onClick={() => setIsOpen && setIsOpen(false)} href="/custom">
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/transact/custom"
+          >
             Custom
           </Link>
         </li>
         <li>
-          <Link onClick={() => setIsOpen && setIsOpen(false)} href="/batchall">
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/transact/batch-all"
+          >
             Batch
           </Link>
         </li>
@@ -81,34 +105,50 @@ export const Menu: React.FC<MenuProps> = ({ setIsOpen }) => {
 
   return (
     <>
-      <DropDownMenu title="Auth SDK">
+      <li>
+        <a
+          href="https://faucet.rootnet.cloud"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="faucet-link"
+        >
+          <div>Faucet</div>
+          <ExternalLink />
+        </a>
+      </li>
+      <DropDownMenu title="Polkadot API">
+        <ul className="dropdown-content">
+          <li className="no-hover">Coming Soon</li>
+        </ul>
+        <DocumentationLink links={polkadotLinks} navName="polkadot" />
+      </DropDownMenu>
+      <DropDownMenu title="EVM">
+        <ul className="dropdown-content">
+          <li className="no-hover">Coming Soon</li>
+        </ul>
+        <DocumentationLink links={evmLinks} navName="polkadot" />
+      </DropDownMenu>
+      <DropDownMenu title="Auth">
         <ul className="dropdown-content">
           <li className="no-hover">Coming Soon</li>
         </ul>
         <DocumentationLink links={authDocLinks} navName="auth" />
       </DropDownMenu>
-      {/* <DropDownMenu title="Polkadot SDK">
-        <ul className="dropdown-content">
-          <li className="no-hover">Coming Soon</li>
-        </ul>
-        <DocumentationLink links={polkadotLinks} navName="polkadot" />
-      </DropDownMenu> */}
-      <DropDownMenu title="Transact SDK">
+      <DropDownMenu title="Transact">
         <TransactMenu setIsOpen={setIsOpen} />
       </DropDownMenu>
-      <DropDownMenu title="Asset Register SDK">
+      <DropDownMenu title="Asset Register">
         <ul className="dropdown-content">
           <li className="no-hover">Coming Soon</li>
         </ul>
         <DocumentationLink links={assetLinks} navName="assets" />
       </DropDownMenu>
-      <DropDownMenu title="Swappables SDK">
+      <DropDownMenu title="Swappables">
         <ul className="dropdown-content">
           <li className="no-hover">Coming Soon</li>
         </ul>
         <DocumentationLink links={swappablesLinks} navName="swappables" />
       </DropDownMenu>
-      <ResourceMenu />
 
       <DropDownMenu
         title={shortAddress(userSession?.futurepass ?? '', 6, 4)}
@@ -154,40 +194,54 @@ export const MobileMenu: React.FC<MenuProps> = ({ setIsOpen }) => {
           </Link>
         </li>
         <li>
-          <div className="sectionTitle">Auth SDK</div>
+          <a
+            href="https://faucet.rootnet.cloud"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="faucet-link"
+          >
+            <div>Faucet</div>
+            <ExternalLink />
+          </a>
+        </li>
+        <li>
+          <div className="sectionTitle">Polkadot API</div>
+          <ul className="dropdown-content">
+            <li className="no-hover">Coming Soon</li>
+          </ul>
+          <DocumentationLink links={polkadotLinks} navName="polkadot" />
+        </li>
+        <li>
+          <div className="sectionTitle">EVM</div>
+          <ul className="dropdown-content">
+            <li className="no-hover">Coming Soon</li>
+          </ul>
+          <DocumentationLink links={evmLinks} navName="polkadot" />
+        </li>
+        <li>
+          <div className="sectionTitle">Auth</div>
           <ul className="dropdown-content">
             <li className="no-hover">Coming Soon</li>
           </ul>
           <DocumentationLink links={authDocLinks} navName="auth" />
         </li>
-        {/* <li>
-          <div className="sectionTitle">Polkadot SDK</div>
-                  <ul className="dropdown-content">
-
-            <li className="no-hover">Coming Soon</li>
-          </ul>
-          <DocumentationLink links={polkadotLinks} navName="polkadot" />
-        </li> */}
         <li>
-          <div className="sectionTitle">Transact SDK</div>
+          <div className="sectionTitle">Transact</div>
           <TransactMenu setIsOpen={setIsOpen} />
         </li>
         <li>
-          <div className="sectionTitle">Asset Register SDK</div>
+          <div className="sectionTitle">Asset Register</div>
           <ul className="dropdown-content">
             <li className="no-hover">Coming Soon</li>
           </ul>
           <DocumentationLink links={assetLinks} navName="assets" />
         </li>
         <li>
-          <div className="sectionTitle">Swappables SDK</div>
+          <div className="sectionTitle">Swappables</div>
           <ul className="dropdown-content">
             <li className="no-hover">Coming Soon</li>
           </ul>
           <DocumentationLink links={swappablesLinks} navName="swappables" />
-        </li>
-        <li>
-          <ResourceMenuMobile />
         </li>
         <li>
           <div className="wallet-dropdown-inner">

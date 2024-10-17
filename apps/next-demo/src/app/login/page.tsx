@@ -32,14 +32,62 @@ export default function Login() {
   }, [authClient, router]);
 
   if (signInState === true) {
-    return <div>Authenticated</div>;
+    return (
+      <div className="row login-row">
+        <div className="card">
+          <div className="inner">
+            <div className="grid cols-1">
+              <div
+                className="spinner"
+                style={{
+                  margin: '0 auto',
+                  marginTop: '16px',
+                  width: '100px',
+                  height: '100px',
+                }}
+              />
+              <div style={{ textAlign: 'center' }}>
+                Redirecting, please wait...
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
   if (signInState === false) {
-    return <div>Not Authenticated</div>;
+    return (
+      <div className="row login-row">
+        <div className="card">
+          <div className="inner">
+            <div className="grid cols-1">
+              <div style={{ textAlign: 'center' }}>
+                Not Authenticated - Please Try Again...
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
   return (
-    <div>
-      <Spinner /> Authenticating...
+    <div className="row login-row">
+      <div className="card">
+        <div className="inner">
+          <div className="grid cols-1">
+            <div
+              className="spinner"
+              style={{
+                margin: '0 auto',
+                marginTop: '16px',
+                width: '100px',
+                height: '100px',
+              }}
+            />
+            <div style={{ textAlign: 'center' }}>Authenticating...</div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
