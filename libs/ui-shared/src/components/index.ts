@@ -20,13 +20,20 @@ export {
 } from './TransferComps';
 
 export { Batch } from './Batch';
+export { AccountCard } from './AccountCard';
+export { ConnectorInfo } from './ConnectorInfo';
 
 export { AssetTransfer } from './Assets/index';
 
 export { NftMint } from './NftComps';
 export { Header } from './Header';
 export { Footer } from './Footer';
-export { Navigation, type MenuProps, ResourceMenu } from './Navigation';
+export {
+  Navigation,
+  type MenuProps,
+  ResourceMenu,
+  ResourceMenuMobile,
+} from './Navigation';
 
 export * from './Icons';
 

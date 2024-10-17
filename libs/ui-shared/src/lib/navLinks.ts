@@ -5,7 +5,7 @@ export const authDocLinks = [
   },
   {
     title: 'Docs',
-    link: 'https://docs.futureverse.com/dev/auth',
+    link: 'https://docs.futureverse.com/dev/authentication',
   },
 ];
 
@@ -27,7 +27,7 @@ export const transactLinks = [
   },
   {
     title: 'Docs',
-    link: 'https://docs.futureverse.com/dev/transact',
+    link: 'https://docs.futureverse.com/dev/transactions',
   },
 ];
 

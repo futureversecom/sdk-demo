@@ -8,27 +8,11 @@ const clientId = import.meta.env.VITE_CLIENT_ID;
 const walletConnectProjectId = import.meta.env.VITE_WALLET_CONNECT;
 const xamanAPIKey = import.meta.env.VITE_XAMAN_API;
 
-console.log(
-  'Redirect URL:',
-  `${
-    typeof window !== 'undefined'
-      ? `${window.location.protocol}//${
-          window.location.hostname ?? window.location.host
-        }${window.location.port === '' ? '' : `:${window.location.port}`}/`
-      : ''
-  }login`
-);
-
 export const authClient = new FutureverseAuthClient({
   clientId,
   environment: 'staging',
-  redirectUri: `${
-    typeof window !== 'undefined'
-      ? `${window.location.protocol}//${
-          window.location.hostname ?? window.location.host
-        }${window.location.port === '' ? '' : `:${window.location.port}`}/`
-      : ''
-  }login`,
+  redirectUri:
+    typeof window !== 'undefined' ? `${window.location.origin}/login` : '',
   signInFlow: 'redirect',
 });
 export const queryClient = new QueryClient();

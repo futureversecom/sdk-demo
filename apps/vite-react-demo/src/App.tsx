@@ -41,7 +41,7 @@ export default function App() {
 
 function Layout() {
   const [isOpen, setIsOpen] = React.useState(false);
-  const isMobile = useIsMobile();
+  const isMobile = useIsMobile(992);
   const reactRouterLocation = useReactRouterLocation();
   useIsAuthed({ redirectUrl: '/' });
 

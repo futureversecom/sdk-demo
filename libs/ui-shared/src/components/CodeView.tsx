@@ -2,12 +2,13 @@ import React, { PropsWithChildren } from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { useCopyToClipboard } from '../hooks';
-
+import { hooksCodeString } from '../lib/hooksCodeString';
 export default function CodeView({
   children,
   code,
 }: PropsWithChildren<{ code: string }>) {
   const [showCode, setShowCode] = React.useState(false);
+  const [showHooksCode, setShowHooksCode] = React.useState(false);
 
   const { isCopied, copyToClipboard } = useCopyToClipboard();
 
@@ -62,6 +63,16 @@ export default function CodeView({
       </div>
       {showCode && (
         <div className="code-view" onClick={() => setShowCode(false)}>
+          <button
+            className="hooks-btn green"
+            onClick={e => {
+              e.preventDefault();
+              e.stopPropagation();
+              setShowHooksCode(!showHooksCode);
+            }}
+          >
+            {showHooksCode ? 'Hide' : 'View'} Hooks
+          </button>
           <button
             className="close-code-btn green"
             onClick={() => setShowCode(false)}
@@ -120,9 +131,15 @@ export default function CodeView({
               </svg>
             )}
           </button>
-          <SyntaxHighlighter language="javascript" style={dracula}>
-            {code}
-          </SyntaxHighlighter>
+          {showHooksCode ? (
+            <SyntaxHighlighter language="javascript" style={dracula}>
+              {hooksCodeString}
+            </SyntaxHighlighter>
+          ) : (
+            <SyntaxHighlighter language="javascript" style={dracula}>
+              {code}
+            </SyntaxHighlighter>
+          )}
         </div>
       )}
     </div>

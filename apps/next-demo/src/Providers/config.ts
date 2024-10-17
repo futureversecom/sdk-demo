@@ -12,12 +12,8 @@ export const authClient = new FutureverseAuthClient({
   clientId,
   environment: 'staging',
   redirectUri: `${
-    typeof window !== 'undefined'
-      ? `${window.location.protocol}//${window.location.hostname}${
-          window.location.port === '' ? '' : `:${window.location.port}`
-        }/`
-      : ''
-  }login`,
+    typeof window !== 'undefined' ? `${window.location.origin}/login` : ''
+  }`,
   signInFlow: 'redirect',
 });
 export const queryClient = new QueryClient();

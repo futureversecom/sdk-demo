@@ -1,10 +1,11 @@
 import { useAuth } from '@futureverse/auth-react';
 import { useAuthUi } from '@futureverse/auth-ui';
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { CSSProperties, Dispatch, SetStateAction } from 'react';
 import DropDownMenu from './DropDownMenu';
 
 export interface MenuProps {
   setIsOpen?: Dispatch<SetStateAction<boolean>>;
+  isMobileOpen?: boolean;
   openByDefault?: boolean;
 }
 
@@ -23,18 +24,20 @@ export function Navigation({
     <div role="navigation">
       <ul className="desktop-nav ">
         {!userSession && <LogIn />}
-        {userSession && <Menu setIsOpen={setIsMobileOpen} />}
+        {userSession && (
+          <Menu setIsOpen={setIsMobileOpen} isMobileOpen={isMobileOpen} />
+        )}
       </ul>
       <ul className="mobile-nav">
         {!userSession && <LogIn />}
         {userSession && (
           <li className="mobile-wrap">
-            <button
+            <div
               onClick={() => setIsMobileOpen(!isMobileOpen)}
-              className="green"
+              className="btn green"
             >
               Menu
-            </button>
+            </div>
           </li>
         )}
       </ul>
@@ -42,11 +45,11 @@ export function Navigation({
   );
 }
 
-export const LogIn = () => {
+export const LogIn = ({ styles }: { styles?: CSSProperties }) => {
   const { openLogin } = useAuthUi();
 
   return (
-    <button onClick={() => openLogin()} className="green">
+    <button onClick={() => openLogin()} className="green" style={styles}>
       Log In
     </button>
   );
@@ -113,5 +116,48 @@ export const ResourceMenu = () => {
         </li>
       </ul>
     </DropDownMenu>
+  );
+};
+
+export const ResourceMenuMobile = () => {
+  return (
+    <ul>
+      <li>
+        <div className="sectionTitle">Resources</div>
+        <ul className="dropdown-content">
+          <li>
+            <a
+              href="https://faucet.rootnet.cloud"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Porcini Faucet
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://github.com/futureversecom/trn-examples/tree/main/examples/substrate"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              NodeJS Native
+              <br />
+              Examples
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://github.com/futureversecom/trn-examples/tree/main/examples/evm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              NodeJS EVM
+              <br />
+              Examples
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
   );
 };

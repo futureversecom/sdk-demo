@@ -9,6 +9,7 @@ import {
   MenuProps,
   Navigation,
   ResourceMenu,
+  ResourceMenuMobile,
   shortAddress,
   swappablesLinks,
   transactLinks,
@@ -154,14 +155,15 @@ export const MobileMenu: React.FC<MenuProps> = ({ setIsOpen }) => {
         </li>
         <li>
           <div className="sectionTitle">Auth SDK</div>
-          <ul>
+          <ul className="dropdown-content">
             <li className="no-hover">Coming Soon</li>
           </ul>
           <DocumentationLink links={authDocLinks} navName="auth" />
         </li>
         {/* <li>
           <div className="sectionTitle">Polkadot SDK</div>
-          <ul>
+                  <ul className="dropdown-content">
+
             <li className="no-hover">Coming Soon</li>
           </ul>
           <DocumentationLink links={polkadotLinks} navName="polkadot" />
@@ -172,20 +174,20 @@ export const MobileMenu: React.FC<MenuProps> = ({ setIsOpen }) => {
         </li>
         <li>
           <div className="sectionTitle">Asset Register SDK</div>
-          <ul>
+          <ul className="dropdown-content">
             <li className="no-hover">Coming Soon</li>
           </ul>
           <DocumentationLink links={assetLinks} navName="assets" />
         </li>
         <li>
           <div className="sectionTitle">Swappables SDK</div>
-          <ul>
+          <ul className="dropdown-content">
             <li className="no-hover">Coming Soon</li>
           </ul>
           <DocumentationLink links={swappablesLinks} navName="swappables" />
         </li>
         <li>
-          <ResourceMenu />
+          <ResourceMenuMobile />
         </li>
         <li>
           <div className="wallet-dropdown-inner">

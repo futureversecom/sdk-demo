@@ -8,6 +8,7 @@ import {
   MenuProps,
   Navigation,
   ResourceMenu,
+  ResourceMenuMobile,
   shortAddress,
   swappablesLinks,
   transactLinks,
@@ -183,7 +184,7 @@ export const MobileMenu: React.FC<MenuProps> = ({ setIsOpen }) => {
           <DocumentationLink links={swappablesLinks} navName="swappables" />
         </li>
         <li>
-          <ResourceMenu />
+          <ResourceMenuMobile />
         </li>
         <li>
           <div className="wallet-dropdown-inner">
