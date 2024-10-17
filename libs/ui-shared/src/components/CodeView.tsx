@@ -131,15 +131,23 @@ export default function CodeView({
               </svg>
             )}
           </button>
-          {showHooksCode ? (
-            <SyntaxHighlighter language="javascript" style={dracula}>
-              {hooksCodeString}
-            </SyntaxHighlighter>
-          ) : (
-            <SyntaxHighlighter language="javascript" style={dracula}>
-              {code}
-            </SyntaxHighlighter>
-          )}
+          <div
+            className="code-view-wrapper"
+            onClick={e => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+          >
+            {showHooksCode ? (
+              <SyntaxHighlighter language="javascript" style={dracula}>
+                {hooksCodeString}
+              </SyntaxHighlighter>
+            ) : (
+              <SyntaxHighlighter language="javascript" style={dracula}>
+                {code}
+              </SyntaxHighlighter>
+            )}
+          </div>
         </div>
       )}
     </div>

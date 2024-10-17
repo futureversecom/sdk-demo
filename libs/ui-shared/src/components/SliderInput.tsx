@@ -24,7 +24,7 @@ export default function SliderInput({
       position: 'absolute',
       width: `calc(${(Number(sliderValue) * 100) / maxValue}%)`,
       height: '2px',
-      backgroundColor: '#000000',
+      backgroundColor: 'var(--cta)',
       padding: '0',
       marginTop: '8px',
       marginBottom: '8px',

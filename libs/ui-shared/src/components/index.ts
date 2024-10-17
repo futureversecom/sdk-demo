@@ -38,6 +38,7 @@ export {
 export * from './Icons';
 
 export { DocumentationLink } from './DocumentationLink';
+export { DarkModeToggle } from './DarkModeToggle';
 
 export {
   CustomFromEoaFuturePassFeeProxy,

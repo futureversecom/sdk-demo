@@ -1,6 +1,7 @@
 import React from 'react';
 import { DocumentationIcon } from './Icons/DocumentationIcon';
 import { GithubIcon } from './Icons/GithubIcon';
+import { DarkModeToggle } from './DarkModeToggle';
 
 export function Header({ Nav, Logo }: { Nav: React.FC; Logo: React.FC }) {
   return (
@@ -27,6 +28,7 @@ export function Header({ Nav, Logo }: { Nav: React.FC; Logo: React.FC }) {
           >
             <GithubIcon />
           </a>
+          <DarkModeToggle />
         </div>
       </div>
     </header>
