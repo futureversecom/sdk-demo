@@ -11,6 +11,7 @@ import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
 import CodeView from '../CodeView';
 import { isAddress } from 'viem';
 import SliderInput from '../SliderInput';
+import { useShouldShowEoa } from '../../hooks';
 
 const codeString = `
 import { useAuth } from '@futureverse/auth-react';
@@ -20,15 +21,19 @@ import { useTrnApi } from '../../providers/TRNProvider';
 import { useFutureverseSigner } from '@futureverse/auth-react';
 
 import { useRootStore } from '../../hooks/useRootStore';
-
-import { shortAddress } from '../../lib/utils';
 import { useCustomExtrinsicBuilder } from '../../hooks/useCustomExtrinsicBuilder';
+
+import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
 import CodeView from '../CodeView';
+import { isAddress } from 'viem';
+import SliderInput from '../SliderInput';
+import { useShouldShowEoa } from '../../hooks';
 
 type Argument = {
   name: string;
   type: string;
   defaultValue: string | number | boolean;
+  validation?: 'address' | 'number' | 'string' | 'boolean';
 };
 
 type Method = {
@@ -47,6 +52,7 @@ export default function CustomBuilderComp() {
   const { userSession } = useAuth();
   const { trnApi } = useTrnApi();
   const signer = useFutureverseSigner();
+  const shouldShowEoa = useShouldShowEoa();
 
   const builder = useCustomExtrinsicBuilder({
     trnApi,
@@ -71,7 +77,8 @@ export default function CustomBuilderComp() {
             {
               name: 'walletAddress',
               type: 'string',
-              defaultValue: userSession?.eoa ?? '',
+              defaultValue: shouldShowEoa ? userSession?.eoa ?? '' : '',
+              validation: 'address',
             },
             {
               name: 'amount',
@@ -102,7 +109,8 @@ export default function CustomBuilderComp() {
             {
               name: 'walletAddress',
               type: 'string',
-              defaultValue: userSession?.eoa ?? '',
+              defaultValue: userSession?.futurepass ?? '',
+              validation: 'address',
             },
           ],
         },
@@ -121,7 +129,8 @@ export default function CustomBuilderComp() {
             {
               name: 'walletAddress',
               type: 'string',
-              defaultValue: userSession?.eoa ?? '',
+              defaultValue: userSession?.futurepass ?? '',
+              validation: 'address',
             },
           ],
         },
@@ -156,7 +165,8 @@ export default function CustomBuilderComp() {
             {
               name: 'walletAddress',
               type: 'string',
-              defaultValue: userSession?.eoa ?? '',
+              defaultValue: userSession?.futurepass ?? '',
+              validation: 'address',
             },
           ],
         },
@@ -175,7 +185,8 @@ export default function CustomBuilderComp() {
             {
               name: 'walletAddress',
               type: 'string',
-              defaultValue: userSession?.eoa ?? '',
+              defaultValue: userSession?.futurepass ?? '',
+              validation: 'address',
             },
           ],
         },
@@ -206,27 +217,16 @@ export default function CustomBuilderComp() {
         },
       },
     };
-  }, [userSession?.eoa]);
+  }, [shouldShowEoa, userSession?.eoa, userSession?.futurepass]);
 
   const disable = useMemo(() => {
     return signed && !result && !error;
   }, [signed, result, error]);
 
-  const getExtrinsic = async (builder: RootTransactionBuilder) => {
-    const gasEstimate = await builder?.getGasFees();
-    if (gasEstimate) {
-      setGas(gasEstimate);
-    }
-    const payloads = await builder?.getPayloads();
-    if (!payloads) {
-      return;
-    }
-    setPayload(payloads);
-    const { ethPayload } = payloads;
-    setToSign(ethPayload.toString());
-  };
+  const getExtrinsic = useGetExtrinsic();
 
   const [feeAssetId, setFeeAssetId] = useState<number>(1);
+  const [slippage, setSlippage] = useState<string>('5');
 
   const [useFuturePass, setUseFuturePass] = useState(true);
 
@@ -234,6 +234,8 @@ export default function CustomBuilderComp() {
   const [method, setMethod] = useState<keyof Method | null>(null);
 
   const [formValues, setFormValues] = useState<{ [key: string]: string }>({});
+
+  const [addressError, setAddressError] = useState<string | null>(null);
 
   useEffect(() => {
     if (pallet && method) {
@@ -316,23 +318,27 @@ export default function CustomBuilderComp() {
     builder,
     pallet,
     method,
+    customPalletMethods,
     formValues,
     feeAssetId,
     getExtrinsic,
     setCurrentBuilder,
     useFuturePass,
+    slippage,
   ]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormValues(prevValues => ({
-      ...prevValues,
-      [name]: value,
-    }));
+    setFormValues(prevValues => {
+      return {
+        ...prevValues,
+        [name]: value,
+      };
+    });
   };
 
   return (
-    <div>
+    <div className={\`card \${disable ? 'disabled' : ''}\`}>
       <div className="inner">
         <CodeView code={codeString}>
           <h3>Custom Extrinsic Builder</h3>
@@ -408,10 +414,34 @@ export default function CustomBuilderComp() {
                     type="text"
                     className="w-full builder-input"
                     disabled={disable}
-                    onChange={handleInputChange}
+                    onChange={e => {
+                      if (arg.validation === 'address') {
+                        if (e.target.value.length !== 42) {
+                          setAddressError('Address is too long');
+                        }
+                        if (!isAddress(e.target.value)) {
+                          setAddressError('Invalid address');
+                        }
+                        if (
+                          isAddress(e.target.value) &&
+                          e.target.value.length === 42
+                        ) {
+                          setAddressError(null);
+                        }
+                      }
+                      handleInputChange(e);
+                    }}
                     name={arg.name}
                     value={formValues[arg.name] ?? ''}
                   />
+                  {arg.validation === 'address' && addressError && (
+                    <span
+                      style={{ display: 'inline-block', fontSize: '0.8rem' }}
+                      className="text-red-500"
+                    >
+                      {addressError}
+                    </span>
+                  )}
                 </label>
               </div>
             ))}
@@ -446,7 +476,9 @@ export default function CustomBuilderComp() {
                     }}
                   >
                     <option value={'true'}>Use FuturePass</option>
-                    <option value={'false'}>Do Not Use FuturePass</option>
+                    {shouldShowEoa && (
+                      <option value={'false'}>Do Not Use FuturePass</option>
+                    )}
                   </select>
                 </label>
               </div>
@@ -462,21 +494,35 @@ export default function CustomBuilderComp() {
                       setFeeAssetId(Number(e.target.value));
                     }}
                   >
-                    <option value={1}>ROOT</option>
                     <option value={2}>XRP</option>
+                    <option value={1}>ROOT</option>
                     <option value={3172}>SYLO</option>
                     <option value={17508}>ASTO</option>
                   </select>
                 </label>
               </div>
+              {feeAssetId !== 2 && (
+                <div className="row">
+                  <SliderInput
+                    sliderValue={slippage}
+                    setSliderValue={setSlippage}
+                    minValue={0}
+                    sliderStep={0.1}
+                    maxValue={15}
+                    resetState={resetState}
+                  />
+                </div>
+              )}
               <div className="row">
                 <button
-                  className="w-full builder-input green"
+                  className={\`w-full builder-input green \${
+                    disable || !!addressError ? 'disabled' : ''
+                  }\`}
                   onClick={() => {
                     resetState();
                     createBuilder();
                   }}
-                  disabled={disable}
+                  disabled={disable || !!addressError}
                   style={{ textTransform: 'capitalize' }}
                 >
                   {method} {pallet}
@@ -488,6 +534,7 @@ export default function CustomBuilderComp() {
     </div>
   );
 }
+
 `;
 
 type Argument = {
@@ -513,6 +560,7 @@ export default function CustomBuilderComp() {
   const { userSession } = useAuth();
   const { trnApi } = useTrnApi();
   const signer = useFutureverseSigner();
+  const shouldShowEoa = useShouldShowEoa();
 
   const builder = useCustomExtrinsicBuilder({
     trnApi,
@@ -537,7 +585,7 @@ export default function CustomBuilderComp() {
             {
               name: 'walletAddress',
               type: 'string',
-              defaultValue: userSession?.eoa ?? '',
+              defaultValue: shouldShowEoa ? userSession?.eoa ?? '' : '',
               validation: 'address',
             },
             {
@@ -569,7 +617,7 @@ export default function CustomBuilderComp() {
             {
               name: 'walletAddress',
               type: 'string',
-              defaultValue: userSession?.eoa ?? '',
+              defaultValue: userSession?.futurepass ?? '',
               validation: 'address',
             },
           ],
@@ -589,7 +637,7 @@ export default function CustomBuilderComp() {
             {
               name: 'walletAddress',
               type: 'string',
-              defaultValue: userSession?.eoa ?? '',
+              defaultValue: userSession?.futurepass ?? '',
               validation: 'address',
             },
           ],
@@ -625,7 +673,7 @@ export default function CustomBuilderComp() {
             {
               name: 'walletAddress',
               type: 'string',
-              defaultValue: userSession?.eoa ?? '',
+              defaultValue: userSession?.futurepass ?? '',
               validation: 'address',
             },
           ],
@@ -645,7 +693,7 @@ export default function CustomBuilderComp() {
             {
               name: 'walletAddress',
               type: 'string',
-              defaultValue: userSession?.eoa ?? '',
+              defaultValue: userSession?.futurepass ?? '',
               validation: 'address',
             },
           ],
@@ -677,7 +725,7 @@ export default function CustomBuilderComp() {
         },
       },
     };
-  }, [userSession?.eoa]);
+  }, [shouldShowEoa, userSession?.eoa, userSession?.futurepass]);
 
   const disable = useMemo(() => {
     return signed && !result && !error;
@@ -936,7 +984,9 @@ export default function CustomBuilderComp() {
                     }}
                   >
                     <option value={'true'}>Use FuturePass</option>
-                    <option value={'false'}>Do Not Use FuturePass</option>
+                    {shouldShowEoa && (
+                      <option value={'false'}>Do Not Use FuturePass</option>
+                    )}
                   </select>
                 </label>
               </div>

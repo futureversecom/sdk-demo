@@ -11,14 +11,9 @@ const xamanAPIKey = import.meta.env.VITE_XAMAN_API;
 export const authClient = new FutureverseAuthClient({
   clientId,
   environment: 'staging',
-  redirectUri: `${
-    typeof window !== 'undefined'
-      ? `${window.location.protocol}//${window.location.hostname}${
-          window.location.port === '' ? '' : `:${window.location.port}`
-        }/`
-      : ''
-  }login`,
-  signInFlow: 'popup',
+  redirectUri:
+    typeof window !== 'undefined' ? `${window.location.origin}/login` : '',
+  signInFlow: 'redirect',
 });
 export const queryClient = new QueryClient();
 

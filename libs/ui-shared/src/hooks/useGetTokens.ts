@@ -1,13 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { useTrnApi } from '../providers';
 
-const collectionId = 709732;
-
-export function useGetTokens(walletAddress: string) {
+export function useGetTokens(walletAddress: string, collectionId: number) {
   const { trnApi } = useTrnApi();
 
   return useQuery({
-    queryKey: ['tokens', walletAddress],
+    queryKey: ['tokens', walletAddress, collectionId],
     queryFn: async () => {
       if (!trnApi || !walletAddress) {
         console.log('Missing trnApi or walletAddress');
@@ -25,7 +23,7 @@ export function useGetTokens(walletAddress: string) {
 
       return ownedTokens ?? [];
     },
-    enabled: !!trnApi && !!walletAddress,
+    enabled: !!trnApi && !!walletAddress && !!collectionId,
     refetchInterval: 30000,
   });
 }

@@ -1,5 +1,5 @@
-import { useAuth, useConnector } from '@futureverse/auth-react';
-import { useCallback, useMemo, useState } from 'react';
+import { useAuth } from '@futureverse/auth-react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import { useTrnApi } from '../../providers/TRNProvider';
 import { useFutureverseSigner } from '@futureverse/auth-react';
@@ -12,9 +12,10 @@ import CodeView from '../CodeView';
 import SliderInput from '../SliderInput';
 import SendFrom from '../SendFrom';
 import { AddressToSend } from '../AddressToSend';
+import { useShouldShowEoa } from '../../hooks';
 
 const codeString = `
-import { useAuth, useConnector } from '@futureverse/auth-react';
+import { useAuth } from '@futureverse/auth-react';
 import React, { useCallback, useMemo, useState } from 'react';
 
 import { useTrnApi } from '../../providers/TRNProvider';
@@ -23,15 +24,15 @@ import { useFutureverseSigner } from '@futureverse/auth-react';
 import { TransactionBuilder } from '@futureverse/transact';
 import { useRootStore } from '../../hooks/useRootStore';
 
-import { shortAddress } from '../../lib/utils';
+import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
 import CodeView from '../CodeView';
 import SliderInput from '../SliderInput';
 import SendFrom from '../SendFrom';
 import { AddressToSend } from '../AddressToSend';
+import { useShouldShowEoa } from '../../hooks';
 
 export default function CustomExtrinsic() {
-  const { userSession, authMethod } = useAuth();
-  const { connector } = useConnector();
+  const { userSession } = useAuth();
 
   const { resetState, setCurrentBuilder, signed, result, error } = useRootStore(
     state => state
@@ -44,23 +45,11 @@ export default function CustomExtrinsic() {
   const { trnApi } = useTrnApi();
   const signer = useFutureverseSigner();
 
-  const getExtrinsic = async (builder: RootTransactionBuilder) => {
-    const gasEstimate = await builder?.getGasFees();
-    if (gasEstimate) {
-      setGas(gasEstimate);
-    }
-    const payloads = await builder?.getPayloads();
-    if (!payloads) {
-      return;
-    }
-    setPayload(payloads);
-    const { ethPayload } = payloads;
-    setToSign(ethPayload.toString());
-  };
+  const getExtrinsic = useGetExtrinsic();
 
-  const shouldShowEoa = useMemo(() => {
-    return connector?.id !== 'xaman' || authMethod !== 'eoa';
-  }, [connector, authMethod]);
+  const shouldShowEoa = useShouldShowEoa();
+  const [collectionId, setCollectionId] = useState<number>(709732);
+  const [mintQty, setMintQty] = useState<number>(1);
 
   const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
     shouldShowEoa ? 'eoa' : 'fpass'
@@ -71,7 +60,7 @@ export default function CustomExtrinsic() {
   const [addressInputError, setAddressInputError] = useState<string>('');
 
   const [addressToSend, setAddressToSend] = useState<string>(
-    (fromWallet === 'eoa' ? userSession?.futurepass : userSession?.eoa) ?? ''
+    (fromWallet === 'eoa' ? userSession?.eoa : userSession?.futurepass) ?? ''
   );
 
   const createBuilder = useCallback(async () => {
@@ -80,7 +69,7 @@ export default function CustomExtrinsic() {
       return;
     }
 
-    const extrinsic = trnApi.tx.nft.mint(709732, 1, addressToSend);
+    const extrinsic = trnApi.tx.nft.mint(collectionId, mintQty, addressToSend);
 
     const builder = await TransactionBuilder.custom(
       trnApi,
@@ -90,7 +79,7 @@ export default function CustomExtrinsic() {
 
     if (fromWallet === 'fpass') {
       if (feeAssetId === 2) {
-        builder.addFuturePass(userSession.futurepass);
+        await builder.addFuturePass(userSession.futurepass);
       }
 
       if (feeAssetId !== 2) {
@@ -117,6 +106,8 @@ export default function CustomExtrinsic() {
     trnApi,
     signer,
     userSession,
+    collectionId,
+    mintQty,
     addressToSend,
     fromWallet,
     getExtrinsic,
@@ -145,6 +136,36 @@ export default function CustomExtrinsic() {
             disable={disable}
             setAddressToSend={setAddressToSend}
           />
+        </div>
+        <div className="row">
+          <label>
+            Collection Id
+            <input
+              type="text"
+              value={collectionId.toString()}
+              className="w-full builder-input"
+              onChange={e => {
+                resetState();
+                setCollectionId(Number(e.target.value) || 1);
+              }}
+              disabled={disable}
+            />
+          </label>
+        </div>
+        <div className="row">
+          <label>
+            Mint Qty
+            <input
+              type="text"
+              value={mintQty}
+              className="w-full builder-input"
+              onChange={e => {
+                resetState();
+                setMintQty(Number(e.target.value) || 1);
+              }}
+              disabled={disable}
+            />
+          </label>
         </div>
         <div className="row">
           <AddressToSend
@@ -206,11 +227,11 @@ export default function CustomExtrinsic() {
     </div>
   );
 }
+
 `;
 
 export default function CustomExtrinsic() {
-  const { userSession, authMethod } = useAuth();
-  const { connector } = useConnector();
+  const { userSession } = useAuth();
 
   const { resetState, setCurrentBuilder, signed, result, error } = useRootStore(
     state => state
@@ -225,9 +246,9 @@ export default function CustomExtrinsic() {
 
   const getExtrinsic = useGetExtrinsic();
 
-  const shouldShowEoa = useMemo(() => {
-    return connector?.id !== 'xaman' || authMethod !== 'eoa';
-  }, [connector, authMethod]);
+  const shouldShowEoa = useShouldShowEoa();
+  const [collectionId, setCollectionId] = useState<number>(709732);
+  const [mintQty, setMintQty] = useState<number>(1);
 
   const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
     shouldShowEoa ? 'eoa' : 'fpass'
@@ -238,7 +259,7 @@ export default function CustomExtrinsic() {
   const [addressInputError, setAddressInputError] = useState<string>('');
 
   const [addressToSend, setAddressToSend] = useState<string>(
-    (fromWallet === 'eoa' ? userSession?.futurepass : userSession?.eoa) ?? ''
+    (fromWallet === 'eoa' ? userSession?.eoa : userSession?.futurepass) ?? ''
   );
 
   const createBuilder = useCallback(async () => {
@@ -247,7 +268,7 @@ export default function CustomExtrinsic() {
       return;
     }
 
-    const extrinsic = trnApi.tx.nft.mint(709732, 1, addressToSend);
+    const extrinsic = trnApi.tx.nft.mint(collectionId, mintQty, addressToSend);
 
     const builder = await TransactionBuilder.custom(
       trnApi,
@@ -257,7 +278,7 @@ export default function CustomExtrinsic() {
 
     if (fromWallet === 'fpass') {
       if (feeAssetId === 2) {
-        builder.addFuturePass(userSession.futurepass);
+        await builder.addFuturePass(userSession.futurepass);
       }
 
       if (feeAssetId !== 2) {
@@ -284,6 +305,8 @@ export default function CustomExtrinsic() {
     trnApi,
     signer,
     userSession,
+    collectionId,
+    mintQty,
     addressToSend,
     fromWallet,
     getExtrinsic,
@@ -312,6 +335,36 @@ export default function CustomExtrinsic() {
             disable={disable}
             setAddressToSend={setAddressToSend}
           />
+        </div>
+        <div className="row">
+          <label>
+            Collection Id
+            <input
+              type="text"
+              value={collectionId.toString()}
+              className="w-full builder-input"
+              onChange={e => {
+                resetState();
+                setCollectionId(Number(e.target.value) || 1);
+              }}
+              disabled={disable}
+            />
+          </label>
+        </div>
+        <div className="row">
+          <label>
+            Mint Qty
+            <input
+              type="text"
+              value={mintQty}
+              className="w-full builder-input"
+              onChange={e => {
+                resetState();
+                setMintQty(Number(e.target.value) || 1);
+              }}
+              disabled={disable}
+            />
+          </label>
         </div>
         <div className="row">
           <AddressToSend

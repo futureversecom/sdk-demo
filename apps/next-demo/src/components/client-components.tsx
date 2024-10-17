@@ -21,6 +21,9 @@ import {
   Nft,
   AssetTransfer,
   Assets,
+  Header,
+  Footer,
+  BatchAll,
 } from '@fv-sdk-demos/ui-shared';
 
 export {
@@ -42,4 +45,7 @@ export {
   Nft,
   AssetTransfer,
   Assets,
+  Header,
+  Footer,
+  BatchAll,
 };

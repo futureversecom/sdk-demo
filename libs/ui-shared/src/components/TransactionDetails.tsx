@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { ExtrinsicResult } from '@futureverse/transact';
 
 import { useCallback } from 'react';
@@ -210,12 +210,14 @@ export default function TransactionDetails() {
     sent,
     setError,
     error,
+    signedCallback,
   } = useRootStore(state => state);
 
   const onSign = useCallback(() => {
     setSigned(true);
+    signedCallback && signedCallback();
     console.log('Signed');
-  }, [setSigned]);
+  }, [setSigned, signedCallback]);
 
   const onSend = useCallback(() => {
     setSent(true);

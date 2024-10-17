@@ -1,6 +1,6 @@
-import { useAuth, useConnector } from '@futureverse/auth-react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { TransactionBuilder } from '@futureverse/transact';
-import { useCallback, useMemo, useState } from 'react';
+import { useAuth } from '@futureverse/auth-react';
 
 import { parseUnits } from 'viem';
 
@@ -14,16 +14,14 @@ import { getBalance } from '../../lib/utils';
 import CodeView from '../CodeView';
 import { AddressToSend } from '../AddressToSend';
 import SendFrom from '../SendFrom';
-import { useTransactQuery } from '../../hooks';
+import { useShouldShowEoa, useTransactQuery } from '../../hooks';
 import { useQuery } from '@tanstack/react-query';
 import SliderInput from '../SliderInput';
 
 const codeString = `
-import React from 'react';
-
-import { useAuth, useConnector } from '@futureverse/auth-react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { TransactionBuilder } from '@futureverse/transact';
-import { useCallback, useMemo, useState } from 'react';
+import { useAuth } from '@futureverse/auth-react';
 
 import { parseUnits } from 'viem';
 
@@ -32,17 +30,18 @@ import { ASSET_DECIMALS } from '../../helpers';
 import { useRootStore } from '../../hooks/useRootStore';
 import { useFutureverseSigner } from '@futureverse/auth-react';
 
-import { getBalance, shortAddress } from '../../lib/utils';
+import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
+import { getBalance } from '../../lib/utils';
 import CodeView from '../CodeView';
 import { AddressToSend } from '../AddressToSend';
 import SendFrom from '../SendFrom';
-import { useTransactQuery } from '../../hooks';
+import { useShouldShowEoa, useTransactQuery } from '../../hooks';
 import { useQuery } from '@tanstack/react-query';
+import SliderInput from '../SliderInput';
 
 
 export default function AssetTransfer() {
-  const { userSession, authMethod } = useAuth();
-  const { connector } = useConnector();
+  const { userSession } = useAuth();
 
   const { resetState, setCurrentBuilder, signed, result, error } = useRootStore(
     state => state
@@ -56,23 +55,9 @@ export default function AssetTransfer() {
 
   const signer = useFutureverseSigner();
 
-  const getExtrinsic = async (builder: RootTransactionBuilder) => {
-    const gasEstimate = await builder?.getGasFees();
-    if (gasEstimate) {
-      setGas(gasEstimate);
-    }
-    const payloads = await builder?.getPayloads();
-    if (!payloads) {
-      return;
-    }
-    setPayload(payloads);
-    const { ethPayload } = payloads;
-    setToSign(ethPayload.toString());
-  };
+  const getExtrinsic = useGetExtrinsic();
 
-  const shouldShowEoa = useMemo(() => {
-    return connector?.id !== 'xaman' || authMethod !== 'eoa';
-  }, [connector, authMethod]);
+  const shouldShowEoa = useShouldShowEoa();
 
   const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
     shouldShowEoa ? 'eoa' : 'fpass'
@@ -82,8 +67,13 @@ export default function AssetTransfer() {
   const [feeAssetId, setFeeAssetId] = useState<number>(1);
   const [amountToSend, setAmountToSend] = useState<number>(1);
   const [addressToSend, setAddressToSend] = useState<string>(
-    (fromWallet === 'eoa' ? userSession?.futurepass : userSession?.eoa) ?? ''
+    (fromWallet === 'eoa'
+      ? userSession?.futurepass
+      : shouldShowEoa
+      ? userSession?.eoa
+      : '') ?? ''
   );
+
   const [slippage, setSlippage] = useState<string>('5');
   const [addressInputError, setAddressInputError] = useState<string>('');
 
@@ -133,14 +123,14 @@ export default function AssetTransfer() {
 
     if (fromWallet === 'fpass') {
       if (feeAssetId === 2) {
-        builder.addFuturePass(userSession.futurepass);
+        await builder.addFuturePass(userSession.futurepass);
       }
 
       if (feeAssetId !== 2) {
         await builder.addFuturePassAndFeeProxy({
           futurePass: userSession.futurepass,
           assetId: feeAssetId,
-          slippage: 5,
+          slippage: Number(slippage),
         });
       }
     }
@@ -149,7 +139,7 @@ export default function AssetTransfer() {
       if (feeAssetId !== 2) {
         await builder.addFeeProxy({
           assetId: feeAssetId,
-          slippage: 5,
+          slippage: Number(slippage),
         });
       }
     }
@@ -167,6 +157,7 @@ export default function AssetTransfer() {
     getExtrinsic,
     setCurrentBuilder,
     feeAssetId,
+    slippage,
   ]);
 
   return (
@@ -203,15 +194,31 @@ export default function AssetTransfer() {
               }}
             />
           </label>
-          {!isFetching && !userBalance && <span
+          {!isFetching && !userBalance && (
+            <span
               style={{ display: 'inline-block', fontSize: '0.8rem' }}
-            ></span>}
-          {isFetching && <span
-              style={{ display: 'inline-block', fontSize: '0.8rem' }}
-            >Checking User Balance...</span>}
-          {userBalance && <span
-              style={{ display: 'inline-block', fontSize: '0.8rem' }}
-            >Balance: {userBalance}</span>}
+            ></span>
+          )}
+          {isFetching && (
+            <span style={{ display: 'inline-block', fontSize: '0.8rem' }}>
+              Checking User Balance...
+            </span>
+          )}
+          {userBalance && (
+            <span style={{ display: 'inline-block', fontSize: '0.8rem' }}>
+              Balance: {userBalance}
+            </span>
+          )}
+        </div>
+        <div className="row">
+          <AddressToSend
+            addressToSend={addressToSend}
+            setAddressToSend={setAddressToSend}
+            addressInputError={addressInputError}
+            setAddressInputError={setAddressInputError}
+            disable={disable}
+            resetState={resetState}
+          />
         </div>
         <div className="row">
           <label>
@@ -228,16 +235,6 @@ export default function AssetTransfer() {
               }}
             />
           </label>
-        </div>
-        <div className="row">
-          <AddressToSend
-            addressToSend={addressToSend}
-            setAddressToSend={setAddressToSend}
-            addressInputError={addressInputError}
-            setAddressInputError={setAddressInputError}
-            disable={disable}
-            resetState={resetState}
-          />
         </div>
         <div className="row">
           <label>
@@ -258,16 +255,18 @@ export default function AssetTransfer() {
             </select>
           </label>
         </div>
-        {feeAssetId !== 2 && <div className="row">
+        {feeAssetId !== 2 && (
+          <div className="row">
             <SliderInput
-              sliderValue={5}
-              setSliderValue={5}
+              sliderValue={slippage}
+              setSliderValue={setSlippage}
               minValue={0}
               sliderStep={0.1}
               maxValue={15}
               resetState={resetState}
             />
-          </div>}
+          </div>
+        )}
         <div className="row">
           <button
             className={\`w-full builder-input green \${
@@ -286,12 +285,10 @@ export default function AssetTransfer() {
     </div>
   );
 }
-
 `;
 
 export default function AssetTransfer() {
-  const { userSession, authMethod } = useAuth();
-  const { connector } = useConnector();
+  const { userSession } = useAuth();
 
   const { resetState, setCurrentBuilder, signed, result, error } = useRootStore(
     state => state
@@ -307,9 +304,7 @@ export default function AssetTransfer() {
 
   const getExtrinsic = useGetExtrinsic();
 
-  const shouldShowEoa = useMemo(() => {
-    return connector?.id !== 'xaman' || authMethod !== 'eoa';
-  }, [connector, authMethod]);
+  const shouldShowEoa = useShouldShowEoa();
 
   const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
     shouldShowEoa ? 'eoa' : 'fpass'
@@ -319,7 +314,11 @@ export default function AssetTransfer() {
   const [feeAssetId, setFeeAssetId] = useState<number>(1);
   const [amountToSend, setAmountToSend] = useState<number>(1);
   const [addressToSend, setAddressToSend] = useState<string>(
-    (fromWallet === 'eoa' ? userSession?.futurepass : userSession?.eoa) ?? ''
+    (fromWallet === 'eoa'
+      ? userSession?.futurepass
+      : shouldShowEoa
+      ? userSession?.eoa
+      : '') ?? ''
   );
 
   const [slippage, setSlippage] = useState<string>('5');
@@ -371,7 +370,7 @@ export default function AssetTransfer() {
 
     if (fromWallet === 'fpass') {
       if (feeAssetId === 2) {
-        builder.addFuturePass(userSession.futurepass);
+        await builder.addFuturePass(userSession.futurepass);
       }
 
       if (feeAssetId !== 2) {
@@ -459,6 +458,16 @@ export default function AssetTransfer() {
           )}
         </div>
         <div className="row">
+          <AddressToSend
+            addressToSend={addressToSend}
+            setAddressToSend={setAddressToSend}
+            addressInputError={addressInputError}
+            setAddressInputError={setAddressInputError}
+            disable={disable}
+            resetState={resetState}
+          />
+        </div>
+        <div className="row">
           <label>
             Amount
             <input
@@ -473,16 +482,6 @@ export default function AssetTransfer() {
               }}
             />
           </label>
-        </div>
-        <div className="row">
-          <AddressToSend
-            addressToSend={addressToSend}
-            setAddressToSend={setAddressToSend}
-            addressInputError={addressInputError}
-            setAddressInputError={setAddressInputError}
-            disable={disable}
-            resetState={resetState}
-          />
         </div>
         <div className="row">
           <label>

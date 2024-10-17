@@ -1,5 +1,2 @@
-import { TrnApiProvider, useTrnApi } from './TRNProvider';
-
-import { RootStoreProvider } from './RootStoreProvider';
-
-export { TrnApiProvider, useTrnApi, RootStoreProvider };
+export { TrnApiProvider, useTrnApi } from './TRNProvider';
+export { RootStoreProvider } from './RootStoreProvider';

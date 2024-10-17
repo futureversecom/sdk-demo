@@ -1,5 +1,7 @@
+'use client';
+
 import { Assets } from '@/components/client-components';
 
-export default async function Page() {
+export default function Page() {
   return <Assets />;
 }

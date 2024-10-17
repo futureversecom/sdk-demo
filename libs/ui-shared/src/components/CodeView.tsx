@@ -1,12 +1,16 @@
 import React, { PropsWithChildren } from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-
+import { useCopyToClipboard } from '../hooks';
+import { hooksCodeString } from '../lib/hooksCodeString';
 export default function CodeView({
   children,
   code,
 }: PropsWithChildren<{ code: string }>) {
   const [showCode, setShowCode] = React.useState(false);
+  const [showHooksCode, setShowHooksCode] = React.useState(false);
+
+  const { isCopied, copyToClipboard } = useCopyToClipboard();
 
   return (
     <div className="code-viewer">
@@ -14,17 +18,36 @@ export default function CodeView({
       <div className="buttons">
         <button
           className="code-btn green"
-          onClick={() => navigator.clipboard.writeText(code)}
+          onClick={() => copyToClipboard(code)}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            width="24"
-            height="24"
-            fill="currentColor"
-          >
-            <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
-          </svg>
+          {isCopied ? (
+            <svg
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 17.837 17.837"
+              width="24"
+              height="24"
+            >
+              <g>
+                <path
+                  fill="currentColor"
+                  d="M16.145,2.571c-0.272-0.273-0.718-0.273-0.99,0L6.92,10.804l-4.241-4.27
+		c-0.272-0.274-0.715-0.274-0.989,0L0.204,8.019c-0.272,0.271-0.272,0.717,0,0.99l6.217,6.258c0.272,0.271,0.715,0.271,0.99,0
+		L17.63,5.047c0.276-0.273,0.276-0.72,0-0.994L16.145,2.571z"
+                />
+              </g>
+            </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              fill="currentColor"
+            >
+              <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
+            </svg>
+          )}
         </button>
         <button className="code-btn green" onClick={() => setShowCode(true)}>
           <svg
@@ -40,6 +63,16 @@ export default function CodeView({
       </div>
       {showCode && (
         <div className="code-view" onClick={() => setShowCode(false)}>
+          <button
+            className="hooks-btn green"
+            onClick={e => {
+              e.preventDefault();
+              e.stopPropagation();
+              setShowHooksCode(!showHooksCode);
+            }}
+          >
+            {showHooksCode ? 'Hide' : 'View'} Hooks
+          </button>
           <button
             className="close-code-btn green"
             onClick={() => setShowCode(false)}
@@ -66,22 +99,47 @@ export default function CodeView({
             onClick={e => {
               e.preventDefault();
               e.stopPropagation();
-              navigator.clipboard.writeText(code);
+              copyToClipboard(code);
             }}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              width="24"
-              height="24"
-              fill="currentColor"
-            >
-              <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
-            </svg>
+            {isCopied ? (
+              <svg
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 17.837 17.837"
+                width="24"
+                height="24"
+              >
+                <g>
+                  <path
+                    fill="currentColor"
+                    d="M16.145,2.571c-0.272-0.273-0.718-0.273-0.99,0L6.92,10.804l-4.241-4.27
+		c-0.272-0.274-0.715-0.274-0.989,0L0.204,8.019c-0.272,0.271-0.272,0.717,0,0.99l6.217,6.258c0.272,0.271,0.715,0.271,0.99,0
+		L17.63,5.047c0.276-0.273,0.276-0.72,0-0.994L16.145,2.571z"
+                  />
+                </g>
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+                fill="currentColor"
+              >
+                <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
+              </svg>
+            )}
           </button>
-          <SyntaxHighlighter language="javascript" style={dracula}>
-            {code}
-          </SyntaxHighlighter>
+          {showHooksCode ? (
+            <SyntaxHighlighter language="javascript" style={dracula}>
+              {hooksCodeString}
+            </SyntaxHighlighter>
+          ) : (
+            <SyntaxHighlighter language="javascript" style={dracula}>
+              {code}
+            </SyntaxHighlighter>
+          )}
         </div>
       )}
     </div>

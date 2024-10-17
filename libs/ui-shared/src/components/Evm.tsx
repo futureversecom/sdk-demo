@@ -7,7 +7,6 @@ import { Increment, Decrement } from '../components';
 
 import { useAuth } from '@futureverse/auth-react';
 import { useRootStore } from '../hooks/useRootStore';
-import { CustomEvm } from './EVMComps';
 
 export default function Transfer() {
   const isMounted = useIsMounted();
@@ -35,7 +34,7 @@ export default function Transfer() {
       <div className="auto-grid">
         <Increment />
         <Decrement />
-        <CustomEvm />
+        {/* <CustomEvm /> */}
       </div>
       <div className="auto-grid">
         {gas && (

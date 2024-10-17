@@ -24,7 +24,7 @@ export default function SliderInput({
       position: 'absolute',
       width: `calc(${(Number(sliderValue) * 100) / maxValue}%)`,
       height: '2px',
-      backgroundColor: '#7bff00',
+      backgroundColor: '#000000',
       padding: '0',
       marginTop: '8px',
       marginBottom: '8px',
@@ -58,7 +58,7 @@ export default function SliderInput({
             }}
             style={{
               width: '100%',
-              backgroundColor: '#7bff0046',
+              backgroundColor: '#00000046',
               padding: '0',
               height: '2px',
               marginTop: '8px',
@@ -79,7 +79,7 @@ export default function SliderInput({
           <div
             style={{
               display: 'block',
-              border: '1px solid #7bff00',
+              border: '1px solid #000000',
               padding: '12px 8px',
               lineHeight: '1',
               borderRadius: '8px',
