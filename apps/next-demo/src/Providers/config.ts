@@ -1,6 +1,6 @@
 import { createWagmiConfig } from '@futureverse/wagmi-connectors';
 import { FutureverseAuthClient } from '@futureverse/auth-react/auth';
-import { polygonAmoy, sepolia, mainnet } from 'viem/chains';
+import { mainnet, rootPorcini } from 'viem/chains';
 import { QueryClient } from '@tanstack/react-query';
 import { cookieStorage, createStorage } from 'wagmi';
 
@@ -18,13 +18,25 @@ export const authClient = new FutureverseAuthClient({
 });
 export const queryClient = new QueryClient();
 
+const rootPorciniAlt = {
+  ...rootPorcini,
+  rpcUrls: {
+    default: {
+      http: [rootPorcini.rpcUrls.default.http[0].replace('/archive', '')],
+      webSocket: [
+        rootPorcini.rpcUrls.default.webSocket[0].replace('/archive', ''),
+      ],
+    },
+  },
+};
+
 export const getWagmiConfig = async () => {
   return createWagmiConfig({
     walletConnectProjectId,
     xamanAPIKey,
     authClient,
     ssr: true,
-    chains: [mainnet, sepolia, polygonAmoy],
+    chains: [mainnet, rootPorciniAlt],
     storage: createStorage({
       storage: cookieStorage,
     }),

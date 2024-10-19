@@ -24,6 +24,10 @@ import {
   Header,
   Footer,
   BatchAll,
+  EvmErc20,
+  EvmErc721,
+  EvmErc1155,
+  LogIn,
 } from '@fv-sdk-demos/ui-shared';
 
 export {
@@ -48,4 +52,8 @@ export {
   Header,
   Footer,
   BatchAll,
+  EvmErc20,
+  EvmErc721,
+  EvmErc1155,
+  LogIn,
 };

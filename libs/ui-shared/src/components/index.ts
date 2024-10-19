@@ -10,6 +10,9 @@ import Assets from './Assets';
 import DropDownMenu from './DropDownMenu';
 import TransactionDetails from './TransactionDetails';
 import BatchAll from './BatchAll';
+import EvmErc20 from './EvmErc20';
+import EvmErc721 from './EvmErc721';
+import EvmErc1155 from './EvmErc1155';
 
 export { Dialog } from './Dialog/Dialog';
 export {
@@ -25,20 +28,28 @@ export { ConnectorInfo } from './ConnectorInfo';
 
 export { AssetTransfer } from './Assets/index';
 
+export * from './Erc20';
+export * from './Erc721';
+export * from './Erc1155';
+
+export { EvmModal } from './EvmModal';
+
 export { NftMint } from './NftComps';
 export { Header } from './Header';
 export { Footer } from './Footer';
 export {
   Navigation,
   type MenuProps,
-  ResourceMenu,
-  ResourceMenuMobile,
+  LogIn,
+  // ResourceMenuMobile,
 } from './Navigation';
 
 export * from './Icons';
 
 export { DocumentationLink } from './DocumentationLink';
 export { DarkModeToggle } from './DarkModeToggle';
+export { CurrentChainSwap } from './CurrentChainSwap';
+export { EvmCollectionInfo } from './EvmCollectionInfo';
 
 export {
   CustomFromEoaFuturePassFeeProxy,
@@ -61,4 +72,7 @@ export {
   Assets,
   BatchAll,
   DropDownMenu,
+  EvmErc20,
+  EvmErc721,
+  EvmErc1155,
 };

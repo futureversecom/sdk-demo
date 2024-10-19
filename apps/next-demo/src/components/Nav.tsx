@@ -99,6 +99,44 @@ const TransactMenu = ({
     </>
   );
 };
+
+const EvmMenu = ({
+  setIsOpen,
+}: {
+  setIsOpen?: Dispatch<SetStateAction<boolean>>;
+}) => {
+  return (
+    <>
+      <ul className="dropdown-content">
+        <li>
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/evm/erc-20"
+          >
+            ERC-20
+          </Link>
+        </li>
+        <li>
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/evm/erc-721"
+          >
+            ERC-721
+          </Link>
+        </li>
+        <li>
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/evm/erc-1155"
+          >
+            ERC-1155
+          </Link>
+        </li>
+      </ul>
+      <DocumentationLink links={evmLinks} navName="polkadot" />
+    </>
+  );
+};
 export const Menu: React.FC<MenuProps> = ({ setIsOpen }) => {
   const { signOut, userSession } = useAuth();
   const { disconnect, isConnected } = useConnector();
@@ -123,10 +161,7 @@ export const Menu: React.FC<MenuProps> = ({ setIsOpen }) => {
         <DocumentationLink links={polkadotLinks} navName="polkadot" />
       </DropDownMenu>
       <DropDownMenu title="EVM">
-        <ul className="dropdown-content">
-          <li className="no-hover">Coming Soon</li>
-        </ul>
-        <DocumentationLink links={evmLinks} navName="polkadot" />
+        <EvmMenu setIsOpen={setIsOpen} />
       </DropDownMenu>
       <DropDownMenu title="Auth">
         <ul className="dropdown-content">

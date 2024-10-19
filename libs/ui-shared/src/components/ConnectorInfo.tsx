@@ -1,8 +1,7 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useAuth, useConnector } from '@futureverse/auth-react';
 import CodeView from './CodeView';
-import { useChainId, useConfig } from 'wagmi';
-import { switchChain } from '@wagmi/core';
+import { CurrentChainSwap } from './CurrentChainSwap';
 
 const codeString = `
 import React from 'react';
@@ -34,13 +33,6 @@ export function ConnectorInfo() {
 export function ConnectorInfo() {
   const { userSession, authMethod } = useAuth();
   const { connector } = useConnector();
-  const chainId = useChainId();
-  const config = useConfig();
-
-  const switchToChain = useCallback(async () => {
-    if (!userSession?.chainId) return;
-    await switchChain(config, { chainId: userSession?.chainId });
-  }, [config, userSession?.chainId]);
 
   return (
     <div className="">
@@ -67,15 +59,7 @@ export function ConnectorInfo() {
             <div className="row content-row">
               <div className="title">Wagmi Chain ID</div>
               <div className="content">
-                {chainId}{' '}
-                {chainId !== userSession?.chainId && (
-                  <div
-                    className="text-link"
-                    onClick={async () => await switchToChain()}
-                  >
-                    Switch To Porcini
-                  </div>
-                )}
+                <CurrentChainSwap />
               </div>
             </div>
           </div>

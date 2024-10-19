@@ -137,6 +137,10 @@ export default function CodeView({
               e.preventDefault();
               e.stopPropagation();
             }}
+            onDoubleClick={e => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
           >
             {showHooksCode ? (
               <SyntaxHighlighter language="javascript" style={dracula}>

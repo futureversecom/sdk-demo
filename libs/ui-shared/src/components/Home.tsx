@@ -1,13 +1,17 @@
+import React from 'react';
 import { useAuth, useConnector } from '@futureverse/auth-react';
 import { useIsMounted } from '../hooks';
 import { LogIn } from './Navigation';
 import { AccountCard } from './AccountCard';
 import { ConnectorInfo } from './ConnectorInfo';
+import { useClient } from 'wagmi';
 
 export default function Home({ title }: { title: string }) {
   const isMounted = useIsMounted();
   const { userSession, authMethod } = useAuth();
   const { connector } = useConnector();
+
+  const client = useClient();
 
   if (!isMounted) {
     return <div>Loading...</div>;

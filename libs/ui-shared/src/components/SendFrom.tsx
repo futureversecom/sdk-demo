@@ -5,10 +5,11 @@ type SendFromProps = {
   shouldShowEoa?: boolean;
   fromWallet: 'eoa' | 'fpass';
   setFromWallet: (wallet: 'eoa' | 'fpass') => void;
-  resetState: () => void;
-  disable: boolean;
+  resetState?: () => void;
+  disable?: boolean;
   setAddressToSend?: (address: string) => void;
   label?: string;
+  onChangeEvent?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
 export default function SendFrom({
@@ -19,6 +20,7 @@ export default function SendFrom({
   disable,
   setAddressToSend,
   label = 'Send From',
+  onChangeEvent,
 }: SendFromProps) {
   const { userSession } = useAuth();
 
@@ -30,7 +32,7 @@ export default function SendFrom({
         className="w-full builder-input"
         disabled={disable}
         onChange={e => {
-          resetState();
+          resetState && resetState();
           setFromWallet(e.target.value as 'eoa' | 'fpass');
           setAddressToSend &&
             setAddressToSend(
@@ -40,6 +42,7 @@ export default function SendFrom({
                   : userSession?.eoa
                 : ''
             );
+          onChangeEvent && onChangeEvent(e);
         }}
       >
         {shouldShowEoa && <option value="eoa">EOA</option>}

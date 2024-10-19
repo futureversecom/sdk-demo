@@ -37,7 +37,7 @@
   --grey: #181818;
   --input-grey: #cacaca;
   --input-text: #2e2e2e;
-  --header-grey: #737373;
+  --header-grey: #73737389;
   --header-grey-opacity-80: #737373d6;
   --header-text: #f6f0f0;
   --dropdown-menu: #5b5b5b;
@@ -317,6 +317,14 @@ input {
   padding: 0.5rem 0.75rem;
   border-radius: 0.5rem;
   color: var(--input-text);
+  font-size: 16px;
+}
+
+button:disabled,
+select:disabled,
+input:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
 }
 
 .auto-grid {
@@ -500,14 +508,11 @@ input {
 
 .desktop-nav>li {
   margin: 0 8px;
-  padding: 0;
 }
 
 .desktop-nav li a {
   transition: all 0.2s ease-in-out;
 }
-
-
 
 .desktop-nav>li:last-of-type {
   margin-right: 0;
@@ -659,6 +664,7 @@ div.sdk-demo-dialog .spinner {
   border-top-color: transparent;
 }
 
+button:disabled,
 button.disabled {
   cursor: not-allowed !important;
 }
@@ -801,6 +807,7 @@ input[type=range]::-ms-thumb {
   flex-direction: column;
   min-height: calc(100vh - 40px);
   min-height: calc(100dvh - 40px);
+  padding-top: 48px;
 }
 
 .body-wrap .inner {
@@ -825,11 +832,12 @@ input[type=range]::-ms-thumb {
   justify-content: space-between;
   align-items: center;
   /* margin-bottom: 16px; */
-  padding: 4px 16px;
+  padding: 0 8px;
   background: var(--header-grey);
   color: var(--header-text);
-  border-radius: 16px;
-  position: sticky;
+  border-radius: 10px;
+  position: fixed;
+  width: calc(100% - (2 * var(--body-padding)));
   top: 20px;
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
@@ -928,7 +936,7 @@ input[type=range]::-ms-thumb {
 }
 
 .header__nav_icons {
-  gap: 0;
+  gap: 2px;
   padding: 4px;
   background: var(--card-bg);
   border-radius: 8px;
@@ -1091,7 +1099,7 @@ nav li {
 }
 
 .dropdown-inner {
-  padding-top: 24px;
+  padding-top: 20px;
   position: absolute;
   width: 100%;
   bottom: 0;
@@ -1108,12 +1116,13 @@ nav li {
 }
 
 .dropdown-menu.wallet-dropdown {
-  padding: 10px
+  padding: 8px 0;
 }
 
 .dropdown-menu.wallet-dropdown .dropdown-inner {
-  padding-top: 10px;
+  padding-top: 6px;
   width: auto;
+  min-width: 100%;
 }
 
 .dropdown-menu.wallet-dropdown .wallet-dropdown-inner {
@@ -1139,8 +1148,9 @@ nav li {
 }
 
 .dropdown-button.green {
-  padding: 8px;
+  padding: 10px 12px;
   margin: 0;
+  line-height: 1;
 }
 
 .dropdown-inner button.green {
@@ -1315,6 +1325,25 @@ nav li {
   align-items: center;
 }
 
+.gas-row .title {
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+}
+
+.gas-row .content.center {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.8rem;
+
+}
+
+.gas-row .content {
+  font-size: 2rem;
+}
+
 .copy-text {
   display: flex;
   flex-direction: row;
@@ -1414,7 +1443,7 @@ nav li {
 .text-link {
   display: inline;
   position: relative;
-  color: var(--cta);
+  color: currentColor;
   cursor: pointer;
   font-weight: 700;
   font-size: 0.8rem;
@@ -1430,7 +1459,7 @@ nav li {
   height: 1px;
   bottom: 0;
   left: 0;
-  background-color: var(--cta);
+  background-color: currentColor;
 }
 
 @media screen and (min-width: 481px) {
@@ -1460,6 +1489,12 @@ nav li {
 }
 
 @media screen and (min-width: 992px) {
+
+  select,
+  input {
+    font-size: 0.9rem;
+  }
+
   .code-view {
     padding: 32px;
   }
@@ -1512,7 +1547,6 @@ nav li {
 
   .desktop-nav>li {
     margin: 0 8px;
-    padding: 0 8px;
   }
 
 }
