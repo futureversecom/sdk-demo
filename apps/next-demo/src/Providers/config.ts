@@ -3,6 +3,7 @@ import { FutureverseAuthClient } from '@futureverse/auth-react/auth';
 import { mainnet, rootPorcini } from 'viem/chains';
 import { QueryClient } from '@tanstack/react-query';
 import { cookieStorage, createStorage } from 'wagmi';
+import { Storage } from '@wagmi/core';
 
 const clientId = process.env.NEXT_PUBLIC_CLIENT_ID as string;
 const walletConnectProjectId = process.env.NEXT_PUBLIC_WALLET_CONNECT as string;
@@ -39,6 +40,6 @@ export const getWagmiConfig = async () => {
     chains: [mainnet, rootPorciniAlt],
     storage: createStorage({
       storage: cookieStorage,
-    }),
+    }) as Storage,
   });
 };
