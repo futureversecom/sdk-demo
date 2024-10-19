@@ -54,14 +54,14 @@ const TransactMenu = ({
             NFT
           </Link>
         </li>
-        <li>
+        {/* <li>
           <Link
             onClick={() => setIsOpen && setIsOpen(false)}
             href="/transact/sft"
           >
             SFT
           </Link>
-        </li>
+        </li> */}
         <li>
           <Link
             onClick={() => setIsOpen && setIsOpen(false)}
@@ -132,6 +132,22 @@ const EvmMenu = ({
             ERC-1155
           </Link>
         </li>
+        <li>
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/evm/fee-proxy"
+          >
+            Fee Proxy
+          </Link>
+        </li>
+        <li>
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/evm/futurePass-proxy"
+          >
+            FuturePass Proxy
+          </Link>
+        </li>
       </ul>
       <DocumentationLink links={evmLinks} navName="polkadot" />
     </>
@@ -154,6 +170,12 @@ export const Menu: React.FC<MenuProps> = ({ setIsOpen }) => {
           <ExternalLink />
         </a>
       </li>
+      <DropDownMenu title="Auth">
+        <ul className="dropdown-content">
+          <li className="no-hover">Coming Soon</li>
+        </ul>
+        <DocumentationLink links={authDocLinks} navName="auth" />
+      </DropDownMenu>
       <DropDownMenu title="Polkadot API">
         <ul className="dropdown-content">
           <li className="no-hover">Coming Soon</li>
@@ -162,12 +184,6 @@ export const Menu: React.FC<MenuProps> = ({ setIsOpen }) => {
       </DropDownMenu>
       <DropDownMenu title="EVM">
         <EvmMenu setIsOpen={setIsOpen} />
-      </DropDownMenu>
-      <DropDownMenu title="Auth">
-        <ul className="dropdown-content">
-          <li className="no-hover">Coming Soon</li>
-        </ul>
-        <DocumentationLink links={authDocLinks} navName="auth" />
       </DropDownMenu>
       <DropDownMenu title="Transact">
         <TransactMenu setIsOpen={setIsOpen} />
@@ -240,6 +256,13 @@ export const MobileMenu: React.FC<MenuProps> = ({ setIsOpen }) => {
           </a>
         </li>
         <li>
+          <div className="sectionTitle">Auth</div>
+          <ul className="dropdown-content">
+            <li className="no-hover">Coming Soon</li>
+          </ul>
+          <DocumentationLink links={authDocLinks} navName="auth" />
+        </li>
+        <li>
           <div className="sectionTitle">Polkadot API</div>
           <ul className="dropdown-content">
             <li className="no-hover">Coming Soon</li>
@@ -252,13 +275,6 @@ export const MobileMenu: React.FC<MenuProps> = ({ setIsOpen }) => {
             <li className="no-hover">Coming Soon</li>
           </ul>
           <DocumentationLink links={evmLinks} navName="polkadot" />
-        </li>
-        <li>
-          <div className="sectionTitle">Auth</div>
-          <ul className="dropdown-content">
-            <li className="no-hover">Coming Soon</li>
-          </ul>
-          <DocumentationLink links={authDocLinks} navName="auth" />
         </li>
         <li>
           <div className="sectionTitle">Transact</div>

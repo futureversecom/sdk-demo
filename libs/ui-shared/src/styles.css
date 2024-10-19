@@ -959,6 +959,22 @@ input[type=range]::-ms-thumb {
   transition: all 0.2s ease-in-out;
 }
 
+.header__logo .header__logo__row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  font-size: 12px;
+}
+
+.header__logo .header__logo__row .pill {
+  margin-left: 4px;
+  padding: 4px 8px;
+  border-radius: 24px;
+  background-color: var(--cta-hover);
+  color: var(--white)
+}
+
 .header__nav_icons button:hover svg,
 .header__nav_icons a:hover svg {
   color: var(--cta);

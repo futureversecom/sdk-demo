@@ -13,6 +13,8 @@ import BatchAll from './BatchAll';
 import EvmErc20 from './EvmErc20';
 import EvmErc721 from './EvmErc721';
 import EvmErc1155 from './EvmErc1155';
+import FeeProxy from './FeeProxy';
+import FuturePassProxy from './FuturePassProxy';
 
 export { Dialog } from './Dialog/Dialog';
 export {
@@ -75,4 +77,6 @@ export {
   EvmErc20,
   EvmErc721,
   EvmErc1155,
+  FeeProxy,
+  FuturePassProxy,
 };

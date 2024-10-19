@@ -20,7 +20,7 @@ import { EvmCollectionInfo } from '../EvmCollectionInfo';
 
 const codeString = ``;
 
-export default function FpassErc1155Mint() {
+export default function FpassErc1155MintSingle() {
   const { userSession } = useAuth();
   const shouldShowEoa = useShouldShowEoa();
 
@@ -33,7 +33,8 @@ export default function FpassErc1155Mint() {
 
   const contractDebounced = useDebounce(collectionContract ?? '', 500);
 
-  const [tokenQty, setTokenQty] = useState<Array<[number, number]>>([[0, 1]]);
+  const [tokenId, setTokenId] = useState(0);
+  const [tokenQty, setTokenQty] = useState(1);
 
   const [addressToMint, setAddressToMint] = useState<string>(
     shouldShowEoa ? userSession?.eoa ?? '' : ''
@@ -47,29 +48,29 @@ export default function FpassErc1155Mint() {
   const [showDialog, setShowDialog] = useState(false);
 
   const buttonDisabled = useMemo(() => {
-    const anyTokenQtyBiggerThan1000 = tokenQty.some(t => t[1] > 1000);
-    const anyTokenQtySmallerThan1 = tokenQty.some(t => t[1] < 1);
     return (
       addressInputError !== '' ||
       addressToMint === '' ||
-      tokenQty?.length === 0 ||
-      anyTokenQtyBiggerThan1000 ||
-      anyTokenQtySmallerThan1 ||
+      tokenQty <= 0 ||
+      tokenQty > 1000 ||
+      tokenId < 0 ||
       !contractDebounced ||
       isFetching ||
       (!isFetching && !collectionOwner)
     );
   }, [
-    tokenQty,
     addressInputError,
     addressToMint,
+    tokenQty,
+    tokenId,
     contractDebounced,
     isFetching,
     collectionOwner,
   ]);
 
   const resetState = () => {
-    setTokenQty([[0, 1]]);
+    setTokenId(0);
+    setTokenQty(1);
     setAddressInputError('');
   };
 
@@ -79,7 +80,7 @@ export default function FpassErc1155Mint() {
         <div className="inner">
           <div className="row">
             <CodeView code={codeString}>
-              <h3>Batch Mint ERC-1155 Token: Pass.Online</h3>
+              <h3>Single Mint ERC-1155 Token: Pass.Online</h3>
               <h4>
                 Current Chain: <CurrentChainSwap />
               </h4>
@@ -133,78 +134,44 @@ export default function FpassErc1155Mint() {
               label="Address to Mint"
             />
           </div>
-          {tokenQty.map((token, index) => (
-            <div
-              className="row"
-              style={{
-                display: 'grid',
-                gap: '8px',
-                gridTemplateColumns: '3fr 3fr 1fr',
-                marginTop: '8px',
-              }}
-              key={index}
-            >
-              <label>
-                Token ID
-                <input
-                  type="number"
-                  value={token[0]}
-                  min={0}
-                  className="w-full builder-input"
-                  style={{ marginTop: '4px' }}
-                  onChange={e => {
-                    setTokenQty([
-                      ...tokenQty.slice(0, index),
-                      [Number(e.target.value), token[1]],
-                      ...tokenQty.slice(index + 1),
-                    ]);
-                  }}
-                />
-              </label>
-              <label>
-                Quantity
-                <input
-                  type="number"
-                  value={token[1]}
-                  min={1}
-                  max={1000}
-                  className="w-full builder-input"
-                  style={{ marginTop: '4px' }}
-                  onChange={e => {
-                    if (parseInt(e.target.value) <= 1000) {
-                      setTokenQty([
-                        ...tokenQty.slice(0, index),
-                        [token[0], Number(e.target.value)],
-                        ...tokenQty.slice(index + 1),
-                      ]);
-                    }
-                  }}
-                />
-              </label>
-              <button
-                style={{ top: '6px', position: 'relative', cursor: 'pointer' }}
-                className="w-full builder-input green"
-                onClick={() => {
-                  setTokenQty([
-                    ...tokenQty.slice(0, index),
-                    ...tokenQty.slice(index + 1),
-                  ]);
+          <div
+            className="row"
+            style={{
+              display: 'grid',
+              gap: '8px',
+              gridTemplateColumns: '3fr 3fr',
+              marginTop: '8px',
+            }}
+          >
+            <label>
+              Token ID
+              <input
+                type="number"
+                value={tokenId}
+                min={0}
+                className="w-full builder-input"
+                style={{ marginTop: '4px' }}
+                onChange={e => {
+                  setTokenId(Number(e.target.value));
                 }}
-              >
-                -
-              </button>
-            </div>
-          ))}
-          <div className="row">
-            <button
-              style={{ marginTop: '8px', cursor: 'pointer' }}
-              className="w-full builder-input green"
-              onClick={() => {
-                setTokenQty([...tokenQty, [0, 1]]);
-              }}
-            >
-              +
-            </button>
+              />
+            </label>
+            <label>
+              Quantity
+              <input
+                type="number"
+                value={tokenQty}
+                min={1}
+                max={1000}
+                className="w-full builder-input"
+                style={{ marginTop: '4px' }}
+                onChange={e => {
+                  if (parseInt(e.target.value) <= 1000) {
+                    setTokenQty(Number(e.target.value));
+                  }
+                }}
+              />
+            </label>
           </div>
 
           <div className="row">
@@ -217,7 +184,7 @@ export default function FpassErc1155Mint() {
               }}
               disabled={buttonDisabled}
             >
-              Start FuturePass Proxy Batch Mint
+              Start FuturePass Proxy Single Mint
             </button>
           </div>
         </div>
@@ -227,13 +194,9 @@ export default function FpassErc1155Mint() {
           setShowDialog={setShowDialog}
           fromWallet={fromWallet}
           contract={contractDebounced}
-          functionName="mintBatch"
+          functionName="mint"
           abi={parseAbi(ERC1155_PRECOMPILE_ABI)}
-          args={[
-            addressToMint,
-            tokenQty.map(t => t[0]),
-            tokenQty.map(t => t[1]),
-          ]}
+          args={[addressToMint, tokenId, tokenQty]}
           feeAssetId={2}
           slippage={'0'}
           callback={() => {

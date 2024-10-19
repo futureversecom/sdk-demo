@@ -9,9 +9,5 @@ export function useShouldShowEoa() {
     return connector?.id !== 'xaman' && authMethod === 'eoa';
   }, [connector, authMethod]);
 
-  console.log('connector?.id', connector?.id, connector?.id !== 'xaman');
-  console.log('authMethod', authMethod, authMethod === 'eoa');
-  console.log('shouldShowEoa', shouldShowEoa);
-
   return shouldShowEoa;
 }

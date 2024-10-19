@@ -27,6 +27,8 @@ import {
   EvmErc20,
   EvmErc721,
   EvmErc1155,
+  FeeProxy,
+  FuturePassProxy,
   LogIn,
 } from '@fv-sdk-demos/ui-shared';
 
@@ -55,5 +57,7 @@ export {
   EvmErc20,
   EvmErc721,
   EvmErc1155,
+  FeeProxy,
+  FuturePassProxy,
   LogIn,
 };

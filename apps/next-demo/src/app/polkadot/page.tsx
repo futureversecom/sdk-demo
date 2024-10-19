@@ -1,5 +1,5 @@
 'use client';
 
 export default function Page() {
-  return <div>Auth</div>;
+  return <div>Polkadot</div>;
 }

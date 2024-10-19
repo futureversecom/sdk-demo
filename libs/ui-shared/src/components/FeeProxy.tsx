@@ -5,17 +5,10 @@ import React, { useEffect } from 'react';
 import { useIsMounted } from '../hooks';
 import { useAuth } from '@futureverse/auth-react';
 import { useRootStore } from '../hooks/useRootStore';
-import {
-  EoaErc1155Mint,
-  EoaErc1155MintSingle,
-  Erc1155Mint,
-  FeeProxyErc1155Mint,
-  FeeProxyErc1155MintSingle,
-  FpassErc1155Mint,
-  FpassErc1155MintSingle,
-} from './Erc1155';
-
-export default function EvmErc1155() {
+import { FeeProxyErc1155Mint, FeeProxyErc1155MintSingle } from './Erc1155';
+import { FeeProxyErc20Transfer } from './Erc20';
+import { FeeProxyErc721Mint } from './Erc721';
+export default function FeeProxy() {
   const isMounted = useIsMounted();
 
   const { userSession } = useAuth();
@@ -28,7 +21,7 @@ export default function EvmErc1155() {
   }, [resetState]);
 
   if (!userSession) {
-    return <h1>Sign in to interact with ERC-1155 through EVM</h1>;
+    return <h1>Sign in to interact with Fee Proxy through EVM</h1>;
   }
 
   if (!isMounted) {
@@ -40,13 +33,10 @@ export default function EvmErc1155() {
       <h1>ERC-1155 Demo</h1>
 
       <div className="auto-grid">
-        <EoaErc1155MintSingle />
-        <EoaErc1155Mint />
-        <FpassErc1155MintSingle />
-        <FpassErc1155Mint />
+        <FeeProxyErc20Transfer />
+        <FeeProxyErc721Mint />
         <FeeProxyErc1155MintSingle />
         <FeeProxyErc1155Mint />
-        <Erc1155Mint />
       </div>
     </>
   );

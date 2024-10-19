@@ -51,9 +51,12 @@ function Layout() {
       <Header
         Nav={() => <Nav setIsOpen={setIsOpen} isOpen={isOpen} />}
         Logo={() => (
-          <Link to="/">
-            <LogoIcon />
-          </Link>
+          <div className="header__logo__row">
+            <Link to="/">
+              <LogoIcon />
+            </Link>
+            <span className="pill">Porcini</span>
+          </div>
         )}
       />
       {isOpen && isMobile && <MobileMenu setIsOpen={setIsOpen} />}

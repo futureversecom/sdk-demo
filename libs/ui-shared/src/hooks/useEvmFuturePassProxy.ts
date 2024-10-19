@@ -46,8 +46,6 @@ const evmFuturePassProxy = async ({
       'Invalid chain. Please use either Root Network or Porcini.'
     );
 
-  console.log(config);
-
   const futurepass = await getFuturePass(config, account);
 
   const futurePassCall = encodeFunctionData({
@@ -56,7 +54,7 @@ const evmFuturePassProxy = async ({
     args,
   });
 
-  const { request, result } = await simulateContract(config, {
+  const { request } = await simulateContract(config, {
     account,
     address: futurepass,
     abi: parseAbi(FUTUREPASS_PRECOMPILE_ABI),
@@ -64,9 +62,6 @@ const evmFuturePassProxy = async ({
     functionName: 'proxyCall',
     args: [1, address, 0n, futurePassCall],
   });
-
-  console.log('request', request);
-  console.log('result', result);
 
   return writeContract(config, request);
 };

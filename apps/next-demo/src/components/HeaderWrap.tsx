@@ -17,9 +17,12 @@ export const HeaderWrap = () => {
       <Header
         Nav={() => <Nav setIsOpen={setIsOpen} isOpen={isOpen} />}
         Logo={() => (
-          <Link href="/">
-            <LogoIcon />
-          </Link>
+          <div className="header__logo__row">
+            <Link href="/">
+              <LogoIcon />
+            </Link>
+            <span className="pill">Porcini</span>
+          </div>
         )}
       />
       {isOpen && isMobile && <MobileMenu setIsOpen={setIsOpen} />}

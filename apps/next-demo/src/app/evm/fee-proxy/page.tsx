@@ -1,6 +1,6 @@
 'use client';
-import { Nft } from '@/components/client-components';
+import { FeeProxy } from '@/components/client-components';
 
 export default function Page() {
-  return <Nft />;
+  return <FeeProxy />;
 }

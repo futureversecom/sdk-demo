@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useAuth } from '@futureverse/auth-react';
 import {
   useDebounce,
@@ -26,14 +26,15 @@ export default function EoaErc1155Mint() {
 
   const fromWallet = 'eoa';
 
-  const [collectionId, setCollectionId] = useState(292964);
+  const [collectionId, setCollectionId] = useState(834660);
   const [collectionContract, setCollectionContract] = useState<`0x${string}`>(
-    '0xBBBBbBBb00047864000000000000000000000000'
+    '0xbbbBBbbb000CBc64000000000000000000000000'
   );
 
   const contractDebounced = useDebounce(collectionContract ?? '', 500);
 
-  const [qty, setQty] = useState(1);
+  const [tokenQty, setTokenQty] = useState<Array<[number, number]>>([[0, 1]]);
+
   const [addressToMint, setAddressToMint] = useState<string>(
     (fromWallet === 'eoa'
       ? userSession?.futurepass
@@ -52,11 +53,15 @@ export default function EoaErc1155Mint() {
   const [showDialog, setShowDialog] = useState(false);
 
   const buttonDisabled = useMemo(() => {
+    const anyTokenQtyBiggerThan1000 = tokenQty.some(t => t[1] > 1000);
+    const anyTokenQtySmallerThan1 = tokenQty.some(t => t[1] < 1);
+
     return (
       addressInputError !== '' ||
       addressToMint === '' ||
-      qty <= 0 ||
-      qty > 1000 ||
+      tokenQty?.length === 0 ||
+      anyTokenQtyBiggerThan1000 ||
+      anyTokenQtySmallerThan1 ||
       !contractDebounced ||
       isFetching ||
       (!isFetching && !collectionOwner)
@@ -64,14 +69,14 @@ export default function EoaErc1155Mint() {
   }, [
     addressInputError,
     addressToMint,
-    qty,
+    tokenQty,
     contractDebounced,
     isFetching,
     collectionOwner,
   ]);
 
   const resetState = () => {
-    setQty(1);
+    setTokenQty([[0, 1]]);
     setAddressInputError('');
   };
 
@@ -81,7 +86,7 @@ export default function EoaErc1155Mint() {
         <div className="inner">
           <div className="row">
             <CodeView code={codeString}>
-              <h3>Mint ERC-1155 Token: EOA</h3>
+              <h3>Batch Mint ERC-1155 Token: EOA</h3>
             </CodeView>
           </div>
           <div className="row">Requires an EOA on The Root Network</div>
@@ -96,7 +101,7 @@ export default function EoaErc1155Mint() {
         <div className="inner">
           <div className="row">
             <CodeView code={codeString}>
-              <h3>Mint ERC-1155 Token: EOA</h3>
+              <h3>Batch Mint ERC-1155 Token: EOA</h3>
               <h4>
                 Current Chain: <CurrentChainSwap />
               </h4>
@@ -150,24 +155,79 @@ export default function EoaErc1155Mint() {
               label="Address to Mint"
             />
           </div>
-          <div className="row">
-            <label>
-              Quantity
-              <input
-                type="number"
-                value={qty}
-                min={1}
-                max={1000}
-                className="w-full builder-input"
-                onChange={e => {
-                  if (parseInt(e.target.value) <= 1000) {
-                    setQty(Number(e.target.value));
-                  }
+          {tokenQty.map((token, index) => (
+            <div
+              className="row"
+              style={{
+                display: 'grid',
+                gap: '8px',
+                gridTemplateColumns: '3fr 3fr 1fr',
+                marginTop: '8px',
+              }}
+              key={index}
+            >
+              <label>
+                Token ID
+                <input
+                  type="number"
+                  value={token[0]}
+                  min={0}
+                  className="w-full builder-input"
+                  style={{ marginTop: '4px' }}
+                  onChange={e => {
+                    setTokenQty([
+                      ...tokenQty.slice(0, index),
+                      [Number(e.target.value), token[1]],
+                      ...tokenQty.slice(index + 1),
+                    ]);
+                  }}
+                />
+              </label>
+              <label>
+                Quantity
+                <input
+                  type="number"
+                  value={token[1]}
+                  min={1}
+                  max={1000}
+                  className="w-full builder-input"
+                  style={{ marginTop: '4px' }}
+                  onChange={e => {
+                    if (parseInt(e.target.value) <= 1000) {
+                      setTokenQty([
+                        ...tokenQty.slice(0, index),
+                        [token[0], Number(e.target.value)],
+                        ...tokenQty.slice(index + 1),
+                      ]);
+                    }
+                  }}
+                />
+              </label>
+              <button
+                style={{ top: '6px', position: 'relative', cursor: 'pointer' }}
+                className="w-full builder-input green"
+                onClick={() => {
+                  setTokenQty([
+                    ...tokenQty.slice(0, index),
+                    ...tokenQty.slice(index + 1),
+                  ]);
                 }}
-              />
-            </label>
+              >
+                -
+              </button>
+            </div>
+          ))}
+          <div className="row">
+            <button
+              style={{ marginTop: '8px', cursor: 'pointer' }}
+              className="w-full builder-input green"
+              onClick={() => {
+                setTokenQty([...tokenQty, [0, 1]]);
+              }}
+            >
+              +
+            </button>
           </div>
-
           <div className="row">
             <button
               className={`w-full builder-input green ${
@@ -178,19 +238,24 @@ export default function EoaErc1155Mint() {
               }}
               disabled={buttonDisabled}
             >
-              Start EOA Mint
+              Start EOA Batch Mint
             </button>
           </div>
         </div>
       </div>
+
       {showDialog && (
         <EvmModal
           setShowDialog={setShowDialog}
           fromWallet={'eoa'}
           contract={contractDebounced}
-          functionName="mint"
+          functionName="mintBatch"
           abi={parseAbi(ERC1155_PRECOMPILE_ABI)}
-          args={[addressToMint, qty]}
+          args={[
+            addressToMint,
+            tokenQty.map(t => t[0]),
+            tokenQty.map(t => t[1]),
+          ]}
           feeAssetId={2}
           slippage={'0'}
           callback={() => {
