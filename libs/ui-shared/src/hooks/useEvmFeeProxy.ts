@@ -50,8 +50,6 @@ const evmFeeProxy = async ({
   if (!functionName) throw new Error('Function name is required');
   if (!address) throw new Error('Address is required');
 
-  console.log('address from feeProxy', address);
-
   if (!ALLOWED_CHAINS.includes(chainId))
     throw new Error(
       'Invalid chain. Please use either Root Network or Porcini.'
