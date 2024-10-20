@@ -59,7 +59,7 @@ export function EvmModal({
   const { chainId } = useAccount();
 
   const { data: feeDecimals } = useEvmGetDecimals(
-    assetIdToERC20Address(feeAssetId)
+    assetIdToERC20Address(feeAssetId) as Address
   );
 
   const {

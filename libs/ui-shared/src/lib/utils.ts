@@ -3,14 +3,7 @@ import {
   FUTUREPASS_REGISTRAR_PRECOMPILE_ABI,
   FUTUREPASS_REGISTRAR_PRECOMPILE_ADDRESS,
 } from '@therootnetwork/evm';
-import {
-  Account,
-  Address,
-  Client,
-  formatUnits,
-  getAddress,
-  parseAbi,
-} from 'viem';
+import { Account, Address, formatUnits, getAddress, parseAbi } from 'viem';
 // import { readContract } from 'viem/actions';
 import { readContract } from '@wagmi/core';
 import { Config } from 'wagmi';

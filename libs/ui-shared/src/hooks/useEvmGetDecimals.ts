@@ -1,9 +1,9 @@
 import { useAuth } from '@futureverse/auth-react';
 import { ERC20_PRECOMPILE_ABI } from '@therootnetwork/evm';
-import { parseAbi } from 'viem';
+import { Address, parseAbi } from 'viem';
 import { useReadContract } from 'wagmi';
 
-export function useEvmGetDecimals(contract) {
+export function useEvmGetDecimals(contract: Address) {
   const { userSession } = useAuth();
   return useReadContract({
     address: contract,
