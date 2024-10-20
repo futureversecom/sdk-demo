@@ -25,7 +25,9 @@ export default function App() {
       <Route path="/" element={<Layout />}>
         <Route
           index
-          element={<Home title="Welcome to the SDK Demo in Vite React" />}
+          element={
+            <Home title="Welcome to the Root Network SDK Playground (Vite)" />
+          }
         />
         <Route path="transact/assets" element={<Assets />} />
         <Route path="transact/batch-all" element={<BatchAll />} />
