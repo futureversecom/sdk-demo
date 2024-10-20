@@ -1010,6 +1010,42 @@ nav li {
   backdrop-filter: blur(8px);
 }
 
+.header__nav__mobile {
+  display: block;
+}
+
+.header__nav__desktop {
+  display: none;
+}
+
+.header__logo__row__desktop {
+  display: none;
+}
+
+.header__logo__row__mobile {
+  display: block;
+  display: flex;
+  align-items: center;
+}
+
+.header__logo .header__logo__row__mobile svg,
+.header__logo .header__logo__row__mobile img {
+  width: 28px;
+  height: 28px;
+}
+
+.header__logo .header__logo__row__mobile svg:first-of-type {
+  position: relative;
+  margin-top: 4px;
+  margin-right: -4px;
+}
+
+.mobile-container-outer .header-icon-wrap {
+  position: absolute;
+  top: var(--body-padding);
+  left: var(--body-padding);
+}
+
 .mobile-container-outer .mobile-container {
   position: relative;
   padding: 8px;
@@ -1535,6 +1571,24 @@ nav li {
   }
 
 
+  .header__nav__mobile {
+    display: none;
+  }
+
+  .header__nav__desktop {
+    display: block;
+  }
+
+}
+
+@media screen and (min-width: 1040px) {
+  .header__logo__row__desktop {
+    display: block;
+  }
+
+  .header__logo__row__mobile {
+    display: none;
+  }
 }
 
 @media screen and (min-width: 1200px) {

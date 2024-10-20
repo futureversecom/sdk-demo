@@ -53,6 +53,8 @@ export { DarkModeToggle } from './DarkModeToggle';
 export { CurrentChainSwap } from './CurrentChainSwap';
 export { EvmCollectionInfo } from './EvmCollectionInfo';
 
+export { HeaderIcons } from './HeaderIcons';
+
 export {
   CustomFromEoaFuturePassFeeProxy,
   CustomBuilderComp,

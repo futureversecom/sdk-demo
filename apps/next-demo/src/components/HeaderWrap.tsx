@@ -1,6 +1,12 @@
 'use client';
 
-import { Header, LogoIcon, useIsMobile } from '@fv-sdk-demos/ui-shared';
+import {
+  FVIcon,
+  Header,
+  LogoIcon,
+  RootIcon,
+  useIsMobile,
+} from '@fv-sdk-demos/ui-shared';
 import Nav, { MobileMenu } from './Nav';
 import { useState } from 'react';
 import Link from 'next/link';
@@ -19,7 +25,13 @@ export const HeaderWrap = () => {
         Logo={() => (
           <div className="header__logo__row">
             <Link href="/">
-              <LogoIcon />
+              <div className="header__logo__row__desktop">
+                <LogoIcon />
+              </div>
+              <div className="header__logo__row__mobile">
+                <RootIcon />
+                <FVIcon />
+              </div>
             </Link>
             <span className="pill">Porcini</span>
           </div>

@@ -8,6 +8,7 @@ import {
   DropDownMenu,
   evmLinks,
   ExternalLink,
+  HeaderIcons,
   MenuProps,
   Navigation,
   polkadotLinks,
@@ -235,6 +236,9 @@ export const MobileMenu: React.FC<MenuProps> = ({ setIsOpen }) => {
 
   return (
     <div className="mobile-container-outer">
+      <div className="header-icon-wrap">
+        <HeaderIcons />
+      </div>
       <div className="close" onClick={() => setIsOpen && setIsOpen(false)}>
         Close Menu
       </div>
@@ -271,10 +275,7 @@ export const MobileMenu: React.FC<MenuProps> = ({ setIsOpen }) => {
         </li>
         <li>
           <div className="sectionTitle">EVM</div>
-          <ul className="dropdown-content">
-            <li className="no-hover">Coming Soon</li>
-          </ul>
-          <DocumentationLink links={evmLinks} navName="polkadot" />
+          <EvmMenu setIsOpen={setIsOpen} />
         </li>
         <li>
           <div className="sectionTitle">Transact</div>
