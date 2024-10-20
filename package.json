@@ -16,6 +16,7 @@
     "@futureverse/signer": "latest",
     "@futureverse/transact": "latest",
     "@futureverse/wagmi-connectors": "latest",
+    "@metamask/sdk": "^0.29.2",
     "@remix-run/node": "^2.8.1",
     "@remix-run/react": "^2.8.1",
     "@remix-run/serve": "^2.8.1",
