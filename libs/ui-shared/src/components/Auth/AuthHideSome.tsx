@@ -1,8 +1,6 @@
 import { DarkTheme, ThemeConfig, useAuthUi } from '@futureverse/auth-ui';
-import React from 'react';
 import CodeView from '../CodeView';
 import { authProvidersCodeString } from '../../lib';
-import { useConnectors } from 'wagmi';
 
 const codeString = `
 import { useAuthUi } from '@futureverse/auth-ui';
@@ -32,8 +30,6 @@ export function AuthHideSome({
 }: {
   setTheme: (theme: ThemeConfig) => void;
 }) {
-  const connectors = useConnectors();
-
   const { openLogin } = useAuthUi();
 
   return (
