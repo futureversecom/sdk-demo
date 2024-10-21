@@ -25,7 +25,7 @@ export default function EvmErc721() {
   }, [resetState]);
 
   if (!userSession) {
-    return <h1>Sign in to interact with REC-20 through EVM</h1>;
+    return <h1>Sign in to interact with ERC-721 through EVM</h1>;
   }
 
   if (!isMounted) {

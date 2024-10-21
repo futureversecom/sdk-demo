@@ -24,8 +24,6 @@ export default function EoaErc721Mint() {
   const { userSession } = useAuth();
   const shouldShowEoa = useShouldShowEoa();
 
-  const fromWallet = 'eoa';
-
   const [collectionId, setCollectionId] = useState(709732);
   const [collectionContract, setCollectionContract] = useState<`0x${string}`>(
     '0xAaAAAaAa000ad464000000000000000000000000'
@@ -35,11 +33,7 @@ export default function EoaErc721Mint() {
 
   const [qty, setQty] = useState(1);
   const [addressToMint, setAddressToMint] = useState<string>(
-    (fromWallet === 'eoa'
-      ? userSession?.futurepass
-      : shouldShowEoa
-      ? userSession?.eoa
-      : '') ?? ''
+    userSession?.eoa ?? ''
   );
 
   const [addressInputError, setAddressInputError] = useState('');

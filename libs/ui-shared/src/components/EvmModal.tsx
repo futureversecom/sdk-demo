@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import {
   Abi,
@@ -15,17 +15,21 @@ import {
   useEvmFuturePassProxyGas,
   useEvmGetDecimals,
   useEvmGetGasPrice,
+  useEvmSimulateTx,
   useEvmTx,
 } from '../hooks';
 import {
   useAccount,
   useEstimateFeesPerGas,
   useEstimateGas,
-  useSimulateContract,
   useTransactionReceipt,
 } from 'wagmi';
 import { ExternalLink } from './Icons';
-import { useAuth } from '@futureverse/auth-react';
+import {
+  useAuth,
+  useConnector,
+  useFutureverseSigner,
+} from '@futureverse/auth-react';
 import { ASSET_NAME } from '../lib/utils';
 import Spinner from './Spinner';
 import { assetIdToERC20Address } from '@therootnetwork/evm';
@@ -40,8 +44,8 @@ export function EvmModal({
   functionName,
   args,
   decimals,
-  feeAssetId,
-  slippage,
+  feeAssetId = 2,
+  slippage = '5',
   callback,
 }: {
   setShowDialog: (value: boolean) => void;
@@ -57,6 +61,11 @@ export function EvmModal({
 }) {
   const { userSession } = useAuth();
   const { chainId } = useAccount();
+  const { connector } = useConnector();
+
+  const [callbackTriggered, setCallbackTriggered] = useState(false);
+
+  const signer = useFutureverseSigner();
 
   const { data: feeDecimals } = useEvmGetDecimals(
     assetIdToERC20Address(feeAssetId) as Address
@@ -66,24 +75,17 @@ export function EvmModal({
     isError: isSimulateError,
     error: simulateError,
     isPending: simulatePending,
-  } = useSimulateContract({
-    abi,
+  } = useEvmSimulateTx({
+    fromWallet,
+    account: (fromWallet === 'eoa'
+      ? userSession?.eoa
+      : userSession?.futurepass) as Address,
     address: contract,
+    abi,
     functionName,
     args,
-    query: {
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-      refetchOnReconnect: false,
-      refetchInterval: false,
-      enabled:
-        !!userSession &&
-        chainId === userSession.chainId &&
-        !!contract &&
-        !!abi &&
-        !!functionName &&
-        !!args,
-    },
+    feeAssetId,
+    slippage,
   });
 
   const {
@@ -92,6 +94,7 @@ export function EvmModal({
     isPending: evmPending,
     isError: evmIsError,
     error: evmError,
+    isSuccess: evmSuccess,
   } = useEvmTx();
 
   const { data: txRcpt, isFetching: txRcptFinalising } = useTransactionReceipt({
@@ -100,8 +103,17 @@ export function EvmModal({
       refetchOnMount: false,
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
+      refetchInterval: false,
     },
   });
+
+  console.log('evmHash', evmHash);
+  console.log('evmPending', evmPending);
+  console.log('evmSuccess', evmSuccess);
+  console.log('evmError', evmError);
+  console.log('evmIsError', evmIsError);
+  console.log('txRcptFinalising', txRcptFinalising);
+  console.log('txRcpt', txRcpt);
 
   const evmData = useMemo(() => {
     return encodeFunctionData({
@@ -207,10 +219,12 @@ export function EvmModal({
   };
 
   useEffect(() => {
-    if (txRcpt?.status === 'success') {
+    if (txRcpt?.status === 'success' && !callbackTriggered) {
+      setCallbackTriggered(true);
+      console.log('callbackTriggered', callbackTriggered);
       callback && callback();
     }
-  }, [callback, txRcpt]);
+  }, [callback, callbackTriggered, txRcpt]);
 
   return (
     <Dialog>
@@ -227,7 +241,7 @@ export function EvmModal({
                 </button>
               )}
 
-              {!txRcptFinalising && !txRcpt && !evmPending && (
+              {!evmSuccess && !txRcptFinalising && !txRcpt && !evmPending && (
                 <>
                   {simulatePending && (
                     <CodeView code={codeString}>
@@ -273,26 +287,34 @@ export function EvmModal({
 
                   {isSimulateError && (
                     <div className="row content-row gas-row">
-                      <div>
-                        {
-                          (simulateError as { shortMessage: string })
-                            .shortMessage
-                        }
-                      </div>
+                      <div>{simulateError}</div>
                     </div>
+                  )}
+
+                  {connector?.id === 'xaman' && (
+                    <small>
+                      This transaction will be sent via the XRPL Pallet on the
+                      Root Network and may take a little longer to complete.
+                    </small>
                   )}
 
                   <button
                     className="builder-input green"
                     onClick={submitTransfer}
-                    disabled={evmPending || isSimulateError || simulatePending}
+                    disabled={
+                      evmPending ||
+                      isSimulateError ||
+                      simulatePending ||
+                      !signer
+                    }
                   >
                     Submit Transaction
                   </button>
+                  {!signer && <small>Signer is currently missing</small>}
                 </>
               )}
 
-              {evmPending && (
+              {evmPending && connector?.id !== 'xaman' && (
                 <div className="row content-row gas-row">
                   <div className="grid cols-1">
                     <div
@@ -311,7 +333,7 @@ export function EvmModal({
                 </div>
               )}
 
-              {txRcptFinalising && txRcpt?.status !== 'success' && (
+              {txRcptFinalising && connector?.id !== 'xaman' && (
                 <div className="row gas-row">
                   <div className="grid cols-1">
                     <div
@@ -324,18 +346,33 @@ export function EvmModal({
                       }}
                     />
                     <div style={{ textAlign: 'center' }}>
-                      Waiting For Tx To Finalise...
+                      Waiting For Transaction To Finalise...
                     </div>
                   </div>
                 </div>
               )}
-              {!txRcptFinalising && evmHash && !!txRcpt?.status && (
+
+              {connector?.id === 'xaman' && !evmSuccess && evmPending && (
+                <div className="row gas-row">
+                  <div className="grid cols-1">
+                    <div
+                      className="spinner"
+                      style={{
+                        margin: '0 auto',
+                        marginTop: '16px',
+                        width: '100px',
+                        height: '100px',
+                      }}
+                    />
+                    <div style={{ textAlign: 'center' }}>Please Wait...</div>
+                  </div>{' '}
+                </div>
+              )}
+
+              {connector?.id === 'xaman' && evmSuccess && !evmPending && (
                 <div className="row gas-row">
                   <CodeView code={codeString}>
-                    <h1>
-                      Transaction{' '}
-                      {txRcpt.status === 'success' ? 'Succeeded' : 'Failed'}
-                    </h1>
+                    <h1>Transaction</h1>
                   </CodeView>
                   <div>
                     <a
@@ -355,10 +392,51 @@ export function EvmModal({
                   </div>
                 </div>
               )}
-              {evmHash && !!txRcpt?.status && evmIsError && (
+
+              {!txRcptFinalising &&
+                evmHash &&
+                !!txRcpt?.status &&
+                connector?.id !== 'xaman' && (
+                  <div className="row gas-row">
+                    <CodeView code={codeString}>
+                      <h1>
+                        Transaction{' '}
+                        {txRcpt?.status === 'success' ? 'Succeeded' : 'Failed'}
+                      </h1>
+                    </CodeView>
+                    <div>
+                      <a
+                        href={`https://porcini.rootscan.io/tx/${evmHash}`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        View TX on Rootscan{' '}
+                        <ExternalLink
+                          styles={{
+                            width: '16px',
+                            height: '16px',
+                            display: 'inline-block',
+                          }}
+                        />
+                      </a>
+                    </div>
+                  </div>
+                )}
+              {evmIsError && evmError && (
                 <div className="row gas-row">
-                  <div className="title">Error</div>
-                  <div className="content">{evmError?.message}</div>
+                  <div>
+                    <small>
+                      {
+                        (evmError as unknown as { shortMessage: string })
+                          ?.shortMessage
+                      }
+                    </small>
+                  </div>
+                  <div>
+                    <small>
+                      {(evmError as unknown as { details: string })?.details}
+                    </small>
+                  </div>
                 </div>
               )}
             </div>

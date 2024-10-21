@@ -15,6 +15,7 @@ import EvmErc721 from './EvmErc721';
 import EvmErc1155 from './EvmErc1155';
 import FeeProxy from './FeeProxy';
 import FuturePassProxy from './FuturePassProxy';
+import AuthSDK from './AuthSDK';
 
 export { Dialog } from './Dialog/Dialog';
 export {
@@ -27,6 +28,7 @@ export {
 export { Batch } from './Batch';
 export { AccountCard } from './AccountCard';
 export { ConnectorInfo } from './ConnectorInfo';
+export { SignerDebug } from './SignerDebug';
 
 export { AssetTransfer } from './Assets/index';
 
@@ -81,4 +83,5 @@ export {
   EvmErc1155,
   FeeProxy,
   FuturePassProxy,
+  AuthSDK,
 };

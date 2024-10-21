@@ -65,23 +65,10 @@ const RowComponent = ({
 }) => {
   return (
     <div className="row login-row">
-      <div className="card">
+      <div className="card login-card">
         <div className="inner">
-          <div
-            className="grid cols-1"
-            style={{ width: '90dvw', maxWidth: '400px' }}
-          >
-            {showSpinner && (
-              <div
-                className="spinner"
-                style={{
-                  margin: '0 auto',
-                  marginTop: '16px',
-                  width: '100px',
-                  height: '100px',
-                }}
-              />
-            )}
+          <div className="grid cols-1 login-grid" style={{}}>
+            {showSpinner && <div className="spinner" />}
             <div style={{ textAlign: 'center' }}>{children}</div>
           </div>
         </div>

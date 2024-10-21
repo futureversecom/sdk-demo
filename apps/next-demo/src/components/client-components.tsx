@@ -30,6 +30,7 @@ import {
   FeeProxy,
   FuturePassProxy,
   LogIn,
+  AuthSDK,
 } from '@fv-sdk-demos/ui-shared';
 
 export {
@@ -60,4 +61,5 @@ export {
   FeeProxy,
   FuturePassProxy,
   LogIn,
+  AuthSDK,
 };

@@ -154,6 +154,43 @@ const EvmMenu = ({
     </>
   );
 };
+
+const AuthMenu = ({
+  setIsOpen,
+}: {
+  setIsOpen?: Dispatch<SetStateAction<boolean>>;
+}) => {
+  return (
+    <>
+      <ul className="dropdown-content">
+        <li>
+          <Link onClick={() => setIsOpen && setIsOpen(false)} href="/auth">
+            Auth UI SDK
+          </Link>
+        </li>
+        <li>
+          <a
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="https://login.futureverse.cloud/manageclients"
+            target="_blank"
+            rel="nofollow"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              flexWrap: 'nowrap',
+            }}
+          >
+            Manage Clients{' '}
+            <ExternalLink
+              styles={{ width: '16px', height: '16px', marginLeft: '6px' }}
+            />
+          </a>
+        </li>
+      </ul>
+      <DocumentationLink links={authDocLinks} navName="auth" />
+    </>
+  );
+};
 export const Menu: React.FC<MenuProps> = ({ setIsOpen }) => {
   const { signOut, userSession } = useAuth();
   const { disconnect, isConnected } = useConnector();
@@ -172,10 +209,7 @@ export const Menu: React.FC<MenuProps> = ({ setIsOpen }) => {
         </a>
       </li>
       <DropDownMenu title="Auth">
-        <ul className="dropdown-content">
-          <li className="no-hover">Coming Soon</li>
-        </ul>
-        <DocumentationLink links={authDocLinks} navName="auth" />
+        <AuthMenu setIsOpen={setIsOpen} />
       </DropDownMenu>
       <DropDownMenu title="Polkadot API">
         <ul className="dropdown-content">
@@ -260,11 +294,8 @@ export const MobileMenu: React.FC<MenuProps> = ({ setIsOpen }) => {
           </a>
         </li>
         <li>
-          <div className="sectionTitle">Auth</div>
-          <ul className="dropdown-content">
-            <li className="no-hover">Coming Soon</li>
-          </ul>
-          <DocumentationLink links={authDocLinks} navName="auth" />
+          <div className="sectionTitle">Auth SDK</div>
+          <AuthMenu setIsOpen={setIsOpen} />
         </li>
         <li>
           <div className="sectionTitle">Polkadot API</div>

@@ -22,9 +22,6 @@ const codeString = ``;
 
 export default function FpassErc721Mint() {
   const { userSession } = useAuth();
-  const shouldShowEoa = useShouldShowEoa();
-
-  const fromWallet = 'fpass';
 
   const [collectionId, setCollectionId] = useState(709732);
   const [collectionContract, setCollectionContract] = useState<`0x${string}`>(
@@ -34,7 +31,7 @@ export default function FpassErc721Mint() {
 
   const [qty, setQty] = useState(1);
   const [addressToMint, setAddressToMint] = useState<string>(
-    shouldShowEoa ? userSession?.eoa ?? '' : ''
+    userSession?.futurepass ?? ''
   );
 
   const { data: collectionInfo, isFetching } =
@@ -164,7 +161,7 @@ export default function FpassErc721Mint() {
       {showDialog && (
         <EvmModal
           setShowDialog={setShowDialog}
-          fromWallet={fromWallet}
+          fromWallet={'fpass'}
           contract={contractDebounced}
           functionName="mint"
           abi={parseAbi(ERC721_PRECOMPILE_ABI)}

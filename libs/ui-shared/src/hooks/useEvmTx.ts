@@ -2,8 +2,16 @@ import { useCallback } from 'react';
 import { useAccount, useConfig, useWriteContract } from 'wagmi';
 import { useEvmFuturePassProxy } from './useEvmFuturePassProxy';
 import { useEvmFeeProxy } from './useEvmFeeProxy';
-import { Abi, Account, Address, ContractFunctionArgs } from 'viem';
+import {
+  Abi,
+  Account,
+  Address,
+  ContractFunctionArgs,
+  encodeFunctionData,
+  parseAbi,
+} from 'viem';
 import { useAuth } from '@futureverse/auth-react';
+import { FUTUREPASS_PRECOMPILE_ABI } from '@therootnetwork/evm';
 
 export function useEvmTx() {
   const { userSession } = useAuth();
@@ -14,21 +22,36 @@ export function useEvmTx() {
     data: evmHash,
     writeContract: evmWrite,
     isPending: evmPending,
+    isSuccess: evmSuccess,
     isError: evmIsError,
     error: evmError,
   } = useWriteContract();
 
+  console.log('evmHash use useEvmTx', evmHash);
+
   const {
     data: futurePassHash,
-    mutate: futurePassProxyWrite,
+    writeContract: futurePassProxyWrite,
     isPending: futurePassPending,
+    isSuccess: futurePassSuccess,
     isError: futurePassIsError,
     error: futurePassError,
-  } = useEvmFuturePassProxy();
+  } = useWriteContract();
+
+  console.log('futurePassHash', futurePassHash);
+
+  // const {
+  //   data: futurePassHash,
+  //   mutate: futurePassProxyWrite,
+  //   isPending: futurePassPending,
+  //   isError: futurePassIsError,
+  //   error: futurePassError,
+  // } = useEvmFuturePassProxy();
 
   const {
     data: feeProxyHash,
     mutate: feeProxyWrite,
+    isSuccess: feeProxySuccess,
     isPending: feeProxyPending,
     isError: feeProxyIsError,
     error: feeProxyError,
@@ -36,6 +59,7 @@ export function useEvmTx() {
 
   const hash = evmHash || futurePassHash || feeProxyHash;
   const isPending = evmPending || futurePassPending || feeProxyPending;
+  const isSuccess = evmSuccess || futurePassSuccess || feeProxySuccess;
   const isError = evmIsError || futurePassIsError || feeProxyIsError;
   const error = evmError || futurePassError || feeProxyError;
 
@@ -69,14 +93,19 @@ export function useEvmTx() {
       }
 
       if (fromWallet === 'fpass' && gasToken === 2) {
-        return futurePassProxyWrite({
-          config,
-          account,
-          chainId,
+        const futurePassCall = encodeFunctionData({
           abi,
-          address,
           functionName,
           args,
+        });
+
+        return futurePassProxyWrite({
+          account,
+          address: userSession?.futurepass as Address,
+          chainId,
+          abi: parseAbi(FUTUREPASS_PRECOMPILE_ABI),
+          functionName: 'proxyCall',
+          args: [1, address, 0n, futurePassCall],
         });
       }
 
@@ -102,8 +131,15 @@ export function useEvmTx() {
         args,
       });
     },
-    [evmWrite, futurePassProxyWrite, config, chainId, feeProxyWrite]
+    [
+      evmWrite,
+      futurePassProxyWrite,
+      config,
+      userSession?.futurepass,
+      chainId,
+      feeProxyWrite,
+    ]
   );
 
-  return { submitTx, hash, isPending, isError, error };
+  return { submitTx, hash, isPending, isError, error, isSuccess };
 }

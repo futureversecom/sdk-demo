@@ -30,7 +30,7 @@ export default function FeeProxy() {
 
   return (
     <>
-      <h1>ERC-1155 Demo</h1>
+      <h1>EVM Fee Proxy Demo</h1>
 
       <div className="auto-grid">
         <FeeProxyErc20Transfer />

@@ -45,11 +45,7 @@ export default function Erc721Mint() {
   const [qty, setQty] = useState(1);
 
   const [addressToMint, setAddressToMint] = useState<string>(
-    (fromWallet === 'eoa'
-      ? userSession?.futurepass
-      : shouldShowEoa
-      ? userSession?.eoa
-      : '') ?? ''
+    (fromWallet === 'eoa' ? userSession?.eoa : userSession?.futurepass) ?? ''
   );
 
   const [feeAssetId, setFeeAssetId] = useState(2);

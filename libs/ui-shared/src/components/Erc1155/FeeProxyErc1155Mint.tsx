@@ -40,11 +40,7 @@ export default function FeeProxyErc1155Mint() {
   const [tokenQty, setTokenQty] = useState<Array<[number, number]>>([[0, 1]]);
 
   const [addressToMint, setAddressToMint] = useState<string>(
-    (fromWallet === 'eoa'
-      ? userSession?.futurepass
-      : shouldShowEoa
-      ? userSession?.eoa
-      : '') ?? ''
+    (fromWallet === 'eoa' ? userSession?.eoa : userSession?.futurepass) ?? ''
   );
 
   const [feeAssetId, setFeeAssetId] = useState(1);
@@ -81,6 +77,23 @@ export default function FeeProxyErc1155Mint() {
     setTokenQty([[0, 1]]);
     setAddressInputError('');
   };
+
+  if (!shouldShowEoa) {
+    return (
+      <div className="card">
+        <div className="inner">
+          <div className="row">
+            <CodeView code={codeString}>
+              <h3>Batch Mint ERC-1155 Token: Fee Proxy</h3>
+            </CodeView>
+          </div>
+          <div className="row">
+            Fee Proxy can only sent from an EOA on The Root Network
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>

@@ -21,3 +21,4 @@ export { useEvmGetGasPrice } from './useEvmGetGasPrice';
 export { useEvmTx } from './useEvmTx';
 export { useEvmCollectionInfo } from './useEvmCollectionInfo';
 export { useEvmCollectionInfoSft } from './useEvmCollectionInfoSft';
+export { useEvmSimulateTx } from './useEvmSimulateTx';

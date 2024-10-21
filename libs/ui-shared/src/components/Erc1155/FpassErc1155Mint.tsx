@@ -36,7 +36,7 @@ export default function FpassErc1155Mint() {
   const [tokenQty, setTokenQty] = useState<Array<[number, number]>>([[0, 1]]);
 
   const [addressToMint, setAddressToMint] = useState<string>(
-    shouldShowEoa ? userSession?.eoa ?? '' : ''
+    userSession?.futurepass ?? ''
   );
 
   const { data: collectionOwner, isFetching } =

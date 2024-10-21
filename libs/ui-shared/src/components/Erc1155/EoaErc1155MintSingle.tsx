@@ -37,11 +37,7 @@ export default function EoaErc1155MintSingle() {
   const [tokenQty, setTokenQty] = useState(1);
 
   const [addressToMint, setAddressToMint] = useState<string>(
-    (fromWallet === 'eoa'
-      ? userSession?.futurepass
-      : shouldShowEoa
-      ? userSession?.eoa
-      : '') ?? ''
+    (fromWallet === 'eoa' ? userSession?.eoa : userSession?.futurepass) ?? ''
   );
 
   const [addressInputError, setAddressInputError] = useState('');

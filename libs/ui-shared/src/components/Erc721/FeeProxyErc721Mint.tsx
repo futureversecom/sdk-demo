@@ -41,11 +41,7 @@ export default function FeeProxyErc721Mint() {
   const [qty, setQty] = useState(1);
 
   const [addressToMint, setAddressToMint] = useState<string>(
-    (fromWallet === 'eoa'
-      ? userSession?.futurepass
-      : shouldShowEoa
-      ? userSession?.eoa
-      : '') ?? ''
+    userSession?.eoa ?? ''
   );
 
   const [feeAssetId, setFeeAssetId] = useState(1);
@@ -78,6 +74,23 @@ export default function FeeProxyErc721Mint() {
     setQty(1);
     setAddressInputError('');
   };
+
+  if (!shouldShowEoa) {
+    return (
+      <div className="card">
+        <div className="inner">
+          <div className="row">
+            <CodeView code={codeString}>
+              <h3>Mint ERC-721 Token: Fee Proxy</h3>
+            </CodeView>
+          </div>
+          <div className="row">
+            Fee Proxy can only sent from an EOA on The Root Network
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>

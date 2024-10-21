@@ -30,7 +30,7 @@ export default function FuturePassProxy() {
 
   return (
     <>
-      <h1>ERC-1155 Demo</h1>
+      <h1>EVM Pass.Online Proxy Demo</h1>
 
       <div className="auto-grid">
         <FpassErc20Transfer />
