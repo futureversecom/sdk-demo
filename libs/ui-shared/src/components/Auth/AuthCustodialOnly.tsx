@@ -1,7 +1,7 @@
 import { DarkTheme, ThemeConfig, useAuthUi } from '@futureverse/auth-ui';
 import React from 'react';
 import CodeView from '../CodeView';
-import { authProvidersCodeString } from '../../lib';
+import { authProvidersCodeString, disableAuthLoginButtons } from '../../lib';
 
 const codeString = `
 import { useAuthUi } from '@futureverse/auth-ui';
@@ -48,6 +48,7 @@ export function AuthCustodialOnly({
                 hideWeb3: true,
               });
               openLogin();
+              disableAuthLoginButtons();
             }}
             className="green"
           >

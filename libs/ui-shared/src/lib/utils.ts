@@ -267,3 +267,16 @@ export const simulateFeeProxy = async ({
     ],
   });
 };
+
+export const disableAuthLoginButtons = () => {
+  setTimeout(() => {
+    const buttons = document.querySelectorAll(
+      '.sdk-ui-demo .fvaui-card-content button'
+    );
+    console.log('buttons', buttons);
+
+    buttons.forEach(button => {
+      button.setAttribute('disabled', 'true');
+    });
+  }, 250);
+};

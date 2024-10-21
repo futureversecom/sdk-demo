@@ -1200,7 +1200,13 @@ nav li {
   padding: 8px 0;
 }
 
-.show-web3 {}
+.sdk-ui-demo .fvaui-dialog-container .fvaui-dialog-content .fvaui-card .fvaui-card-content button {
+  pointer-events: none !important;
+}
+
+.sdk-ui-demo .fvaui-dialog-container .fvaui-dialog-content .fvaui-card .fvaui-card-content button:disabled {
+  opacity: 1 !important
+}
 
 .dropdown-menu.wallet-dropdown .dropdown-inner {
   padding-top: 6px;

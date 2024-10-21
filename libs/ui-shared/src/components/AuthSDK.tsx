@@ -1,5 +1,6 @@
 'use client';
 
+import React, { useEffect, useState } from 'react';
 import { useIsMounted } from '../hooks';
 
 import {
@@ -9,8 +10,6 @@ import {
   AuthHideSome,
   AuthWeb3Only,
 } from './Auth';
-
-import React, { useState } from 'react';
 
 import { AuthUiProvider, DarkTheme, ThemeConfig } from '@futureverse/auth-ui';
 import { FutureverseAuthClient } from '@futureverse/auth';
@@ -27,6 +26,14 @@ export default function AuthSDK({
 }) {
   const isMounted = useIsMounted();
   const [theme, setTheme] = useState<ThemeConfig>(customTheme);
+
+  useEffect(() => {
+    document.body.classList.add('sdk-ui-demo');
+
+    return () => {
+      document && document.body.classList.remove('sdk-ui-demo');
+    };
+  }, []);
 
   if (!isMounted) {
     return <div>Loading...</div>;
