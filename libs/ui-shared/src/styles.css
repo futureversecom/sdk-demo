@@ -201,7 +201,7 @@ pre {
   height: 40px;
   margin: 0;
   padding: 4px 8px;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .p-8 {
@@ -1557,6 +1557,11 @@ nav li {
   background-color: currentColor;
 }
 
+.ui-inject {
+  padding: 64px;
+  overflow: hidden;
+}
+
 @media screen and (min-width: 481px) {
   .code-view {
     padding: var(--body-padding);
@@ -1615,6 +1620,7 @@ nav li {
   } */
 
 
+
   .header__nav__mobile {
     display: none;
   }
@@ -1658,6 +1664,11 @@ nav li {
   .code-viewer .hooks-btn {
     right: calc(64px + 88px + 8px);
   } */
+
+  .ui-inject {
+    grid-column: span 2;
+    padding: 64px;
+  }
 
   .desktop-nav>li {
     margin: 0 8px;
