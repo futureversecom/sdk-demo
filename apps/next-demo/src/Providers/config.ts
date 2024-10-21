@@ -20,18 +20,6 @@ export const authClient = new FutureverseAuthClient({
 });
 export const queryClient = new QueryClient();
 
-// const rootPorciniAlt = {
-//   ...rootPorcini,
-//   rpcUrls: {
-//     default: {
-//       http: [rootPorcini.rpcUrls.default.http[0].replace('/archive', '')],
-//       webSocket: [
-//         rootPorcini.rpcUrls.default.webSocket[0].replace('/archive', ''),
-//       ],
-//     },
-//   },
-// };
-
 export const getWagmiConfig = async () => {
   // const custodialAuthOptions = await authClient.queryCustodialOptions();
 
