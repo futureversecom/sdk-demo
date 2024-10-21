@@ -1,10 +1,6 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useAuth } from '@futureverse/auth-react';
-import {
-  useDebounce,
-  useEvmCollectionInfo,
-  useShouldShowEoa,
-} from '../../hooks';
+import { useDebounce, useEvmCollectionInfo } from '../../hooks';
 import { erc721AddressToCollectionId, shortAddress } from '../../lib/utils';
 import { parseAbi } from 'viem';
 import {

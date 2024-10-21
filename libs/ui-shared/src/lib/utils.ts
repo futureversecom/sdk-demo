@@ -271,7 +271,7 @@ export const simulateFeeProxy = async ({
 export const disableAuthLoginButtons = () => {
   setTimeout(() => {
     const buttons = document.querySelectorAll(
-      '.sdk-ui-demo .fvaui-card-content button'
+      '.sdk-ui-demo .fvaui-web3authbutton-container button, .sdk-ui-demo .fvaui-futurepassauthoptions-container button'
     );
     console.log('buttons', buttons);
 

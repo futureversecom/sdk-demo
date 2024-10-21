@@ -38,7 +38,7 @@ export function AuthHideSome({
         <div className="row">
           <CodeView code={codeString} helperCode={authProvidersCodeString}>
             <h3>Pass.Online Sign In UI: Hide Some</h3>
-            <div>Hiding MetaMask, Coinbase, WalletConnect, X & Discord</div>
+            <div>Hiding MetaMask, Coinbase, X, Facebook & Discord</div>
           </CodeView>
           <button
             onClick={() => {
@@ -47,7 +47,6 @@ export function AuthHideSome({
                 hideConnectors: [
                   'metaMaskSDK',
                   'coinbaseWalletSDK',
-                  'walletConnect',
                   'x',
                   'facebook',
                   'discord',

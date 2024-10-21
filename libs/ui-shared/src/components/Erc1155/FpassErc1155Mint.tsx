@@ -1,10 +1,6 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useAuth } from '@futureverse/auth-react';
-import {
-  useDebounce,
-  useEvmCollectionInfoSft,
-  useShouldShowEoa,
-} from '../../hooks';
+import { useDebounce, useEvmCollectionInfoSft } from '../../hooks';
 import { erc721AddressToCollectionId, shortAddress } from '../../lib/utils';
 import { parseAbi } from 'viem';
 import {
@@ -22,7 +18,6 @@ const codeString = ``;
 
 export default function FpassErc1155Mint() {
   const { userSession } = useAuth();
-  const shouldShowEoa = useShouldShowEoa();
 
   const fromWallet = 'fpass';
 
