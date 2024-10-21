@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { SketchPicker } from 'react-color';
 import {
+  AuthThemeProvider,
+  CustodialOptions,
+  Modal,
   ThemeConfig as OriginalThemeConfig,
+  State,
   useAuthUi,
+  Web3Options,
 } from '@futureverse/auth-ui';
 import { buttonDisable, disableAuthLoginButtons } from '../../lib';
 import { useCopyToClipboard } from '../../hooks';
+import { useConnectors } from 'wagmi';
 
 interface ThemeConfig extends OriginalThemeConfig {
   [key: string]: unknown;
@@ -118,6 +124,8 @@ export const AuthUiCustomiser = ({
 }: {
   setTheme: (theme: ThemeConfig) => void;
 }) => {
+  const [currentState, setCurrentState] = useState<State>(State.IDLE);
+
   const { isCopied, copyToClipboard } = useCopyToClipboard();
 
   const { openLogin } = useAuthUi();
@@ -126,23 +134,55 @@ export const AuthUiCustomiser = ({
   );
 
   const [firstRender, setFirstRender] = useState(true);
+  const connectors = useConnectors();
 
-  useEffect(() => {
-    if (firstRender) {
-      setFirstRender(false);
-      openLogin();
-      disableAuthLoginButtons();
+  console.log('connectors', connectors);
 
-      setTimeout(() => {
-        const uiDialog = document.querySelector('.fvaui-dialog');
-        console.log('uiDialog', uiDialog);
-        if (uiDialog) {
-          document.querySelector('.ui-inject')?.appendChild(uiDialog);
-          uiDialog.setAttribute('style', 'position:relative');
-        }
-      }, 1000);
-    }
-  }, [firstRender, openLogin]);
+  const web3AuthOptions: Web3Options[] = connectors
+    .filter(conn => !conn.type.startsWith('FutureverseCustodial'))
+    .filter(connector => connector.id !== 'io.metamask')
+    .filter(connector => connector.id !== 'com.coinbase.wallet')
+    .map(connector => {
+      return {
+        icon: connector.icon ?? connector.name,
+        title: connector.name,
+        id: connector.id,
+        installed: false,
+      } as Web3Options;
+    });
+
+  console.log('web3AuthOptions', web3AuthOptions);
+
+  const custodialAuthOptions: CustodialOptions[] = connectors
+    .filter(conn => conn.type.startsWith('FutureverseCustodial'))
+    .filter(connector => connector.name !== 'Email')
+    .map(
+      connector =>
+        ({
+          icon: connector.icon ?? connector.name,
+          title: connector.name,
+          id: connector.id,
+          iconDark: connector.iconDark,
+          iconLight: connector.iconLight,
+        } as CustodialOptions)
+    );
+
+  // useEffect(() => {
+  //   if (firstRender) {
+  //     setFirstRender(false);
+  //     // openLogin();
+  //     // disableAuthLoginButtons();
+
+  //     // setTimeout(() => {
+  //     //   // const uiDialog = document.querySelector('.fvaui-dialog');
+  //     //   // console.log('uiDialog', uiDialog);
+  //     //   // if (uiDialog) {
+  //     //   //   document.querySelector('.ui-inject')?.appendChild(uiDialog);
+  //     //     uiDialog.setAttribute('style', 'position:relative');
+  //     //   }
+  //     // }, 1000);
+  //   }
+  // }, [firstRender, openLogin]);
 
   useEffect(() => {
     return () => {
@@ -352,10 +392,28 @@ export const AuthUiCustomiser = ({
           </div>
         </div>
       </div>
+
       <div
         className="card ui-inject"
         style={{ gridColumn: 'span 2', padding: '64px', overflow: 'hidden' }}
-      ></div>
+      >
+        <AuthThemeProvider themeConfig={themeConfig}>
+          <Modal
+            show={true}
+            onClose={() => console.log('close')}
+            currentState={currentState}
+            currentConnector={undefined}
+            custodialAuthOptions={custodialAuthOptions}
+            web3AuthOptions={web3AuthOptions}
+            themeConfig={themeConfig}
+            onShowDetails={() => console.log('')}
+            onCloseDetails={() => console.log('')}
+            onBack={() => console.log('')}
+            detailsOpen={false}
+            connectAndSignIn={async () => console.log('connectAndSignIn')}
+          ></Modal>
+        </AuthThemeProvider>
+      </div>
       <div className="card">
         <div className="inner">
           <div

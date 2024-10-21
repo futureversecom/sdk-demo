@@ -1209,6 +1209,10 @@ nav li {
   opacity: 1 !important
 }
 
+.ui-inject .fvaui-dialog {
+  position: relative !important;
+}
+
 .dropdown-menu.wallet-dropdown .dropdown-inner {
   padding-top: 6px;
   width: auto;
