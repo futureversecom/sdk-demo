@@ -1,7 +1,11 @@
 import { DarkTheme, ThemeConfig, useAuthUi } from '@futureverse/auth-ui';
-import React from 'react';
+import React, { useEffect } from 'react';
 import CodeView from '../CodeView';
-import { authProvidersCodeString, disableAuthLoginButtons } from '../../lib';
+import {
+  authProvidersCodeString,
+  buttonDisable,
+  disableAuthLoginButtons,
+} from '../../lib';
 
 const codeString = `
 import { useAuthUi } from '@futureverse/auth-ui';
@@ -28,6 +32,13 @@ export function Auth() {
 
 export function Auth({ setTheme }: { setTheme: (theme: ThemeConfig) => void }) {
   const { openLogin } = useAuthUi();
+
+  useEffect(() => {
+    return () => {
+      document.removeEventListener('click', buttonDisable);
+    };
+  }, []);
+
   return (
     <div className="card">
       <div className="inner">

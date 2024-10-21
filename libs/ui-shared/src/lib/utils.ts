@@ -268,15 +268,22 @@ export const simulateFeeProxy = async ({
   });
 };
 
-export const disableAuthLoginButtons = () => {
-  setTimeout(() => {
-    const buttons = document.querySelectorAll(
-      '.sdk-ui-demo .fvaui-web3authbutton-container button, .sdk-ui-demo .fvaui-futurepassauthoptions-container button'
-    );
-    console.log('buttons', buttons);
+export const buttonDisable = () => {
+  console.log('buttonDisable being called');
+  const buttons = document.querySelectorAll(
+    '.sdk-ui-demo .fvaui-button-web3auth, .sdk-ui-demo .fvaui-custodialauthbutton, .sdk-ui-demo .fvaui-custodialauthoptions-social button'
+  );
+  console.log('buttons', buttons);
 
-    buttons.forEach(button => {
-      button.setAttribute('disabled', 'true');
-    });
+  buttons.forEach(button => {
+    button.setAttribute('disabled', 'true');
+  });
+};
+
+export const disableAuthLoginButtons = () => {
+  document.addEventListener('click', buttonDisable);
+
+  setTimeout(() => {
+    buttonDisable();
   }, 250);
 };

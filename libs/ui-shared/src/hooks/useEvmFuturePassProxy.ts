@@ -1,14 +1,13 @@
 import { useMutation } from '@tanstack/react-query';
 import { simulateFuturePassProxy } from '../lib/utils';
 import {
-  encodeFunctionData,
   type Abi,
   type Account,
   type Address,
   type ContractFunctionArgs,
 } from 'viem';
 import { writeContract } from '@wagmi/core';
-import { useWriteContract, type Config } from 'wagmi';
+import { type Config } from 'wagmi';
 
 type IEvmFuturePassProxy = {
   config: Config;

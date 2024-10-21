@@ -1,6 +1,11 @@
 import { DarkTheme, ThemeConfig, useAuthUi } from '@futureverse/auth-ui';
 import CodeView from '../CodeView';
-import { authProvidersCodeString, disableAuthLoginButtons } from '../../lib';
+import {
+  authProvidersCodeString,
+  buttonDisable,
+  disableAuthLoginButtons,
+} from '../../lib';
+import { useEffect } from 'react';
 
 const codeString = `
 import { useAuthUi } from '@futureverse/auth-ui';
@@ -31,7 +36,11 @@ export function AuthHideSome({
   setTheme: (theme: ThemeConfig) => void;
 }) {
   const { openLogin } = useAuthUi();
-
+  useEffect(() => {
+    return () => {
+      document.removeEventListener('click', buttonDisable);
+    };
+  }, []);
   return (
     <div className="card">
       <div className="inner">

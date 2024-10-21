@@ -1200,7 +1200,8 @@ nav li {
   padding: 8px 0;
 }
 
-.sdk-ui-demo .fvaui-dialog-container .fvaui-dialog-content .fvaui-card .fvaui-card-content button {
+.sdk-ui-demo .fvaui-dialog-container .fvaui-dialog-content .fvaui-card .fvaui-custodialauthoptions-social button,
+.sdk-ui-demo .fvaui-dialog-container .fvaui-dialog-content .fvaui-card .fvaui-web3authoptions-container button {
   pointer-events: none !important;
 }
 
