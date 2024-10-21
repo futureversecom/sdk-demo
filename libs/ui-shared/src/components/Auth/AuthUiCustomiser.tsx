@@ -124,7 +124,7 @@ export const AuthUiCustomiser = ({
 }: {
   setTheme: (theme: ThemeConfig) => void;
 }) => {
-  const [currentState, setCurrentState] = useState<State>(State.IDLE);
+  const [currentState] = useState<State>(State.IDLE);
 
   const { isCopied, copyToClipboard } = useCopyToClipboard();
 
@@ -133,7 +133,6 @@ export const AuthUiCustomiser = ({
     null
   );
 
-  const [firstRender, setFirstRender] = useState(true);
   const connectors = useConnectors();
 
   console.log('connectors', connectors);
