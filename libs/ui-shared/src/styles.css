@@ -878,6 +878,7 @@ input[type=range]::-ms-thumb {
     0px 9.2px 3.2px -28px rgba(0, 0, 0, 0.137),
     0px 16.2px 5.5px -28px rgba(0, 0, 0, 0.157),
     0px 33px 12px -28px rgba(0, 0, 0, 0.21);
+  z-index: 99;
 }
 
 .footer {
