@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useAccount, useConfig, useWriteContract } from 'wagmi';
-import { useEvmFuturePassProxy } from './useEvmFuturePassProxy';
+//import { useEvmFuturePassProxy } from './useEvmFuturePassProxy';
 import { useEvmFeeProxy } from './useEvmFeeProxy';
 import {
   Abi,
