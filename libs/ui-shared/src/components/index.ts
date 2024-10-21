@@ -15,7 +15,8 @@ import EvmErc721 from './EvmErc721';
 import EvmErc1155 from './EvmErc1155';
 import FeeProxy from './FeeProxy';
 import FuturePassProxy from './FuturePassProxy';
-import AuthSDK from './AuthSDK';
+import AuthUiSdk from './AuthUiSdk';
+import AuthUiSdkCustomiser from './AuthUiSdkCustomiser';
 
 export { Dialog } from './Dialog/Dialog';
 export {
@@ -83,5 +84,6 @@ export {
   EvmErc1155,
   FeeProxy,
   FuturePassProxy,
-  AuthSDK,
+  AuthUiSdk,
+  AuthUiSdkCustomiser,
 };

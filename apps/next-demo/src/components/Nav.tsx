@@ -164,8 +164,16 @@ const AuthMenu = ({
     <>
       <ul className="dropdown-content">
         <li>
-          <Link onClick={() => setIsOpen && setIsOpen(false)} href="/auth">
+          <Link onClick={() => setIsOpen && setIsOpen(false)} href="/auth/ui">
             Auth UI SDK
+          </Link>
+        </li>
+        <li>
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/auth/ui-customiser"
+          >
+            Auth UI Customiser
           </Link>
         </li>
         <li>
