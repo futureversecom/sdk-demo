@@ -152,7 +152,7 @@ export default function NftCreateCollection() {
         </CodeView>
         <div className="row">
           <SendFrom
-            label="Mint From"
+            label="Create From"
             shouldShowEoa={shouldShowEoa}
             setFromWallet={setFromWallet}
             fromWallet={fromWallet}
