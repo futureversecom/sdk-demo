@@ -1,15 +1,9 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useIsMounted } from '../hooks';
 
-import {
-  Auth,
-  AuthCustodialFirst,
-  AuthCustodialOnly,
-  AuthHideSome,
-  AuthWeb3Only,
-} from './Auth';
+import { Auth, AuthCustodialFirst } from './Auth';
 
 import { AuthUiProvider, DarkTheme, ThemeConfig } from '@futureverse/auth-ui';
 import { FutureverseAuthClient } from '@futureverse/auth';

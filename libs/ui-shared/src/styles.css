@@ -835,6 +835,7 @@ input[type=range]::-ms-thumb {
 
 .code-btn {
   padding: 8px;
+  margin: 0;
 }
 
 .code-btn svg {
