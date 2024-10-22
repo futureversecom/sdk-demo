@@ -11,7 +11,6 @@ import {
   HeaderIcons,
   MenuProps,
   Navigation,
-  polkadotLinks,
   shortAddress,
   swappablesLinks,
   transactLinks,
