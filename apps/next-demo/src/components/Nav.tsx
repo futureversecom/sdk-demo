@@ -216,6 +216,17 @@ export const Menu: React.FC<MenuProps> = ({ setIsOpen }) => {
           <ExternalLink />
         </a>
       </li>
+      <li>
+        <a
+          href="https://portal.rootnet.live/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="faucet-link"
+        >
+          <div>Portal</div>
+          <ExternalLink />
+        </a>
+      </li>
       <DropDownMenu title="Auth">
         <AuthMenu setIsOpen={setIsOpen} />
       </DropDownMenu>
@@ -298,6 +309,17 @@ export const MobileMenu: React.FC<MenuProps> = ({ setIsOpen }) => {
             className="faucet-link"
           >
             <div>Faucet</div>
+            <ExternalLink />
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://portal.rootnet.live/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="faucet-link"
+          >
+            <div>Portal</div>
             <ExternalLink />
           </a>
         </li>
