@@ -19,6 +19,9 @@ import AuthUiSdk from './AuthUiSdk';
 import AuthUiSdkCustomiser from './AuthUiSdkCustomiser';
 
 export { Dialog } from './Dialog/Dialog';
+export { AddressInput } from './AddressInput';
+export { URLInput } from './URLInput';
+
 export {
   AssetFromEoa,
   AssetFromEoaFeeProxy,

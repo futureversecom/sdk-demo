@@ -288,7 +288,11 @@ export default function TransactionDetails() {
                         <div className="grid cols-1 gap-0">
                           <div className="small">TRN Message</div>
                           <pre className="pre">
-                            {JSON.stringify(payload.trnPayload, null, 2)}
+                            {JSON.stringify(
+                              payload.trnPayload.toHuman(),
+                              null,
+                              2
+                            )}
                           </pre>
                         </div>
 
@@ -330,7 +334,9 @@ export default function TransactionDetails() {
                       <h2>Transaction Result</h2>
                     </CodeView>
                     <div className="grid cols-1">
-                      <pre>{JSON.stringify(result, null, 2)}</pre>
+                      <pre>
+                        {JSON.stringify(result.result.toHuman(), null, 2)}
+                      </pre>
 
                       <a
                         href={`https://porcini.rootscan.io/extrinsic/${result.extrinsicId}`}
