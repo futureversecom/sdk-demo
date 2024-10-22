@@ -9,6 +9,7 @@ type AddressToSendProps = {
   disable?: boolean;
   resetState?: () => void;
   label?: string;
+  canBeNull?: boolean;
 };
 
 export const AddressInput: React.FC<AddressToSendProps> = ({
@@ -19,6 +20,7 @@ export const AddressInput: React.FC<AddressToSendProps> = ({
   disable,
   resetState,
   label = 'Send To',
+  canBeNull = false,
 }) => {
   return (
     <label>
@@ -31,6 +33,11 @@ export const AddressInput: React.FC<AddressToSendProps> = ({
         style={{ marginTop: '4px' }}
         onChange={e => {
           setAddressInputError('');
+          if (e.target.value === '' && canBeNull) {
+            setAddressInputError('');
+            setInputAddress('');
+            return;
+          }
           if (
             !isAddress(e.target.value) ||
             e.target.value === '0x0000000000000000000000000000000000000000'

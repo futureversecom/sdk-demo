@@ -14,7 +14,7 @@ import { AddressInput } from '../AddressInput';
 import SliderInput from '../SliderInput';
 import { useShouldShowEoa } from '../../hooks';
 import { ITuple } from '@polkadot/types/types';
-import { Address } from 'viem';
+import { Address, getAddress } from 'viem';
 import { Permill } from '@polkadot/types/interfaces';
 import { Vec } from '@polkadot/types';
 import { SeedPrimitivesSignatureAccountId20 } from '@polkadot/types/lookup';
@@ -52,12 +52,13 @@ export default function NftCreateCollection() {
   > | null>(null);
   const [initialIssuance, setInitialIssuance] = useState<number | null>(null);
   const [maxIssuance, setMaxIssuance] = useState<number | null>(null);
-  const [tokenOwner, setTokenOwner] = useState<Address | null>(null);
+  const [tokenOwner, setTokenOwner] = useState<string | null>(null);
   const [crossChain, setCrossChain] = useState<boolean | null>(null);
 
   const [feeAssetId, setFeeAssetId] = useState<number>(2);
 
-  const [addressInputError, setAddressInputError] = useState<string>('');
+  const [tokenOwnerError, setTokenOwnerError] = useState<string>('');
+
   const [royaltyAddressInputError, setRoyaltyAddressInputError] = useState<
     string[]
   >(['']);
@@ -69,19 +70,20 @@ export default function NftCreateCollection() {
     const royaltyAddressErrs = royaltyAddressInputError.some(a => a !== '');
     return (
       disable ||
-      addressInputError !== '' ||
       urlInputError !== '' ||
       royaltyAddressErrs ||
       !collectionName ||
-      !metadataUri
+      !metadataUri ||
+      (!!initialIssuance && initialIssuance > 0 && tokenOwnerError)
     );
   }, [
     royaltyAddressInputError,
     disable,
-    addressInputError,
     urlInputError,
     collectionName,
     metadataUri,
+    initialIssuance,
+    tokenOwnerError,
   ]);
 
   const createBuilder = useCallback(async () => {
@@ -185,6 +187,57 @@ export default function NftCreateCollection() {
             resetState={resetState}
             label="Metadata URI"
           />
+        </div>
+        <div className="row">
+          <label>
+            Initial Issuance
+            <input
+              type="number"
+              value={initialIssuance?.toString()}
+              className="w-full builder-input"
+              onChange={e => {
+                if (
+                  (e.target.value && isNaN(Number(e.target.value))) ||
+                  Number(e.target.value) < 0 ||
+                  Number(e.target.value) > 1000
+                ) {
+                  return;
+                }
+                resetState();
+                setInitialIssuance(Number(e.target.value));
+              }}
+              disabled={disable}
+            />
+          </label>
+        </div>
+        {initialIssuance && initialIssuance > 0 ? (
+          <div className="row">
+            <AddressInput
+              inputAddress={tokenOwner || ''}
+              setInputAddress={setTokenOwner}
+              addressInputError={tokenOwnerError}
+              setAddressInputError={setTokenOwnerError}
+              label="Token Owner"
+              disable={disable}
+              resetState={resetState}
+              canBeNull={true}
+            />
+          </div>
+        ) : null}
+
+        <div className="row">
+          <label>
+            Max Issuance
+            <input
+              type="number"
+              value={maxIssuance ? maxIssuance?.toString() : ''}
+              className="w-full builder-input"
+              onChange={e => {
+                setMaxIssuance(e.target.value ? Number(e.target.value) : null);
+              }}
+              disabled={disable}
+            />
+          </label>
         </div>
         <div className="row">
           <label style={{ marginBottom: 0 }}>Royalties</label>
@@ -298,6 +351,23 @@ export default function NftCreateCollection() {
           </div>
         </div>
 
+        <div className="row">
+          <label>
+            Cross Chain
+            <select
+              value={crossChain ? 'true' : 'false'}
+              className="w-full builder-input"
+              disabled={disable}
+              onChange={e => {
+                setCrossChain(e.target.value === 'true');
+              }}
+            >
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
+          </label>
+        </div>
+        <div className="row"></div>
         <div className="row">
           <label>
             Gas Token

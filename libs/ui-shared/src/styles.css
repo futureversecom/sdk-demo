@@ -532,7 +532,7 @@ input:disabled {
 
 @media screen and (min-width: 992px) {
   .auto-grid {
-    grid-template-columns: repeat(auto-fill, minmax(480px, auto));
+    grid-template-columns: repeat(auto-fill, minmax(24.45%, auto));
   }
 
   .desktop-nav {
