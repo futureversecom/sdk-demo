@@ -1,5 +1,5 @@
 import { useAuth } from '@futureverse/auth-react';
-import React, { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { useTrnApi } from '../../providers/TRNProvider';
 import { useFutureverseSigner } from '@futureverse/auth-react';
@@ -14,7 +14,6 @@ import { AddressInput } from '../AddressInput';
 import SliderInput from '../SliderInput';
 import { useShouldShowEoa } from '../../hooks';
 import { ITuple } from '@polkadot/types/types';
-import { Address, getAddress } from 'viem';
 import { Permill } from '@polkadot/types/interfaces';
 import { Vec } from '@polkadot/types';
 import { SeedPrimitivesSignatureAccountId20 } from '@polkadot/types/lookup';
@@ -74,7 +73,7 @@ export default function NftCreateCollection() {
       royaltyAddressErrs ||
       !collectionName ||
       !metadataUri ||
-      (!!initialIssuance && initialIssuance > 0 && tokenOwnerError)
+      (!!initialIssuance && initialIssuance > 0 && tokenOwnerError !== '')
     );
   }, [
     royaltyAddressInputError,
