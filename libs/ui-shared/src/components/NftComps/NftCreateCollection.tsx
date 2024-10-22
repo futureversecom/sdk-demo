@@ -11,13 +11,13 @@ import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
 import CodeView from '../CodeView';
 import SendFrom from '../SendFrom';
 import { AddressInput } from '../AddressInput';
+import { URLInput } from '../UrlInput';
 import SliderInput from '../SliderInput';
 import { useShouldShowEoa } from '../../hooks';
 import { ITuple } from '@polkadot/types/types';
 import { Permill } from '@polkadot/types/interfaces';
 import { Vec } from '@polkadot/types';
 import { SeedPrimitivesSignatureAccountId20 } from '@polkadot/types/lookup';
-import { URLInput } from '../URLInput';
 
 const codeString = `
 `;
