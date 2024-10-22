@@ -132,6 +132,7 @@ export const AuthUiCustomiser = ({
   const [activeColorPicker, setActiveColorPicker] = useState<string | null>(
     null
   );
+  const [canClose, setCanClose] = useState(false);
 
   const connectors = useConnectors();
 
@@ -261,7 +262,13 @@ export const AuthUiCustomiser = ({
 
   return (
     <>
-      <div className="card">
+      <div
+        className="card"
+        onClick={() => {
+          canClose && setActiveColorPicker(null);
+          setCanClose(false);
+        }}
+      >
         <div className="inner">
           <div className="row">
             <h2>Customise Theme</h2>
@@ -330,7 +337,15 @@ export const AuthUiCustomiser = ({
                             transform: 'translateX(0)',
                             zIndex: 9,
                           }}
-                          onMouseLeave={() => setActiveColorPicker(null)}
+                          onMouseLeave={() => {
+                            setCanClose(true);
+                          }}
+                          onMouseEnter={() => {
+                            setCanClose(false);
+                          }}
+                          onMouseOver={() => {
+                            setCanClose(false);
+                          }}
                         >
                           <SketchPicker
                             color={
@@ -392,26 +407,27 @@ export const AuthUiCustomiser = ({
         </div>
       </div>
 
-      <div
-        className="card ui-inject"
-        style={{ gridColumn: 'span 2', padding: '64px', overflow: 'hidden' }}
-      >
-        <AuthThemeProvider themeConfig={themeConfig}>
-          <Modal
-            show={true}
-            onClose={() => console.log('close')}
-            currentState={currentState}
-            currentConnector={undefined}
-            custodialAuthOptions={custodialAuthOptions}
-            web3AuthOptions={web3AuthOptions}
-            themeConfig={themeConfig}
-            onShowDetails={() => console.log('')}
-            onCloseDetails={() => console.log('')}
-            onBack={() => console.log('')}
-            detailsOpen={false}
-            connectAndSignIn={async () => console.log('connectAndSignIn')}
-          ></Modal>
-        </AuthThemeProvider>
+      <div className="card ui-inject">
+        <div className="inject-inner">
+          <div className="inject-inner-overflow">
+            <AuthThemeProvider themeConfig={themeConfig}>
+              <Modal
+                show={true}
+                onClose={() => console.log('close')}
+                currentState={currentState}
+                currentConnector={undefined}
+                custodialAuthOptions={custodialAuthOptions}
+                web3AuthOptions={web3AuthOptions}
+                themeConfig={themeConfig}
+                onShowDetails={() => console.log('')}
+                onCloseDetails={() => console.log('')}
+                onBack={() => console.log('')}
+                detailsOpen={false}
+                connectAndSignIn={async () => console.log('connectAndSignIn')}
+              ></Modal>
+            </AuthThemeProvider>
+          </div>
+        </div>
       </div>
       <div className="card">
         <div className="inner">

@@ -56,7 +56,7 @@ export function Auth({ setTheme }: { setTheme: (theme: ThemeConfig) => void }) {
               openLogin();
               disableAuthLoginButtons();
             }}
-            className="green"
+            className="green no-margin"
           >
             Log In
           </button>

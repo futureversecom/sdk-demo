@@ -686,6 +686,10 @@ button.disabled {
   cursor: not-allowed !important;
 }
 
+button.no-margin {
+  margin: 0;
+}
+
 input[type="range"] {
   width: 100%;
   height: 0px;
@@ -725,6 +729,10 @@ input[type=range]::-ms-thumb {
   border-radius: 50%;
   border: 0;
   cursor: pointer;
+}
+
+.code-viewer {
+  margin-bottom: 8px;
 }
 
 .code-viewer .button-row {
@@ -789,6 +797,27 @@ input[type=range]::-ms-thumb {
   position: relative;
   z-index: 1;
   height: calc(100dvh - (var(--body-padding) * 2));
+}
+
+.code-viewer {
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.code-viewer h2 {
+  margin: 0;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.code-viewer .code-view-buttons {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.code-viewer .code-view-buttons .code-btn.green {
+  margin: 0;
 }
 
 .code-view pre {
@@ -1212,6 +1241,7 @@ nav li {
 
 .ui-inject .fvaui-dialog {
   position: relative !important;
+  /* height: calc(100dvh - 100px) !important; */
 }
 
 .dropdown-menu.wallet-dropdown .dropdown-inner {
@@ -1557,8 +1587,27 @@ nav li {
   background-color: currentColor;
 }
 
+.ui-customiser-wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
 .ui-inject {
-  padding: 64px;
+  grid-column: span 1;
+}
+
+.ui-inject .fvaui-dialog {
+  padding: clamp(8px, 1vw, 16px);
+}
+
+.ui-inject .inject-inner {
+  position: relative;
+  top: 0;
+}
+
+
+.ui-inject .inject-inner-overflow {
   overflow: hidden;
 }
 
@@ -1587,6 +1636,18 @@ nav li {
     right: calc(64px + 8px + 4px)
   } */
 
+}
+
+@media screen and (min-width: 768px) {
+  .ui-customiser-wrapper {
+    display: grid;
+    grid-template-columns: 1fr
+  }
+
+  .ui-inject .inject-inner {
+    position: sticky;
+    top: 96px;
+  }
 }
 
 @media screen and (min-width: 992px) {
@@ -1619,7 +1680,18 @@ nav li {
     right: calc(32px + 88px + 8px);
   } */
 
+  .ui-customiser-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr
+  }
 
+  .ui-inject {
+    grid-column: span 2;
+  }
+
+  .ui-inject .fvaui-dialog {
+    padding: clamp(16px, 1vw, 32px);
+  }
 
   .header__nav__mobile {
     display: none;
@@ -1665,9 +1737,12 @@ nav li {
     right: calc(64px + 88px + 8px);
   } */
 
-  .ui-inject {
-    grid-column: span 2;
-    padding: 64px;
+  .ui-customiser-wrapper {
+    grid-template-columns: 1fr 1fr 1fr 1fr
+  }
+
+  .ui-inject .fvaui-dialog {
+    padding: clamp(32px, 1vw, 64px);
   }
 
   .desktop-nav>li {

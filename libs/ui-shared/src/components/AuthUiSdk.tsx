@@ -44,10 +44,7 @@ export default function AuthUiSdk({
       <h1>Auth UI SDK Demo</h1>
       <div className="auto-grid">
         <Auth setTheme={setTheme} />
-        <AuthWeb3Only setTheme={setTheme} />
-        <AuthHideSome setTheme={setTheme} />
         <AuthCustodialFirst setTheme={setTheme} />
-        <AuthCustodialOnly setTheme={setTheme} />
       </div>
     </AuthUiProvider>
   );

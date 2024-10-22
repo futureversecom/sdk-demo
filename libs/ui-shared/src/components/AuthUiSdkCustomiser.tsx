@@ -36,7 +36,7 @@ export default function AuthUiSdkCustomiser({
   return (
     <AuthUiProvider themeConfig={theme} authClient={authClient}>
       <h1>Auth UI SDK Demo</h1>
-      <div className="auto-grid">
+      <div className="ui-customiser-wrapper">
         <AuthUiCustomiser setTheme={setTheme} />
       </div>
     </AuthUiProvider>

@@ -58,7 +58,7 @@ export function AuthWeb3Only({
               openLogin();
               disableAuthLoginButtons();
             }}
-            className="green"
+            className="green no-margin"
           >
             Log In
           </button>

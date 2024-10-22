@@ -65,7 +65,7 @@ export function AuthHideSome({
               openLogin();
               disableAuthLoginButtons();
             }}
-            className="green"
+            className="green no-margin"
           >
             Log In
           </button>

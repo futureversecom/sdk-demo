@@ -58,7 +58,7 @@ export function AuthCustodialOnly({
               openLogin();
               disableAuthLoginButtons();
             }}
-            className="green"
+            className="green no-margin"
           >
             Log In
           </button>
