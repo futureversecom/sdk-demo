@@ -230,12 +230,12 @@ export const Menu: React.FC<MenuProps> = ({ setIsOpen }) => {
       <DropDownMenu title="Auth">
         <AuthMenu setIsOpen={setIsOpen} />
       </DropDownMenu>
-      <DropDownMenu title="Polkadot API">
+      {/* <DropDownMenu title="Polkadot API">
         <ul className="dropdown-content">
           <li className="no-hover">Coming Soon</li>
         </ul>
         <DocumentationLink links={polkadotLinks} navName="polkadot" />
-      </DropDownMenu>
+      </DropDownMenu> */}
       <DropDownMenu title="EVM">
         <EvmMenu setIsOpen={setIsOpen} />
       </DropDownMenu>
@@ -327,13 +327,13 @@ export const MobileMenu: React.FC<MenuProps> = ({ setIsOpen }) => {
           <div className="sectionTitle">Auth SDK</div>
           <AuthMenu setIsOpen={setIsOpen} />
         </li>
-        <li>
+        {/* <li>
           <div className="sectionTitle">Polkadot API</div>
           <ul className="dropdown-content">
             <li className="no-hover">Coming Soon</li>
           </ul>
           <DocumentationLink links={polkadotLinks} navName="polkadot" />
-        </li>
+        </li> */}
         <li>
           <div className="sectionTitle">EVM</div>
           <EvmMenu setIsOpen={setIsOpen} />
