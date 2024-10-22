@@ -61,7 +61,7 @@ export default function Batch() {
         section: 'sft',
         method: 'mint',
         args: [
-          292964,
+          834660,
           [[1, 1]],
           shouldShowEoa ? userSession?.eoa : userSession?.futurepass,
         ],
@@ -356,7 +356,7 @@ export default function Batch() {
         section: 'sft',
         method: 'mint',
         args: [
-          292964,
+          834660,
           [[1, 1]],
           shouldShowEoa ? userSession?.eoa : userSession?.futurepass,
         ],

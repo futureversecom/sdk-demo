@@ -1,13 +1,22 @@
-import { useAuth, useConnector } from '@futureverse/auth-react';
-import { useIsMounted } from '../hooks';
+import React from 'react';
+import { useAuth } from '@futureverse/auth-react';
+import { useIsMounted, useShouldShowEoa } from '../hooks';
 import { LogIn } from './Navigation';
 import { AccountCard } from './AccountCard';
 import { ConnectorInfo } from './ConnectorInfo';
+import { SignerDebug } from './SignerDebug';
 
 export default function Home({ title }: { title: string }) {
   const isMounted = useIsMounted();
-  const { userSession, authMethod } = useAuth();
-  const { connector } = useConnector();
+  const { userSession, authClient } = useAuth();
+  const shouldShowEoa = useShouldShowEoa();
+
+  console.log(
+    'authClient',
+    authClient?.environment?.chain?.rpcUrls?.[
+      'default'
+    ]?.webSocket?.[0].replace('/archive', '')
+  );
 
   if (!isMounted) {
     return <div>Loading...</div>;
@@ -46,11 +55,10 @@ export default function Home({ title }: { title: string }) {
         <div className="row">
           <div className="auto-grid">
             <ConnectorInfo />
+            <SignerDebug />
           </div>
           <div className="auto-grid " style={{ marginTop: '16px' }}>
-            {connector?.id !== 'xaman' && authMethod === 'eoa' && (
-              <AccountCard type="eoa" title="EOA" />
-            )}
+            {shouldShowEoa && <AccountCard type="eoa" title="EOA" />}
             <AccountCard type="futurepass" title="Pass.Online" />
           </div>
         </div>

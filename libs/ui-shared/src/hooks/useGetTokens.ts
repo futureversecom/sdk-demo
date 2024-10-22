@@ -24,6 +24,6 @@ export function useGetTokens(walletAddress: string, collectionId: number) {
       return ownedTokens ?? [];
     },
     enabled: !!trnApi && !!walletAddress && !!collectionId,
-    refetchInterval: 30000,
+    // refetchInterval: 30000,
   });
 }

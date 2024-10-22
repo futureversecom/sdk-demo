@@ -6,8 +6,8 @@ type AddressToSendProps = {
   setAddressToSend: (address: string) => void;
   addressInputError: string;
   setAddressInputError: (error: string) => void;
-  disable: boolean;
-  resetState: () => void;
+  disable?: boolean;
+  resetState?: () => void;
   label?: string;
 };
 
@@ -29,7 +29,6 @@ export const AddressToSend: React.FC<AddressToSendProps> = ({
         className="w-full builder-input"
         maxLength={42}
         onChange={e => {
-          console.log(isAddress(e.target.value));
           setAddressInputError('');
           if (
             !isAddress(e.target.value) ||
@@ -37,7 +36,7 @@ export const AddressToSend: React.FC<AddressToSendProps> = ({
           ) {
             setAddressInputError('Address is invalid or null');
           }
-          resetState();
+          resetState && resetState();
           setAddressToSend(e.target.value);
         }}
         disabled={disable}

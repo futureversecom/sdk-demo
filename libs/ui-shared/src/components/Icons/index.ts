@@ -6,3 +6,5 @@ export { LogoIcon } from './LogoIcon';
 export { RootIcon } from './RootIcon';
 export { TickIcon } from './TickIcon';
 export { CopyIcon } from './CopyIcon';
+export { SunIcon } from './SunIcon';
+export { MoonIcon } from './MoonIcon';

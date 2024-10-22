@@ -6,8 +6,9 @@ type SendFromProps = {
   maxValue?: number;
   minValue?: number;
   sliderStep?: number;
-  resetState: () => void;
+  resetState?: () => void;
   label?: string;
+  onChangeEvent?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export default function SliderInput({
@@ -18,13 +19,14 @@ export default function SliderInput({
   sliderStep = 1,
   resetState,
   label = 'Slippage',
+  onChangeEvent,
 }: SendFromProps) {
   const bgRender: CSSProperties = useMemo(() => {
     return {
       position: 'absolute',
       width: `calc(${(Number(sliderValue) * 100) / maxValue}%)`,
       height: '2px',
-      backgroundColor: '#000000',
+      backgroundColor: 'var(--cta)',
       padding: '0',
       marginTop: '8px',
       marginBottom: '8px',
@@ -53,8 +55,9 @@ export default function SliderInput({
             max={maxValue}
             step={sliderStep}
             onChange={e => {
-              resetState();
+              resetState && resetState();
               setSliderValue(e.target.value);
+              onChangeEvent && onChangeEvent(e);
             }}
             style={{
               width: '100%',
