@@ -75,6 +75,29 @@ const TransactMenu = ({
     </>
   );
 };
+
+const AssetRegisterMenu = ({
+  setIsOpen,
+}: {
+  setIsOpen?: Dispatch<SetStateAction<boolean>>;
+}) => {
+  return (
+    <>
+      <ul className="dropdown-content">
+        <li>
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/asset-link-equip"
+          >
+            Asset Link Equip
+          </Link>
+        </li>
+      </ul>
+      <DocumentationLink links={assetLinks} navName="assets" />
+    </>
+  );
+};
+
 export const Menu: React.FC<MenuProps> = ({ setIsOpen }) => {
   const { signOut, userSession } = useAuth();
   const { disconnect, isConnected } = useConnector();
@@ -97,10 +120,7 @@ export const Menu: React.FC<MenuProps> = ({ setIsOpen }) => {
         <TransactMenu setIsOpen={setIsOpen} />
       </DropDownMenu>
       <DropDownMenu title="Asset Register SDK">
-        <ul className="dropdown-content">
-          <li className="no-hover">Coming Soon</li>
-        </ul>
-        <DocumentationLink links={assetLinks} navName="assets" />
+        <AssetRegisterMenu setIsOpen={setIsOpen} />
       </DropDownMenu>
       <DropDownMenu title="Swappables SDK">
         <ul className="dropdown-content">

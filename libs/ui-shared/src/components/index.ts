@@ -10,6 +10,7 @@ import Assets from './Assets';
 import DropDownMenu from './DropDownMenu';
 import TransactionDetails from './TransactionDetails';
 import BatchAll from './BatchAll';
+import AssetLink from './AssetLink';
 
 export { Dialog } from './Dialog/Dialog';
 export {
@@ -60,4 +61,5 @@ export {
   Assets,
   BatchAll,
   DropDownMenu,
+  AssetLink,
 };
