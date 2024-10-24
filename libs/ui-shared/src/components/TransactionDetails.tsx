@@ -128,21 +128,13 @@ export default function TransactionDetails() {
                         <TransactionPayload
                           payload={payload.trnPayload}
                           config={{
-                            // @ts-expect-error - types are wrong in lib
                             backgroundColor: 'var(--white)',
-                            // @ts-expect-error - types are wrong in lib
                             textColor: 'var(--cta)',
-                            // @ts-expect-error - types are wrong in lib
                             lineColor: 'var(--cta)',
-                            // @ts-expect-error - types are wrong in lib
                             highlightColor: 'var(--cta)',
-                            // @ts-expect-error - types are wrong in lib
                             highlightTextColor: 'var(--white)',
-                            // @ts-expect-error - types are wrong in lib
                             lowlightColor: 'var(--cta-hover)',
-                            // @ts-expect-error - types are wrong in lib
                             lowlightTextColor: 'var(--cta)',
-                            // @ts-expect-error - types are wrong in lib
                             addressHighlightColor: 'var(--cta)',
                           }}
                         />
@@ -348,21 +340,13 @@ export default function TransactionDetails() {
                         <TransactionPayload
                           payload={payload.trnPayload}
                           config={{
-                            // @ts-expect-error - types are wrong in lib
                             backgroundColor: 'var(--white)',
-                            // @ts-expect-error - types are wrong in lib
                             textColor: 'var(--cta)',
-                            // @ts-expect-error - types are wrong in lib
                             lineColor: 'var(--cta)',
-                            // @ts-expect-error - types are wrong in lib
                             highlightColor: 'var(--cta)',
-                            // @ts-expect-error - types are wrong in lib
                             highlightTextColor: 'var(--white)',
-                            // @ts-expect-error - types are wrong in lib
                             lowlightColor: 'var(--cta-hover)',
-                            // @ts-expect-error - types are wrong in lib
                             lowlightTextColor: 'var(--cta)',
-                            // @ts-expect-error - types are wrong in lib
                             addressHighlightColor: 'var(--cta)',
                           }}
                         />
