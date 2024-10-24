@@ -31,8 +31,10 @@ import { ASSET_DECIMALS } from '../../helpers';
 import { useRootStore } from '../../hooks/useRootStore';
 import { useFutureverseSigner } from '@futureverse/auth-react';
 
+import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
 import { shortAddress } from '../../lib/utils';
 import CodeView from '../CodeView';
+
 
 export default function AssetFromFuturePassFeeProxy() {
   const { userSession } = useAuth();
@@ -49,26 +51,14 @@ export default function AssetFromFuturePassFeeProxy() {
 
   const signer = useFutureverseSigner();
 
+  const getExtrinsic = useGetExtrinsic();
+
   const [assetId, setAssetId] = useState<number>(1);
   const [feeAssetId, setFeeAssetId] = useState<number>(1);
   const [amountToSend, setAmountToSend] = useState<number>(1);
   const [addressToSend, setAddressToSend] = useState<string>(
     userSession?.eoa ?? ''
   );
-
-  const getExtrinsic = async (builder: RootTransactionBuilder) => {
-    const gasEstimate = await builder?.getGasFees();
-    if (gasEstimate) {
-      setGas(gasEstimate);
-    }
-    const payloads = await builder?.getPayloads();
-    if (!payloads) {
-      return;
-    }
-    setPayload(payloads);
-    const { ethPayload } = payloads;
-    setToSign(ethPayload.toString());
-  };
 
   const createBuilder = useCallback(async () => {
     if (!trnApi || !signer || !userSession) {
@@ -112,14 +102,14 @@ export default function AssetFromFuturePassFeeProxy() {
   ]);
 
   return (
-    <div>
+    <div className={\`card $\{disable ? 'disabled' : ''}\`}>
       <div className="inner">
         <div className="row">
           <CodeView code={codeString}>
             <h3>Send From Pass Using Fee Proxy</h3>
-            <span
-              style={{ display: 'inline-block', fontSize: '0.8rem' }}
-            >{shortAddress(userSession?.futurepass ?? '')}</span>
+            <span style={{ display: 'inline-block', fontSize: '0.8rem' }}>
+              {shortAddress(userSession?.futurepass ?? '')}
+            </span>
           </CodeView>
         </div>
         <div className="row">

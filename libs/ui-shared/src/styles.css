@@ -188,8 +188,28 @@ pre {
   gap: 8px;
 }
 
+.gap-16 {
+  gap: 16px;
+}
+
+.gap-32 {
+  gap: 32px;
+}
+
 .gap-0 {
   gap: 0px;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-row {
+  flex-direction: row;
 }
 
 .small {
@@ -1675,7 +1695,7 @@ nav li {
   }
 
   .code-view pre {
-    padding-top: 0 !important
+    padding-top: 16px !important
   }
 
   .code-view-wrapper {

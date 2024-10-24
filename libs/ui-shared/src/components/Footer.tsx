@@ -1,3 +1,4 @@
+import React from 'react';
 import { DocumentationIcon } from './Icons/DocumentationIcon';
 import { GithubIcon } from './Icons/GithubIcon';
 import { FVIcon } from './Icons/FVIcon';

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import TransactionDetails from './TransactionDetails';
 import { useIsMounted } from '../hooks';

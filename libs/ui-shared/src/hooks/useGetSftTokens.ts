@@ -15,6 +15,7 @@ export function useGetSftTokens(collectionId: number, walletAddress?: string) {
       const sftCollectionInfo = await trnApi.query.sft.sftCollectionInfo(
         collectionId
       );
+
       const info = sftCollectionInfo.unwrap();
 
       const collectionTokens = info.nextSerialNumber.toNumber() - 1;

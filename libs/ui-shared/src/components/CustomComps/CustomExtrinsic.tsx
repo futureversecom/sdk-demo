@@ -33,6 +33,7 @@ import SendFrom from '../SendFrom';
 import { AddressToSend } from '../AddressToSend';
 import { useShouldShowEoa } from '../../hooks';
 
+
 export default function CustomExtrinsic() {
   const { userSession } = useAuth();
 
@@ -123,7 +124,7 @@ export default function CustomExtrinsic() {
   }, [disable, addressInputError]);
 
   return (
-    <div className={\`card \${disable ? 'disabled' : ''}\`}>
+    <div className={\`card $\{disable ? 'disabled' : ''}\`}>
       <div className="inner">
         <CodeView code={codeString}>
           <h3>Mint Nft Using Custom Extrinsic Builder</h3>
@@ -213,7 +214,7 @@ export default function CustomExtrinsic() {
         )}
         <div className="row">
           <button
-            className={\`w-full builder-input green \${
+            className={\`w-full builder-input green $\{
               buttonDisabled ? 'disabled' : ''
             }\`}
             onClick={() => {

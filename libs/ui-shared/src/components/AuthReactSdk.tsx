@@ -1,7 +1,8 @@
 'use client';
 
+import React from 'react';
 import { useIsMounted } from '../hooks';
-import { AuthCallBack, AuthLogout, AuthUserSession } from './Auth';
+import { AuthCallBack, AuthLogout, AuthUserSession, AuthSigner } from './Auth';
 
 export default function AuthReactSdk() {
   const isMounted = useIsMounted();
@@ -14,9 +15,12 @@ export default function AuthReactSdk() {
     <>
       <h1>Auth React SDK Demo</h1>
       <div className="auto-grid">
-        <AuthCallBack />
+        <div className="flex flex-col gap-16">
+          <AuthCallBack />
+          <AuthLogout />
+          <AuthSigner />
+        </div>
         <AuthUserSession />
-        <AuthLogout />
       </div>
     </>
   );

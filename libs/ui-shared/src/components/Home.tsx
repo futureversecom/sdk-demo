@@ -1,22 +1,13 @@
-import React from 'react';
 import { useAuth } from '@futureverse/auth-react';
 import { useIsMounted, useShouldShowEoa } from '../hooks';
 import { LogIn } from './Navigation';
 import { AccountCard } from './AccountCard';
 import { ConnectorInfo } from './ConnectorInfo';
-import { SignerDebug } from './SignerDebug';
 
 export default function Home({ title }: { title: string }) {
   const isMounted = useIsMounted();
-  const { userSession, authClient } = useAuth();
+  const { userSession } = useAuth();
   const shouldShowEoa = useShouldShowEoa();
-
-  console.log(
-    'authClient',
-    authClient?.environment?.chain?.rpcUrls?.[
-      'default'
-    ]?.webSocket?.[0].replace('/archive', '')
-  );
 
   if (!isMounted) {
     return <div>Loading...</div>;

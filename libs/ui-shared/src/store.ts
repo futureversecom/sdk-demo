@@ -22,6 +22,7 @@ export type RootState = {
   currentBuilder: RootTransactionBuilder | null;
   error: string | null;
   signedCallback: (() => void) | undefined;
+  resultCallback: ((result: ExtrinsicResult) => void) | undefined;
 };
 
 export type RootActions = {
@@ -39,6 +40,9 @@ export type RootActions = {
   resetState: () => void;
   setError: (error: string) => void;
   setSignedCallback: ((signedCallback: () => void) => void) | undefined;
+  setResultCallback:
+    | ((resultCallback: (result: ExtrinsicResult) => void) => void)
+    | undefined;
 };
 
 export type RootStore = RootState & RootActions;
@@ -53,6 +57,7 @@ export const defaultInitState: RootState = {
   currentBuilder: null,
   error: null,
   signedCallback: undefined,
+  resultCallback: undefined,
 };
 
 export const createRootStore = (initState: RootState = defaultInitState) => {
@@ -83,5 +88,8 @@ export const createRootStore = (initState: RootState = defaultInitState) => {
     setError: (error: string) => set({ error }),
     setSignedCallback: (signedCallback: (() => void) | undefined) =>
       set({ signedCallback }),
+    setResultCallback: (
+      resultCallback: ((result: ExtrinsicResult) => void) | undefined
+    ) => set({ resultCallback }),
   }));
 };

@@ -27,8 +27,6 @@ export function useEvmTx() {
     error: evmError,
   } = useWriteContract();
 
-  console.log('evmHash use useEvmTx', evmHash);
-
   const {
     data: futurePassHash,
     writeContract: futurePassProxyWrite,
@@ -37,16 +35,6 @@ export function useEvmTx() {
     isError: futurePassIsError,
     error: futurePassError,
   } = useWriteContract();
-
-  console.log('futurePassHash', futurePassHash);
-
-  // const {
-  //   data: futurePassHash,
-  //   mutate: futurePassProxyWrite,
-  //   isPending: futurePassPending,
-  //   isError: futurePassIsError,
-  //   error: futurePassError,
-  // } = useEvmFuturePassProxy();
 
   const {
     data: feeProxyHash,

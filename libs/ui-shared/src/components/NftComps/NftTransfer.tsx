@@ -27,7 +27,7 @@ import { TransactionBuilder } from '@futureverse/transact';
 import { useRootStore } from '../../hooks/useRootStore';
 
 import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
-import { useGetTokens, useShouldShowEoa } from '../../hooks';
+import { useDebounce, useGetTokens, useShouldShowEoa } from '../../hooks';
 import CodeView from '../CodeView';
 import { AddressToSend } from '../AddressToSend';
 import SendFrom from '../SendFrom';
@@ -53,6 +53,7 @@ export default function NftTransfer() {
   const shouldShowEoa = useShouldShowEoa();
 
   const [collectionId, setCollectionId] = useState<number>(709732);
+  const debouncedCollectionId = useDebounce(collectionId, 500);
 
   const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
     shouldShowEoa ? 'eoa' : 'fpass'
@@ -68,7 +69,7 @@ export default function NftTransfer() {
         ? userSession?.futurepass
         : userSession?.eoa
       : '',
-    collectionId
+    debouncedCollectionId
   );
 
   const [feeAssetId, setFeeAssetId] = useState<number>(2);
@@ -77,8 +78,9 @@ export default function NftTransfer() {
   const [serialNumber, setSerialNumber] = useState<string>('');
 
   const [addressInputError, setAddressInputError] = useState<string>('');
-  const [addressToSend, setAddressToSend] = useState<string>(
-    (fromWallet === 'eoa' ? userSession?.eoa : userSession?.futurepass) ?? ''
+  const [addressToSend, setAddressToSend] = useState<\`0x$\{string}\`>(
+    ((fromWallet === 'eoa' ? userSession?.eoa : userSession?.futurepass) ??
+      '') as \`0x$\{string}\`
   );
 
   const buttonDisabled = useMemo(() => {
@@ -106,7 +108,7 @@ export default function NftTransfer() {
       trnApi,
       signer,
       userSession.eoa,
-      collectionId
+      debouncedCollectionId
     ).transfer({
       walletAddress: addressToSend,
       serialNumbers: [Number(serialNumber)],
@@ -142,7 +144,7 @@ export default function NftTransfer() {
     signer,
     userSession,
     serialNumber,
-    collectionId,
+    debouncedCollectionId,
     addressToSend,
     fromWallet,
     getExtrinsic,
@@ -151,7 +153,7 @@ export default function NftTransfer() {
   ]);
 
   return (
-    <div className={\`card \${disable ? 'disabled' : ''}\`}>
+    <div className={\`card $\{disable ? 'disabled' : ''}\`}>
       <div className="inner">
         <CodeView code={codeString}>
           <h3>Transfer Nft</h3>
@@ -252,7 +254,7 @@ export default function NftTransfer() {
         )}
         <div className="row">
           <button
-            className={\`w-full builder-input green \${
+            className={\`w-full builder-input green $\{
               buttonDisabled ? 'disabled' : ''
             }\`}
             onClick={() => {
@@ -268,7 +270,6 @@ export default function NftTransfer() {
     </div>
   );
 }
-
 `;
 
 export default function NftTransfer() {

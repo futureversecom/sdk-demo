@@ -25,20 +25,22 @@ export function AuthLogout() {
           </CodeView>
         </div>
 
-        <button
-          className="green"
-          onClick={() => {
-            signOut();
-          }}
-          disabled={true}
-        >
-          Sign Out
-        </button>
+        <div className="row">
+          <button
+            className="green no-margin"
+            onClick={async () => {
+              typeof window !== 'undefined' &&
+                window.confirm('Do you really want to sign out?') &&
+                signOut();
+            }}
+          >
+            Sign Out
+          </button>
+        </div>
       </div>
     </div>
   );
 }
-
 `;
 
 export function AuthLogout() {

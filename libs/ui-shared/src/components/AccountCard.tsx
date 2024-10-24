@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useAuth } from '@futureverse/auth-react';
 
 import { useQuery } from '@tanstack/react-query';
@@ -12,7 +12,7 @@ import CodeView from './CodeView';
 import { CopyText } from './CopyText';
 
 const codeString = `
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useAuth } from '@futureverse/auth-react';
 
 import { useQuery } from '@tanstack/react-query';
@@ -186,6 +186,7 @@ export function AccountCard({ title, type }: AccountCardProps) {
     </div>
   );
 }
+
 `;
 
 const ASTO_ASSET_ID = 17508;

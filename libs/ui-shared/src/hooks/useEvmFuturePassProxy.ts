@@ -45,21 +45,5 @@ const evmFuturePassProxy = async ({
 };
 
 export function useEvmFuturePassProxy() {
-  // const {
-  //   data,
-  //   writeContract,
-  //   isPending,
-  //   isError,
-  //   error,
-  // } = useWriteContract();
-
-  // return {
-  //   data,
-  //   writeContract,
-  //   isPending,
-  //   isError,
-  //   error,
-  // }
-
   return useMutation({ mutationFn: evmFuturePassProxy });
 }

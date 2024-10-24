@@ -16,7 +16,7 @@ export function useGetNftPublicMint(collectionId: number) {
         collectionId
       );
 
-      const info = publicMintInfo.unwrap();
+      const info = publicMintInfo?.unwrap();
 
       return {
         enabled: info.enabled.toHuman(),

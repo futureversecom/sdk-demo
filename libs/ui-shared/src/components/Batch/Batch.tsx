@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { TransactionBuilder } from '@futureverse/transact';
 import { useAuth } from '@futureverse/auth-react';
 
@@ -15,7 +15,7 @@ import SliderInput from '../SliderInput';
 import { shortAddress } from '../../lib/utils';
 
 const codeString = `
-import { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { TransactionBuilder } from '@futureverse/transact';
 import { useAuth } from '@futureverse/auth-react';
 
@@ -30,8 +30,6 @@ import SendFrom from '../SendFrom';
 import { useShouldShowEoa } from '../../hooks';
 import SliderInput from '../SliderInput';
 import { shortAddress } from '../../lib/utils';
-
-
 
 export default function Batch() {
   const { userSession } = useAuth();
@@ -169,7 +167,7 @@ export default function Batch() {
   ]);
 
   return (
-    <div className={\`card \${disable ? 'disabled' : ''}\`}>
+    <div className={\`card $\{disable ? 'disabled' : ''}\`}>
       <div className="inner">
         <div className="row">
           <CodeView code={codeString}>
@@ -223,7 +221,7 @@ export default function Batch() {
         </div>
         <div className="row">
           <div
-            className={\`transactions \${
+            className={\`transactions $\{
               transactions.length === 0 ? 'no-txs' : ''
             }\`}
           >
@@ -231,7 +229,7 @@ export default function Batch() {
               {transactions.length > 0 && (
                 <>
                   {transactions.map((tx, i) => (
-                    <div className="tx" key={\`tx-\${i}\`}>
+                    <div className="tx" key={\`tx-$\{i}\`}>
                       <div className="tx-inner">
                         <div className="tx-section">
                           <div className="title">section</div>
@@ -245,7 +243,7 @@ export default function Batch() {
                           <div className="title">args</div>
 
                           {tx.args.map((arg: any, j: number) => (
-                            <div className="tx-arg" key={\`tx-\${i}-arg-\${j}\`}>
+                            <div className="tx-arg" key={\`tx-$\{i}-arg-$\{j}\`}>
                               <div className="data">
                                 {arg && arg.toString().startsWith('0x')
                                   ? shortAddress(arg)
@@ -309,7 +307,7 @@ export default function Batch() {
         )}
         <div className="row">
           <button
-            className={\`w-full builder-input green \${
+            className={\`w-full builder-input green $\{
               disable ? 'disabled' : ''
             }\`}
             onClick={() => {
@@ -325,7 +323,6 @@ export default function Batch() {
     </div>
   );
 }
-
 `;
 
 export default function Batch() {

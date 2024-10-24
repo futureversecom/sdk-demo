@@ -26,7 +26,7 @@ import { TransactionBuilder } from '@futureverse/transact';
 import { useRootStore } from '../../hooks/useRootStore';
 
 import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
-import { useGetTokens, useShouldShowEoa } from '../../hooks';
+import { useDebounce, useGetTokens, useShouldShowEoa } from '../../hooks';
 import CodeView from '../CodeView';
 import SendFrom from '../SendFrom';
 import SliderInput from '../SliderInput';
@@ -48,6 +48,8 @@ export default function NftBurn() {
   const getExtrinsic = useGetExtrinsic();
 
   const [collectionId, setCollectionId] = useState<number>(709732);
+  const debouncedCollectionId = useDebounce(collectionId, 500);
+
   const [slippage, setSlippage] = useState<string>('5');
 
   const shouldShowEoa = useShouldShowEoa();
@@ -66,7 +68,7 @@ export default function NftBurn() {
         ? userSession?.futurepass
         : userSession?.eoa
       : '',
-    collectionId
+    debouncedCollectionId
   );
 
   const [feeAssetId, setFeeAssetId] = useState<number>(2);
@@ -94,7 +96,7 @@ export default function NftBurn() {
       trnApi,
       signer,
       userSession.eoa,
-      collectionId
+      debouncedCollectionId
     ).burn({
       serialNumber: Number(serialNumber),
     });
@@ -129,7 +131,7 @@ export default function NftBurn() {
     signer,
     userSession,
     serialNumber,
-    collectionId,
+    debouncedCollectionId,
     fromWallet,
     getExtrinsic,
     setCurrentBuilder,
@@ -141,7 +143,7 @@ export default function NftBurn() {
   }, [disable, ownedTokens]);
 
   return (
-    <div className={\`card \${disable ? 'disabled' : ''}\`}>
+    <div className={\`card $\{disable ? 'disabled' : ''}\`}>
       <div className="inner">
         <CodeView code={codeString}>
           <h3>Burn Nft</h3>
@@ -246,7 +248,6 @@ export default function NftBurn() {
   );
 }
 `;
-
 export default function NftBurn() {
   const { userSession } = useAuth();
 

@@ -16,6 +16,8 @@ import { useCallback } from 'react';
 import { useRootStore } from '../hooks/useRootStore';
 import { formatUnits } from 'viem';
 import { Dialog } from './Dialog/Dialog';
+import CodeView from './CodeView';
+import { TransactionPayload } from '@futureverse/transact-react';
 
 export default function TransactionDetails() {
   const [showDialog, setShowDialog] = useState(true);
@@ -33,12 +35,15 @@ export default function TransactionDetails() {
     sent,
     setError,
     error,
+    signedCallback,
+    resultCallback,
   } = useRootStore(state => state);
 
   const onSign = useCallback(() => {
     setSigned(true);
+    signedCallback && signedCallback();
     console.log('Signed');
-  }, [setSigned]);
+  }, [setSigned, signedCallback]);
 
   const onSend = useCallback(() => {
     setSent(true);
@@ -50,12 +55,26 @@ export default function TransactionDetails() {
       try {
         const result = await currentBuilder.signAndSend({ onSign, onSend });
         setResult(result as ExtrinsicResult);
+        resultCallback && resultCallback(result);
       } catch (e: any) {
         console.error(e);
-        setError(e.message);
+        if (typeof e === 'string') {
+          setError(e);
+        }
+        if (typeof e === 'object') {
+          setError(e?.message);
+        }
       }
     }
-  }, [currentBuilder, onSend, onSign, setError, setResult, toSign]);
+  }, [
+    currentBuilder,
+    onSend,
+    onSign,
+    resultCallback,
+    setError,
+    setResult,
+    toSign,
+  ]);
 
   const showClose = useMemo(() => {
     if ((signed || sent) && !result && !error) {
@@ -82,7 +101,10 @@ export default function TransactionDetails() {
                 )}
                 {!result && !error && !signed && (
                   <>
-                    <h2>Transaction Details</h2>
+                    <CodeView code={codeString}>
+                      <h2>Transaction Details</h2>
+                    </CodeView>
+
                     <div className="grid cols-1  gap-0 mb-8">
                       <div className="w-full small">Gas Details</div>
                       <div className="gas-wrap">
@@ -103,12 +125,27 @@ export default function TransactionDetails() {
                     )}
                     {payload && (
                       <>
-                        <div className="grid cols-1 gap-0">
-                          <div className="small">TRN Message</div>
-                          <pre className="pre">
-                            {JSON.stringify(payload.trnPayload, null, 2)}
-                          </pre>
-                        </div>
+                        <TransactionPayload
+                          payload={payload.trnPayload}
+                          config={{
+                            // @ts-expect-error - types are wrong in lib
+                            backgroundColor: 'var(--white)',
+                            // @ts-expect-error - types are wrong in lib
+                            textColor: 'var(--cta)',
+                            // @ts-expect-error - types are wrong in lib
+                            lineColor: 'var(--cta)',
+                            // @ts-expect-error - types are wrong in lib
+                            highlightColor: 'var(--cta)',
+                            // @ts-expect-error - types are wrong in lib
+                            highlightTextColor: 'var(--white)',
+                            // @ts-expect-error - types are wrong in lib
+                            lowlightColor: 'var(--cta-hover)',
+                            // @ts-expect-error - types are wrong in lib
+                            lowlightTextColor: 'var(--cta)',
+                            // @ts-expect-error - types are wrong in lib
+                            addressHighlightColor: 'var(--cta)',
+                          }}
+                        />
 
                         {!signed && (
                           <button
@@ -144,12 +181,16 @@ export default function TransactionDetails() {
                 )}
                 {result && (
                   <>
-                    <h2>Transaction Result</h2>
+                    <CodeView code={codeString}>
+                      <h2>Transaction Result</h2>
+                    </CodeView>
                     <div className="grid cols-1">
-                      <pre>{JSON.stringify(result, null, 2)}</pre>
+                      <pre>
+                        {JSON.stringify(result.result.toHuman(), null, 2)}
+                      </pre>
 
                       <a
-                        href={\`https://porcini.rootscan.io/extrinsic/{result.extrinsicId}\`}
+                        href={\`https://porcini.rootscan.io/extrinsic/$\{result.extrinsicId}\`}
                         target="_blank"
                         rel="noreferrer noopener"
                         style={{ textDecoration: 'underline' }}
@@ -176,7 +217,11 @@ export default function TransactionDetails() {
                   >
                     <div
                       className="error-title"
-                      style={{ fontWeight: '700', fontSize: '14px' }}
+                      style={{
+                        fontWeight: '700',
+                        fontSize: '14px',
+                        marginBottom: '8px',
+                      }}
                     >
                       There has been an error...
                     </div>
@@ -194,7 +239,6 @@ export default function TransactionDetails() {
   );
 }
 `;
-
 export default function TransactionDetails() {
   const [showDialog, setShowDialog] = useState(true);
 
@@ -212,6 +256,7 @@ export default function TransactionDetails() {
     setError,
     error,
     signedCallback,
+    resultCallback,
   } = useRootStore(state => state);
 
   const onSign = useCallback(() => {
@@ -230,12 +275,26 @@ export default function TransactionDetails() {
       try {
         const result = await currentBuilder.signAndSend({ onSign, onSend });
         setResult(result as ExtrinsicResult);
+        resultCallback && resultCallback(result);
       } catch (e: any) {
         console.error(e);
-        setError(e);
+        if (typeof e === 'string') {
+          setError(e);
+        }
+        if (typeof e === 'object') {
+          setError(e?.message);
+        }
       }
     }
-  }, [currentBuilder, onSend, onSign, setError, setResult, toSign]);
+  }, [
+    currentBuilder,
+    onSend,
+    onSign,
+    resultCallback,
+    setError,
+    setResult,
+    toSign,
+  ]);
 
   const showClose = useMemo(() => {
     if ((signed || sent) && !result && !error) {
@@ -243,8 +302,6 @@ export default function TransactionDetails() {
     }
     return true;
   }, [signed, sent, result, error]);
-
-  console.log('Error:', error);
 
   return (
     gas &&

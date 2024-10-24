@@ -6,10 +6,9 @@ import {
   Modal,
   ThemeConfig as OriginalThemeConfig,
   State,
-  useAuthUi,
   Web3Options,
 } from '@futureverse/auth-ui';
-import { buttonDisable, disableAuthLoginButtons } from '../../lib';
+import { buttonDisable } from '../../lib';
 import { useConnectors } from 'wagmi';
 import { CopyButton } from '../CopyButton';
 
@@ -128,14 +127,9 @@ const renderInput = (
   }
 };
 
-export const AuthUiCustomiser = ({
-  setTheme,
-}: {
-  setTheme: (theme: ThemeConfig) => void;
-}) => {
+export const AuthUiCustomiser = () => {
   const [currentState] = useState<State>(State.IDLE);
 
-  const { openLogin } = useAuthUi();
   const [activeColorPicker, setActiveColorPicker] = useState<string | null>(
     null
   );
@@ -198,10 +192,6 @@ export const AuthUiCustomiser = ({
   }, []);
 
   const [themeConfig, setThemeConfig] = useState(defaultTheme);
-
-  useEffect(() => {
-    setTheme(themeConfig);
-  }, [setTheme, themeConfig]);
 
   const { theme, colors, ...filteredConfig } = themeConfig as {
     [key: string]: unknown;
@@ -398,10 +388,9 @@ export const AuthUiCustomiser = ({
           onChange={e => handleInputChange('fontName', e.target.value)}
         />
       </div> */}
-            <div className="row" style={{ marginTop: '16px' }}>
+            {/* <div className="row" style={{ marginTop: '16px' }}>
               <button
                 onClick={() => {
-                  setTheme(themeConfig);
                   openLogin();
                   disableAuthLoginButtons();
                 }}
@@ -409,7 +398,7 @@ export const AuthUiCustomiser = ({
               >
                 Preview Theme
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

@@ -123,7 +123,7 @@ export default function NftMint() {
   ]);
 
   return (
-    <div className={\`card \${disable ? 'disabled' : ''}\`}>
+    <div className={\`card $\{disable ? 'disabled' : ''}\`}>
       <div className="inner">
         <CodeView code={codeString}>
           <h3>Mint Nft</h3>
@@ -212,7 +212,7 @@ export default function NftMint() {
         )}
         <div className="row">
           <button
-            className={\`w-full builder-input green \${
+            className={\`w-full builder-input green $\{
               buttonDisabled ? 'disabled' : ''
             }\`}
             onClick={() => {
