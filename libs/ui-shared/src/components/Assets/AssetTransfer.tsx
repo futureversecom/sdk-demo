@@ -4,7 +4,8 @@ import { useAuth } from '@futureverse/auth-react';
 
 import { parseUnits } from 'viem';
 
-import { useTrnApi } from '../../providers/TRNProvider';
+import { useTrnApi } from '@futureverse/transact-react';
+
 import { ASSET_DECIMALS } from '../../helpers';
 import { useRootStore } from '../../hooks/useRootStore';
 import { useFutureverseSigner } from '@futureverse/auth-react';
@@ -25,7 +26,8 @@ import { useAuth } from '@futureverse/auth-react';
 
 import { parseUnits } from 'viem';
 
-import { useTrnApi } from '../../providers/TRNProvider';
+import { useTrnApi } from '@futureverse/transact-react';
+
 import { ASSET_DECIMALS } from '../../helpers';
 import { useRootStore } from '../../hooks/useRootStore';
 import { useFutureverseSigner } from '@futureverse/auth-react';

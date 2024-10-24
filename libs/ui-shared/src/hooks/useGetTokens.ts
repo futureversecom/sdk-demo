@@ -1,5 +1,7 @@
+import '@therootnetwork/api-types';
+
 import { useQuery } from '@tanstack/react-query';
-import { useTrnApi } from '../providers';
+import { useTrnApi } from '@futureverse/transact-react';
 
 export function useGetTokens(walletAddress: string, collectionId: number) {
   const { trnApi } = useTrnApi();

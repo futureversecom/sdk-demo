@@ -34,7 +34,7 @@ export function useGetExtrinsic() {
 import { useMemo } from 'react';
 import { RootQueryBuilder } from '@futureverse/transact';
 import { useAuth } from '@futureverse/auth-react';
-import { useTrnApi } from '../providers/TRNProvider';
+import { useTrnApi } from '@futureverse/transact-react';
 
 export function useTransactQuery() {
   const { trnApi } = useTrnApi();
@@ -138,7 +138,8 @@ export const useRnsResolveAddress = (
   **/
 
 import { useQuery } from '@tanstack/react-query';
-import { useTrnApi } from '../providers';
+import { useTrnApi } from '@futureverse/transact-react';
+
 
 export function useGetTokens(walletAddress: string, collectionId: number) {
   const { trnApi } = useTrnApi();
@@ -175,7 +176,8 @@ export function useGetTokens(walletAddress: string, collectionId: number) {
 import { decodeFunctionResult, encodeFunctionData } from 'viem';
 import { useQuery } from '@tanstack/react-query';
 import { useAuth, useFutureverseSigner } from '@futureverse/auth-react';
-import { useTrnApi } from '../providers';
+import { useTrnApi } from '@futureverse/transact-react';
+
 
 export function useGetCount(TestContractAddress: any, TestContractAbi: any) {
   const { trnApi } = useTrnApi();

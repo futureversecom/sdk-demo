@@ -1,7 +1,7 @@
 import { useAuth } from '@futureverse/auth-react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { useTrnApi } from '../../providers/TRNProvider';
+import { useTrnApi } from '@futureverse/transact-react';
 import { useFutureverseSigner } from '@futureverse/auth-react';
 
 import { TransactionBuilder } from '@futureverse/transact';

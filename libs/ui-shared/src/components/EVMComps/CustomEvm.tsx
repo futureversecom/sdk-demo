@@ -3,7 +3,7 @@ import { useAuth } from '@futureverse/auth-react';
 import { useMemo } from 'react';
 import { useFutureverseSigner } from '@futureverse/auth-react';
 
-import { useTrnApi } from '../../providers/TRNProvider';
+import { useTrnApi } from '@futureverse/transact-react';
 
 import { useRootStore } from '../../hooks/useRootStore';
 import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';

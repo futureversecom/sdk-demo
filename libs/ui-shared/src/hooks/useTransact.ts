@@ -11,7 +11,8 @@ import {
   SftBuilder,
   TransactionBuilder,
 } from '@futureverse/transact';
-import { useTrnApi } from '../providers/TRNProvider';
+import { useTrnApi } from '@futureverse/transact-react';
+
 import { useMemo } from 'react';
 
 export const useTransact = ({

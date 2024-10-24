@@ -15,6 +15,7 @@
     "@futureverse/auth-ui": "latest",
     "@futureverse/signer": "latest",
     "@futureverse/transact": "latest",
+    "@futureverse/transact-react": "latest",
     "@futureverse/wagmi-connectors": "latest",
     "@remix-run/node": "^2.8.1",
     "@remix-run/react": "^2.8.1",

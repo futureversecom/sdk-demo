@@ -574,7 +574,14 @@ input:disabled {
 }
 
 .sdk-demo-dialog-content .card .inner {
-  background-color: var(--cta)
+  background-color: var(--cta);
+  max-height: 80vh;
+  max-height: 80dvh;
+  height: auto;
+}
+
+.sdk-demo-dialog-content .card .inner .raw-button {
+  background-color: var(--cta-hover);
 }
 
 .sdk-demo-dialog-content .inner button.builder-input.green {

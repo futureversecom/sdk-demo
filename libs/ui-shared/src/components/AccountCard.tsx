@@ -3,7 +3,8 @@ import { useAuth } from '@futureverse/auth-react';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { useTrnApi } from '../providers';
+import { useTrnApi } from '@futureverse/transact-react';
+
 import { useRnsResolveAddress, useTransactQuery } from '../hooks';
 import { useAccount } from 'wagmi';
 import { getBalance } from '../lib/utils';
@@ -16,7 +17,8 @@ import { useAuth } from '@futureverse/auth-react';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { useTrnApi } from '../providers';
+import { useTrnApi } from '@futureverse/transact-react';
+
 import { useRnsResolveAddress, useTransactQuery } from '../hooks';
 import { useAccount } from 'wagmi';
 import { getBalance } from '../lib/utils';

@@ -5,8 +5,8 @@ import React from 'react';
 import { QueryClientProvider } from '@tanstack/react-query';
 
 import { authClient, getWagmiConfig, queryClient } from './config';
-import { RootStoreProvider, TrnApiProvider } from '@fv-sdk-demos/ui-shared';
-
+import { RootStoreProvider } from '@fv-sdk-demos/ui-shared';
+import { TrnApiProvider } from '@futureverse/transact-react';
 import { AuthUiProvider, DarkTheme, ThemeConfig } from '@futureverse/auth-ui';
 
 import { State } from 'wagmi';

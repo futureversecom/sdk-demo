@@ -1,10 +1,10 @@
 'use client';
 
+import '@therootnetwork/api-types';
 import React, { type ReactNode, useContext, createContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { ApiPromise } from '@polkadot/api';
 import { NetworkName, getApiOptions, getProvider } from '@therootnetwork/api';
-import '@therootnetwork/api-types';
 import { NETWORK_PROVIDER } from '../helpers';
 
 export interface ApiProps {

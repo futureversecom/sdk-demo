@@ -2,7 +2,8 @@ import { useCallback, useMemo, useState } from 'react';
 import { TransactionBuilder } from '@futureverse/transact';
 import { useAuth } from '@futureverse/auth-react';
 
-import { useTrnApi } from '../../providers/TRNProvider';
+import { useTrnApi } from '@futureverse/transact-react';
+
 import { useRootStore } from '../../hooks/useRootStore';
 import { useFutureverseSigner } from '@futureverse/auth-react';
 
@@ -18,7 +19,8 @@ import { useCallback, useMemo, useState } from 'react';
 import { TransactionBuilder } from '@futureverse/transact';
 import { useAuth } from '@futureverse/auth-react';
 
-import { useTrnApi } from '../../providers/TRNProvider';
+import { useTrnApi } from '@futureverse/transact-react';
+
 import { useRootStore } from '../../hooks/useRootStore';
 import { useFutureverseSigner } from '@futureverse/auth-react';
 

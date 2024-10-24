@@ -1,7 +1,7 @@
 import { decodeFunctionResult, encodeFunctionData } from 'viem';
 import { useQuery } from '@tanstack/react-query';
 import { useAuth, useFutureverseSigner } from '@futureverse/auth-react';
-import { useTrnApi } from '../providers';
+import { useTrnApi } from '@futureverse/transact-react';
 
 export function useGetCount(TestContractAddress: any, TestContractAbi: any) {
   const { trnApi } = useTrnApi();
