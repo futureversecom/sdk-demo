@@ -398,7 +398,7 @@ input:disabled {
 }
 
 
-.card button {
+.card button:not(.code-btn) {
   margin-top: 8px;
 }
 
@@ -737,11 +737,11 @@ input[type=range]::-ms-thumb {
 
 .code-viewer .button-row {
   position: absolute;
-  padding: 8px;
+  padding: 0;
   cursor: pointer;
   z-index: 2;
-  top: calc(var(--body-padding) + 8px);
-  right: calc(var(--body-padding) + 8px);
+  top: calc(var(--body-padding) + 0);
+  right: calc(var(--body-padding) + 4px);
   width: auto;
   display: inline-flex
 }
@@ -790,7 +790,7 @@ input[type=range]::-ms-thumb {
   backdrop-filter: blur(8px);
   padding: var(--body-padding);
   cursor: pointer;
-  z-index: 999;
+  z-index: 99;
 }
 
 .code-view-wrapper {
@@ -824,7 +824,7 @@ input[type=range]::-ms-thumb {
   height: 100%;
   max-height: none;
   padding: 16px !important;
-  padding-top: 0 !important
+  padding-top: 32px !important
 }
 
 .code-viewer .buttons {
@@ -908,7 +908,7 @@ input[type=range]::-ms-thumb {
     0px 9.2px 3.2px -28px rgba(0, 0, 0, 0.137),
     0px 16.2px 5.5px -28px rgba(0, 0, 0, 0.157),
     0px 33px 12px -28px rgba(0, 0, 0, 0.21);
-  z-index: 99;
+  z-index: 20;
 }
 
 .footer {
@@ -1094,10 +1094,10 @@ nav li {
   height: 28px;
 }
 
-.header__logo .header__logo__row__mobile svg:first-of-type {
+.header__logo .header__logo__row__mobile svg:last-of-type {
   position: relative;
-  margin-top: 4px;
-  margin-right: -4px;
+  margin-top: 6px;
+  margin-left: -4px;
 }
 
 .mobile-container-outer .header-icon-wrap {
@@ -1612,6 +1612,11 @@ nav li {
   overflow: hidden;
 }
 
+.sketch-picker input {
+  border-radius: 2px !important;
+  background-color: white;
+}
+
 @media screen and (min-width: 481px) {
   .code-view {
     padding: var(--body-padding);
@@ -1660,6 +1665,10 @@ nav li {
 
   .code-view {
     padding: var(--body-padding);
+  }
+
+  .code-view pre {
+    padding-top: 0 !important
   }
 
   .code-view-wrapper {

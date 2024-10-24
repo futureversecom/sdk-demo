@@ -55,7 +55,7 @@ export default function Home({ title }: { title: string }) {
         <div className="row">
           <div className="auto-grid">
             <ConnectorInfo />
-            <SignerDebug />
+            {/* <SignerDebug /> */}
           </div>
           <div className="auto-grid " style={{ marginTop: '16px' }}>
             {shouldShowEoa && <AccountCard type="eoa" title="EOA" />}

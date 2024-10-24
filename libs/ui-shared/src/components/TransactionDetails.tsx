@@ -231,7 +231,7 @@ export default function TransactionDetails() {
         setResult(result as ExtrinsicResult);
       } catch (e: any) {
         console.error(e);
-        setError(e.message);
+        setError(e);
       }
     }
   }, [currentBuilder, onSend, onSign, setError, setResult, toSign]);
@@ -242,6 +242,8 @@ export default function TransactionDetails() {
     }
     return true;
   }, [signed, sent, result, error]);
+
+  console.log('Error:', error);
 
   return (
     gas &&
@@ -366,7 +368,11 @@ export default function TransactionDetails() {
                   >
                     <div
                       className="error-title"
-                      style={{ fontWeight: '700', fontSize: '14px' }}
+                      style={{
+                        fontWeight: '700',
+                        fontSize: '14px',
+                        marginBottom: '8px',
+                      }}
                     >
                       There has been an error...
                     </div>

@@ -54,14 +54,14 @@ const TransactMenu = ({
             NFT
           </Link>
         </li>
-        {/* <li>
+        <li>
           <Link
             onClick={() => setIsOpen && setIsOpen(false)}
             href="/transact/sft"
           >
             SFT
           </Link>
-        </li> */}
+        </li>
         <li>
           <Link
             onClick={() => setIsOpen && setIsOpen(false)}
@@ -173,6 +173,14 @@ const AuthMenu = ({
             href="/auth/ui-customiser"
           >
             Auth UI Customiser
+          </Link>
+        </li>
+        <li>
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/auth/react"
+          >
+            Auth React SDK
           </Link>
         </li>
         <li>

@@ -1,5 +1,5 @@
 import { useAuth } from '@futureverse/auth-react';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import { useTrnApi } from '../../providers/TRNProvider';
 import { useFutureverseSigner } from '@futureverse/auth-react';
@@ -42,8 +42,19 @@ export default function NftPublicMint() {
     debouncedCollectionId
   );
 
-  const [publicMint, setPublicMint] = useState<boolean>(
-    isPublicMint?.enabled ? true : false
+  const [publicMintPrice, setPublicMintPrice] = useState<
+    | {
+        assetId: number | undefined;
+        price: bigint | undefined;
+      }
+    | undefined
+  >(
+    isPublicMint?.pricingDetails && Array.isArray(isPublicMint.pricingDetails)
+      ? {
+          assetId: isPublicMint.pricingDetails[0] as number,
+          price: BigInt(isPublicMint.pricingDetails?.[1]?.toString() || '0'),
+        }
+      : { assetId: undefined, price: undefined }
   );
 
   const [slippage, setSlippage] = useState<string>('5');
@@ -67,7 +78,11 @@ export default function NftPublicMint() {
       signer,
       userSession.eoa,
       collectionId
-    ).togglePublicMint(publicMint);
+    ).setPrice(
+      publicMintPrice && publicMintPrice?.assetId && publicMintPrice?.price
+        ? { assetId: publicMintPrice?.assetId, price: publicMintPrice?.price }
+        : { assetId: 0, price: BigInt(0) }
+    );
 
     if (fromWallet === 'fpass') {
       if (feeAssetId === 2) {
@@ -99,7 +114,7 @@ export default function NftPublicMint() {
     signer,
     userSession,
     collectionId,
-    publicMint,
+    publicMintPrice,
     fromWallet,
     getExtrinsic,
     setCurrentBuilder,
@@ -146,24 +161,86 @@ export default function NftPublicMint() {
           <>
             <div className="row">
               <label>
-                Public Mint
-                <select
-                  value={publicMint ? 'true' : 'false'}
+                Token Id
+                <input
+                  type="number"
+                  value={
+                    publicMintPrice?.assetId
+                      ? publicMintPrice?.assetId?.toString()
+                      : ''
+                  }
+                  min={1}
                   className="w-full builder-input"
                   disabled={disable}
                   onChange={e => {
+                    if (e.target.value === '') {
+                      setPublicMintPrice(
+                        publicMintPrice
+                          ? { ...publicMintPrice, assetId: undefined }
+                          : { assetId: undefined, price: BigInt(0) }
+                      );
+                      return;
+                    }
                     resetState();
-                    setPublicMint(e.target.value === 'true');
+                    setPublicMintPrice(
+                      publicMintPrice
+                        ? {
+                            ...publicMintPrice,
+                            assetId: Number(e.target.value),
+                          }
+                        : { assetId: Number(e.target.value), price: BigInt(0) }
+                    );
                   }}
-                >
-                  <option value={'true'}>Enabled</option>
-                  <option value={'false'}>Disabled</option>
-                </select>
+                />
               </label>
+              <small>
+                Current Price Token:{' '}
+                {Array.isArray(isPublicMint?.pricingDetails)
+                  ? isPublicMint.pricingDetails[0]?.toString()
+                  : '0'}
+              </small>
             </div>
-            <small>
-              Current Status: {isPublicMint ? 'Enabled' : 'Disabled'}
-            </small>
+            <div className="row">
+              <label>
+                Mint Price
+                <input
+                  type="number"
+                  value={
+                    publicMintPrice?.price
+                      ? publicMintPrice?.price?.toString()
+                      : ''
+                  }
+                  min={1}
+                  className="w-full builder-input"
+                  disabled={disable}
+                  onChange={e => {
+                    if (e.target.value === '') {
+                      setPublicMintPrice(
+                        publicMintPrice
+                          ? { ...publicMintPrice, price: undefined }
+                          : { assetId: 0, price: undefined }
+                      );
+                      return;
+                    }
+                    resetState();
+                    setPublicMintPrice(
+                      publicMintPrice
+                        ? {
+                            ...publicMintPrice,
+                            price: BigInt(e.target.value),
+                          }
+                        : { price: BigInt(e.target.value), assetId: 0 }
+                    );
+                  }}
+                />
+              </label>
+              <small>
+                Current Price:{' '}
+                {Array.isArray(isPublicMint?.pricingDetails)
+                  ? isPublicMint.pricingDetails[1]?.toString()
+                  : '0'}
+              </small>
+            </div>
           </>
         )}
         <div className="row">

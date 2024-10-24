@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SketchPicker } from 'react-color';
 import {
   AuthThemeProvider,
@@ -10,8 +10,8 @@ import {
   Web3Options,
 } from '@futureverse/auth-ui';
 import { buttonDisable, disableAuthLoginButtons } from '../../lib';
-import { useCopyToClipboard } from '../../hooks';
 import { useConnectors } from 'wagmi';
+import { CopyButton } from '../CopyButton';
 
 interface ThemeConfig extends OriginalThemeConfig {
   [key: string]: unknown;
@@ -45,6 +45,15 @@ const defaultTheme: ThemeConfig = {
   // },
 };
 
+const formatKey = (key: string) => {
+  const keyToUse = key.includes('.') ? (key.split('.').pop() as string) : key;
+
+  return keyToUse
+    .replace(/([A-Z])/g, ' $1')
+    .replace(/^./, str => str.toUpperCase())
+    .trim();
+};
+
 const renderInput = (
   key: string,
   value: unknown,
@@ -55,7 +64,7 @@ const renderInput = (
     return (
       <div className="row" key={key}>
         <div className="row">
-          <label>{key}</label>
+          <label>{formatKey(key)}</label>
         </div>
         <div className="row">
           <select
@@ -75,7 +84,7 @@ const renderInput = (
     return (
       <div className="row" key={key}>
         <div className="row">
-          <label>{key}</label>
+          <label>{formatKey(key)}</label>
         </div>
         <div className="row">
           <select
@@ -94,7 +103,7 @@ const renderInput = (
     return (
       <div className="row" key={key}>
         <div className="row">
-          <label>{key}</label>
+          <label>{formatKey(key)}</label>
         </div>
         <div className="row">
           <input
@@ -110,7 +119,7 @@ const renderInput = (
   } else if (typeof value === 'object' && value !== null) {
     return (
       <div key={key} style={{ marginTop: '16px' }}>
-        <h4 style={{ textTransform: 'capitalize' }}>{key}</h4>
+        <h4 style={{ textTransform: 'capitalize' }}>{formatKey(key)}</h4>
         {Object.entries(value).map(([nestedKey, nestedValue]) =>
           renderInput(`${key}.${nestedKey}`, nestedValue, handleChange)
         )}
@@ -125,8 +134,6 @@ export const AuthUiCustomiser = ({
   setTheme: (theme: ThemeConfig) => void;
 }) => {
   const [currentState] = useState<State>(State.IDLE);
-
-  const { isCopied, copyToClipboard } = useCopyToClipboard();
 
   const { openLogin } = useAuthUi();
   const [activeColorPicker, setActiveColorPicker] = useState<string | null>(
@@ -359,7 +366,7 @@ export const AuthUiCustomiser = ({
                           />
                         </div>
                       )}
-                      {colorKey}
+                      {formatKey(colorKey)}
                     </label>
                   </div>
                 </div>
@@ -429,7 +436,7 @@ export const AuthUiCustomiser = ({
           </div>
         </div>
       </div>
-      <div className="card">
+      <div className="card" style={{ maxWidth: '400px' }}>
         <div className="inner">
           <div
             className="row"
@@ -442,42 +449,7 @@ export const AuthUiCustomiser = ({
             }}
           >
             <h3>Current Theme Configuration</h3>
-            <button
-              className="code-btn green"
-              onClick={() => {
-                const themeString = JSON.stringify(themeConfig, null, 2);
-                copyToClipboard(themeString);
-              }}
-            >
-              {isCopied ? (
-                <svg
-                  version="1.1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 17.837 17.837"
-                  width="24"
-                  height="24"
-                >
-                  <g>
-                    <path
-                      fill="currentColor"
-                      d="M16.145,2.571c-0.272-0.273-0.718-0.273-0.99,0L6.92,10.804l-4.241-4.27
-		c-0.272-0.274-0.715-0.274-0.989,0L0.204,8.019c-0.272,0.271-0.272,0.717,0,0.99l6.217,6.258c0.272,0.271,0.715,0.271,0.99,0
-		L17.63,5.047c0.276-0.273,0.276-0.72,0-0.994L16.145,2.571z"
-                    />
-                  </g>
-                </svg>
-              ) : (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  width="24"
-                  height="24"
-                  fill="currentColor"
-                >
-                  <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
-                </svg>
-              )}
-            </button>
+            <CopyButton contentToCopy={themeConfig} />
           </div>
           <pre>{JSON.stringify(themeConfig, null, 2)}</pre>
         </div>

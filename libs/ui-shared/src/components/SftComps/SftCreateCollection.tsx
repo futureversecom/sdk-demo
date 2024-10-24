@@ -50,7 +50,7 @@ export default function NftCreateCollection() {
     ITuple<[SeedPrimitivesSignatureAccountId20, Permill]>
   > | null>(null);
   const [initialIssuance, setInitialIssuance] = useState<number | null>(null);
-  const [maxIssuance, setMaxIssuance] = useState<number | undefined>(undefined);
+  const [maxIssuance, setMaxIssuance] = useState<number | null>(null);
   const [tokenOwner, setTokenOwner] = useState<string | null>(null);
   const [crossChain, setCrossChain] = useState<boolean | null>(null);
 
@@ -71,22 +71,18 @@ export default function NftCreateCollection() {
       disable ||
       urlInputError !== '' ||
       royaltyAddressErrs ||
-      (!!tokenOwner && tokenOwnerError !== '') ||
       !collectionName ||
       !metadataUri ||
-      (!!maxIssuance && maxIssuance <= 0) ||
       (!!initialIssuance && initialIssuance > 0 && tokenOwnerError !== '')
     );
   }, [
     royaltyAddressInputError,
     disable,
     urlInputError,
-    tokenOwner,
-    tokenOwnerError,
     collectionName,
     metadataUri,
-    maxIssuance,
     initialIssuance,
+    tokenOwnerError,
   ]);
 
   const createBuilder = useCallback(async () => {
@@ -95,25 +91,21 @@ export default function NftCreateCollection() {
       return;
     }
 
-    const nft = TransactionBuilder.nft(trnApi, signer, userSession.eoa);
+    const sft = TransactionBuilder.sft(trnApi, signer, userSession.eoa);
 
-    nft.createCollection({
-      name: collectionName,
+    sft.createCollection({
+      collectionName,
       metadataUri,
       royalties,
-      initialIssuance,
-      maxIssuance,
-      tokenOwner,
-      crossChain,
     });
 
     if (fromWallet === 'fpass') {
       if (feeAssetId === 2) {
-        await nft.addFuturePass(userSession.futurepass);
+        await sft.addFuturePass(userSession.futurepass);
       }
 
       if (feeAssetId !== 2) {
-        await nft.addFuturePassAndFeeProxy({
+        await sft.addFuturePassAndFeeProxy({
           futurePass: userSession.futurepass,
           assetId: feeAssetId,
           slippage: 5,
@@ -123,15 +115,15 @@ export default function NftCreateCollection() {
 
     if (fromWallet === 'eoa') {
       if (feeAssetId !== 2) {
-        await nft.addFeeProxy({
+        await sft.addFeeProxy({
           assetId: feeAssetId,
           slippage: 5,
         });
       }
     }
 
-    getExtrinsic(nft);
-    setCurrentBuilder(nft);
+    getExtrinsic(sft);
+    setCurrentBuilder(sft);
   }, [
     trnApi,
     signer,
@@ -139,10 +131,6 @@ export default function NftCreateCollection() {
     collectionName,
     metadataUri,
     royalties,
-    initialIssuance,
-    maxIssuance,
-    tokenOwner,
-    crossChain,
     fromWallet,
     getExtrinsic,
     setCurrentBuilder,
@@ -198,8 +186,6 @@ export default function NftCreateCollection() {
               type="number"
               value={initialIssuance?.toString()}
               className="w-full builder-input"
-              min={0}
-              max={1000}
               onChange={e => {
                 if (
                   (e.target.value && isNaN(Number(e.target.value))) ||
@@ -235,13 +221,10 @@ export default function NftCreateCollection() {
             Max Issuance
             <input
               type="number"
-              min={1}
               value={maxIssuance ? maxIssuance?.toString() : ''}
               className="w-full builder-input"
               onChange={e => {
-                setMaxIssuance(
-                  e.target.value !== '' ? Number(e.target.value) : undefined
-                );
+                setMaxIssuance(e.target.value ? Number(e.target.value) : null);
               }}
               disabled={disable}
             />

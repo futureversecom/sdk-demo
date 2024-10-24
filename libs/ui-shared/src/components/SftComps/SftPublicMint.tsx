@@ -8,9 +8,8 @@ import { TransactionBuilder } from '@futureverse/transact';
 import { useRootStore } from '../../hooks/useRootStore';
 
 import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
-import { useDebounce, useGetTokens, useShouldShowEoa } from '../../hooks';
+import { useGetTokens, useShouldShowEoa } from '../../hooks';
 import CodeView from '../CodeView';
-import { AddressToSend } from '../AddressToSend';
 import SendFrom from '../SendFrom';
 import SliderInput from '../SliderInput';
 
@@ -27,12 +26,10 @@ import { useRootStore } from '../../hooks/useRootStore';
 import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
 import { useGetTokens, useShouldShowEoa } from '../../hooks';
 import CodeView from '../CodeView';
-import { AddressToSend } from '../AddressToSend';
 import SendFrom from '../SendFrom';
 import SliderInput from '../SliderInput';
 
-
-export default function NftTransfer() {
+export default function NftBurn() {
   const { userSession } = useAuth();
 
   const { resetState, setCurrentBuilder, signed, result, error } = useRootStore(
@@ -48,9 +45,10 @@ export default function NftTransfer() {
 
   const getExtrinsic = useGetExtrinsic();
 
-  const shouldShowEoa = useShouldShowEoa();
-
   const [collectionId, setCollectionId] = useState<number>(709732);
+  const [slippage, setSlippage] = useState<string>('5');
+
+  const shouldShowEoa = useShouldShowEoa();
 
   const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
     shouldShowEoa ? 'eoa' : 'fpass'
@@ -71,17 +69,7 @@ export default function NftTransfer() {
 
   const [feeAssetId, setFeeAssetId] = useState<number>(2);
 
-  const [slippage, setSlippage] = useState<string>('5');
   const [serialNumber, setSerialNumber] = useState<string>('');
-
-  const [addressInputError, setAddressInputError] = useState<string>('');
-  const [addressToSend, setAddressToSend] = useState<string>(
-    (fromWallet === 'eoa' ? userSession?.eoa : userSession?.futurepass) ?? ''
-  );
-
-  const buttonDisabled = useMemo(() => {
-    return disable || addressInputError !== '' || ownedTokens?.length === 0;
-  }, [disable, addressInputError, ownedTokens]);
 
   useEffect(() => {
     if (ownedTokens && ownedTokens.length > 0) {
@@ -105,9 +93,8 @@ export default function NftTransfer() {
       signer,
       userSession.eoa,
       collectionId
-    ).transfer({
-      walletAddress: addressToSend,
-      serialNumbers: [Number(serialNumber)],
+    ).burn({
+      serialNumber: Number(serialNumber),
     });
 
     if (fromWallet === 'fpass') {
@@ -141,22 +128,25 @@ export default function NftTransfer() {
     userSession,
     serialNumber,
     collectionId,
-    addressToSend,
     fromWallet,
     getExtrinsic,
     setCurrentBuilder,
     feeAssetId,
   ]);
 
+  const buttonDisabled = useMemo(() => {
+    return disable || ownedTokens?.length === 0;
+  }, [disable, ownedTokens]);
+
   return (
     <div className={\`card \${disable ? 'disabled' : ''}\`}>
       <div className="inner">
         <CodeView code={codeString}>
-          <h3>Transfer Nft</h3>
+          <h3>Burn Nft</h3>
         </CodeView>
         <div className="row">
           <SendFrom
-            label="Transfer From"
+            label="Burn From"
             shouldShowEoa={shouldShowEoa}
             setFromWallet={setFromWallet}
             fromWallet={fromWallet}
@@ -207,17 +197,6 @@ export default function NftTransfer() {
         </div>
 
         <div className="row">
-          <AddressToSend
-            label="Transfer To"
-            addressToSend={addressToSend}
-            setAddressToSend={setAddressToSend}
-            addressInputError={addressInputError}
-            setAddressInputError={setAddressInputError}
-            disable={disable}
-            resetState={resetState}
-          />
-        </div>
-        <div className="row">
           <label>
             Gas Token
             <select
@@ -250,26 +229,23 @@ export default function NftTransfer() {
         )}
         <div className="row">
           <button
-            className={\`w-full builder-input green \${
-              buttonDisabled ? 'disabled' : ''
-            }\`}
+            className="w-full builder-input green"
             onClick={() => {
               resetState();
               createBuilder();
             }}
             disabled={buttonDisabled}
           >
-            Transfer Token
+            Burn Token
           </button>
         </div>
       </div>
     </div>
   );
 }
-
 `;
 
-export default function NftTransfer() {
+export default function NftBurn() {
   const { userSession } = useAuth();
 
   const { resetState, setCurrentBuilder, signed, result, error } = useRootStore(
@@ -285,10 +261,10 @@ export default function NftTransfer() {
 
   const getExtrinsic = useGetExtrinsic();
 
-  const shouldShowEoa = useShouldShowEoa();
-
   const [collectionId, setCollectionId] = useState<number>(709732);
-  const debouncedCollectionId = useDebounce(collectionId, 500);
+  const [slippage, setSlippage] = useState<string>('5');
+
+  const shouldShowEoa = useShouldShowEoa();
 
   const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
     shouldShowEoa ? 'eoa' : 'fpass'
@@ -304,23 +280,12 @@ export default function NftTransfer() {
         ? userSession?.futurepass
         : userSession?.eoa
       : '',
-    debouncedCollectionId
+    collectionId
   );
 
   const [feeAssetId, setFeeAssetId] = useState<number>(2);
 
-  const [slippage, setSlippage] = useState<string>('5');
   const [serialNumber, setSerialNumber] = useState<string>('');
-
-  const [addressInputError, setAddressInputError] = useState<string>('');
-  const [addressToSend, setAddressToSend] = useState<`0x${string}`>(
-    ((fromWallet === 'eoa' ? userSession?.eoa : userSession?.futurepass) ??
-      '') as `0x${string}`
-  );
-
-  const buttonDisabled = useMemo(() => {
-    return disable || addressInputError !== '' || ownedTokens?.length === 0;
-  }, [disable, addressInputError, ownedTokens]);
 
   useEffect(() => {
     if (ownedTokens && ownedTokens.length > 0) {
@@ -343,10 +308,9 @@ export default function NftTransfer() {
       trnApi,
       signer,
       userSession.eoa,
-      debouncedCollectionId
-    ).transfer({
-      walletAddress: addressToSend,
-      serialNumbers: [Number(serialNumber)],
+      collectionId
+    ).burn({
+      serialNumber: Number(serialNumber),
     });
 
     if (fromWallet === 'fpass') {
@@ -379,23 +343,26 @@ export default function NftTransfer() {
     signer,
     userSession,
     serialNumber,
-    debouncedCollectionId,
-    addressToSend,
+    collectionId,
     fromWallet,
     getExtrinsic,
     setCurrentBuilder,
     feeAssetId,
   ]);
 
+  const buttonDisabled = useMemo(() => {
+    return disable || ownedTokens?.length === 0;
+  }, [disable, ownedTokens]);
+
   return (
     <div className={`card ${disable ? 'disabled' : ''}`}>
       <div className="inner">
         <CodeView code={codeString}>
-          <h3>Transfer Nft</h3>
+          <h3>Burn Nft</h3>
         </CodeView>
         <div className="row">
           <SendFrom
-            label="Transfer From"
+            label="Burn From"
             shouldShowEoa={shouldShowEoa}
             setFromWallet={setFromWallet}
             fromWallet={fromWallet}
@@ -446,17 +413,6 @@ export default function NftTransfer() {
         </div>
 
         <div className="row">
-          <AddressToSend
-            label="Transfer To"
-            addressToSend={addressToSend}
-            setAddressToSend={setAddressToSend}
-            addressInputError={addressInputError}
-            setAddressInputError={setAddressInputError}
-            disable={disable}
-            resetState={resetState}
-          />
-        </div>
-        <div className="row">
           <label>
             Gas Token
             <select
@@ -489,16 +445,14 @@ export default function NftTransfer() {
         )}
         <div className="row">
           <button
-            className={`w-full builder-input green ${
-              buttonDisabled ? 'disabled' : ''
-            }`}
+            className="w-full builder-input green"
             onClick={() => {
               resetState();
               createBuilder();
             }}
             disabled={buttonDisabled}
           >
-            Transfer Token
+            Burn Token
           </button>
         </div>
       </div>

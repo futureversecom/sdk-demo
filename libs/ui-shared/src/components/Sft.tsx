@@ -1,20 +1,13 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 import TransactionDetails from './TransactionDetails';
 import { useIsMounted } from '../hooks';
 
 import { useAuth } from '@futureverse/auth-react';
 import { useRootStore } from '../hooks/useRootStore';
-import {
-  NftBurn,
-  NftCreateCollection,
-  NftMint,
-  NftPublicMint,
-  NftPublicMintPrice,
-  NftTransfer,
-} from './NftComps';
+import { SftBurn, SftMint, SftTransfer } from './SftComps';
 
-export default function Nft() {
+export default function Sft() {
   const isMounted = useIsMounted();
 
   const { userSession } = useAuth();
@@ -36,14 +29,12 @@ export default function Nft() {
 
   return (
     <>
-      <h1>NFT Demos</h1>
+      <h1>SFT Demos</h1>
       <div className="auto-grid">
-        <NftCreateCollection />
-        <NftPublicMint />
-        <NftPublicMintPrice />
-        <NftMint />
-        <NftTransfer />
-        <NftBurn />
+        {/* <SftCreateCollection /> */}
+        <SftMint />
+        <SftTransfer />
+        <SftBurn />
       </div>
       <div className="auto-grid">
         {gas && (

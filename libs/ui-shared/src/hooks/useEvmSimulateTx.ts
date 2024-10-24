@@ -36,6 +36,7 @@ export function useEvmSimulateTx({
   const config = useConfig();
 
   const {
+    data: eoaData,
     isError: isEoaSimulateError,
     error: simulateEoaError,
     isPending: simulateEoaPending,
@@ -58,6 +59,7 @@ export function useEvmSimulateTx({
   });
 
   const {
+    data: fpassData,
     isError: isFpassSimulateError,
     error: simulateFpassError,
     isPending: simulateFpassPending,
@@ -80,6 +82,7 @@ export function useEvmSimulateTx({
   });
 
   const {
+    data: feeProxyData,
     isError: isFeeProxySimulateError,
     error: simulateFeeProxyError,
     isPending: simulateFeeProxyPending,
@@ -148,6 +151,13 @@ export function useEvmSimulateTx({
     feeProxyIsLoaded,
   ]);
 
+  const request =
+    fromWallet === 'eoa' && feeAssetId === 2
+      ? eoaData?.request
+      : fromWallet === 'eoa' && feeAssetId !== 2
+      ? feeProxyData?.request
+      : fpassData?.request;
+
   const isError =
     isEoaSimulateError || isFpassSimulateError || isFeeProxySimulateError;
   const error = simulateEoaError || simulateFpassError || simulateFeeProxyError;
@@ -156,7 +166,13 @@ export function useEvmSimulateTx({
     (simulateFpassPending && fpassIsLoaded) ||
     (simulateFeeProxyPending && feeProxyIsLoaded);
 
+  console.log('request', request);
+  console.log('eoaData', eoaData);
+  console.log('feeProxyData', feeProxyData);
+  console.log('fpassData', fpassData);
+
   return {
+    request,
     isError,
     error: error && (error as unknown as { shortMessage: string }).shortMessage,
     isPending,

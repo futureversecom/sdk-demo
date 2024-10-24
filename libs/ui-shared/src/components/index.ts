@@ -6,6 +6,7 @@ import Result from './Result';
 import Spinner from './Spinner';
 import Evm from './Evm';
 import Nft from './Nft';
+import Sft from './Sft';
 import Assets from './Assets';
 import DropDownMenu from './DropDownMenu';
 import TransactionDetails from './TransactionDetails';
@@ -16,11 +17,13 @@ import EvmErc1155 from './EvmErc1155';
 import FeeProxy from './FeeProxy';
 import FuturePassProxy from './FuturePassProxy';
 import AuthUiSdk from './AuthUiSdk';
+import AuthReactSdk from './AuthReactSdk';
 import AuthUiSdkCustomiser from './AuthUiSdkCustomiser';
 
 export { Dialog } from './Dialog/Dialog';
 export { AddressInput } from './AddressInput';
 export { URLInput } from './UrlInput';
+export { CopyButton } from './CopyButton';
 
 export {
   AssetFromEoa,
@@ -42,9 +45,12 @@ export * from './Erc1155';
 
 export { EvmModal } from './EvmModal';
 
-export { NftMint } from './NftComps';
+export * from './NftComps';
+export * from './SftComps';
+
 export { Header } from './Header';
 export { Footer } from './Footer';
+
 export {
   Navigation,
   type MenuProps,
@@ -79,6 +85,7 @@ export {
   Custom,
   CustomBuilder,
   Nft,
+  Sft,
   Assets,
   BatchAll,
   DropDownMenu,
@@ -88,5 +95,6 @@ export {
   FeeProxy,
   FuturePassProxy,
   AuthUiSdk,
+  AuthReactSdk,
   AuthUiSdkCustomiser,
 };

@@ -3,12 +3,17 @@ import { GithubIcon } from './Icons/GithubIcon';
 import { FVIcon } from './Icons/FVIcon';
 import { RootIcon } from './Icons';
 
-export function Footer({ pathName }: { pathName?: string }) {
-  console.log('FooterWrap pathName:', pathName);
+export function Footer() {
   return (
     <footer className="footer">
       <div className="footer__nav">
         <div className="footer__nav_icons">
+          <a href="https://futureverse.com/" target="_blank" rel="noreferrer">
+            <div className="icon">
+              <FVIcon />
+            </div>
+            <div className="icon-text">Futureverse</div>
+          </a>
           <a
             href="https://therootnetwork.com/"
             target="_blank"
@@ -18,12 +23,6 @@ export function Footer({ pathName }: { pathName?: string }) {
               <RootIcon />
             </div>
             <div className="icon-text">The Root Network</div>
-          </a>
-          <a href="https://futureverse.com/" target="_blank" rel="noreferrer">
-            <div className="icon">
-              <FVIcon />
-            </div>
-            <div className="icon-text">Futureverse</div>
           </a>
           <a
             href="https://docs.futureverse.com/dev"

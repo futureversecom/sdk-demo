@@ -23,8 +23,8 @@ export const HeaderWrap = () => {
                 <LogoIcon />
               </div>
               <div className="header__logo__row__mobile">
-                <RootIcon />
                 <FVIcon />
+                <RootIcon />
               </div>
             </Link>
             <span className="pill">Porcini</span>

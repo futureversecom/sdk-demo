@@ -5,6 +5,8 @@ export { useRnsResolveAddress, useRnsResolveRns } from './useRns';
 export { useTransactQuery } from './useTransactQuery';
 export { useTransact } from './useTransact';
 export { useGetTokens } from './useGetTokens';
+export { useGetSftTokens } from './useGetSftTokens';
+export { useGetNftPublicMint } from './useGetNftPublicMint';
 export { useIsMobile } from './useIsMobile';
 export { useCurrentPath } from './useCurrentPath';
 export { useShouldShowEoa } from './useShouldShowEoa';
