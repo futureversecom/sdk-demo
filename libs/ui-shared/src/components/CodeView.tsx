@@ -3,6 +3,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { useCopyToClipboard } from '../hooks';
 import { hooksCodeString } from '../lib/hooksCodeString';
+import { rootStoreCodeString } from '../lib/rootStoreCodeString';
 export default function CodeView({
   children,
   code,
@@ -11,12 +12,26 @@ export default function CodeView({
   const [showCode, setShowCode] = React.useState(false);
   const [showHooksCode, setShowHooksCode] = React.useState(false);
   const [showHelperCode, setShowHelperCode] = React.useState(false);
+  const [showRootStore, setShowRootStore] = React.useState(false);
+
+  const getCodeString = () => {
+    if (showHooksCode) {
+      return hooksCodeString;
+    } else if (showHelperCode && helperCode) {
+      return helperCode;
+    } else if (showRootStore) {
+      return rootStoreCodeString;
+    } else {
+      return code;
+    }
+  };
 
   const { isCopied, copyToClipboard } = useCopyToClipboard();
 
   const closeAll = () => {
     setShowHooksCode(false);
     setShowHelperCode(false);
+    setShowRootStore(false);
   };
 
   const closeCodeViewer = () => {
@@ -89,6 +104,7 @@ export default function CodeView({
                 {showHelperCode ? 'Hide' : 'View'} Helper Code
               </button>
             )}
+
             <button
               className="hooks-btn green"
               onClick={e => {
@@ -99,6 +115,18 @@ export default function CodeView({
               }}
             >
               {showHooksCode ? 'Hide' : 'View'} Hooks
+            </button>
+
+            <button
+              className="hooks-btn green"
+              onClick={e => {
+                e.preventDefault();
+                e.stopPropagation();
+                closeAll();
+                setShowRootStore(!showRootStore);
+              }}
+            >
+              {showRootStore ? 'Hide' : 'View'} Root Store
             </button>
 
             <button
@@ -172,19 +200,9 @@ export default function CodeView({
               e.stopPropagation();
             }}
           >
-            {showHooksCode ? (
-              <SyntaxHighlighter language="javascript" style={dracula}>
-                {hooksCodeString}
-              </SyntaxHighlighter>
-            ) : showHelperCode && helperCode ? (
-              <SyntaxHighlighter language="javascript" style={dracula}>
-                {helperCode}
-              </SyntaxHighlighter>
-            ) : (
-              <SyntaxHighlighter language="javascript" style={dracula}>
-                {code}
-              </SyntaxHighlighter>
-            )}
+            <SyntaxHighlighter language="javascript" style={dracula}>
+              {getCodeString()}
+            </SyntaxHighlighter>
           </div>
         </div>
       )}

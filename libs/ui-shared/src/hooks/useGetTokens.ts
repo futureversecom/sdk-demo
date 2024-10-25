@@ -21,6 +21,7 @@ export function useGetTokens(walletAddress: string, collectionId: number) {
         1000
       );
 
+      // returns [0] => nextCursor, [1] => totalCount, [2] => ownedTokens
       const ownedTokens = tokens.toJSON()[2] as number[];
 
       return ownedTokens ?? [];

@@ -93,17 +93,57 @@ export const getBalance = async (
   assetId: number
 ) => {
   if (!transactionQuery) {
-    return '0';
+    return {
+      balance: '0',
+      rawBalance: '0',
+      decimals: 0,
+    };
   }
 
-  const balance = await transactionQuery?.checkBalance({
+  const walletBalance = await transactionQuery?.checkBalance({
     walletAddress: address,
     assetId: assetId,
   });
 
-  return balance
-    ? formatUnits(BigInt(balance?.balance), balance?.decimals)
-    : '0';
+  return {
+    balance: walletBalance
+      ? formatUnits(BigInt(walletBalance?.balance), walletBalance?.decimals)
+      : '0',
+    rawBalance: walletBalance?.balance,
+    decimals: walletBalance?.decimals,
+  };
+};
+
+export const getBalances = async (
+  transactionQuery: RootQueryBuilder | undefined,
+  walletAssetIds: Array<{ walletAddress: string; assetId: number }>
+) => {
+  if (!transactionQuery) {
+    return [
+      {
+        walletAddress: '',
+        balance: '0',
+        rawBalance: '0',
+        decimals: 0,
+      },
+    ];
+  }
+
+  const walletBalances = await transactionQuery?.checkBalances(walletAssetIds);
+
+  const balances = walletBalances?.map(walletBalance => {
+    return {
+      walletAddress: walletBalance.walletAddress,
+      balance: formatUnits(
+        BigInt(walletBalance?.balance),
+        walletBalance?.decimals
+      ),
+      rawBalance: walletBalance?.balance,
+      decimals: walletBalance?.decimals,
+    };
+  });
+
+  return balances;
 };
 
 export const getFuturePass = async (

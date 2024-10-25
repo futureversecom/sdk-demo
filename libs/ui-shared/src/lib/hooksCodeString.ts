@@ -1,30 +1,98 @@
 export const hooksCodeString = `
 /**
-  * useGetExtrinsic
+  * useGetUserBalance
   **/
-import { RootTransactionBuilder } from '@futureverse/transact';
-import { useRootStore } from './useRootStore';
+import { getBalance } from '../lib/utils';
+import { useTransactQuery } from '@/hooks/useTransactQuery';
+import { useQuery } from '@tanstack/react-query';
 
-export function useGetExtrinsic() {
-  const { setGas, setPayload, setToSign } = useRootStore(state => state);
+export default function useGetUserBalance({
+  walletAddress,
+  assetId,
+}: {
+  walletAddress: string;
+  assetId: number;
+}) {
+  const transactionQuery = useTransactQuery();
 
-  const getExtrinsic = async (builder: RootTransactionBuilder) => {
-    const gasEstimate = await builder?.getGasFees();
-    if (gasEstimate) {
-      setGas(gasEstimate);
-    }
-    const payloads = await builder?.getPayloads();
-    if (!payloads) {
-      return;
-    }
-    setPayload(payloads);
-    const { ethPayload } = payloads;
-    setToSign(ethPayload.toString());
-  };
-
-  return getExtrinsic;
+  return useQuery({
+    queryKey: ['balance', walletAddress, assetId],
+    queryFn: async () => getBalance(transactionQuery, walletAddress, assetId),
+    enabled: !!walletAddress && !!assetId && !!transactionQuery,
+  });
 }
 
+
+/**
+  * getBalance() used in useGetUserBalance
+  **/
+export const getBalance = async (
+  transactionQuery: RootQueryBuilder | undefined,
+  address: string,
+  assetId: number
+) => {
+  if (!transactionQuery) {
+    return '0';
+  }
+
+  const balance = await transactionQuery?.checkBalance({
+    walletAddress: address,
+    assetId: assetId,
+  });
+
+  return balance
+    ? formatUnits(BigInt(balance?.balance), balance?.decimals)
+    : '0';
+};
+
+/**
+  * useGetUserBalances
+  **/
+import { getBalances } from '../lib/utils';
+import { useTransactQuery } from '@/hooks/useTransactQuery';
+import { useQuery } from '@tanstack/react-query';
+
+export default function useGetUserBalance(
+  walletAssetIds: Array<{
+    walletAddress: string;
+    assetId: number;
+  }>
+) {
+  const transactionQuery = useTransactQuery();
+
+  return useQuery({
+    queryKey: ['balances', walletAssetIds],
+    queryFn: async () => getBalances(transactionQuery, walletAssetIds),
+    enabled: !!walletAssetIds && !!transactionQuery,
+  });
+}
+
+
+/**
+  * getBalances() used in useGetUserBalances
+  **/
+export const getBalances = async (
+  transactionQuery: RootQueryBuilder | undefined,
+  walletAssetIds: { walletAddress: string; assetId: number }[]
+) => {
+  if (!transactionQuery) {
+    return '0';
+  }
+
+  const walletBalances = await transactionQuery?.checkBalances(walletAssetIds);
+
+  const balances = walletBalances?.map(walletBalance => {
+    return {
+      walletAddress: walletBalance.walletAddress,
+      balance: formatUnits(
+        BigInt(walletBalance?.balance),
+        walletBalance?.decimals
+      ),
+    };
+  });
+
+  return balances;
+};
 
 /**
   * useTransactQuery
@@ -49,7 +117,6 @@ export function useTransactQuery() {
   return transactQuery;
 }
 
-
 /**
   * useShouldShowEoa
   **/
@@ -57,23 +124,22 @@ import { useAuth, useConnector } from '@futureverse/auth-react';
 import { useMemo } from 'react';
 
 export function useShouldShowEoa() {
-  const { authMethod } = useAuth();
+  const auth = useAuth();
   const { connector } = useConnector();
 
   const shouldShowEoa = useMemo(() => {
     let should = false;
-    if (!connector || !authMetho=d) {
+    if (!connector || !auth?.authMethod) {
       return should;
     }
-    if (connector?.id !== 'xaman' && authMethod === 'eoa') {
+    if (connector?.id !== 'xaman' && auth?.authMethod === 'eoa') {
       should = true;
     }
     return should;
-  }, [connector, authMethod]);
+  }, [connector, auth?.authMethod]);
 
   return shouldShowEoa;
 }
-
 
 /**
   * useRnsResolveRns
@@ -104,7 +170,6 @@ export const useRnsResolveRns = (
   });
 };
 
-
 /**
   * useRnsResolveAddress
   **/
@@ -133,7 +198,6 @@ export const useRnsResolveAddress = (
     refetchOnWindowFocus: false,
   });
 };
-
 
 /**
   * useGetTokens
@@ -167,6 +231,33 @@ export function useGetTokens(walletAddress: string, collectionId: number) {
     enabled: !!trnApi && !!walletAddress && !!collectionId,
     refetchInterval: 30000,
   });
+}
+
+/**
+  * useGetExtrinsic
+  **/
+import { RootTransactionBuilder } from '@futureverse/transact';
+import { useRootStore } from './useRootStore';
+
+
+export function useGetExtrinsic() {
+  const { setGas, setPayload, setToSign } = useRootStore(state => state);
+
+  const getExtrinsic = async (builder: RootTransactionBuilder) => {
+    const gasEstimate = await builder?.getGasFees();
+    if (gasEstimate) {
+      setGas(gasEstimate);
+    }
+    const payloads = await builder?.getPayloads();
+    if (!payloads) {
+      return;
+    }
+    setPayload(payloads);
+    const { ethPayload } = payloads;
+    setToSign(ethPayload.toString());
+  };
+
+  return getExtrinsic;
 }
 
 
