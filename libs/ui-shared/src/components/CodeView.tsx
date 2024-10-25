@@ -6,16 +6,28 @@ import { hooksCodeString } from '../lib/hooksCodeString';
 export default function CodeView({
   children,
   code,
-}: PropsWithChildren<{ code: string }>) {
+  helperCode,
+}: PropsWithChildren<{ code: string; helperCode?: string }>) {
   const [showCode, setShowCode] = React.useState(false);
   const [showHooksCode, setShowHooksCode] = React.useState(false);
+  const [showHelperCode, setShowHelperCode] = React.useState(false);
 
   const { isCopied, copyToClipboard } = useCopyToClipboard();
+
+  const closeAll = () => {
+    setShowHooksCode(false);
+    setShowHelperCode(false);
+  };
+
+  const closeCodeViewer = () => {
+    closeAll();
+    setShowCode(false);
+  };
 
   return (
     <div className="code-viewer">
       <div className="title-row">{children}</div>
-      <div className="buttons">
+      <div className="code-view-buttons">
         <button
           className="code-btn green"
           onClick={() => copyToClipboard(code)}
@@ -63,83 +75,117 @@ export default function CodeView({
       </div>
       {showCode && (
         <div className="code-view" onClick={() => setShowCode(false)}>
-          <button
-            className="hooks-btn green"
-            onClick={e => {
-              e.preventDefault();
-              e.stopPropagation();
-              setShowHooksCode(!showHooksCode);
-            }}
-          >
-            {showHooksCode ? 'Hide' : 'View'} Hooks
-          </button>
-          <button
-            className="close-code-btn green"
-            onClick={() => setShowCode(false)}
-          >
-            <svg
-              width="24"
-              height="24"
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-            >
-              <g>
-                <g>
-                  <polygon
-                    points="512,59.076 452.922,0 256,196.922 59.076,0 0,59.076 196.922,256 0,452.922 59.076,512 256,315.076 452.922,512
-                 512,452.922 315.076,256 		"
-                  />
-                </g>
-              </g>
-            </svg>
-          </button>
-          <button
-            className="copy-code-btn green"
-            onClick={e => {
-              e.preventDefault();
-              e.stopPropagation();
-              copyToClipboard(code);
-            }}
-          >
-            {isCopied ? (
-              <svg
-                version="1.1"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 17.837 17.837"
-                width="24"
-                height="24"
+          <div className="button-row">
+            {helperCode && (
+              <button
+                className="hooks-btn green"
+                onClick={e => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  closeAll();
+                  setShowHelperCode(!showHelperCode);
+                }}
               >
-                <g>
-                  <path
-                    fill="currentColor"
-                    d="M16.145,2.571c-0.272-0.273-0.718-0.273-0.99,0L6.92,10.804l-4.241-4.27
+                {showHelperCode ? 'Hide' : 'View'} Helper Code
+              </button>
+            )}
+            <button
+              className="hooks-btn green"
+              onClick={e => {
+                e.preventDefault();
+                e.stopPropagation();
+                closeAll();
+                setShowHooksCode(!showHooksCode);
+              }}
+            >
+              {showHooksCode ? 'Hide' : 'View'} Hooks
+            </button>
+
+            <button
+              className="copy-code-btn green"
+              onClick={e => {
+                e.preventDefault();
+                e.stopPropagation();
+                copyToClipboard(code);
+              }}
+            >
+              {isCopied ? (
+                <svg
+                  version="1.1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 17.837 17.837"
+                  width="24"
+                  height="24"
+                >
+                  <g>
+                    <path
+                      fill="currentColor"
+                      d="M16.145,2.571c-0.272-0.273-0.718-0.273-0.99,0L6.92,10.804l-4.241-4.27
 		c-0.272-0.274-0.715-0.274-0.989,0L0.204,8.019c-0.272,0.271-0.272,0.717,0,0.99l6.217,6.258c0.272,0.271,0.715,0.271,0.99,0
 		L17.63,5.047c0.276-0.273,0.276-0.72,0-0.994L16.145,2.571z"
-                  />
-                </g>
-              </svg>
-            ) : (
+                    />
+                  </g>
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                >
+                  <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
+                </svg>
+              )}
+            </button>
+            <button
+              className="close-code-btn green"
+              onClick={() => closeCodeViewer()}
+            >
               <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
                 width="24"
                 height="24"
                 fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
               >
-                <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
+                <g>
+                  <g>
+                    <polygon
+                      points="512,59.076 452.922,0 256,196.922 59.076,0 0,59.076 196.922,256 0,452.922 59.076,512 256,315.076 452.922,512
+                 512,452.922 315.076,256 		"
+                    />
+                  </g>
+                </g>
               </svg>
+            </button>
+          </div>
+
+          <div
+            className="code-view-wrapper"
+            onClick={e => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+            onDoubleClick={e => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+          >
+            {showHooksCode ? (
+              <SyntaxHighlighter language="javascript" style={dracula}>
+                {hooksCodeString}
+              </SyntaxHighlighter>
+            ) : showHelperCode && helperCode ? (
+              <SyntaxHighlighter language="javascript" style={dracula}>
+                {helperCode}
+              </SyntaxHighlighter>
+            ) : (
+              <SyntaxHighlighter language="javascript" style={dracula}>
+                {code}
+              </SyntaxHighlighter>
             )}
-          </button>
-          {showHooksCode ? (
-            <SyntaxHighlighter language="javascript" style={dracula}>
-              {hooksCodeString}
-            </SyntaxHighlighter>
-          ) : (
-            <SyntaxHighlighter language="javascript" style={dracula}>
-              {code}
-            </SyntaxHighlighter>
-          )}
+          </div>
         </div>
       )}
     </div>

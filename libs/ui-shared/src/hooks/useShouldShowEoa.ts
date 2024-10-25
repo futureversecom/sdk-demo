@@ -6,7 +6,14 @@ export function useShouldShowEoa() {
   const { connector } = useConnector();
 
   const shouldShowEoa = useMemo(() => {
-    return connector?.id !== 'xaman' && authMethod === 'eoa';
+    let should = false;
+    if (!connector || !authMethod) {
+      return should;
+    }
+    if (connector?.id !== 'xaman' && authMethod === 'eoa') {
+      should = true;
+    }
+    return should;
   }, [connector, authMethod]);
 
   return shouldShowEoa;

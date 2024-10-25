@@ -36,6 +36,6 @@ export function useGetCount(TestContractAddress: any, TestContractAbi: any) {
       return (returnData as bigint).toString();
     },
     enabled: !!trnApi && !!signer && !!userSession,
-    refetchInterval: 30000,
+    // refetchInterval: 30000,
   });
 }

@@ -155,7 +155,7 @@ export default function CustomBuilderComp() {
             {
               name: 'collectionId',
               type: 'number',
-              defaultValue: 292964,
+              defaultValue: 834660,
             },
             {
               name: 'serialNumbers',
@@ -175,7 +175,7 @@ export default function CustomBuilderComp() {
             {
               name: 'collectionId',
               type: 'number',
-              defaultValue: 292964,
+              defaultValue: 834660,
             },
             {
               name: 'serialNumbers',
@@ -195,7 +195,7 @@ export default function CustomBuilderComp() {
             {
               name: 'collectionId',
               type: 'number',
-              defaultValue: 292964,
+              defaultValue: 834660,
             },
             {
               name: 'serialNumbers',
@@ -663,7 +663,7 @@ export default function CustomBuilderComp() {
             {
               name: 'collectionId',
               type: 'number',
-              defaultValue: 292964,
+              defaultValue: 834660,
             },
             {
               name: 'serialNumbers',
@@ -683,7 +683,7 @@ export default function CustomBuilderComp() {
             {
               name: 'collectionId',
               type: 'number',
-              defaultValue: 292964,
+              defaultValue: 834660,
             },
             {
               name: 'serialNumbers',
@@ -703,7 +703,7 @@ export default function CustomBuilderComp() {
             {
               name: 'collectionId',
               type: 'number',
-              defaultValue: 292964,
+              defaultValue: 834660,
             },
             {
               name: 'serialNumbers',

@@ -1,7 +1,6 @@
 import { useAuth } from '@futureverse/auth-react';
 import { useAuthUi } from '@futureverse/auth-ui';
 import React, { CSSProperties, Dispatch, SetStateAction } from 'react';
-import DropDownMenu from './DropDownMenu';
 
 export interface MenuProps {
   setIsOpen?: Dispatch<SetStateAction<boolean>>;
@@ -79,85 +78,85 @@ export const LogIn = ({ styles }: { styles?: CSSProperties }) => {
 //   );
 // };
 
-export const ResourceMenu = () => {
-  return (
-    <DropDownMenu title="Resources">
-      <ul className="dropdown-content">
-        <li>
-          <a
-            href="https://faucet.rootnet.cloud"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Porcini Faucet
-          </a>
-        </li>
-        <li>
-          <a
-            href="https://github.com/futureversecom/trn-examples/tree/main/examples/substrate"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            NodeJS Native
-            <br />
-            Examples
-          </a>
-        </li>
-        <li>
-          <a
-            href="https://github.com/futureversecom/trn-examples/tree/main/examples/evm"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            NodeJS EVM
-            <br />
-            Examples
-          </a>
-        </li>
-      </ul>
-    </DropDownMenu>
-  );
-};
+// export const ResourceMenu = () => {
+//   return (
+//     <DropDownMenu title="Resources">
+//       <ul className="dropdown-content">
+//         <li>
+//           <a
+//             href="https://faucet.rootnet.cloud"
+//             target="_blank"
+//             rel="noopener noreferrer"
+//           >
+//             Porcini Faucet
+//           </a>
+//         </li>
+//         <li>
+//           <a
+//             href="https://github.com/futureversecom/trn-examples/tree/main/examples/substrate"
+//             target="_blank"
+//             rel="noopener noreferrer"
+//           >
+//             NodeJS Native
+//             <br />
+//             Examples
+//           </a>
+//         </li>
+//         <li>
+//           <a
+//             href="https://github.com/futureversecom/trn-examples/tree/main/examples/evm"
+//             target="_blank"
+//             rel="noopener noreferrer"
+//           >
+//             NodeJS EVM
+//             <br />
+//             Examples
+//           </a>
+//         </li>
+//       </ul>
+//     </DropDownMenu>
+//   );
+// };
 
-export const ResourceMenuMobile = () => {
-  return (
-    <ul>
-      <li>
-        <div className="sectionTitle">Resources</div>
-        <ul className="dropdown-content">
-          <li>
-            <a
-              href="https://faucet.rootnet.cloud"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Porcini Faucet
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://github.com/futureversecom/trn-examples/tree/main/examples/substrate"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              NodeJS Native
-              <br />
-              Examples
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://github.com/futureversecom/trn-examples/tree/main/examples/evm"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              NodeJS EVM
-              <br />
-              Examples
-            </a>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  );
-};
+// export const ResourceMenuMobile = () => {
+//   return (
+//     <ul>
+//       <li>
+//         <div className="sectionTitle">Resources</div>
+//         <ul className="dropdown-content">
+//           <li>
+//             <a
+//               href="https://faucet.rootnet.cloud"
+//               target="_blank"
+//               rel="noopener noreferrer"
+//             >
+//               Porcini Faucet
+//             </a>
+//           </li>
+//           <li>
+//             <a
+//               href="https://github.com/futureversecom/trn-examples/tree/main/examples/substrate"
+//               target="_blank"
+//               rel="noopener noreferrer"
+//             >
+//               NodeJS Native
+//               <br />
+//               Examples
+//             </a>
+//           </li>
+//           <li>
+//             <a
+//               href="https://github.com/futureversecom/trn-examples/tree/main/examples/evm"
+//               target="_blank"
+//               rel="noopener noreferrer"
+//             >
+//               NodeJS EVM
+//               <br />
+//               Examples
+//             </a>
+//           </li>
+//         </ul>
+//       </li>
+//     </ul>
+//   );
+// };

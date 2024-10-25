@@ -138,7 +138,7 @@ export default function NftMint() {
         </div>
         <div className="row">
           <label>
-            Collection collectionId
+            Collection Id
             <input
               type="text"
               value={collectionId.toString()}
@@ -335,7 +335,7 @@ export default function NftMint() {
         </div>
         <div className="row">
           <label>
-            Collection collectionId
+            Collection Id
             <input
               type="text"
               value={collectionId.toString()}

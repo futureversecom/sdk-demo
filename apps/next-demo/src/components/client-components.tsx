@@ -25,6 +25,14 @@ import {
   Footer,
   BatchAll,
   AssetLink,
+  EvmErc20,
+  EvmErc721,
+  EvmErc1155,
+  FeeProxy,
+  FuturePassProxy,
+  LogIn,
+  AuthUiSdk,
+  AuthUiSdkCustomiser,
 } from '@fv-sdk-demos/ui-shared';
 
 export {
@@ -50,4 +58,12 @@ export {
   Footer,
   BatchAll,
   AssetLink,
+  EvmErc20,
+  EvmErc721,
+  EvmErc1155,
+  FeeProxy,
+  FuturePassProxy,
+  LogIn,
+  AuthUiSdk,
+  AuthUiSdkCustomiser,
 };

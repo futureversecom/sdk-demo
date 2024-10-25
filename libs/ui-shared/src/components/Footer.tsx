@@ -3,9 +3,8 @@ import { GithubIcon } from './Icons/GithubIcon';
 import { FVIcon } from './Icons/FVIcon';
 import { RootIcon } from './Icons';
 
-export function Footer({ pathName }: { pathName: string }) {
-  console.log('pathName', pathName);
-
+export function Footer({ pathName }: { pathName?: string }) {
+  console.log('FooterWrap pathName:', pathName);
   return (
     <footer className="footer">
       <div className="footer__nav">

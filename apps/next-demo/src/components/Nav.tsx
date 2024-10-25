@@ -6,10 +6,11 @@ import {
   authDocLinks,
   DocumentationLink,
   DropDownMenu,
+  evmLinks,
+  ExternalLink,
+  HeaderIcons,
   MenuProps,
   Navigation,
-  ResourceMenu,
-  ResourceMenuMobile,
   shortAddress,
   swappablesLinks,
   transactLinks,
@@ -38,27 +39,50 @@ const TransactMenu = ({
     <>
       <ul className="dropdown-content">
         <li>
-          <Link onClick={() => setIsOpen && setIsOpen(false)} href="/assets">
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/transact/assets"
+          >
             Assets
           </Link>
         </li>
         <li>
-          <Link onClick={() => setIsOpen && setIsOpen(false)} href="/nft">
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/transact/nft"
+          >
             NFT
           </Link>
         </li>
+        {/* <li>
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/transact/sft"
+          >
+            SFT
+          </Link>
+        </li> */}
         <li>
-          <Link onClick={() => setIsOpen && setIsOpen(false)} href="/evm">
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/transact/evm"
+          >
             EVM
           </Link>
         </li>
         <li>
-          <Link onClick={() => setIsOpen && setIsOpen(false)} href="/custom">
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/transact/custom"
+          >
             Custom
           </Link>
         </li>
         <li>
-          <Link onClick={() => setIsOpen && setIsOpen(false)} href="/batchall">
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/transact/batch-all"
+          >
             Batch
           </Link>
         </li>
@@ -98,37 +122,156 @@ const AssetRegisterMenu = ({
   );
 };
 
+const EvmMenu = ({
+  setIsOpen,
+}: {
+  setIsOpen?: Dispatch<SetStateAction<boolean>>;
+}) => {
+  return (
+    <>
+      <ul className="dropdown-content">
+        <li>
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/evm/erc-20"
+          >
+            ERC-20
+          </Link>
+        </li>
+        <li>
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/evm/erc-721"
+          >
+            ERC-721
+          </Link>
+        </li>
+        <li>
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/evm/erc-1155"
+          >
+            ERC-1155
+          </Link>
+        </li>
+        <li>
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/evm/fee-proxy"
+          >
+            Fee Proxy
+          </Link>
+        </li>
+        <li>
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/evm/futurePass-proxy"
+          >
+            FuturePass Proxy
+          </Link>
+        </li>
+      </ul>
+      <DocumentationLink links={evmLinks} navName="polkadot" />
+    </>
+  );
+};
+
+const AuthMenu = ({
+  setIsOpen,
+}: {
+  setIsOpen?: Dispatch<SetStateAction<boolean>>;
+}) => {
+  return (
+    <>
+      <ul className="dropdown-content">
+        <li>
+          <Link onClick={() => setIsOpen && setIsOpen(false)} href="/auth/ui">
+            Auth UI SDK
+          </Link>
+        </li>
+        <li>
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/auth/ui-customiser"
+          >
+            Auth UI Customiser
+          </Link>
+        </li>
+        <li>
+          <a
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="https://login.futureverse.cloud/manageclients"
+            target="_blank"
+            rel="nofollow"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              flexWrap: 'nowrap',
+            }}
+          >
+            Manage Clients{' '}
+            <ExternalLink
+              styles={{ width: '16px', height: '16px', marginLeft: '6px' }}
+            />
+          </a>
+        </li>
+      </ul>
+      <DocumentationLink links={authDocLinks} navName="auth" />
+    </>
+  );
+};
 export const Menu: React.FC<MenuProps> = ({ setIsOpen }) => {
   const { signOut, userSession } = useAuth();
   const { disconnect, isConnected } = useConnector();
 
   return (
     <>
-      <DropDownMenu title="Auth SDK">
-        <ul className="dropdown-content">
-          <li className="no-hover">Coming Soon</li>
-        </ul>
-        <DocumentationLink links={authDocLinks} navName="auth" />
+      <li>
+        <a
+          href="https://faucet.rootnet.cloud"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="faucet-link"
+        >
+          <div>Faucet</div>
+          <ExternalLink />
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://portal.rootnet.live/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="faucet-link"
+        >
+          <div>Portal</div>
+          <ExternalLink />
+        </a>
+      </li>
+      <DropDownMenu title="Auth">
+        <AuthMenu setIsOpen={setIsOpen} />
       </DropDownMenu>
-      {/* <DropDownMenu title="Polkadot SDK">
+      {/* <DropDownMenu title="Polkadot API">
         <ul className="dropdown-content">
           <li className="no-hover">Coming Soon</li>
         </ul>
         <DocumentationLink links={polkadotLinks} navName="polkadot" />
       </DropDownMenu> */}
-      <DropDownMenu title="Transact SDK">
+      <DropDownMenu title="EVM">
+        <EvmMenu setIsOpen={setIsOpen} />
+      </DropDownMenu>
+      <DropDownMenu title="Transact">
         <TransactMenu setIsOpen={setIsOpen} />
       </DropDownMenu>
       <DropDownMenu title="Asset Register SDK">
         <AssetRegisterMenu setIsOpen={setIsOpen} />
       </DropDownMenu>
-      <DropDownMenu title="Swappables SDK">
+      <DropDownMenu title="Swappables">
         <ul className="dropdown-content">
           <li className="no-hover">Coming Soon</li>
         </ul>
         <DocumentationLink links={swappablesLinks} navName="swappables" />
       </DropDownMenu>
-      <ResourceMenu />
 
       <DropDownMenu
         title={shortAddress(userSession?.futurepass ?? '', 6, 4)}
@@ -164,6 +307,9 @@ export const MobileMenu: React.FC<MenuProps> = ({ setIsOpen }) => {
 
   return (
     <div className="mobile-container-outer">
+      <div className="header-icon-wrap">
+        <HeaderIcons />
+      </div>
       <div className="close" onClick={() => setIsOpen && setIsOpen(false)}>
         Close Menu
       </div>
@@ -174,22 +320,44 @@ export const MobileMenu: React.FC<MenuProps> = ({ setIsOpen }) => {
           </Link>
         </li>
         <li>
+          <a
+            href="https://faucet.rootnet.cloud"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="faucet-link"
+          >
+            <div>Faucet</div>
+            <ExternalLink />
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://portal.rootnet.live/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="faucet-link"
+          >
+            <div>Portal</div>
+            <ExternalLink />
+          </a>
+        </li>
+        <li>
           <div className="sectionTitle">Auth SDK</div>
-          <ul className="dropdown-content">
-            <li className="no-hover">Coming Soon</li>
-          </ul>
-          <DocumentationLink links={authDocLinks} navName="auth" />
+          <AuthMenu setIsOpen={setIsOpen} />
         </li>
         {/* <li>
-          <div className="sectionTitle">Polkadot SDK</div>
-                  <ul className="dropdown-content">
-
+          <div className="sectionTitle">Polkadot API</div>
+          <ul className="dropdown-content">
             <li className="no-hover">Coming Soon</li>
           </ul>
           <DocumentationLink links={polkadotLinks} navName="polkadot" />
         </li> */}
         <li>
-          <div className="sectionTitle">Transact SDK</div>
+          <div className="sectionTitle">EVM</div>
+          <EvmMenu setIsOpen={setIsOpen} />
+        </li>
+        <li>
+          <div className="sectionTitle">Transact</div>
           <TransactMenu setIsOpen={setIsOpen} />
         </li>
         <li>
@@ -197,14 +365,11 @@ export const MobileMenu: React.FC<MenuProps> = ({ setIsOpen }) => {
           <AssetRegisterMenu setIsOpen={setIsOpen} />
         </li>
         <li>
-          <div className="sectionTitle">Swappables SDK</div>
+          <div className="sectionTitle">Swappables</div>
           <ul className="dropdown-content">
             <li className="no-hover">Coming Soon</li>
           </ul>
           <DocumentationLink links={swappablesLinks} navName="swappables" />
-        </li>
-        <li>
-          <ResourceMenuMobile />
         </li>
         <li>
           <div className="wallet-dropdown-inner">

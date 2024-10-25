@@ -56,7 +56,22 @@ export const polkadotLinks = [
     link: 'https://docs.therootnetwork.com/intro/build/substrate/api-package',
   },
   {
-    title: 'Examples',
+    title: 'Node Examples',
     link: 'https://github.com/futureversecom/trn-examples/tree/main/examples/substrate',
+  },
+];
+
+export const evmLinks = [
+  {
+    title: 'NPM',
+    link: 'https://www.npmjs.com/package/@therootnetwork/evm',
+  },
+  {
+    title: 'Docs',
+    link: 'https://docs.therootnetwork.com/intro/build/evm/evm-package',
+  },
+  {
+    title: 'Node Examples',
+    link: 'https://github.com/futureversecom/trn-examples/tree/main/examples/evm',
   },
 ];

@@ -1,8 +1,9 @@
 'use client';
 
+import { LogIn } from '@/components/client-components';
 import { UserSession } from '@futureverse/auth';
 import { useAuth } from '@futureverse/auth-react';
-import { Spinner } from '@fv-sdk-demos/ui-shared';
+
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -32,14 +33,46 @@ export default function Login() {
   }, [authClient, router]);
 
   if (signInState === true) {
-    return <div>Authenticated</div>;
+    return (
+      <RowComponent showSpinner={true}>
+        Redirecting, please wait...
+      </RowComponent>
+    );
   }
   if (signInState === false) {
-    return <div>Not Authenticated</div>;
+    return (
+      <RowComponent showSpinner={false}>
+        <div>Not Authenticated - Please Log In...</div>
+        <LogIn
+          styles={{
+            padding: ' 16px',
+            fontWeight: '700',
+            fontSize: '1.2rem',
+          }}
+        />
+      </RowComponent>
+    );
   }
+  return <RowComponent showSpinner={true}>Authenticating...</RowComponent>;
+}
+
+const RowComponent = ({
+  children,
+  showSpinner,
+}: {
+  children: React.ReactNode;
+  showSpinner: boolean;
+}) => {
   return (
-    <div>
-      <Spinner /> Authenticating...
+    <div className="row login-row">
+      <div className="card login-card">
+        <div className="inner">
+          <div className="grid cols-1 login-grid" style={{}}>
+            {showSpinner && <div className="spinner" />}
+            <div style={{ textAlign: 'center' }}>{children}</div>
+          </div>
+        </div>
+      </div>
     </div>
   );
-}
+};
