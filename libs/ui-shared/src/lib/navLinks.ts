@@ -11,6 +11,10 @@ export const authDocLinks = [
 
 export const assetLinks = [
   {
+    title: 'Dev Portal',
+    link: 'https://ar-docs.futureverse.cloud/',
+  },
+  {
     title: 'NPM',
     link: 'https://www.npmjs.com/package/@futureverse/asset-register',
   },

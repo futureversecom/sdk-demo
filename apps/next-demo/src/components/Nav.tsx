@@ -87,9 +87,9 @@ const AssetRegisterMenu = ({
         <li>
           <Link
             onClick={() => setIsOpen && setIsOpen(false)}
-            href="/asset-link-equip"
+            href="/asset-link"
           >
-            Asset Link Equip
+            Asset Link
           </Link>
         </li>
       </ul>
@@ -194,10 +194,7 @@ export const MobileMenu: React.FC<MenuProps> = ({ setIsOpen }) => {
         </li>
         <li>
           <div className="sectionTitle">Asset Register SDK</div>
-          <ul className="dropdown-content">
-            <li className="no-hover">Coming Soon</li>
-          </ul>
-          <DocumentationLink links={assetLinks} navName="assets" />
+          <AssetRegisterMenu setIsOpen={setIsOpen} />
         </li>
         <li>
           <div className="sectionTitle">Swappables SDK</div>

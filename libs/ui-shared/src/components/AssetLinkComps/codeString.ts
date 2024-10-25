@@ -1,3 +1,4 @@
+export const codeString = `
 import React, { useEffect, useMemo, useState } from 'react';
 import { useRootStore } from '../../hooks/useRootStore';
 import { useAuth, useFutureverseSigner } from '@futureverse/auth-react';
@@ -55,7 +56,7 @@ export const AssetLinkEquipForm = ({ address }: { address: string }) => {
     const operation = {
       type: 'asset-link',
       action,
-      args: [path, `did:fv-asset:${parentAsset}`, `did:fv-asset:${childAsset}`],
+      args: [path, \`did:fv-asset:\${parentAsset}\`, \`did:fv-asset:\${childAsset}\`],
     };
     return [operation];
   }, [path, parentAsset, childAsset, action]);
@@ -97,7 +98,7 @@ export const AssetLinkEquipForm = ({ address }: { address: string }) => {
   };
 
   return (
-    <div className={`card ${disable ? 'disabled' : ''}`}>
+    <div className={\`card \${disable ? 'disabled' : ''}\`}>
       <div className="inner">
         <div className="row">
           <CodeView code={codeString}>
@@ -209,9 +210,9 @@ export const AssetLinkEquipForm = ({ address }: { address: string }) => {
 
         <div className="row">
           <button
-            className={`w-full builder-input green ${
+            className={\`w-full builder-input green \${
               buttonDisabled ? 'disabled' : ''
-            }`}
+            }\`}
             onClick={() => {
               resetState();
               submitARTM();
@@ -247,3 +248,5 @@ export const AssetLinkEquipForm = ({ address }: { address: string }) => {
     </div>
   );
 };
+
+`;
