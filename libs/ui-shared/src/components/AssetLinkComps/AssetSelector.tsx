@@ -44,7 +44,7 @@ export const AssetSelector = ({
 
   return (
     <div>
-      <button onClick={() => setShowSelector(!showSelector)}>
+      <button className="green" onClick={() => setShowSelector(!showSelector)}>
         Select Asset
       </button>
       {showSelector && (
@@ -92,7 +92,10 @@ export const AssetSelector = ({
                         <div className="value">{asset.tokenId}</div>
                       </div>
                       <div className="button-row">
-                        <button onClick={() => handleSelect(asset)}>
+                        <button
+                          className="green"
+                          onClick={() => handleSelect(asset)}
+                        >
                           Select
                         </button>
                         <a
