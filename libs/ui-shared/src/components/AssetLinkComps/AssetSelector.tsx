@@ -1,4 +1,5 @@
 import { useAssets } from '@futureverse/asset-register-react/v2';
+//@ts-expect-error - we need to fix this
 import { AssetModel } from '@futureverse/asset-register';
 
 import React from 'react';
@@ -74,41 +75,47 @@ export const AssetSelector = ({
                   </svg>
                 </button>
               </div>
-              <div className="row">
-                {isFetching && <div>Loading...</div>}
+              <div className="row asset-row">
                 {assets.map(asset => (
                   <div key={asset.id} className="asset-card">
                     <div className="asset-card-inner">
-                      <div className="asset-name">
-                        Asset Type: {asset.assetType}
+                      <div className="asset-name flex-col">
+                        <div className="title">Asset Type:</div>
+                        <div className="value">{asset.assetType}</div>
                       </div>
-                      <div className="asset-collection-id">
-                        Collection ID: {asset.collectionId}
+                      <div className="asset-collection-id flex-col">
+                        <div className="title">Collection ID:</div>
+                        <div className="value">{asset.collectionId}</div>
                       </div>
-                      <div className="asset-token-id">
-                        Token ID: {asset.tokenId}
+                      <div className="asset-token-id flex-col">
+                        <div className="title">Token ID:</div>
+                        <div className="value">{asset.tokenId}</div>
                       </div>
-                      <button onClick={() => handleSelect(asset)}>
-                        Select
-                      </button>
-                      <a
-                        target="_blank"
-                        rel="noreferrer"
-                        href={`${DevPortalUrl}${asset.id}`}
-                      >
-                        View in Dev Portal
-                      </a>
+                      <div className="button-row">
+                        <button onClick={() => handleSelect(asset)}>
+                          Select
+                        </button>
+                        <a
+                          target="_blank"
+                          rel="noreferrer"
+                          href={`${DevPortalUrl}${asset.id}`}
+                        >
+                          View in Dev Portal
+                        </a>
+                      </div>
                     </div>
                     <hr style={{ borderWidth: '1px' }} />
                   </div>
                 ))}
               </div>
+
               <div className="row">
                 {hasNextPage && (
                   <button onClick={() => fetchNextPage()} disabled={isFetching}>
                     Load More
                   </button>
                 )}
+                {isFetching && <span>Loading More Assets...</span>}
                 {error && <div>Error loading assets</div>}
               </div>
             </div>

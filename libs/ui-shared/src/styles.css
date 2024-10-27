@@ -363,7 +363,7 @@ input:disabled {
   gap: 8px;
 }
 
-.card .inner .row > button {
+.card .inner .row>button {
   padding: 12px 16px;
 }
 
@@ -503,7 +503,7 @@ input:disabled {
   white-space: nowrap;
 }
 
-.desktop-nav > li {
+.desktop-nav>li {
   margin: 0 8px;
 }
 
@@ -511,7 +511,7 @@ input:disabled {
   transition: all 0.2s ease-in-out;
 }
 
-.desktop-nav > li:last-of-type {
+.desktop-nav>li:last-of-type {
   margin-right: 0;
 }
 
@@ -1033,8 +1033,7 @@ input[type='range']::-ms-thumb {
 }
 
 .header__logo svg:hover,
-.header__nav_icons svg:hover {
-}
+.header__nav_icons svg:hover {}
 
 nav li {
   font-size: 14px;
@@ -1157,8 +1156,8 @@ nav li {
   background: transparent;
 }
 
-.mobile-container-outer .mobile-container > li,
-.mobile-container-outer .mobile-container > li * {
+.mobile-container-outer .mobile-container>li,
+.mobile-container-outer .mobile-container>li * {
   margin: 0;
   text-align: flex-start;
 }
@@ -1213,27 +1212,12 @@ nav li {
   padding: 8px 0;
 }
 
-.sdk-ui-demo
-  .fvaui-dialog-container
-  .fvaui-dialog-content
-  .fvaui-card
-  .fvaui-custodialauthoptions-social
-  button,
-.sdk-ui-demo
-  .fvaui-dialog-container
-  .fvaui-dialog-content
-  .fvaui-card
-  .fvaui-web3authoptions-container
-  button {
+.sdk-ui-demo .fvaui-dialog-container .fvaui-dialog-content .fvaui-card .fvaui-custodialauthoptions-social button,
+.sdk-ui-demo .fvaui-dialog-container .fvaui-dialog-content .fvaui-card .fvaui-web3authoptions-container button {
   pointer-events: none !important;
 }
 
-.sdk-ui-demo
-  .fvaui-dialog-container
-  .fvaui-dialog-content
-  .fvaui-card
-  .fvaui-card-content
-  button:disabled {
+.sdk-ui-demo .fvaui-dialog-container .fvaui-dialog-content .fvaui-card .fvaui-card-content button:disabled {
   opacity: 1 !important;
 }
 
@@ -1526,7 +1510,7 @@ nav li {
 .transactions .transactions-inner .tx:before {
   display: inline-block;
   counter-increment: counter;
-  content: 'TX: ' counter(counter);
+  content: 'TX: 'counter(counter);
   padding: 2px 4px;
   background: var(--card-bg);
   font-size: 11px;
@@ -1642,6 +1626,7 @@ nav li {
 }
 
 @media screen and (min-width: 992px) {
+
   select,
   input {
     font-size: 0.9rem;
@@ -1734,7 +1719,7 @@ nav li {
     padding: clamp(32px, 1vw, 64px);
   }
 
-  .desktop-nav > li {
+  .desktop-nav>li {
     margin: 0 8px;
   }
 }
@@ -1845,20 +1830,17 @@ button.fvaui-button-secondary:hover .fvaui-iconWrapper {
   border-radius: 50%;
   padding: 1px;
   background: conic-gradient(#0000 10%, #fff) content-box;
-  -webkit-mask: repeating-conic-gradient(
-      #0000 0deg,
+  -webkit-mask: repeating-conic-gradient(#0000 0deg,
       #000 1deg 20deg,
-      #0000 21deg 36deg
-    ),
-    radial-gradient(
-      farthest-side,
+      #0000 21deg 36deg),
+    radial-gradient(farthest-side,
       #0000 calc(100% - var(--b) - 1px),
-      #000 calc(100% - var(--b))
-    );
+      #000 calc(100% - var(--b)));
   -webkit-mask-composite: destination-in;
   mask-composite: intersect;
   animation: l4 1s infinite steps(10);
 }
+
 @keyframes l4 {
   to {
     transform: rotate(1turn);
@@ -1887,5 +1869,63 @@ button.fvaui-button-secondary:hover .fvaui-iconWrapper {
   padding: 16px;
   cursor: pointer;
   z-index: 999;
+  overflow: hidden;
+}
+
+.asset-selector-modal .card {
+  color: var(--white);
+  height: calc(100vh - 32px);
+  align-content: flex-start;
+  position: relative;
+  display: flex;
+  width: calc(100vw - 32px);
+}
+
+.asset-selector-modal .inner {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
   overflow: scroll;
+}
+
+.asset-selector-modal .inner .asset-row {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.asset-selector-modal .asset-card {
+  width: auto;
+  padding: 8px;
+  background: var(--header-grey);
+  border-radius: 8px;
+  box-shadow: 0 0 16px -8px rgba(0, 0, 0, 0.8);
+}
+
+.asset-selector-modal .asset-card hr {
+  display: none;
+}
+
+.asset-selector-modal .asset-card .flex-col {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+}
+
+.asset-selector-modal .asset-card .flex-col .title {
+  font-size: 0.6rem;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 2px;
+  ;
+  text-transform: uppercase;
+}
+
+.asset-selector-modal .asset-card .flex-col .value {
+  font-size: 1rem;
+  line-height: 1.2;
+  font-weight: 400;
 }

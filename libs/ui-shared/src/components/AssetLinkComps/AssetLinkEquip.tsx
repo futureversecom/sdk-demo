@@ -163,7 +163,19 @@ export const AssetLinkEquipForm = ({ address }: { address: string }) => {
             title="Select parent asset"
             address={address}
           />
-          {parentAsset}
+          <label>
+            Selected Parent Asset:
+            <input
+              type="text"
+              value={parentAsset}
+              className="w-full builder-input"
+              onChange={e => {
+                resetState();
+                setParentAsset(e.target.value);
+              }}
+              disabled={disable}
+            />
+          </label>
         </div>
 
         <div className="row">
@@ -193,7 +205,19 @@ export const AssetLinkEquipForm = ({ address }: { address: string }) => {
             title="Select child asset"
             address={address}
           />
-          {childAsset}
+          <label>
+            Selected Child Asset:
+            <input
+              type="text"
+              value={childAsset}
+              className="w-full builder-input"
+              onChange={e => {
+                resetState();
+                setChildAsset(e.target.value);
+              }}
+              disabled={disable}
+            />
+          </label>
         </div>
         <div className="row">
           <label>
