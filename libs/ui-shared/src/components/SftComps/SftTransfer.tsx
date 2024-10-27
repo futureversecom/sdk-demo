@@ -8,7 +8,11 @@ import { TransactionBuilder } from '@futureverse/transact';
 import { useRootStore } from '../../hooks/useRootStore';
 
 import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
-import { useDebounce, useGetSftTokens, useShouldShowEoa } from '../../hooks';
+import {
+  useDebounce,
+  useGetSftUserTokens,
+  useShouldShowEoa,
+} from '../../hooks';
 import CodeView from '../CodeView';
 import { AddressToSend } from '../AddressToSend';
 import SendFrom from '../SendFrom';
@@ -25,7 +29,7 @@ import { TransactionBuilder } from '@futureverse/transact';
 import { useRootStore } from '../../hooks/useRootStore';
 
 import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
-import { useDebounce, useGetSftTokens, useShouldShowEoa } from '../../hooks';
+import { useDebounce, useGetSftUserTokens, useShouldShowEoa } from '../../hooks';
 import CodeView from '../CodeView';
 import { AddressToSend } from '../AddressToSend';
 import SendFrom from '../SendFrom';
@@ -65,7 +69,7 @@ export default function NftTransfer() {
     (fromWallet === 'eoa' ? userSession?.eoa : userSession?.futurepass) ?? ''
   );
 
-  const { data: collectionTokens, isPending } = useGetSftTokens(
+  const { data: collectionTokens, isPending } = useGetSftUserTokens(
     collectionIdDebounced,
     fromWallet === 'eoa' ? userSession?.eoa : userSession?.futurepass
   );
@@ -366,7 +370,7 @@ export default function NftTransfer() {
     (fromWallet === 'eoa' ? userSession?.eoa : userSession?.futurepass) ?? ''
   );
 
-  const { data: collectionTokens, isPending } = useGetSftTokens(
+  const { data: collectionTokens, isPending } = useGetSftUserTokens(
     collectionIdDebounced,
     fromWallet === 'eoa' ? userSession?.eoa : userSession?.futurepass
   );

@@ -1,7 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { useTrnApi } from '@futureverse/transact-react';
 
-export function useGetSftTokens(collectionId: number, walletAddress?: string) {
+export function useGetSftUserTokens(
+  collectionId: number,
+  walletAddress?: string
+) {
   const { trnApi } = useTrnApi();
 
   return useQuery({
@@ -16,9 +19,15 @@ export function useGetSftTokens(collectionId: number, walletAddress?: string) {
         collectionId
       );
 
-      const info = sftCollectionInfo.unwrap();
+      console.log('sftCollectionInfo', sftCollectionInfo.toHuman());
 
-      const collectionTokens = info.nextSerialNumber.toNumber() - 1;
+      const info = sftCollectionInfo.toHuman() as unknown as {
+        nextSerialNumber: { toNumber: () => number };
+      };
+
+      console.log('info', info);
+
+      const collectionTokens = info?.nextSerialNumber?.toNumber() - 1;
 
       const tokenInfo = collectionTokens
         ? await Promise.all(

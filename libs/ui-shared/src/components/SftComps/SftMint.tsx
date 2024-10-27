@@ -12,7 +12,11 @@ import CodeView from '../CodeView';
 import SendFrom from '../SendFrom';
 import { AddressToSend } from '../AddressToSend';
 import SliderInput from '../SliderInput';
-import { useDebounce, useGetSftTokens, useShouldShowEoa } from '../../hooks';
+import {
+  useDebounce,
+  useGetSftUserTokens,
+  useShouldShowEoa,
+} from '../../hooks';
 
 const codeString = `
 import { useAuth } from '@futureverse/auth-react';
@@ -29,7 +33,7 @@ import CodeView from '../CodeView';
 import SendFrom from '../SendFrom';
 import { AddressToSend } from '../AddressToSend';
 import SliderInput from '../SliderInput';
-import { useDebounce, useGetSftTokens, useShouldShowEoa } from '../../hooks';
+import { useDebounce, useGetSftUserTokens, useShouldShowEoa } from '../../hooks';
 
 export default function SftMint() {
   const { userSession } = useAuth();
@@ -65,7 +69,7 @@ export default function SftMint() {
 
   const [tokenQty, setTokenQty] = useState<Array<[number, number]>>([]);
 
-  const { data: collectionTokens, isPending } = useGetSftTokens(
+  const { data: collectionTokens, isPending } = useGetSftUserTokens(
     collectionIdDebounced,
     mintTo
   );
@@ -340,7 +344,7 @@ export default function SftMint() {
 
   const [tokenQty, setTokenQty] = useState<Array<[number, number]>>([]);
 
-  const { data: collectionTokens, isPending } = useGetSftTokens(
+  const { data: collectionTokens, isPending } = useGetSftUserTokens(
     collectionIdDebounced,
     mintTo
   );

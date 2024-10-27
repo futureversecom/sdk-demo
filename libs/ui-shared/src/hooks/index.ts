@@ -4,7 +4,7 @@ export { useGetCount } from './useGetCount';
 export { useRnsResolveAddress, useRnsResolveRns } from './useRns';
 export { useTransactQuery } from './useTransactQuery';
 export { useGetTokens } from './useGetTokens';
-export { useGetSftTokens } from './useGetSftTokens';
+export { useGetSftUserTokens } from './useGetSftUserTokens';
 export { useGetNftPublicMint } from './useGetNftPublicMint';
 export { useIsMobile } from './useIsMobile';
 export { useCurrentPath } from './useCurrentPath';

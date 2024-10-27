@@ -340,12 +340,12 @@ export function useGetNftPublicMint(collectionId: number) {
 }
 
 /**
- * useGetSftTokens
+ * useGetSftUserTokens
  **/
 import { useQuery } from '@tanstack/react-query';
 import { useTrnApi } from '@futureverse/transact-react';
 
-export function useGetSftTokens(collectionId: number, walletAddress?: string) {
+export function useGetSftUserTokens(collectionId: number, walletAddress?: string) {
   const { trnApi } = useTrnApi();
 
   return useQuery({
