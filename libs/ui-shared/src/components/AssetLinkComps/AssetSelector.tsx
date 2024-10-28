@@ -1,6 +1,5 @@
 import { useAssets } from '@futureverse/asset-register-react/v2';
-//@ts-expect-error - we need to fix this
-import { AssetModel } from '@futureverse/asset-register';
+import { AssetModel } from '@futureverse/asset-register/models';
 
 import React from 'react';
 
