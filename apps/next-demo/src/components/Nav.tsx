@@ -89,7 +89,7 @@ const TransactMenu = ({
         <li>
           <Link
             onClick={() => setIsOpen && setIsOpen(false)}
-            href="/custom-builder"
+            href="/transact/custom-builder"
           >
             Extrinsic Builder
           </Link>

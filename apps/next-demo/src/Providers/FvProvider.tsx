@@ -7,7 +7,11 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { authClient, getWagmiConfig, queryClient } from './config';
 import { RootStoreProvider } from '@fv-sdk-demos/ui-shared';
 import { TrnApiProvider } from '@futureverse/transact-react';
-import { AuthUiProvider, DarkTheme, ThemeConfig } from '@futureverse/auth-ui';
+import {
+  AuthUiProvider,
+  DefaultTheme,
+  ThemeConfig,
+} from '@futureverse/auth-ui';
 
 import { State } from 'wagmi';
 import {
@@ -17,9 +21,11 @@ import {
 import type { NetworkName } from '@therootnetwork/api';
 import { AssetRegisterProvider } from './AssetRegisterProvider';
 
-const customTheme: ThemeConfig = {
-  ...DarkTheme,
-  defaultAuthOption: 'web3',
+const customThemeConfig: ThemeConfig = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+  },
 };
 
 const network = (process.env.NEXT_PUBLIC_NETWORK ?? 'porcini') as
@@ -42,7 +48,10 @@ export default function Providers({
         >
           <RootStoreProvider>
             <FutureverseAuthProvider authClient={authClient}>
-              <AuthUiProvider themeConfig={customTheme} authClient={authClient}>
+              <AuthUiProvider
+                themeConfig={customThemeConfig}
+                authClient={authClient}
+              >
                 <AssetRegisterProvider>{children}</AssetRegisterProvider>
               </AuthUiProvider>
             </FutureverseAuthProvider>

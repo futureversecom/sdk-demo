@@ -1615,6 +1615,10 @@ nav li {
   overflow: hidden;
 }
 
+.ui-inject .inject-inner-overflow .fvaui-dialog-blur {
+  position: relative;
+}
+
 .sketch-picker input {
   border-radius: 2px !important;
   background-color: white;

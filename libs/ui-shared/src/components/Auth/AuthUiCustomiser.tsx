@@ -5,6 +5,7 @@ import {
   AuthThemeProvider,
   CustodialOptions,
   Modal,
+  DefaultTheme,
   ThemeConfig as OriginalThemeConfig,
   State,
   Web3Options,
@@ -22,27 +23,40 @@ const rgbaToString = (rgba: { r: number; g: number; b: number; a: number }) =>
   `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a})`;
 
 const defaultTheme: ThemeConfig = {
-  theme: 'dark',
-  colors: {
-    primaryColor: '#0b0b0b',
-    socialPrimaryColor: '#fff',
-    socialSecondaryColor: '#0b0b0b',
-    secondaryColor: '#e7eeef',
-    backgroundColor: '#121212',
-    borderColor: '#e7eeef',
-    textColor: '#fff',
-  },
+  ...DefaultTheme,
   defaultAuthOption: 'web3',
-  hideCustodial: false,
-  hideWeb3: false,
-  images: {
-    backgroundImage: '',
-    logo: '',
+  colors: {
+    primaryBackground: 'rgba(246, 246, 247, 0.1)',
+    primaryForeground: 'rgba(246, 246, 247, 1)',
+    primaryHover: 'rgba(246, 246, 247, 0.2)',
+    primaryActive: 'rgba(246, 246, 247, 0.2)',
+    primaryBackgroundDisabled: 'rgba(55, 55, 57, 1)',
+    primaryForegroundDisabled: 'rgba(103, 102, 109, 1)',
+    secondaryBackground: 'rgba(246, 246, 247, 0)',
+    secondaryForeground: 'rgba(206, 207, 211, 1)',
+    secondaryHover: 'rgba(246, 246, 247, 0)',
+    secondaryActive: 'rgba(246, 246, 247, .05)',
+    secondaryBackgroundDisabled: 'rgba(55, 55, 57, 1)',
+    secondaryForegroundDisabled: 'rgba(103, 102, 109, 1)',
+    border: 'rgba(55, 55, 57, 1)',
+    borderHover: 'rgba(246, 246, 247, 1)',
+    borderActive: 'rgba(246, 246, 247, 1)',
+    borderError: 'rgba(171, 22, 57, 1)',
+    errorForeground: 'rgba(171, 22, 57, 1)',
+    body: 'rgba(246, 246, 247, 1)',
+    muted: 'rgba(206, 207, 211, 1)',
+    surface: 'rgba(12, 12, 12, 1)',
+    page: 'rgba(255, 91, 39, 1)',
   },
-  // font: {
-  //   fontUrl: '',
-  //   fontName: '',
-  // },
+  font: {
+    fontUrl: 'https://app.jenmusic.ai/cdn/src/font/font.css',
+    fontName: 'JenFont',
+  },
+  images: {
+    logo: 'https://app.jenmusic.ai/cdn/src/logo.svg',
+    background:
+      'https://fastly.picsum.photos/id/418/2140/1200.jpg?hmac=TjxRufkWGH_r_xr4cUmJG5iuf3Lmsgb4BAjR0cxhIGY',
+  },
 };
 
 const formatKey = (key: string) => {
@@ -194,7 +208,7 @@ export const AuthUiCustomiser = () => {
 
   const [themeConfig, setThemeConfig] = useState(defaultTheme);
 
-  const { theme, colors, ...filteredConfig } = themeConfig as {
+  const { colors, ...filteredConfig } = themeConfig as {
     [key: string]: unknown;
   };
 
@@ -271,24 +285,7 @@ export const AuthUiCustomiser = () => {
           <div className="row">
             <h2>Customise Theme</h2>
           </div>
-          <div className="row" style={{ marginTop: '8px' }}>
-            <h3>Theme</h3>
-            <div>
-              <select
-                className="w-full builder-input"
-                value={themeConfig.theme}
-                onChange={e =>
-                  handleThemeOptions(
-                    'theme',
-                    e.target.value as 'dark' | 'light'
-                  )
-                }
-              >
-                <option value="dark">Dark</option>
-                <option value="light">Light</option>
-              </select>
-            </div>
-          </div>
+
           <div className="row" style={{ marginTop: '16px' }}>
             <h3>Colors</h3>
             <div>
@@ -416,10 +413,7 @@ export const AuthUiCustomiser = () => {
                 custodialAuthOptions={custodialAuthOptions}
                 web3AuthOptions={web3AuthOptions}
                 themeConfig={themeConfig}
-                onShowDetails={() => console.log('')}
-                onCloseDetails={() => console.log('')}
                 onBack={() => console.log('')}
-                detailsOpen={false}
                 connectAndSignIn={async () => console.log('connectAndSignIn')}
               ></Modal>
             </AuthThemeProvider>
