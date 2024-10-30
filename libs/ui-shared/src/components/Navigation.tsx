@@ -1,3 +1,5 @@
+'use client';
+
 import { useAuth } from '@futureverse/auth-react';
 import { useAuthUi } from '@futureverse/auth-ui';
 import React, { CSSProperties, Dispatch, SetStateAction } from 'react';

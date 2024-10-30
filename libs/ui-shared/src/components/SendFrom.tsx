@@ -1,4 +1,6 @@
+'use client';
 import { useAuth } from '@futureverse/auth-react';
+
 import React from 'react';
 
 type SendFromProps = {

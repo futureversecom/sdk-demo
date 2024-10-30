@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { useCallback, useMemo, useState } from 'react';
 import { useAuth } from '@futureverse/auth-react';

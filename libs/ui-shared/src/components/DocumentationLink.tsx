@@ -1,4 +1,6 @@
+'use client';
 import React from 'react';
+
 import { ExternalLink } from './Icons';
 
 export function DocumentationLink({

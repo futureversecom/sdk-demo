@@ -1,3 +1,5 @@
+'use client';
+import React from 'react';
 import { useAuth } from '@futureverse/auth-react';
 import { useIsMounted, useShouldShowEoa } from '../hooks';
 import { LogIn } from './Navigation';

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useMemo } from 'react';
 import { useAuth } from '@futureverse/auth-react';
 
@@ -321,26 +323,29 @@ export function AccountCard({ title, type }: AccountCardProps) {
               </span>
               <div className="row">
                 XRP Balance:{' '}
-                {formatter.format(Number(xrpBalanceOnTrn.data ?? 0)) ??
+                {formatter.format(Number(xrpBalanceOnTrn.data?.balance ?? 0)) ??
                   'loading'}{' '}
                 XRP
               </div>
               <div className="row">
                 ROOT Balance:{' '}
-                {formatter.format(Number(rootBalanceOnTrn.data ?? 0)) ??
-                  'loading'}{' '}
+                {formatter.format(
+                  Number(rootBalanceOnTrn.data?.balance ?? 0)
+                ) ?? 'loading'}{' '}
                 ROOT
               </div>
               <div className="row">
                 ASTO Balance:{' '}
-                {formatter.format(Number(astoBalanceOnTrn.data ?? 0)) ??
-                  'loading'}{' '}
+                {formatter.format(
+                  Number(astoBalanceOnTrn.data?.balance ?? 0)
+                ) ?? 'loading'}{' '}
                 ASTO
               </div>
               <div className="row">
                 SYLO Balance:{' '}
-                {formatter.format(Number(syloBalanceOnTrn.data ?? 0)) ??
-                  'loading'}{' '}
+                {formatter.format(
+                  Number(syloBalanceOnTrn.data?.balance ?? 0)
+                ) ?? 'loading'}{' '}
                 SYLO
               </div>
             </div>

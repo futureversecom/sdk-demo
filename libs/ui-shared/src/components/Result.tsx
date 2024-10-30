@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { useRootStore } from '../hooks/useRootStore';
 import CodeView from './CodeView';

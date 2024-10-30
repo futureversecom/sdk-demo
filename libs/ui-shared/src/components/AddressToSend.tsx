@@ -1,4 +1,6 @@
+'use client';
 import React from 'react';
+
 import { isAddress } from 'viem';
 
 type AddressToSendProps = {

@@ -100,6 +100,28 @@ const TransactMenu = ({
   );
 };
 
+const AssetRegisterMenu = ({
+  setIsOpen,
+}: {
+  setIsOpen?: Dispatch<SetStateAction<boolean>>;
+}) => {
+  return (
+    <>
+      <ul className="dropdown-content">
+        <li>
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/asset-link"
+          >
+            Asset Link
+          </Link>
+        </li>
+      </ul>
+      <DocumentationLink links={assetLinks} navName="assets" />
+    </>
+  );
+};
+
 const EvmMenu = ({
   setIsOpen,
 }: {
@@ -249,11 +271,8 @@ export const Menu: React.FC<MenuProps> = ({ setIsOpen }) => {
       <DropDownMenu title="Transact">
         <TransactMenu setIsOpen={setIsOpen} />
       </DropDownMenu>
-      <DropDownMenu title="Asset Register">
-        <ul className="dropdown-content">
-          <li className="no-hover">Coming Soon</li>
-        </ul>
-        <DocumentationLink links={assetLinks} navName="assets" />
+      <DropDownMenu title="Asset Register SDK">
+        <AssetRegisterMenu setIsOpen={setIsOpen} />
       </DropDownMenu>
       <DropDownMenu title="Swappables">
         <ul className="dropdown-content">
@@ -350,11 +369,8 @@ export const MobileMenu: React.FC<MenuProps> = ({ setIsOpen }) => {
           <TransactMenu setIsOpen={setIsOpen} />
         </li>
         <li>
-          <div className="sectionTitle">Asset Register</div>
-          <ul className="dropdown-content">
-            <li className="no-hover">Coming Soon</li>
-          </ul>
-          <DocumentationLink links={assetLinks} navName="assets" />
+          <div className="sectionTitle">Asset Register SDK</div>
+          <AssetRegisterMenu setIsOpen={setIsOpen} />
         </li>
         <li>
           <div className="sectionTitle">Swappables</div>

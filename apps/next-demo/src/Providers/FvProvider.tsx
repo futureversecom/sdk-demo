@@ -15,6 +15,7 @@ import {
   FutureverseWagmiProvider,
 } from '@/components/client-components';
 import type { NetworkName } from '@therootnetwork/api';
+import { AssetRegisterProvider } from './AssetRegisterProvider';
 
 const customTheme: ThemeConfig = {
   ...DarkTheme,
@@ -42,7 +43,7 @@ export default function Providers({
           <RootStoreProvider>
             <FutureverseAuthProvider authClient={authClient}>
               <AuthUiProvider themeConfig={customTheme} authClient={authClient}>
-                {children}
+                <AssetRegisterProvider>{children}</AssetRegisterProvider>
               </AuthUiProvider>
             </FutureverseAuthProvider>
           </RootStoreProvider>

@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { useAuth, useConnector } from '@futureverse/auth-react';
 import CodeView from './CodeView';

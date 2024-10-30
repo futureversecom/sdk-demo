@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { useCopyToClipboard } from '../hooks';
 import { TickIcon, CopyIcon } from './Icons';

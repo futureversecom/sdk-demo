@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { SunIcon, MoonIcon } from './Icons';
 import { useLocalStorage } from '../hooks';

@@ -1,3 +1,5 @@
+'use client';
+
 import { DarkTheme, ThemeConfig, useAuthUi } from '@futureverse/auth-ui';
 import React, { useEffect } from 'react';
 import CodeView from '../CodeView';
