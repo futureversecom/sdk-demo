@@ -10,6 +10,7 @@ import Assets from './Assets';
 import DropDownMenu from './DropDownMenu';
 import TransactionDetails from './TransactionDetails';
 import BatchAll from './BatchAll';
+import AssetLink from './AssetLink';
 import EvmErc20 from './EvmErc20';
 import EvmErc721 from './EvmErc721';
 import EvmErc1155 from './EvmErc1155';
@@ -82,6 +83,7 @@ export {
   Assets,
   BatchAll,
   DropDownMenu,
+  AssetLink,
   EvmErc20,
   EvmErc721,
   EvmErc1155,
