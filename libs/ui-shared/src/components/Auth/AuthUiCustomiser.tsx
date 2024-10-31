@@ -24,30 +24,30 @@ const rgbaToString = (rgba: { r: number; g: number; b: number; a: number }) =>
 
 const defaultTheme: ThemeConfig = {
   ...DefaultTheme,
-  defaultAuthOption: 'web3',
-  colors: {
-    primaryBackground: 'rgba(246, 246, 247, 0.1)',
-    primaryForeground: 'rgba(246, 246, 247, 1)',
-    primaryHover: 'rgba(246, 246, 247, 0.2)',
-    primaryActive: 'rgba(246, 246, 247, 0.2)',
-    primaryBackgroundDisabled: 'rgba(55, 55, 57, 1)',
-    primaryForegroundDisabled: 'rgba(103, 102, 109, 1)',
-    secondaryBackground: 'rgba(246, 246, 247, 0)',
-    secondaryForeground: 'rgba(206, 207, 211, 1)',
-    secondaryHover: 'rgba(246, 246, 247, 0)',
-    secondaryActive: 'rgba(246, 246, 247, .05)',
-    secondaryBackgroundDisabled: 'rgba(55, 55, 57, 1)',
-    secondaryForegroundDisabled: 'rgba(103, 102, 109, 1)',
-    border: 'rgba(55, 55, 57, 1)',
-    borderHover: 'rgba(246, 246, 247, 1)',
-    borderActive: 'rgba(246, 246, 247, 1)',
-    borderError: 'rgba(171, 22, 57, 1)',
-    errorForeground: 'rgba(171, 22, 57, 1)',
-    body: 'rgba(246, 246, 247, 1)',
-    muted: 'rgba(206, 207, 211, 1)',
-    surface: 'rgba(12, 12, 12, 1)',
-    page: 'rgba(255, 91, 39, 1)',
-  },
+  // defaultAuthOption: 'web3',
+  // colors: {
+  //   primaryBackground: 'rgba(246, 246, 247, 0.1)',
+  //   primaryForeground: 'rgba(246, 246, 247, 1)',
+  //   primaryHover: 'rgba(246, 246, 247, 0.2)',
+  //   primaryActive: 'rgba(246, 246, 247, 0.2)',
+  //   primaryBackgroundDisabled: 'rgba(55, 55, 57, 1)',
+  //   primaryForegroundDisabled: 'rgba(103, 102, 109, 1)',
+  //   secondaryBackground: 'rgba(246, 246, 247, 0)',
+  //   secondaryForeground: 'rgba(206, 207, 211, 1)',
+  //   secondaryHover: 'rgba(246, 246, 247, 0)',
+  //   secondaryActive: 'rgba(246, 246, 247, .05)',
+  //   secondaryBackgroundDisabled: 'rgba(55, 55, 57, 1)',
+  //   secondaryForegroundDisabled: 'rgba(103, 102, 109, 1)',
+  //   border: 'rgba(55, 55, 57, 1)',
+  //   borderHover: 'rgba(246, 246, 247, 1)',
+  //   borderActive: 'rgba(246, 246, 247, 1)',
+  //   borderError: 'rgba(171, 22, 57, 1)',
+  //   errorForeground: 'rgba(171, 22, 57, 1)',
+  //   body: 'rgba(246, 246, 247, 1)',
+  //   muted: 'rgba(206, 207, 211, 1)',
+  //   surface: 'rgba(12, 12, 12, 1)',
+  //   page: 'rgba(255, 91, 39, 1)',
+  // },
   font: {
     fontUrl: 'https://app.jenmusic.ai/cdn/src/font/font.css',
     fontName: 'JenFont',
@@ -183,23 +183,6 @@ export const AuthUiCustomiser = () => {
         } as CustodialOptions)
     );
 
-  // useEffect(() => {
-  //   if (firstRender) {
-  //     setFirstRender(false);
-  //     // openLogin();
-  //     // disableAuthLoginButtons();
-
-  //     // setTimeout(() => {
-  //     //   // const uiDialog = document.querySelector('.fvaui-dialog');
-  //     //   // console.log('uiDialog', uiDialog);
-  //     //   // if (uiDialog) {
-  //     //   //   document.querySelector('.ui-inject')?.appendChild(uiDialog);
-  //     //     uiDialog.setAttribute('style', 'position:relative');
-  //     //   }
-  //     // }, 1000);
-  //   }
-  // }, [firstRender, openLogin]);
-
   useEffect(() => {
     return () => {
       document.removeEventListener('click', buttonDisable);
@@ -216,25 +199,34 @@ export const AuthUiCustomiser = () => {
     const keys = key.split('.');
     const lastKey = keys.pop() as string;
     const nestedConfig = keys.reduce(
-      (obj, k) => (obj as any)[k],
+      (obj: { [key: string]: unknown }, k: string) =>
+        obj[k] as { [key: string]: unknown },
       themeConfig
-    ) as any;
+    ) as { [key: string]: unknown };
 
     if (
       typeof value === 'string' ||
       typeof value === 'boolean' ||
       typeof value === 'object'
     ) {
-      (nestedConfig as any)[lastKey] = value;
+      (nestedConfig as { [key: string]: unknown })[lastKey] = value;
     }
     setThemeConfig({ ...themeConfig });
   };
 
-  const handleColorChange = (key: string, color: any) => {
+  const handleColorChange = (
+    key: string,
+    color: { hex: string; rgb: { r: number; g: number; b: number; a?: number } }
+  ) => {
     const currentColor =
       themeConfig.colors[key as keyof typeof themeConfig.colors];
 
-    const newColor = isHex(currentColor) ? color.hex : rgbaToString(color.rgb);
+    const newColor = isHex(currentColor)
+      ? color.hex
+      : rgbaToString({
+          ...color.rgb,
+          a: color.rgb.a ?? 1,
+        });
 
     setThemeConfig({
       ...themeConfig,
@@ -244,33 +236,6 @@ export const AuthUiCustomiser = () => {
       },
     });
   };
-
-  // const handleImages = (key: 'backgroundImage' | 'logo', value: string) => {
-  //   setThemeConfig({
-  //     ...themeConfig,
-  //     images: {
-  //       ...themeConfig.images,
-  //       [key]: value,
-  //     },
-  //   });
-  // };
-
-  const handleThemeOptions = (key: string, value: string) => {
-    setThemeConfig({
-      ...themeConfig,
-      [key]: value,
-    });
-  };
-
-  // const handleInputChange = (key: string, value: string) => {
-  //   setThemeConfig({
-  //     ...themeConfig,
-  //     font: {
-  //       ...themeConfig.font,
-  //       [key]: value,
-  //     },
-  //   });
-  // };
 
   return (
     <>
