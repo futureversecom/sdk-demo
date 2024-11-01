@@ -267,7 +267,7 @@ export default function TransactionDetails() {
   }, [setSent]);
 
   const onResult = useCallback(
-    result => {
+    (result: ExtrinsicResult) => {
       resultCallback && resultCallback(result);
       queryClient.clear();
     },
