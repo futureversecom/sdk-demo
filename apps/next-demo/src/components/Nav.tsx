@@ -228,6 +228,56 @@ const AuthMenu = ({
     </>
   );
 };
+
+const SwappablesMenu = ({
+  setIsOpen,
+}: {
+  setIsOpen?: Dispatch<SetStateAction<boolean>>;
+}) => {
+  return (
+    <>
+      <ul className="dropdown-content">
+        <li>
+          <a
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="https://partybear.futurepass.futureverse.app/?tokenId="
+            target="_blank"
+            rel="nofollow"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              flexWrap: 'nowrap',
+            }}
+          >
+            Party Bear{' '}
+            <ExternalLink
+              styles={{ width: '16px', height: '16px', marginLeft: '6px' }}
+            />
+          </a>
+        </li>
+        <li>
+          <a
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="https://raicers.futurepass.futureverse.app/?tokenId="
+            target="_blank"
+            rel="nofollow"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              flexWrap: 'nowrap',
+            }}
+          >
+            Party Bear{' '}
+            <ExternalLink
+              styles={{ width: '16px', height: '16px', marginLeft: '6px' }}
+            />
+          </a>
+        </li>
+      </ul>
+      <DocumentationLink links={swappablesLinks} navName="swappables" />
+    </>
+  );
+};
 export const Menu: React.FC<MenuProps> = ({ setIsOpen }) => {
   const { signOut, userSession } = useAuth();
   const { disconnect, isConnected } = useConnector();
@@ -275,10 +325,7 @@ export const Menu: React.FC<MenuProps> = ({ setIsOpen }) => {
         <AssetRegisterMenu setIsOpen={setIsOpen} />
       </DropDownMenu>
       <DropDownMenu title="Swappables">
-        <ul className="dropdown-content">
-          <li className="no-hover">Coming Soon</li>
-        </ul>
-        <DocumentationLink links={swappablesLinks} navName="swappables" />
+        <SwappablesMenu setIsOpen={setIsOpen} />
       </DropDownMenu>
 
       <DropDownMenu
@@ -374,10 +421,7 @@ export const MobileMenu: React.FC<MenuProps> = ({ setIsOpen }) => {
         </li>
         <li>
           <div className="sectionTitle">Swappables</div>
-          <ul className="dropdown-content">
-            <li className="no-hover">Coming Soon</li>
-          </ul>
-          <DocumentationLink links={swappablesLinks} navName="swappables" />
+          <SwappablesMenu setIsOpen={setIsOpen} />
         </li>
         <li>
           <div className="wallet-dropdown-inner">

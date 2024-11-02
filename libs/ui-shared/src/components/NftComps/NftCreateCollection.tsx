@@ -176,10 +176,11 @@ export default function NftCreateCollection() {
             }
           )?.data?.collectionUuid
         );
+        setResultCallback(undefined);
       }
     };
 
-    setResultCallback && setResultCallback(callBackHandler);
+    setResultCallback(callBackHandler);
     getExtrinsic(nft);
     setCurrentBuilder(nft);
   }, [
@@ -624,9 +625,10 @@ export default function NftCreateCollection() {
           )?.data?.collectionUuid
         );
       }
+      setResultCallback(undefined);
     };
 
-    setResultCallback && setResultCallback(callBackHandler);
+    setResultCallback(callBackHandler);
     getExtrinsic(nft);
     setCurrentBuilder(nft);
   }, [

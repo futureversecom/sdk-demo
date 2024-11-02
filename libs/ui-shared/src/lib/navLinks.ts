@@ -42,6 +42,10 @@ export const swappablesLinks = [
   },
   {
     title: 'Docs',
+    link: 'https://docs.futureverse.com/dev/assets/swappables',
+  },
+  {
+    title: 'Docs',
     link: 'https://docs.futureverse.com/dev/platform-tools/swappables-engine',
   },
 ];
