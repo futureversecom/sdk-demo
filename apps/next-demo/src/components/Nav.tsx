@@ -54,14 +54,14 @@ const TransactMenu = ({
             NFT
           </Link>
         </li>
-        {/* <li>
+        <li>
           <Link
             onClick={() => setIsOpen && setIsOpen(false)}
             href="/transact/sft"
           >
             SFT
           </Link>
-        </li> */}
+        </li>
         <li>
           <Link
             onClick={() => setIsOpen && setIsOpen(false)}
@@ -198,6 +198,14 @@ const AuthMenu = ({
           </Link>
         </li>
         <li>
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/auth/react"
+          >
+            Auth React SDK
+          </Link>
+        </li>
+        <li>
           <a
             onClick={() => setIsOpen && setIsOpen(false)}
             href="https://login.futureverse.cloud/manageclients"
@@ -217,6 +225,17 @@ const AuthMenu = ({
         </li>
       </ul>
       <DocumentationLink links={authDocLinks} navName="auth" />
+    </>
+  );
+};
+
+const SwappablesMenu = () => {
+  return (
+    <>
+      <ul className="dropdown-content">
+        <li className="no-hover">Demos Coming Soon</li>
+      </ul>
+      <DocumentationLink links={swappablesLinks} navName="swappables" />
     </>
   );
 };
@@ -267,10 +286,7 @@ export const Menu: React.FC<MenuProps> = ({ setIsOpen }) => {
         <AssetRegisterMenu setIsOpen={setIsOpen} />
       </DropDownMenu>
       <DropDownMenu title="Swappables">
-        <ul className="dropdown-content">
-          <li className="no-hover">Coming Soon</li>
-        </ul>
-        <DocumentationLink links={swappablesLinks} navName="swappables" />
+        <SwappablesMenu />
       </DropDownMenu>
 
       <DropDownMenu
@@ -366,10 +382,7 @@ export const MobileMenu: React.FC<MenuProps> = ({ setIsOpen }) => {
         </li>
         <li>
           <div className="sectionTitle">Swappables</div>
-          <ul className="dropdown-content">
-            <li className="no-hover">Coming Soon</li>
-          </ul>
-          <DocumentationLink links={swappablesLinks} navName="swappables" />
+          <SwappablesMenu />
         </li>
         <li>
           <div className="wallet-dropdown-inner">

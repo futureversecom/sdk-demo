@@ -4,7 +4,7 @@ import { mainnet } from 'viem/chains';
 import { QueryClient } from '@tanstack/react-query';
 import { cookieStorage, createStorage } from 'wagmi';
 import { http, Storage } from '@wagmi/core';
-import { porcini } from 'rootnameservice';
+import { porcini } from '@futureverse/auth';
 
 const clientId = process.env.NEXT_PUBLIC_CLIENT_ID as string;
 const walletConnectProjectId = process.env.NEXT_PUBLIC_WALLET_CONNECT as string;
@@ -21,37 +21,10 @@ export const authClient = new FutureverseAuthClient({
 export const queryClient = new QueryClient();
 
 export const getWagmiConfig = async () => {
-  // const custodialAuthOptions = await authClient.queryCustodialOptions();
-
-  // const connectors = [
-  //   metaMask({
-  //     dappMetadata: {
-  //       name: 'FuturePass',
-  //       url: 'https://playground.therootnetwork.com',
-  //     },
-  //   }),
-  //   coinbaseWallet({
-  //     appName: 'FuturePass',
-  //     enableMobileWalletLink: true,
-  //   }),
-  //   xamanWallet({
-  //     apiKey: xamanAPIKey,
-  //     authClient,
-  //   }),
-  //   walletConnect({ projectId: walletConnectProjectId }),
-  //   ...custodialAuthOptions.map(custodialOpt =>
-  //     futureverseCustodialWallet({
-  //       authClient,
-  //       custodialOpt,
-  //     })
-  //   ),
-  // ];
-
   return createWagmiConfig({
     walletConnectProjectId,
     xamanAPIKey,
     authClient,
-    // connectors,
     metamaskDappMetadata: {
       name: 'Root Network Playground',
       url: 'https://playground.therootnetwork.com',

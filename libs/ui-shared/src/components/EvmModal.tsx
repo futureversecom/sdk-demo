@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useMemo, useState } from 'react';
 
 import {
@@ -6,7 +8,6 @@ import {
   ContractConstructorArgs,
   encodeFunctionData,
   formatUnits,
-  getAddress,
 } from 'viem';
 import { Dialog } from './Dialog/Dialog';
 import CodeView from './CodeView';
@@ -16,13 +17,13 @@ import {
   useEvmGetDecimals,
   useEvmGetGasPrice,
   useEvmSimulateTx,
-  useEvmTx,
 } from '../hooks';
 import {
   useAccount,
   useEstimateFeesPerGas,
   useEstimateGas,
   useTransactionReceipt,
+  useWriteContract,
 } from 'wagmi';
 import { ExternalLink } from './Icons';
 import {
@@ -72,6 +73,7 @@ export function EvmModal({
   );
 
   const {
+    request,
     isError: isSimulateError,
     error: simulateError,
     isPending: simulatePending,
@@ -89,13 +91,13 @@ export function EvmModal({
   });
 
   const {
-    hash: evmHash,
-    submitTx,
+    data: evmHash,
+    writeContract: evmWriteContract,
     isPending: evmPending,
-    isError: evmIsError,
-    error: evmError,
-    isSuccess: evmSuccess,
-  } = useEvmTx();
+    isSuccess: evmIsError,
+    isError: evmError,
+    error: evmSuccess,
+  } = useWriteContract();
 
   const { data: txRcpt, isFetching: txRcptFinalising } = useTransactionReceipt({
     hash: evmHash,
@@ -106,14 +108,6 @@ export function EvmModal({
       refetchInterval: false,
     },
   });
-
-  console.log('evmHash', evmHash);
-  console.log('evmPending', evmPending);
-  console.log('evmSuccess', evmSuccess);
-  console.log('evmError', evmError);
-  console.log('evmIsError', evmIsError);
-  console.log('txRcptFinalising', txRcptFinalising);
-  console.log('txRcpt', txRcpt);
 
   const evmData = useMemo(() => {
     return encodeFunctionData({
@@ -206,16 +200,11 @@ export function EvmModal({
   }, [decimals, feeAssetId, feeDecimals, gasPrice, getGas]);
 
   const submitTransfer = async () => {
-    return submitTx({
-      fromWallet,
-      account: getAddress(userSession?.eoa as `0x${string}`),
-      abi,
-      address: contract as `0x${string}`,
-      functionName,
-      args,
-      gasToken: feeAssetId,
-      slippage,
-    });
+    if (request) {
+      await evmWriteContract(request);
+    } else {
+      console.error('Request object is undefined');
+    }
   };
 
   useEffect(() => {

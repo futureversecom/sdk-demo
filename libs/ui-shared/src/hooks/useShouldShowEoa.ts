@@ -2,19 +2,19 @@ import { useAuth, useConnector } from '@futureverse/auth-react';
 import { useMemo } from 'react';
 
 export function useShouldShowEoa() {
-  const { authMethod } = useAuth();
+  const auth = useAuth();
   const { connector } = useConnector();
 
   const shouldShowEoa = useMemo(() => {
     let should = false;
-    if (!connector || !authMethod) {
+    if (!connector || !auth?.authMethod) {
       return should;
     }
-    if (connector?.id !== 'xaman' && authMethod === 'eoa') {
+    if (connector?.id !== 'xaman' && auth?.authMethod === 'eoa') {
       should = true;
     }
     return should;
-  }, [connector, authMethod]);
+  }, [connector, auth?.authMethod]);
 
   return shouldShowEoa;
 }

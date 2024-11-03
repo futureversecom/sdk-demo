@@ -1,5 +1,7 @@
+import '@therootnetwork/api-types';
+
 import { useQuery } from '@tanstack/react-query';
-import { useTrnApi } from '../providers';
+import { useTrnApi } from '@futureverse/transact-react';
 
 export function useGetTokens(walletAddress: string, collectionId: number) {
   const { trnApi } = useTrnApi();
@@ -19,6 +21,7 @@ export function useGetTokens(walletAddress: string, collectionId: number) {
         1000
       );
 
+      // returns [0] => nextCursor, [1] => totalCount, [2] => ownedTokens
       const ownedTokens = tokens.toJSON()[2] as number[];
 
       return ownedTokens ?? [];

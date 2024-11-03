@@ -1,7 +1,10 @@
+'use client';
+
 import { useAuth } from '@futureverse/auth-react';
 import React, { useCallback, useMemo, useState } from 'react';
 
-import { useTrnApi } from '../../providers/TRNProvider';
+import { useTrnApi } from '@futureverse/transact-react';
+
 import { useFutureverseSigner } from '@futureverse/auth-react';
 
 import { TransactionBuilder } from '@futureverse/transact';
@@ -15,7 +18,8 @@ const codeString = `
 import { useAuth } from '@futureverse/auth-react';
 import React, { useCallback, useMemo, useState } from 'react';
 
-import { useTrnApi } from '../../providers/TRNProvider';
+import { useTrnApi } from '@futureverse/transact-react';
+
 import { useFutureverseSigner } from '@futureverse/auth-react';
 
 import { TransactionBuilder } from '@futureverse/transact';
@@ -23,6 +27,7 @@ import { useRootStore } from '../../hooks/useRootStore';
 
 import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
 import { shortAddress } from '../../lib/utils';
+import CodeView from '../CodeView';
 
 export default function CustomFromEoaFuturePassFeeProxy() {
   const { userSession } = useAuth();
@@ -79,14 +84,14 @@ export default function CustomFromEoaFuturePassFeeProxy() {
   ]);
 
   return (
-    <div>
+    <div className={\`card $\{disable ? 'disabled' : ''}\`}>
       <div className="inner">
-        <div className="row">
+        <CodeView code={codeString}>
           <h3>Mint Nft Using Custom Extrinsic</h3>
-          <span
-              style={{ display: 'inline-block', fontSize: '0.8rem' }}
-            >{shortAddress(userSession?.futurepass ?? '')}</span>
-        </div>
+          <span style={{ display: 'inline-block', fontSize: '0.8rem' }}>
+            {shortAddress(userSession?.futurepass ?? '')}
+          </span>
+        </CodeView>
         <div className="row">
           <label>
             Mint To
@@ -114,10 +119,10 @@ export default function CustomFromEoaFuturePassFeeProxy() {
                 setFeeAssetId(Number(e.target.value));
               }}
             >
-                    <option value={2}>XRP</option>
-                    <option value={1}>ROOT</option>
-                    <option value={3172}>SYLO</option>
-                    <option value={17508}>ASTO</option>
+              <option value={2}>XRP</option>
+              <option value={1}>ROOT</option>
+              <option value={3172}>SYLO</option>
+              <option value={17508}>ASTO</option>
             </select>
           </label>
         </div>

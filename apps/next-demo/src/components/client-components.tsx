@@ -19,6 +19,7 @@ import {
   AssetFromFuturePassFeeProxy,
   Evm,
   Nft,
+  Sft,
   AssetTransfer,
   Assets,
   Header,
@@ -31,6 +32,7 @@ import {
   FeeProxy,
   FuturePassProxy,
   LogIn,
+  AuthReactSdk,
   AuthUiSdk,
   AuthUiSdkCustomiser,
 } from '@fv-sdk-demos/ui-shared';
@@ -52,6 +54,7 @@ export {
   CustomBuilder,
   CustomBuilderComp,
   Nft,
+  Sft,
   AssetTransfer,
   Assets,
   Header,
@@ -64,6 +67,7 @@ export {
   FeeProxy,
   FuturePassProxy,
   LogIn,
+  AuthReactSdk,
   AuthUiSdk,
   AuthUiSdkCustomiser,
 };

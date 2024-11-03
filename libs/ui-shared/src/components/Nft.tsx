@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect } from 'react';
 
 import TransactionDetails from './TransactionDetails';
@@ -5,7 +7,14 @@ import { useIsMounted } from '../hooks';
 
 import { useAuth } from '@futureverse/auth-react';
 import { useRootStore } from '../hooks/useRootStore';
-import { NftBurn, NftCreateCollection, NftMint, NftTransfer } from './NftComps';
+import {
+  NftBurn,
+  NftCreateCollection,
+  NftMint,
+  NftPublicMint,
+  NftPublicMintPrice,
+  NftTransfer,
+} from './NftComps';
 
 export default function Nft() {
   const isMounted = useIsMounted();
@@ -32,6 +41,8 @@ export default function Nft() {
       <h1>NFT Demos</h1>
       <div className="auto-grid">
         <NftCreateCollection />
+        <NftPublicMint />
+        <NftPublicMintPrice />
         <NftMint />
         <NftTransfer />
         <NftBurn />

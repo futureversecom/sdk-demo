@@ -1,9 +1,11 @@
+'use client';
+
 import React, { useState } from 'react';
 import { useAuth } from '@futureverse/auth-react';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useFutureverseSigner } from '@futureverse/auth-react';
 
-import { useTrnApi } from '../../providers/TRNProvider';
+import { useTrnApi } from '@futureverse/transact-react';
 
 import { TransactionBuilder } from '@futureverse/transact';
 import { useRootStore } from '../../hooks/useRootStore';
@@ -23,7 +25,7 @@ import { useAuth } from '@futureverse/auth-react';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useFutureverseSigner } from '@futureverse/auth-react';
 
-import { useTrnApi } from '../../providers/TRNProvider';
+import { useTrnApi } from '@futureverse/transact-react';
 
 import { TransactionBuilder } from '@futureverse/transact';
 import { useRootStore } from '../../hooks/useRootStore';
@@ -35,7 +37,7 @@ import { shortAddress } from '../../lib/utils';
 import CodeView from '../CodeView';
 import SliderInput from '../SliderInput';
 import SendFrom from '../SendFrom';
-
+import { ExternalLink } from '../Icons';
 export default function Increment() {
   const { userSession } = useAuth();
 
@@ -115,7 +117,7 @@ export default function Increment() {
   }, [result, refetch]);
 
   return (
-    <div className={\`card \${disable ? 'disabled' : ''}\`}>
+    <div className={\`card $\{disable ? 'disabled' : ''}\`}>
       <div className="inner">
         <CodeView code={codeString}>
           <h3>Increment Counter</h3>
@@ -126,7 +128,7 @@ export default function Increment() {
             <strong>Contract</strong>
           </div>
           <a
-            href={\`https://porcini.rootscan.io/addresses/\${TestContractAddress}/contract\`}
+            href={\`https://porcini.rootscan.io/addresses/$\{TestContractAddress}/contract\`}
             target="_blank"
             rel="noreferrer"
           >

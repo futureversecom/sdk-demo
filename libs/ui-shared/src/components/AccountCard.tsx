@@ -1,9 +1,12 @@
-import { useMemo } from 'react';
+'use client';
+
+import React, { useMemo } from 'react';
 import { useAuth } from '@futureverse/auth-react';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { useTrnApi } from '../providers';
+import { useTrnApi } from '@futureverse/transact-react';
+
 import { useRnsResolveAddress, useTransactQuery } from '../hooks';
 import { useAccount } from 'wagmi';
 import { getBalance } from '../lib/utils';
@@ -11,12 +14,13 @@ import CodeView from './CodeView';
 import { CopyText } from './CopyText';
 
 const codeString = `
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useAuth } from '@futureverse/auth-react';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { useTrnApi } from '../providers';
+import { useTrnApi } from '@futureverse/transact-react';
+
 import { useRnsResolveAddress, useTransactQuery } from '../hooks';
 import { useAccount } from 'wagmi';
 import { getBalance } from '../lib/utils';
@@ -184,6 +188,7 @@ export function AccountCard({ title, type }: AccountCardProps) {
     </div>
   );
 }
+
 `;
 
 const ASTO_ASSET_ID = 17508;
@@ -318,26 +323,29 @@ export function AccountCard({ title, type }: AccountCardProps) {
               </span>
               <div className="row">
                 XRP Balance:{' '}
-                {formatter.format(Number(xrpBalanceOnTrn.data ?? 0)) ??
+                {formatter.format(Number(xrpBalanceOnTrn.data?.balance ?? 0)) ??
                   'loading'}{' '}
                 XRP
               </div>
               <div className="row">
                 ROOT Balance:{' '}
-                {formatter.format(Number(rootBalanceOnTrn.data ?? 0)) ??
-                  'loading'}{' '}
+                {formatter.format(
+                  Number(rootBalanceOnTrn.data?.balance ?? 0)
+                ) ?? 'loading'}{' '}
                 ROOT
               </div>
               <div className="row">
                 ASTO Balance:{' '}
-                {formatter.format(Number(astoBalanceOnTrn.data ?? 0)) ??
-                  'loading'}{' '}
+                {formatter.format(
+                  Number(astoBalanceOnTrn.data?.balance ?? 0)
+                ) ?? 'loading'}{' '}
                 ASTO
               </div>
               <div className="row">
                 SYLO Balance:{' '}
-                {formatter.format(Number(syloBalanceOnTrn.data ?? 0)) ??
-                  'loading'}{' '}
+                {formatter.format(
+                  Number(syloBalanceOnTrn.data?.balance ?? 0)
+                ) ?? 'loading'}{' '}
                 SYLO
               </div>
             </div>

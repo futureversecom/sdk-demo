@@ -51,7 +51,7 @@ import React from 'react';
 import { QueryClientProvider } from '@tanstack/react-query';
 
 import { authClient, getWagmiConfig, queryClient } from './config';
-import { RootStoreProvider, TrnApiProvider } from '@fv-sdk-demos/ui-shared';
+import { TrnApiProvider } from '@futureverse/transact-react';
 
 import { AuthUiProvider, DarkTheme, ThemeConfig } from '@futureverse/auth-ui';
 
@@ -85,13 +85,11 @@ export default function Providers({
           getWagmiConfig={getWagmiConfig}
           initialState={initialWagmiState}
         >
-          <RootStoreProvider>
-            <FutureverseAuthProvider authClient={authClient}>
-              <AuthUiProvider themeConfig={customTheme} authClient={authClient}>
-                {children}
-              </AuthUiProvider>
-            </FutureverseAuthProvider>
-          </RootStoreProvider>
+          <FutureverseAuthProvider authClient={authClient}>
+            <AuthUiProvider themeConfig={customTheme} authClient={authClient}>
+              {children}
+            </AuthUiProvider>
+          </FutureverseAuthProvider>
         </FutureverseWagmiProvider>
       </TrnApiProvider>
     </QueryClientProvider>
@@ -103,17 +101,13 @@ export default function Providers({
  * config.ts
  *
  */
-import {
-  createWagmiConfig,
-  xamanWallet,
-  futureverseCustodialWallet,
-} from '@futureverse/wagmi-connectors';
+import { createWagmiConfig } from '@futureverse/wagmi-connectors';
 import { FutureverseAuthClient } from '@futureverse/auth-react/auth';
-import { mainnet, rootPorcini } from 'viem/chains';
+import { mainnet } from 'viem/chains';
 import { QueryClient } from '@tanstack/react-query';
 import { cookieStorage, createStorage } from 'wagmi';
 import { http, Storage } from '@wagmi/core';
-import { coinbaseWallet, metaMask, walletConnect } from '@wagmi/connectors';
+import { porcini } from '@futureverse/auth';
 
 const clientId = process.env.NEXT_PUBLIC_CLIENT_ID as string;
 const walletConnectProjectId = process.env.NEXT_PUBLIC_WALLET_CONNECT as string;
@@ -122,8 +116,8 @@ const xamanAPIKey = process.env.NEXT_PUBLIC_XAMAN_API as string;
 export const authClient = new FutureverseAuthClient({
   clientId,
   environment: 'staging',
-  redirectUri: \`\${
-    typeof window !== 'undefined' ? \`\${window.location.origin}/login\` : ''
+  redirectUri: \`$\{
+    typeof window !== 'undefined' ? \`$\{window.location.origin}/login\` : ''
   }\`,
   signInFlow: 'redirect',
 });
@@ -134,7 +128,6 @@ export const getWagmiConfig = async () => {
     walletConnectProjectId,
     xamanAPIKey,
     authClient,
-    // connectors,
     metamaskDappMetadata: {
       name: 'Root Network Playground',
       url: 'https://playground.therootnetwork.com',
@@ -143,7 +136,7 @@ export const getWagmiConfig = async () => {
       7672: http('https://porcini.rootnet.app/'),
     },
     ssr: true,
-    chains: [mainnet, rootPorciniAlt],
+    chains: [mainnet, porcini],
     storage: createStorage({
       storage: cookieStorage,
     }) as Storage,

@@ -1,9 +1,12 @@
+'use client';
+
 import React from 'react';
 import { useAuth } from '@futureverse/auth-react';
 import { useCallback, useMemo, useState } from 'react';
 import { useFutureverseSigner } from '@futureverse/auth-react';
 
-import { useTrnApi } from '../../providers/TRNProvider';
+import { useTrnApi } from '@futureverse/transact-react';
+
 import { ASSET_DECIMALS } from '../../helpers';
 
 import { TransactionBuilder } from '@futureverse/transact';
@@ -19,12 +22,13 @@ import { useAuth } from '@futureverse/auth-react';
 import { useCallback, useMemo, useState } from 'react';
 import { useFutureverseSigner } from '@futureverse/auth-react';
 
-import { useTrnApi } from '../../providers/TRNProvider';
+import { useTrnApi } from '@futureverse/transact-react';
+
 import { ASSET_DECIMALS } from '../../helpers';
 
 import { TransactionBuilder } from '@futureverse/transact';
 import { useRootStore } from '../../hooks/useRootStore';
-
+import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
 import { parseUnits } from 'viem';
 import { shortAddress } from '../../lib/utils';
 import CodeView from '../CodeView';
@@ -44,25 +48,13 @@ export default function AssetFromEoa() {
   const { trnApi } = useTrnApi();
   const signer = useFutureverseSigner();
 
+  const getExtrinsic = useGetExtrinsic();
+
   const [assetId, setAssetId] = useState<number>(1);
   const [amountToSend, setAmountToSend] = useState<number>(1);
   const [addressToSend, setAddressToSend] = useState<string>(
     userSession?.futurepass ?? ''
   );
-
-  const getExtrinsic = async (builder: RootTransactionBuilder) => {
-    const gasEstimate = await builder?.getGasFees();
-    if (gasEstimate) {
-      setGas(gasEstimate);
-    }
-    const payloads = await builder?.getPayloads();
-    if (!payloads) {
-      return;
-    }
-    setPayload(payloads);
-    const { ethPayload } = payloads;
-    setToSign(ethPayload.toString());
-  };
 
   const createBuilder = useCallback(async () => {
     if (!trnApi || !signer || !userSession) {
@@ -99,14 +91,14 @@ export default function AssetFromEoa() {
   ]);
 
   return (
-    <div>
+    <div className={\`card $\{disable ? 'disabled' : ''}\`}>
       <div className="inner">
         <div className="row">
           <CodeView code={codeString}>
             <h3>Send From EOA</h3>
-            <span
-              style={{ display: 'inline-block', fontSize: '0.8rem' }}
-            >{shortAddress(userSession?.eoa ?? '')}</span>
+            <span style={{ display: 'inline-block', fontSize: '0.8rem' }}>
+              {shortAddress(userSession?.eoa ?? '')}
+            </span>
           </CodeView>
         </div>
         <div className="row">

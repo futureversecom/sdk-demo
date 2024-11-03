@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useMemo, useState } from 'react';
 import { useRootStore } from '../../hooks/useRootStore';
 import { useAuth, useFutureverseSigner } from '@futureverse/auth-react';

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useCallback } from 'react';
 import { useChainId, useConfig } from 'wagmi';
 import { switchChain } from '@wagmi/core';

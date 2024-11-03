@@ -1,10 +1,13 @@
+'use client';
+
 import React, { useCallback, useMemo, useState } from 'react';
 import { TransactionBuilder } from '@futureverse/transact';
 import { useAuth } from '@futureverse/auth-react';
 
 import { parseUnits } from 'viem';
 
-import { useTrnApi } from '../../providers/TRNProvider';
+import { useTrnApi } from '@futureverse/transact-react';
+
 import { ASSET_DECIMALS } from '../../helpers';
 import { useRootStore } from '../../hooks/useRootStore';
 import { useFutureverseSigner } from '@futureverse/auth-react';
@@ -25,7 +28,8 @@ import { useAuth } from '@futureverse/auth-react';
 
 import { parseUnits } from 'viem';
 
-import { useTrnApi } from '../../providers/TRNProvider';
+import { useTrnApi } from '@futureverse/transact-react';
+
 import { ASSET_DECIMALS } from '../../helpers';
 import { useRootStore } from '../../hooks/useRootStore';
 import { useFutureverseSigner } from '@futureverse/auth-react';
@@ -206,7 +210,7 @@ export default function AssetTransfer() {
           )}
           {userBalance && (
             <span style={{ display: 'inline-block', fontSize: '0.8rem' }}>
-              Balance: {userBalance}
+              Balance: {userBalance.balance}
             </span>
           )}
         </div>
@@ -453,7 +457,7 @@ export default function AssetTransfer() {
           )}
           {userBalance && (
             <span style={{ display: 'inline-block', fontSize: '0.8rem' }}>
-              Balance: {userBalance}
+              Balance: {userBalance.balance}
             </span>
           )}
         </div>

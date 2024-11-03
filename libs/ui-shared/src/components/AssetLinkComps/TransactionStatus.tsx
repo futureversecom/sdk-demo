@@ -1,3 +1,5 @@
+'use client';
+
 import { useGetTransaction } from '@futureverse/asset-register-react/v2';
 import { TransactionHash } from '@futureverse/asset-register/types';
 import React, { FC } from 'react';

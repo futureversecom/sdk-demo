@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { RootQueryBuilder } from '@futureverse/transact';
 import { useAuth } from '@futureverse/auth-react';
-import { useTrnApi } from '../providers/TRNProvider';
+import { useTrnApi } from '@futureverse/transact-react';
 
 export function useTransactQuery() {
   const { trnApi } = useTrnApi();

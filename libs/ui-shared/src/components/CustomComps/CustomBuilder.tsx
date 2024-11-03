@@ -1,7 +1,9 @@
+'use client';
 import { useAuth } from '@futureverse/auth-react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { useTrnApi } from '../../providers/TRNProvider';
+import { useTrnApi } from '@futureverse/transact-react';
+
 import { useFutureverseSigner } from '@futureverse/auth-react';
 
 import { useRootStore } from '../../hooks/useRootStore';
@@ -17,7 +19,8 @@ const codeString = `
 import { useAuth } from '@futureverse/auth-react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { useTrnApi } from '../../providers/TRNProvider';
+import { useTrnApi } from '@futureverse/transact-react';
+
 import { useFutureverseSigner } from '@futureverse/auth-react';
 
 import { useRootStore } from '../../hooks/useRootStore';
@@ -28,6 +31,7 @@ import CodeView from '../CodeView';
 import { isAddress } from 'viem';
 import SliderInput from '../SliderInput';
 import { useShouldShowEoa } from '../../hooks';
+
 
 type Argument = {
   name: string;
@@ -338,7 +342,7 @@ export default function CustomBuilderComp() {
   };
 
   return (
-    <div className={\`card \${disable ? 'disabled' : ''}\`}>
+    <div className={\`card $\{disable ? 'disabled' : ''}\`}>
       <div className="inner">
         <CodeView code={codeString}>
           <h3>Custom Extrinsic Builder</h3>
@@ -515,7 +519,7 @@ export default function CustomBuilderComp() {
               )}
               <div className="row">
                 <button
-                  className={\`w-full builder-input green \${
+                  className={\`w-full builder-input green $\{
                     disable || !!addressError ? 'disabled' : ''
                   }\`}
                   onClick={() => {
@@ -534,7 +538,6 @@ export default function CustomBuilderComp() {
     </div>
   );
 }
-
 `;
 
 type Argument = {

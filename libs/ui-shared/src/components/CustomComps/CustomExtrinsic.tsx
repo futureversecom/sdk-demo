@@ -1,7 +1,10 @@
+'use client';
+
 import { useAuth } from '@futureverse/auth-react';
 import React, { useCallback, useMemo, useState } from 'react';
 
-import { useTrnApi } from '../../providers/TRNProvider';
+import { useTrnApi } from '@futureverse/transact-react';
+
 import { useFutureverseSigner } from '@futureverse/auth-react';
 
 import { TransactionBuilder } from '@futureverse/transact';
@@ -18,7 +21,8 @@ const codeString = `
 import { useAuth } from '@futureverse/auth-react';
 import React, { useCallback, useMemo, useState } from 'react';
 
-import { useTrnApi } from '../../providers/TRNProvider';
+import { useTrnApi } from '@futureverse/transact-react';
+
 import { useFutureverseSigner } from '@futureverse/auth-react';
 
 import { TransactionBuilder } from '@futureverse/transact';
@@ -30,6 +34,7 @@ import SliderInput from '../SliderInput';
 import SendFrom from '../SendFrom';
 import { AddressToSend } from '../AddressToSend';
 import { useShouldShowEoa } from '../../hooks';
+
 
 export default function CustomExtrinsic() {
   const { userSession } = useAuth();
@@ -121,7 +126,7 @@ export default function CustomExtrinsic() {
   }, [disable, addressInputError]);
 
   return (
-    <div className={\`card \${disable ? 'disabled' : ''}\`}>
+    <div className={\`card $\{disable ? 'disabled' : ''}\`}>
       <div className="inner">
         <CodeView code={codeString}>
           <h3>Mint Nft Using Custom Extrinsic Builder</h3>
@@ -211,7 +216,7 @@ export default function CustomExtrinsic() {
         )}
         <div className="row">
           <button
-            className={\`w-full builder-input green \${
+            className={\`w-full builder-input green $\{
               buttonDisabled ? 'disabled' : ''
             }\`}
             onClick={() => {

@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { useCallback, useMemo, useState } from 'react';
 import { useAuth } from '@futureverse/auth-react';
@@ -5,7 +7,8 @@ import { TransactionBuilder } from '@futureverse/transact';
 
 import { parseUnits } from 'viem';
 
-import { useTrnApi } from '../../providers/TRNProvider';
+import { useTrnApi } from '@futureverse/transact-react';
+
 import { ASSET_DECIMALS } from '../../helpers';
 import { useRootStore } from '../../hooks/useRootStore';
 import { useFutureverseSigner } from '@futureverse/auth-react';
@@ -21,11 +24,12 @@ import { TransactionBuilder } from '@futureverse/transact';
 
 import { parseUnits } from 'viem';
 
-import { useTrnApi } from '../../providers/TRNProvider';
+import { useTrnApi } from '@futureverse/transact-react';
+
 import { ASSET_DECIMALS } from '../../helpers';
 import { useRootStore } from '../../hooks/useRootStore';
 import { useFutureverseSigner } from '@futureverse/auth-react';
-
+import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
 import { shortAddress } from '../../lib/utils';
 import CodeView from '../CodeView';
 
@@ -42,6 +46,8 @@ export default function AssetFromFuturePass() {
 
   const { trnApi } = useTrnApi();
 
+  const getExtrinsic = useGetExtrinsic();
+
   const signer = useFutureverseSigner();
 
   const [assetId, setAssetId] = useState<number>(1);
@@ -49,20 +55,6 @@ export default function AssetFromFuturePass() {
   const [addressToSend, setAddressToSend] = useState<string>(
     userSession?.eoa ?? ''
   );
-
-  const getExtrinsic = async (builder: RootTransactionBuilder) => {
-    const gasEstimate = await builder?.getGasFees();
-    if (gasEstimate) {
-      setGas(gasEstimate);
-    }
-    const payloads = await builder?.getPayloads();
-    if (!payloads) {
-      return;
-    }
-    setPayload(payloads);
-    const { ethPayload } = payloads;
-    setToSign(ethPayload.toString());
-  };
 
   const createBuilder = useCallback(async () => {
     if (!trnApi || !signer || !userSession) {
@@ -101,14 +93,14 @@ export default function AssetFromFuturePass() {
   ]);
 
   return (
-    <div>
+    <div className={\`card $\{disable ? 'disabled' : ''}\`}>
       <div className="inner">
         <div className="row">
           <CodeView code={codeString}>
             <h3>Send From FuturePass</h3>
-            <span
-              style={{ display: 'inline-block', fontSize: '0.8rem' }}
-            >{shortAddress(userSession?.futurepass ?? '')}</span>
+            <span style={{ display: 'inline-block', fontSize: '0.8rem' }}>
+              {shortAddress(userSession?.futurepass ?? '')}
+            </span>
           </CodeView>
         </div>
         <div className="row">
@@ -178,7 +170,6 @@ export default function AssetFromFuturePass() {
   );
 }
 `;
-
 export default function AssetFromFuturePass() {
   const { userSession } = useAuth();
 

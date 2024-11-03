@@ -1,4 +1,6 @@
+'use client';
 import React, { useMemo, CSSProperties } from 'react';
+
 
 type SendFromProps = {
   sliderValue: string;

@@ -1,3 +1,5 @@
+'use client';
+
 import { useAssets } from '@futureverse/asset-register-react/v2';
 import { AssetModel } from '@futureverse/asset-register/models';
 

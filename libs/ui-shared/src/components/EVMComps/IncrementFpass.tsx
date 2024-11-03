@@ -1,8 +1,10 @@
+'use client';
+
 import { useAuth } from '@futureverse/auth-react';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { useFutureverseSigner } from '@futureverse/auth-react';
 
-import { useTrnApi } from '../../providers/TRNProvider';
+import { useTrnApi } from '@futureverse/transact-react';
 
 import { TransactionBuilder } from '@futureverse/transact';
 import { useRootStore } from '../../hooks/useRootStore';
@@ -18,7 +20,8 @@ import { useAuth } from '@futureverse/auth-react';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { useFutureverseSigner } from '@futureverse/auth-react';
 
-import { useTrnApi } from '../../providers/TRNProvider';
+import { useTrnApi } from '@futureverse/transact-react';
+
 
 import { TransactionBuilder } from '@futureverse/transact';
 import { useRootStore } from '../../hooks/useRootStore';

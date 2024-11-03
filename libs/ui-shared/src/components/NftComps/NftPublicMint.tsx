@@ -1,14 +1,19 @@
+'use client';
 import { useAuth } from '@futureverse/auth-react';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
-import { useTrnApi } from '../../providers/TRNProvider';
+import { useTrnApi } from '@futureverse/transact-react';
 import { useFutureverseSigner } from '@futureverse/auth-react';
 
 import { TransactionBuilder } from '@futureverse/transact';
 import { useRootStore } from '../../hooks/useRootStore';
 
 import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
-import { useGetTokens, useShouldShowEoa } from '../../hooks';
+import {
+  useDebounce,
+  useGetNftPublicMint,
+  useShouldShowEoa,
+} from '../../hooks';
 import CodeView from '../CodeView';
 import SendFrom from '../SendFrom';
 import SliderInput from '../SliderInput';
@@ -17,19 +22,23 @@ const codeString = `
 import { useAuth } from '@futureverse/auth-react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { useTrnApi } from '../../providers/TRNProvider';
+import { useTrnApi } from '@futureverse/transact-react';
 import { useFutureverseSigner } from '@futureverse/auth-react';
 
 import { TransactionBuilder } from '@futureverse/transact';
 import { useRootStore } from '../../hooks/useRootStore';
 
 import { useGetExtrinsic } from '../../hooks/useGetExtrinsic';
-import { useGetTokens, useShouldShowEoa } from '../../hooks';
+import {
+  useDebounce,
+  useGetNftPublicMint,
+  useShouldShowEoa,
+} from '../../hooks';
 import CodeView from '../CodeView';
 import SendFrom from '../SendFrom';
 import SliderInput from '../SliderInput';
 
-export default function NftBurn() {
+export default function NftPublicMint() {
   const { userSession } = useAuth();
 
   const { resetState, setCurrentBuilder, signed, result, error } = useRootStore(
@@ -46,6 +55,16 @@ export default function NftBurn() {
   const getExtrinsic = useGetExtrinsic();
 
   const [collectionId, setCollectionId] = useState<number>(709732);
+  const debouncedCollectionId = useDebounce(collectionId, 500);
+
+  const { data: isPublicMint, isFetching } = useGetNftPublicMint(
+    debouncedCollectionId
+  );
+
+  const [publicMint, setPublicMint] = useState<boolean>(
+    isPublicMint?.enabled ? true : false
+  );
+
   const [slippage, setSlippage] = useState<string>('5');
 
   const shouldShowEoa = useShouldShowEoa();
@@ -54,37 +73,11 @@ export default function NftBurn() {
     shouldShowEoa ? 'eoa' : 'fpass'
   );
 
-  const {
-    data: ownedTokens,
-    isFetching,
-    isLoading,
-  } = useGetTokens(
-    userSession
-      ? fromWallet === 'fpass'
-        ? userSession?.futurepass
-        : userSession?.eoa
-      : '',
-    collectionId
-  );
-
   const [feeAssetId, setFeeAssetId] = useState<number>(2);
-
-  const [serialNumber, setSerialNumber] = useState<string>('');
-
-  useEffect(() => {
-    if (ownedTokens && ownedTokens.length > 0) {
-      setSerialNumber(ownedTokens[0].toString());
-    }
-  }, [ownedTokens]);
 
   const createBuilder = useCallback(async () => {
     if (!trnApi || !signer || !userSession) {
       console.log('Missing trnApi, signer or userSession');
-      return;
-    }
-
-    if (serialNumber === '') {
-      console.log('Missing serial number');
       return;
     }
 
@@ -93,9 +86,7 @@ export default function NftBurn() {
       signer,
       userSession.eoa,
       collectionId
-    ).burn({
-      serialNumber: Number(serialNumber),
-    });
+    ).togglePublicMint(publicMint);
 
     if (fromWallet === 'fpass') {
       if (feeAssetId === 2) {
@@ -126,8 +117,8 @@ export default function NftBurn() {
     trnApi,
     signer,
     userSession,
-    serialNumber,
     collectionId,
+    publicMint,
     fromWallet,
     getExtrinsic,
     setCurrentBuilder,
@@ -135,14 +126,14 @@ export default function NftBurn() {
   ]);
 
   const buttonDisabled = useMemo(() => {
-    return disable || ownedTokens?.length === 0;
-  }, [disable, ownedTokens]);
+    return disable;
+  }, [disable]);
 
   return (
-    <div className={\`card \${disable ? 'disabled' : ''}\`}>
+    <div className={\`card $\{disable ? 'disabled' : ''}\`}>
       <div className="inner">
         <CodeView code={codeString}>
-          <h3>Burn Nft</h3>
+          <h3>Nft Public Mint</h3>
         </CodeView>
         <div className="row">
           <SendFrom
@@ -169,33 +160,31 @@ export default function NftBurn() {
             />
           </label>
         </div>
-        <div className="row">
-          <label>
-            Serial Number
-            {isFetching || isLoading ? (
-              <span> Checking Token Ownership</span>
-            ) : ownedTokens && ownedTokens.length > 0 ? (
-              <select
-                value={serialNumber}
-                className="w-full builder-input"
-                disabled={disable}
-                onChange={e => {
-                  resetState();
-                  setSerialNumber(e.target.value);
-                }}
-              >
-                {ownedTokens.map(t => (
-                  <option key={t} value={t}>
-                    {t}
-                  </option>
-                ))}
-              </select>
-            ) : (
-              <span> - No Owned Tokens</span>
-            )}
-          </label>
-        </div>
-
+        {isFetching && <div>Getting Public Mint Status...</div>}
+        {!isFetching && (
+          <>
+            <div className="row">
+              <label>
+                Public Mint
+                <select
+                  value={publicMint ? 'true' : 'false'}
+                  className="w-full builder-input"
+                  disabled={disable}
+                  onChange={e => {
+                    resetState();
+                    setPublicMint(e.target.value === 'true');
+                  }}
+                >
+                  <option value={'true'}>Enabled</option>
+                  <option value={'false'}>Disabled</option>
+                </select>
+              </label>
+            </div>
+            <small>
+              Current Status: {isPublicMint ? 'Enabled' : 'Disabled'}
+            </small>
+          </>
+        )}
         <div className="row">
           <label>
             Gas Token
@@ -236,7 +225,7 @@ export default function NftBurn() {
             }}
             disabled={buttonDisabled}
           >
-            Burn Token
+            Toggle Public Mint
           </button>
         </div>
       </div>
@@ -245,7 +234,7 @@ export default function NftBurn() {
 }
 `;
 
-export default function NftBurn() {
+export default function NftPublicMint() {
   const { userSession } = useAuth();
 
   const { resetState, setCurrentBuilder, signed, result, error } = useRootStore(
@@ -262,6 +251,16 @@ export default function NftBurn() {
   const getExtrinsic = useGetExtrinsic();
 
   const [collectionId, setCollectionId] = useState<number>(709732);
+  const debouncedCollectionId = useDebounce(collectionId, 500);
+
+  const { data: isPublicMint, isFetching } = useGetNftPublicMint(
+    debouncedCollectionId
+  );
+
+  const [publicMint, setPublicMint] = useState<boolean>(
+    isPublicMint?.enabled ? true : false
+  );
+
   const [slippage, setSlippage] = useState<string>('5');
 
   const shouldShowEoa = useShouldShowEoa();
@@ -270,37 +269,11 @@ export default function NftBurn() {
     shouldShowEoa ? 'eoa' : 'fpass'
   );
 
-  const {
-    data: ownedTokens,
-    isFetching,
-    isLoading,
-  } = useGetTokens(
-    userSession
-      ? fromWallet === 'fpass'
-        ? userSession?.futurepass
-        : userSession?.eoa
-      : '',
-    collectionId
-  );
-
   const [feeAssetId, setFeeAssetId] = useState<number>(2);
-
-  const [serialNumber, setSerialNumber] = useState<string>('');
-
-  useEffect(() => {
-    if (ownedTokens && ownedTokens.length > 0) {
-      setSerialNumber(ownedTokens[0].toString());
-    }
-  }, [ownedTokens]);
 
   const createBuilder = useCallback(async () => {
     if (!trnApi || !signer || !userSession) {
       console.log('Missing trnApi, signer or userSession');
-      return;
-    }
-
-    if (serialNumber === '') {
-      console.log('Missing serial number');
       return;
     }
 
@@ -309,9 +282,7 @@ export default function NftBurn() {
       signer,
       userSession.eoa,
       collectionId
-    ).burn({
-      serialNumber: Number(serialNumber),
-    });
+    ).togglePublicMint(publicMint);
 
     if (fromWallet === 'fpass') {
       if (feeAssetId === 2) {
@@ -342,8 +313,8 @@ export default function NftBurn() {
     trnApi,
     signer,
     userSession,
-    serialNumber,
     collectionId,
+    publicMint,
     fromWallet,
     getExtrinsic,
     setCurrentBuilder,
@@ -351,14 +322,14 @@ export default function NftBurn() {
   ]);
 
   const buttonDisabled = useMemo(() => {
-    return disable || ownedTokens?.length === 0;
-  }, [disable, ownedTokens]);
+    return disable;
+  }, [disable]);
 
   return (
     <div className={`card ${disable ? 'disabled' : ''}`}>
       <div className="inner">
         <CodeView code={codeString}>
-          <h3>Burn Nft</h3>
+          <h3>Nft Enable Public Mint</h3>
         </CodeView>
         <div className="row">
           <SendFrom
@@ -385,33 +356,31 @@ export default function NftBurn() {
             />
           </label>
         </div>
-        <div className="row">
-          <label>
-            Serial Number
-            {isFetching || isLoading ? (
-              <span> Checking Token Ownership</span>
-            ) : ownedTokens && ownedTokens.length > 0 ? (
-              <select
-                value={serialNumber}
-                className="w-full builder-input"
-                disabled={disable}
-                onChange={e => {
-                  resetState();
-                  setSerialNumber(e.target.value);
-                }}
-              >
-                {ownedTokens.map(t => (
-                  <option key={t} value={t}>
-                    {t}
-                  </option>
-                ))}
-              </select>
-            ) : (
-              <span> - No Owned Tokens</span>
-            )}
-          </label>
-        </div>
-
+        {isFetching && <div>Getting Public Mint Status...</div>}
+        {!isFetching && (
+          <>
+            <div className="row">
+              <label>
+                Public Mint
+                <select
+                  value={publicMint ? 'true' : 'false'}
+                  className="w-full builder-input"
+                  disabled={disable}
+                  onChange={e => {
+                    resetState();
+                    setPublicMint(e.target.value === 'true');
+                  }}
+                >
+                  <option value={'true'}>Enabled</option>
+                  <option value={'false'}>Disabled</option>
+                </select>
+              </label>
+            </div>
+            <small>
+              Current Status: {isPublicMint ? 'Enabled' : 'Disabled'}
+            </small>
+          </>
+        )}
         <div className="row">
           <label>
             Gas Token
@@ -452,7 +421,7 @@ export default function NftBurn() {
             }}
             disabled={buttonDisabled}
           >
-            Burn Token
+            Toggle Public Mint
           </button>
         </div>
       </div>
