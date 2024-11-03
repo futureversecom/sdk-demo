@@ -229,11 +229,7 @@ const AuthMenu = ({
   );
 };
 
-const SwappablesMenu = ({
-  setIsOpen,
-}: {
-  setIsOpen?: Dispatch<SetStateAction<boolean>>;
-}) => {
+const SwappablesMenu = () => {
   return (
     <>
       <DocumentationLink links={swappablesLinks} navName="swappables" />
@@ -287,7 +283,7 @@ export const Menu: React.FC<MenuProps> = ({ setIsOpen }) => {
         <AssetRegisterMenu setIsOpen={setIsOpen} />
       </DropDownMenu>
       <DropDownMenu title="Swappables">
-        <SwappablesMenu setIsOpen={setIsOpen} />
+        <SwappablesMenu />
       </DropDownMenu>
 
       <DropDownMenu
@@ -383,7 +379,7 @@ export const MobileMenu: React.FC<MenuProps> = ({ setIsOpen }) => {
         </li>
         <li>
           <div className="sectionTitle">Swappables</div>
-          <SwappablesMenu setIsOpen={setIsOpen} />
+          <SwappablesMenu />
         </li>
         <li>
           <div className="wallet-dropdown-inner">
