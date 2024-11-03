@@ -422,7 +422,7 @@ export default function NftPublicMint() {
     <div className={`card ${disable ? 'disabled' : ''}`}>
       <div className="inner">
         <CodeView code={codeString}>
-          <h3>Nft Public Mint</h3>
+          <h3>Nft Public Mint Price</h3>
         </CodeView>
         <div className="row">
           <SendFrom

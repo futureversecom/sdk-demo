@@ -236,44 +236,6 @@ const SwappablesMenu = ({
 }) => {
   return (
     <>
-      <ul className="dropdown-content">
-        <li>
-          <a
-            onClick={() => setIsOpen && setIsOpen(false)}
-            href="https://partybear.futurepass.futureverse.app/?tokenId="
-            target="_blank"
-            rel="nofollow"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              flexWrap: 'nowrap',
-            }}
-          >
-            Party Bear{' '}
-            <ExternalLink
-              styles={{ width: '16px', height: '16px', marginLeft: '6px' }}
-            />
-          </a>
-        </li>
-        <li>
-          <a
-            onClick={() => setIsOpen && setIsOpen(false)}
-            href="https://raicers.futurepass.futureverse.app/?tokenId="
-            target="_blank"
-            rel="nofollow"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              flexWrap: 'nowrap',
-            }}
-          >
-            Party Bear{' '}
-            <ExternalLink
-              styles={{ width: '16px', height: '16px', marginLeft: '6px' }}
-            />
-          </a>
-        </li>
-      </ul>
       <DocumentationLink links={swappablesLinks} navName="swappables" />
     </>
   );
