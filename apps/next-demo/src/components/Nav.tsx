@@ -232,6 +232,9 @@ const AuthMenu = ({
 const SwappablesMenu = () => {
   return (
     <>
+      <ul className="dropdown-content">
+        <li className="no-hover">Demos Coming Soon</li>
+      </ul>
       <DocumentationLink links={swappablesLinks} navName="swappables" />
     </>
   );
