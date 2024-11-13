@@ -1,7 +1,11 @@
 export const authDocLinks = [
   {
-    title: 'NPM',
+    title: 'Auth React NPM',
     link: 'https://www.npmjs.com/package/@futureverse/auth-react',
+  },
+  {
+    title: 'Auth UI NPM',
+    link: 'https://www.npmjs.com/package/@futureverse/auth-ui',
   },
   {
     title: 'Docs',
@@ -39,6 +43,10 @@ export const swappablesLinks = [
   {
     title: 'NPM',
     link: 'https://www.npmjs.com/package/@futureverse/swappable-viewer-react',
+  },
+  {
+    title: 'Docs',
+    link: 'https://docs.futureverse.com/dev/assets/swappables',
   },
   {
     title: 'Docs',

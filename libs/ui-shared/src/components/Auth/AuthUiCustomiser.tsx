@@ -191,7 +191,7 @@ export const AuthUiCustomiser = () => {
 
   const [themeConfig, setThemeConfig] = useState(defaultTheme);
 
-  const { colors, ...filteredConfig } = themeConfig as {
+  const { theme, colors, ...filteredConfig } = themeConfig as {
     [key: string]: unknown;
   };
 

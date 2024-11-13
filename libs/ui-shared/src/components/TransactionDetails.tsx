@@ -9,6 +9,7 @@ import { formatUnits } from 'viem';
 import { Dialog } from './Dialog/Dialog';
 import CodeView from './CodeView';
 import { TransactionPayload } from '@futureverse/transact-react';
+import { useQueryClient } from '@tanstack/react-query';
 
 const codeString = `
 import React, { useMemo, useState } from 'react';
@@ -235,6 +236,7 @@ export default function TransactionDetails() {
 `;
 export default function TransactionDetails() {
   const [showDialog, setShowDialog] = useState(true);
+  const queryClient = useQueryClient();
 
   const {
     gas,
@@ -264,12 +266,20 @@ export default function TransactionDetails() {
     console.log('Sent');
   }, [setSent]);
 
+  const onResult = useCallback(
+    (result: ExtrinsicResult) => {
+      resultCallback && resultCallback(result);
+      queryClient.clear();
+    },
+    [resultCallback, queryClient]
+  );
+
   const signExtrinsic = useCallback(async () => {
     if (toSign && currentBuilder) {
       try {
         const result = await currentBuilder.signAndSend({ onSign, onSend });
         setResult(result as ExtrinsicResult);
-        resultCallback && resultCallback(result);
+        onResult && onResult(result);
       } catch (e: any) {
         console.error(e);
         if (typeof e === 'string') {
@@ -280,15 +290,7 @@ export default function TransactionDetails() {
         }
       }
     }
-  }, [
-    currentBuilder,
-    onSend,
-    onSign,
-    resultCallback,
-    setError,
-    setResult,
-    toSign,
-  ]);
+  }, [currentBuilder, onResult, onSend, onSign, setError, setResult, toSign]);
 
   const showClose = useMemo(() => {
     if ((signed || sent) && !result && !error) {
