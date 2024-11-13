@@ -629,25 +629,6 @@ export default function NftCreateCollection() {
 
     setResultCallback && setResultCallback(callBackHandler);
 
-    const callBackHandler = (result: ExtrinsicResult) => {
-      console.log('Collection created');
-      if (result && currentBuilder) {
-        const [createdId] = currentBuilder.filterExtrinsicEvents({
-          events: result.result.events,
-          names: ['Nft.CollectionCreate'],
-        });
-
-        setCreatedCollectionId(
-          (
-            createdId.get('event')?.toHuman() as {
-              data: { collectionUuid: string };
-            }
-          )?.data?.collectionUuid
-        );
-      }
-    };
-
-    setResultCallback && setResultCallback(callBackHandler);
     getExtrinsic(nft);
     setCurrentBuilder(nft);
   }, [
