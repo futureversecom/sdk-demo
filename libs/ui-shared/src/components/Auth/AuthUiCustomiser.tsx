@@ -49,13 +49,12 @@ const defaultTheme: ThemeConfig = {
     page: 'rgba(255, 91, 39, 1)',
   },
   font: {
-    fontUrl: 'https://app.jenmusic.ai/cdn/src/font/font.css',
-    fontName: 'JenFont',
+    fontUrl: '',
+    fontName: '',
   },
   images: {
-    logo: 'https://app.jenmusic.ai/cdn/src/logo.svg',
-    background:
-      'https://fastly.picsum.photos/id/418/2140/1200.jpg?hmac=TjxRufkWGH_r_xr4cUmJG5iuf3Lmsgb4BAjR0cxhIGY',
+    logo: '',
+    background: '',
   },
 };
 
@@ -191,7 +190,7 @@ export const AuthUiCustomiser = () => {
 
   const [themeConfig, setThemeConfig] = useState(defaultTheme);
 
-  const { theme, colors, ...filteredConfig } = themeConfig as {
+  const { theme, colors, font, ...filteredConfig } = themeConfig as {
     [key: string]: unknown;
   };
 
