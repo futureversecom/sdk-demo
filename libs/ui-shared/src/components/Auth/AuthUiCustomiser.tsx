@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SketchPicker } from 'react-color';
 import {
   AuthThemeProvider,
@@ -24,30 +24,30 @@ const rgbaToString = (rgba: { r: number; g: number; b: number; a: number }) =>
 
 const defaultTheme: ThemeConfig = {
   ...DefaultTheme,
-  // defaultAuthOption: 'web3',
-  // colors: {
-  //   primaryBackground: 'rgba(246, 246, 247, 0.1)',
-  //   primaryForeground: 'rgba(246, 246, 247, 1)',
-  //   primaryHover: 'rgba(246, 246, 247, 0.2)',
-  //   primaryActive: 'rgba(246, 246, 247, 0.2)',
-  //   primaryBackgroundDisabled: 'rgba(55, 55, 57, 1)',
-  //   primaryForegroundDisabled: 'rgba(103, 102, 109, 1)',
-  //   secondaryBackground: 'rgba(246, 246, 247, 0)',
-  //   secondaryForeground: 'rgba(206, 207, 211, 1)',
-  //   secondaryHover: 'rgba(246, 246, 247, 0)',
-  //   secondaryActive: 'rgba(246, 246, 247, .05)',
-  //   secondaryBackgroundDisabled: 'rgba(55, 55, 57, 1)',
-  //   secondaryForegroundDisabled: 'rgba(103, 102, 109, 1)',
-  //   border: 'rgba(55, 55, 57, 1)',
-  //   borderHover: 'rgba(246, 246, 247, 1)',
-  //   borderActive: 'rgba(246, 246, 247, 1)',
-  //   borderError: 'rgba(171, 22, 57, 1)',
-  //   errorForeground: 'rgba(171, 22, 57, 1)',
-  //   body: 'rgba(246, 246, 247, 1)',
-  //   muted: 'rgba(206, 207, 211, 1)',
-  //   surface: 'rgba(12, 12, 12, 1)',
-  //   page: 'rgba(255, 91, 39, 1)',
-  // },
+  defaultAuthOption: 'web3',
+  colors: {
+    primaryBackground: 'rgba(246, 246, 247, 0.1)',
+    primaryForeground: 'rgba(246, 246, 247, 1)',
+    primaryHover: 'rgba(246, 246, 247, 0.2)',
+    primaryActive: 'rgba(246, 246, 247, 0.2)',
+    primaryBackgroundDisabled: 'rgba(55, 55, 57, 1)',
+    primaryForegroundDisabled: 'rgba(103, 102, 109, 1)',
+    secondaryBackground: 'rgba(246, 246, 247, 0)',
+    secondaryForeground: 'rgba(206, 207, 211, 1)',
+    secondaryHover: 'rgba(246, 246, 247, 0)',
+    secondaryActive: 'rgba(246, 246, 247, .05)',
+    secondaryBackgroundDisabled: 'rgba(55, 55, 57, 1)',
+    secondaryForegroundDisabled: 'rgba(103, 102, 109, 1)',
+    border: 'rgba(55, 55, 57, 1)',
+    borderHover: 'rgba(246, 246, 247, 1)',
+    borderActive: 'rgba(246, 246, 247, 1)',
+    borderError: 'rgba(171, 22, 57, 1)',
+    errorForeground: 'rgba(171, 22, 57, 1)',
+    body: 'rgba(246, 246, 247, 1)',
+    muted: 'rgba(206, 207, 211, 1)',
+    surface: 'rgba(12, 12, 12, 1)',
+    page: 'rgba(255, 91, 39, 1)',
+  },
   font: {
     fontUrl: 'https://app.jenmusic.ai/cdn/src/font/font.css',
     fontName: 'JenFont',
