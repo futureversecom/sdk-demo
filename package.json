@@ -14,7 +14,7 @@
     "@futureverse/asset-register": "latest",
     "@futureverse/auth": "latest",
     "@futureverse/auth-react": "latest",
-    "@futureverse/auth-ui": "0.2.0-beta.5",
+    "@futureverse/auth-ui": "latest",
     "@futureverse/signer": "latest",
     "@futureverse/transact": "latest",
     "@futureverse/transact-react": "latest",
