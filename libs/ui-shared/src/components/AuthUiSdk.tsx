@@ -5,11 +5,15 @@ import { useIsMounted } from '../hooks';
 
 import { Auth, AuthCustodialFirst } from './Auth';
 
-import { AuthUiProvider, DarkTheme, ThemeConfig } from '@futureverse/auth-ui';
+import {
+  AuthUiProvider,
+  DefaultTheme,
+  ThemeConfig,
+} from '@futureverse/auth-ui';
 import { FutureverseAuthClient } from '@futureverse/auth';
 
 const customTheme: ThemeConfig = {
-  ...DarkTheme,
+  ...DefaultTheme,
   defaultAuthOption: 'custodial',
 };
 

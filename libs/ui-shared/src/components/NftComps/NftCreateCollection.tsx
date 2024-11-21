@@ -625,10 +625,10 @@ export default function NftCreateCollection() {
           )?.data?.collectionUuid
         );
       }
-      setResultCallback(undefined);
     };
 
-    setResultCallback(callBackHandler);
+    setResultCallback && setResultCallback(callBackHandler);
+
     getExtrinsic(nft);
     setCurrentBuilder(nft);
   }, [

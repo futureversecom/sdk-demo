@@ -5,7 +5,7 @@ import {
   FutureverseWagmiProvider,
 } from '@futureverse/auth-react';
 
-import { DarkTheme, AuthUiProvider, LightTheme } from '@futureverse/auth-ui';
+import { AuthUiProvider } from '@futureverse/auth-ui';
 
 import {
   Home,
@@ -47,9 +47,7 @@ export {
   AssetFromEoaFeeProxy,
   AssetFromFuturePass,
   AssetFromFuturePassFeeProxy,
-  DarkTheme,
   AuthUiProvider,
-  LightTheme,
   Custom,
   CustomBuilder,
   CustomBuilderComp,

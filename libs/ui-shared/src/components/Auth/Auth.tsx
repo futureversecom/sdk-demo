@@ -1,6 +1,6 @@
 'use client';
 
-import { DarkTheme, ThemeConfig, useAuthUi } from '@futureverse/auth-ui';
+import { DefaultTheme, ThemeConfig, useAuthUi } from '@futureverse/auth-ui';
 import React, { useEffect } from 'react';
 import CodeView from '../CodeView';
 import {
@@ -10,7 +10,7 @@ import {
 } from '../../lib';
 
 const codeString = `
-import { DarkTheme, ThemeConfig, useAuthUi } from '@futureverse/auth-ui';
+import { DefaultTheme, ThemeConfig, useAuthUi } from '@futureverse/auth-ui';
 import React, { useEffect } from 'react';
 import CodeView from '../CodeView';
 import {
@@ -75,7 +75,7 @@ export function Auth({ setTheme }: { setTheme: (theme: ThemeConfig) => void }) {
           <button
             onClick={() => {
               setTheme({
-                ...DarkTheme,
+                ...DefaultTheme,
                 defaultAuthOption: 'web3',
               });
 

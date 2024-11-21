@@ -1,6 +1,6 @@
 'use client';
 
-import { DarkTheme, ThemeConfig, useAuthUi } from '@futureverse/auth-ui';
+import { DefaultTheme, ThemeConfig, useAuthUi } from '@futureverse/auth-ui';
 import React, { useEffect } from 'react';
 import CodeView from '../CodeView';
 import {
@@ -10,7 +10,7 @@ import {
 } from '../../lib';
 
 const codeString = `
-import { DarkTheme, ThemeConfig, useAuthUi } from '@futureverse/auth-ui';
+import { DefaultTheme, ThemeConfig, useAuthUi } from '@futureverse/auth-ui';
 import React, { useEffect } from 'react';
 import CodeView from '../CodeView';
 import {
@@ -44,7 +44,7 @@ export function AuthCustodialFirst({
           <button
             onClick={() => {
               setTheme({
-                ...DarkTheme,
+                ...DefaultTheme,
                 defaultAuthOption: 'custodial',
               });
               openLogin();
@@ -84,7 +84,7 @@ export function AuthCustodialFirst({
           <button
             onClick={() => {
               setTheme({
-                ...DarkTheme,
+                ...DefaultTheme,
                 defaultAuthOption: 'custodial',
               });
               openLogin();
