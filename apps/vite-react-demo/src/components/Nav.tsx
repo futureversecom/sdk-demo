@@ -9,7 +9,6 @@ import {
   ExternalLink,
   MenuProps,
   Navigation,
-  polkadotLinks,
   shortAddress,
   swappablesLinks,
   transactLinks,
@@ -27,6 +26,35 @@ export default function Nav({
     <Navigation Menu={Menu} isMobileOpen={isOpen} setIsMobileOpen={setIsOpen} />
   );
 }
+const AssetRegisterMenu = ({
+  setIsOpen,
+}: {
+  setIsOpen?: Dispatch<SetStateAction<boolean>>;
+}) => {
+  return (
+    <>
+      <ul className="dropdown-content">
+        <li>
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            to="/asset-register/view"
+          >
+            View Assets
+          </Link>
+        </li>
+        <li>
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            to="/asset-register/link"
+          >
+            Link/Unlink Assets
+          </Link>
+        </li>
+      </ul>
+      <DocumentationLink links={assetLinks} navName="assets" />
+    </>
+  );
+};
 
 const TransactMenu = ({
   setIsOpen,
@@ -97,6 +125,137 @@ const TransactMenu = ({
     </>
   );
 };
+
+const EvmMenu = ({
+  setIsOpen,
+}: {
+  setIsOpen?: Dispatch<SetStateAction<boolean>>;
+}) => {
+  return (
+    <>
+      <ul className="dropdown-content">
+        <li>
+          <Link onClick={() => setIsOpen && setIsOpen(false)} to="/evm/erc-20">
+            ERC-20
+          </Link>
+        </li>
+        <li>
+          <Link onClick={() => setIsOpen && setIsOpen(false)} to="/evm/erc-721">
+            ERC-721
+          </Link>
+        </li>
+        <li>
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            to="/evm/erc-1155"
+          >
+            ERC-1155
+          </Link>
+        </li>
+        <li>
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            to="/evm/fee-proxy"
+          >
+            Fee Proxy
+          </Link>
+        </li>
+        <li>
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            to="/evm/futurePass-proxy"
+          >
+            FuturePass Proxy
+          </Link>
+        </li>
+      </ul>
+      <DocumentationLink links={evmLinks} navName="polkadot" />
+    </>
+  );
+};
+
+const TransactionsMenu = ({
+  setIsOpen,
+}: {
+  setIsOpen?: Dispatch<SetStateAction<boolean>>;
+}) => {
+  return (
+    <ul className="">
+      <li className="grid cols-2 no-gap dropdown-content-wrapper">
+        <div className="col ">
+          <div className="subtitle">Native API</div>
+          <TransactMenu setIsOpen={setIsOpen} />
+        </div>
+        <div className="col">
+          <div className="subtitle">EVM API</div>
+          <EvmMenu setIsOpen={setIsOpen} />
+        </div>
+      </li>
+    </ul>
+  );
+};
+
+const AuthMenu = ({
+  setIsOpen,
+}: {
+  setIsOpen?: Dispatch<SetStateAction<boolean>>;
+}) => {
+  return (
+    <>
+      <ul className="dropdown-content">
+        <li>
+          <Link onClick={() => setIsOpen && setIsOpen(false)} to="/auth/ui">
+            Auth UI SDK
+          </Link>
+        </li>
+        <li>
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            to="/auth/ui-customiser"
+          >
+            Auth UI Customiser
+          </Link>
+        </li>
+        <li>
+          <Link onClick={() => setIsOpen && setIsOpen(false)} to="/auth/react">
+            Auth React SDK
+          </Link>
+        </li>
+        <li>
+          <a
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="https://login.futureverse.cloud/manageclients"
+            target="_blank"
+            rel="nofollow noopener noreferrer"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              flexWrap: 'nowrap',
+            }}
+          >
+            Manage Clients{' '}
+            <ExternalLink
+              styles={{ width: '16px', height: '16px', marginLeft: '6px' }}
+            />
+          </a>
+        </li>
+      </ul>
+      <DocumentationLink links={authDocLinks} navName="auth" />
+    </>
+  );
+};
+
+const SwappablesMenu = () => {
+  return (
+    <>
+      <ul className="dropdown-content">
+        <li className="no-hover">Demos Coming Soon</li>
+      </ul>
+      <DocumentationLink links={swappablesLinks} navName="swappables" />
+    </>
+  );
+};
+
 export const Menu: React.FC<MenuProps> = ({ setIsOpen }) => {
   const { signOut, userSession } = useAuth();
   const { disconnect, isConnected } = useConnector();
@@ -114,38 +273,28 @@ export const Menu: React.FC<MenuProps> = ({ setIsOpen }) => {
           <ExternalLink />
         </a>
       </li>
-      <DropDownMenu title="Polkadot API">
-        <ul className="dropdown-content">
-          <li className="no-hover">Coming Soon</li>
-        </ul>
-        <DocumentationLink links={polkadotLinks} navName="polkadot" />
-      </DropDownMenu>
-      <DropDownMenu title="EVM">
-        <ul className="dropdown-content">
-          <li className="no-hover">Coming Soon</li>
-        </ul>
-        <DocumentationLink links={evmLinks} navName="polkadot" />
-      </DropDownMenu>
+      <li>
+        <a
+          href="https://portal.rootnet.live/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="faucet-link"
+        >
+          <div>Portal</div>
+          <ExternalLink />
+        </a>
+      </li>
       <DropDownMenu title="Auth">
-        <ul className="dropdown-content">
-          <li className="no-hover">Coming Soon</li>
-        </ul>
-        <DocumentationLink links={authDocLinks} navName="auth" />
+        <AuthMenu setIsOpen={setIsOpen} />
       </DropDownMenu>
-      <DropDownMenu title="Transact">
-        <TransactMenu setIsOpen={setIsOpen} />
+      <DropDownMenu title="Transactions">
+        <TransactionsMenu setIsOpen={setIsOpen} />
       </DropDownMenu>
       <DropDownMenu title="Asset Register">
-        <ul className="dropdown-content">
-          <li className="no-hover">Coming Soon</li>
-        </ul>
-        <DocumentationLink links={assetLinks} navName="assets" />
+        <AssetRegisterMenu setIsOpen={setIsOpen} />
       </DropDownMenu>
       <DropDownMenu title="Swappables">
-        <ul className="dropdown-content">
-          <li className="no-hover">Coming Soon</li>
-        </ul>
-        <DocumentationLink links={swappablesLinks} navName="swappables" />
+        <SwappablesMenu />
       </DropDownMenu>
 
       <DropDownMenu
@@ -203,18 +352,19 @@ export const MobileMenu: React.FC<MenuProps> = ({ setIsOpen }) => {
           </a>
         </li>
         <li>
-          <div className="sectionTitle">Polkadot API</div>
-          <ul className="dropdown-content">
-            <li className="no-hover">Coming Soon</li>
-          </ul>
-          <DocumentationLink links={polkadotLinks} navName="polkadot" />
+          <a
+            href="https://portal.rootnet.live/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="faucet-link"
+          >
+            <div>Portal</div>
+            <ExternalLink />
+          </a>
         </li>
         <li>
-          <div className="sectionTitle">EVM</div>
-          <ul className="dropdown-content">
-            <li className="no-hover">Coming Soon</li>
-          </ul>
-          <DocumentationLink links={evmLinks} navName="polkadot" />
+          <div className="sectionTitle">Auth SDK</div>
+          <AuthMenu setIsOpen={setIsOpen} />
         </li>
         <li>
           <div className="sectionTitle">Auth</div>
@@ -225,21 +375,15 @@ export const MobileMenu: React.FC<MenuProps> = ({ setIsOpen }) => {
         </li>
         <li>
           <div className="sectionTitle">Transact</div>
-          <TransactMenu setIsOpen={setIsOpen} />
+          <TransactionsMenu setIsOpen={setIsOpen} />
         </li>
         <li>
           <div className="sectionTitle">Asset Register</div>
-          <ul className="dropdown-content">
-            <li className="no-hover">Coming Soon</li>
-          </ul>
-          <DocumentationLink links={assetLinks} navName="assets" />
+          <AssetRegisterMenu setIsOpen={setIsOpen} />
         </li>
         <li>
           <div className="sectionTitle">Swappables</div>
-          <ul className="dropdown-content">
-            <li className="no-hover">Coming Soon</li>
-          </ul>
-          <DocumentationLink links={swappablesLinks} navName="swappables" />
+          <SwappablesMenu />
         </li>
         <li>
           <div className="wallet-dropdown-inner">
