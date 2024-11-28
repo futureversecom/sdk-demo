@@ -113,6 +113,15 @@ pre {
   margin: 0;
 }
 
+p {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+p a {
+  text-decoration: underline;
+}
+
 ul {
   list-style: none;
   padding: 0;
@@ -248,6 +257,10 @@ pre {
 
 .grid.cols-auto {
   grid-template-columns: 60px 60px auto;
+}
+
+.no-gap {
+  gap: 0;
 }
 
 .toggle-button,
@@ -1301,6 +1314,25 @@ nav li {
   padding-top: 0;
 }
 
+.subtitle {
+  padding: 8px;
+  padding-bottom: 0;
+  padding-left: 6px;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+  opacity: 0.75;
+}
+
+
+.dropdown-content-wrapper .col {
+  display: flex;
+  height: 100%;
+  align-content: flex-start;
+  flex-direction: column;
+}
+
 .dropdown-content {
   display: flex;
   flex-direction: column;
@@ -1410,9 +1442,21 @@ nav li {
   color: var(--cta);
 }
 
-.documentation-link ul li:last-of-type a {
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+
+.grid.cols-2.dropdown-content-wrapper {
+  grid-template-columns: 1fr;
+}
+
+.dropdown-content-wrapper .col:nth-child(1) .documentation-link ul li:last-of-type a {
+  border-bottom-right-radius: 0;
+}
+
+.dropdown-content-wrapper .col:nth-child(2) .documentation-link ul li:last-of-type a {
+  border-bottom-left-radius: 0;
+}
+
+.documentation-link ul li:last-of-type a:hover {
+  background: var(--cta-hover);
 }
 
 .documentation-link:hover,
@@ -1681,6 +1725,23 @@ nav li {
     height: calc(100dvh - (var(--body-padding) * 2));
   }
 
+  .dropdown-content-wrapper {
+    background: var(--dropdown-menu);
+    border-radius: 8px;
+  }
+
+  .subtitle {
+    padding-left: 8px
+  }
+
+  .grid.cols-2.dropdown-content-wrapper {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .dropdown-content-wrapper .col:nth-child(1) {
+    border-right: 1px solid var(--cta);
+  }
+
   /* .hooks-btn,
   .copy-code-btn,
   .close-code-btn {
@@ -1896,6 +1957,14 @@ button.fvaui-button-secondary:hover .fvaui-iconWrapper {
   justify-content: center;
 }
 
+.asset-selector-card {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
 .asset-selector-modal {
   position: fixed;
   top: 50%;
@@ -1913,6 +1982,7 @@ button.fvaui-button-secondary:hover .fvaui-iconWrapper {
   overflow: hidden;
 }
 
+.asset-selector-card .card,
 .asset-selector-modal .card {
   color: var(--white);
   height: calc(100vh - 32px);
@@ -1922,6 +1992,7 @@ button.fvaui-button-secondary:hover .fvaui-iconWrapper {
   width: calc(100vw - 32px);
 }
 
+.asset-selector-card .inner,
 .asset-selector-modal .inner {
   display: flex;
   flex-direction: column;
@@ -1930,6 +2001,7 @@ button.fvaui-button-secondary:hover .fvaui-iconWrapper {
   overflow: scroll;
 }
 
+.asset-selector-card .inner .asset-row,
 .asset-selector-modal .inner .asset-row {
   display: flex;
   flex-direction: row;
@@ -1937,6 +2009,8 @@ button.fvaui-button-secondary:hover .fvaui-iconWrapper {
   flex-wrap: wrap;
 }
 
+
+.asset-selector-card .asset-card,
 .asset-selector-modal .asset-card {
   width: auto;
   padding: 8px;
@@ -1945,16 +2019,44 @@ button.fvaui-button-secondary:hover .fvaui-iconWrapper {
   box-shadow: 0 0 16px -8px rgba(0, 0, 0, 0.8);
 }
 
+.asset-selector-card .asset-card {
+  width: calc((100% / 3) - 6px);
+}
+
+.asset-selector-card .asset-collection-id .value {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.asset-selector-card .button-row .btn.green {
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0;
+  width: 100%;
+  display: block
+}
+
+.asset-selector-card .button-row .btn.green:hover {
+  background: var(--cta-hover);
+}
+
+.asset-selector-card .asset-card hr,
 .asset-selector-modal .asset-card hr {
   display: none;
 }
 
+.asset-selector-card .asset-card .flex-col,
 .asset-selector-modal .asset-card .flex-col {
   display: flex;
   flex-direction: column;
   margin-bottom: 8px;
 }
 
+.asset-selector-card .asset-card .flex-col .title,
 .asset-selector-modal .asset-card .flex-col .title {
   font-size: 0.6rem;
   line-height: 1.2;
@@ -1965,8 +2067,17 @@ button.fvaui-button-secondary:hover .fvaui-iconWrapper {
   text-transform: uppercase;
 }
 
+.asset-selector-card .asset-card .flex-col .value,
 .asset-selector-modal .asset-card .flex-col .value {
   font-size: 1rem;
   line-height: 1.2;
   font-weight: 400;
+}
+
+.asset-selector-card .asset-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  overflow: hidden;
 }

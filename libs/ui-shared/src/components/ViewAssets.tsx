@@ -2,18 +2,17 @@
 
 import React, { useEffect } from 'react';
 
-import TransactionDetails from './TransactionDetails';
 import { useIsMounted } from '../hooks';
-
 import { useAuth } from '@futureverse/auth-react';
 import { useRootStore } from '../hooks/useRootStore';
-import { CustomBuilderComp } from './CustomComps';
 
-export default function CustomBuilder() {
+import { ViewAssets } from './ViewAssetComps';
+
+export default function ViewAssetsComp() {
   const isMounted = useIsMounted();
 
   const { userSession } = useAuth();
-  const { gas, resetState } = useRootStore(state => state);
+  const { resetState } = useRootStore(state => state);
 
   useEffect(() => {
     return () => {
@@ -22,7 +21,7 @@ export default function CustomBuilder() {
   }, [resetState]);
 
   if (!userSession) {
-    return <h1>Sign in to interact with custom extrinsics</h1>;
+    return <h1>Sign in to interact with assets</h1>;
   }
 
   if (!isMounted) {
@@ -31,16 +30,9 @@ export default function CustomBuilder() {
 
   return (
     <>
-      <h1>Extrinsic Builder Demo</h1>
+      <h1>Asset Register</h1>
       <div className="auto-grid">
-        <CustomBuilderComp />
-      </div>
-      <div className="auto-grid">
-        {gas && (
-          <div className="w-full">
-            <TransactionDetails />
-          </div>
-        )}
+        <ViewAssets />
       </div>
     </>
   );
