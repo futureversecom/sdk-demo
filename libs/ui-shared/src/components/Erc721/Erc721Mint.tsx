@@ -50,8 +50,8 @@ export default function Erc721Mint() {
   const { userSession } = useAuth();
   const shouldShowEoa = useShouldShowEoa();
 
-  const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
-    shouldShowEoa ? 'eoa' : 'fpass'
+  const [fromWallet, setFromWallet] = useState<'eoa' | 'pass'>(
+    shouldShowEoa ? 'eoa' : 'pass'
   );
   const [feeAssetIdDisabled, setFeeAssetIdDisabled] = useState(false);
 
@@ -99,7 +99,7 @@ export default function Erc721Mint() {
   ]);
 
   useEffect(() => {
-    if (fromWallet === 'fpass') {
+    if (fromWallet === 'pass') {
       setFeeAssetId(2);
       setFeeAssetIdDisabled(true);
     } else {
@@ -268,8 +268,8 @@ export default function Erc721Mint() {
   const { userSession } = useAuth();
   const shouldShowEoa = useShouldShowEoa();
 
-  const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
-    shouldShowEoa ? 'eoa' : 'fpass'
+  const [fromWallet, setFromWallet] = useState<'eoa' | 'pass'>(
+    shouldShowEoa ? 'eoa' : 'pass'
   );
   const [feeAssetIdDisabled, setFeeAssetIdDisabled] = useState(false);
 
@@ -317,7 +317,7 @@ export default function Erc721Mint() {
   ]);
 
   useEffect(() => {
-    if (fromWallet === 'fpass') {
+    if (fromWallet === 'pass') {
       setFeeAssetId(2);
       setFeeAssetIdDisabled(true);
     } else {

@@ -246,7 +246,7 @@ export default function CustomEvm() {
           <div className="col col-2">
             <div className="row">
               <label>
-                Use FuturePass
+                Use Pass
                 <select
                   value={evmUseFuturePass.toString()}
                   className="w-full builder-input"
@@ -257,8 +257,8 @@ export default function CustomEvm() {
                     );
                   }}
                 >
-                  <option value={'true'}>Use FuturePass</option>
-                  <option value={'false'}>Do Not Use FuturePass</option>
+                  <option value={'true'}>Use Pass</option>
+                  <option value={'false'}>Do Not Use Pass</option>
                 </select>
               </label>
             </div>

@@ -166,7 +166,7 @@ export default function FpassErc721Mint() {
               }}
               disabled={buttonDisabled}
             >
-              Start FuturePass Proxy Mint
+              Start Pass Proxy Mint
             </button>
           </div>
         </div>
@@ -174,7 +174,7 @@ export default function FpassErc721Mint() {
       {showDialog && (
         <EvmModal
           setShowDialog={setShowDialog}
-          fromWallet={'fpass'}
+          fromWallet={'pass'}
           contract={contractDebounced}
           functionName="mint"
           abi={parseAbi(ERC721_PRECOMPILE_ABI)}
@@ -325,7 +325,7 @@ export default function FpassErc721Mint() {
               }}
               disabled={buttonDisabled}
             >
-              Start FuturePass Proxy Mint
+              Start Pass Proxy Mint
             </button>
           </div>
         </div>
@@ -333,7 +333,7 @@ export default function FpassErc721Mint() {
       {showDialog && (
         <EvmModal
           setShowDialog={setShowDialog}
-          fromWallet={'fpass'}
+          fromWallet={'pass'}
           contract={contractDebounced}
           functionName="mint"
           abi={parseAbi(ERC721_PRECOMPILE_ABI)}

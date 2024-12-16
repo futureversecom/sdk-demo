@@ -50,8 +50,8 @@ export default function Erc20Transfer() {
   const { userSession } = useAuth();
   const shouldShowEoa = useShouldShowEoa();
 
-  const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
-    shouldShowEoa ? 'eoa' : 'fpass'
+  const [fromWallet, setFromWallet] = useState<'eoa' | 'pass'>(
+    shouldShowEoa ? 'eoa' : 'pass'
   );
   const [feeAssetIdDisabled, setFeeAssetIdDisabled] = useState(false);
   const [assetId, setAssetId] = useState(1);
@@ -107,7 +107,7 @@ export default function Erc20Transfer() {
   );
 
   useEffect(() => {
-    if (fromWallet === 'fpass') {
+    if (fromWallet === 'pass') {
       setFeeAssetId(2);
       setFeeAssetIdDisabled(true);
     } else {
@@ -286,8 +286,8 @@ export default function Erc20Transfer() {
   const { userSession } = useAuth();
   const shouldShowEoa = useShouldShowEoa();
 
-  const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
-    shouldShowEoa ? 'eoa' : 'fpass'
+  const [fromWallet, setFromWallet] = useState<'eoa' | 'pass'>(
+    shouldShowEoa ? 'eoa' : 'pass'
   );
   const [feeAssetIdDisabled, setFeeAssetIdDisabled] = useState(false);
   const [assetId, setAssetId] = useState(1);
@@ -343,7 +343,7 @@ export default function Erc20Transfer() {
   );
 
   useEffect(() => {
-    if (fromWallet === 'fpass') {
+    if (fromWallet === 'pass') {
       setFeeAssetId(2);
       setFeeAssetIdDisabled(true);
     } else {

@@ -63,8 +63,8 @@ export default function AssetTransfer() {
 
   const shouldShowEoa = useShouldShowEoa();
 
-  const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
-    shouldShowEoa ? 'eoa' : 'fpass'
+  const [fromWallet, setFromWallet] = useState<'eoa' | 'pass'>(
+    shouldShowEoa ? 'eoa' : 'pass'
   );
 
   const [assetId, setAssetId] = useState<number>(1);
@@ -125,7 +125,7 @@ export default function AssetTransfer() {
       amount: parseInt(valueToSend.toString()),
     });
 
-    if (fromWallet === 'fpass') {
+    if (fromWallet === 'pass') {
       if (feeAssetId === 2) {
         await builder.addFuturePass(userSession.futurepass);
       }
@@ -310,8 +310,8 @@ export default function AssetTransfer() {
 
   const shouldShowEoa = useShouldShowEoa();
 
-  const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
-    shouldShowEoa ? 'eoa' : 'fpass'
+  const [fromWallet, setFromWallet] = useState<'eoa' | 'pass'>(
+    shouldShowEoa ? 'eoa' : 'pass'
   );
 
   const [assetId, setAssetId] = useState<number>(1);
@@ -372,7 +372,7 @@ export default function AssetTransfer() {
       amount: parseInt(valueToSend.toString()),
     });
 
-    if (fromWallet === 'fpass') {
+    if (fromWallet === 'pass') {
       if (feeAssetId === 2) {
         await builder.addFuturePass(userSession.futurepass);
       }
