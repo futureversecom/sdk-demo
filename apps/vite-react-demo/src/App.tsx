@@ -1,7 +1,6 @@
 import './App.css';
 import React from 'react';
 import { Routes, Route, Outlet, Link } from 'react-router-dom';
-import { useLocation as useReactRouterLocation } from 'react-router-dom';
 import {
   Evm,
   Home,
@@ -45,7 +44,7 @@ export default function App() {
 function Layout() {
   const [isOpen, setIsOpen] = React.useState(false);
   const isMobile = useIsMobile(992);
-  const reactRouterLocation = useReactRouterLocation();
+
   useIsAuthed({ redirectUrl: '/' });
 
   return (
@@ -65,7 +64,7 @@ function Layout() {
       <div className="inner">
         <Outlet />
       </div>
-      <Footer pathName={reactRouterLocation.pathname} />
+      <Footer />
     </div>
   );
 }
