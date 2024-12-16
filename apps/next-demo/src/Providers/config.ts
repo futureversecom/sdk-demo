@@ -32,7 +32,7 @@ export const getWagmiConfig = async () => {
     transports: {
       7672: http('https://porcini.rootnet.app/'),
     },
-    ssr: true,
+    ssr: false,
     chains: [mainnet, porcini],
     storage: createStorage({
       storage: cookieStorage,
