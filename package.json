@@ -10,11 +10,11 @@
   "private": true,
   "dependencies": {
     "@ensdomains/ensjs": "^4.0.1-alpha.0",
-    "@futureverse/asset-register-react": "latest",
     "@futureverse/asset-register": "latest",
+    "@futureverse/asset-register-react": "latest",
     "@futureverse/auth": "latest",
     "@futureverse/auth-react": "latest",
-    "@futureverse/auth-ui": "latest",
+    "@futureverse/auth-ui": "^0.6.3",
     "@futureverse/signer": "latest",
     "@futureverse/transact": "latest",
     "@futureverse/transact-react": "latest",
