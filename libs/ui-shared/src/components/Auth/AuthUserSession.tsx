@@ -66,7 +66,7 @@ export function AuthUserSession() {
           </div>
         )}
         <div className="row content-row">
-          <div className="title">FuturePass</div>
+          <div className="title">Pass</div>
           <div className="content">{userSession?.futurepass}</div>
         </div>
         <div className="row content-row">
@@ -148,7 +148,7 @@ export function AuthUserSession() {
           </div>
         )}
         <div className="row content-row">
-          <div className="title">FuturePass</div>
+          <div className="title">Pass</div>
           <div className="content">{userSession?.futurepass}</div>
         </div>
         <div className="row content-row">

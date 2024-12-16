@@ -167,7 +167,7 @@ const EvmMenu = ({
             onClick={() => setIsOpen && setIsOpen(false)}
             href="/evm/futurePass-proxy"
           >
-            FuturePass Proxy
+            Pass Proxy
           </Link>
         </li>
       </ul>

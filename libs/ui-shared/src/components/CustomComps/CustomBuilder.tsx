@@ -468,7 +468,7 @@ export default function CustomBuilderComp() {
             <>
               <div className="row">
                 <label>
-                  Use FuturePass
+                  Use Pass
                   <select
                     value={useFuturePass.toString()}
                     className="w-full builder-input"
@@ -479,9 +479,9 @@ export default function CustomBuilderComp() {
                       );
                     }}
                   >
-                    <option value={'true'}>Use FuturePass</option>
+                    <option value={'true'}>Use Pass</option>
                     {shouldShowEoa && (
-                      <option value={'false'}>Do Not Use FuturePass</option>
+                      <option value={'false'}>Do Not Use Pass</option>
                     )}
                   </select>
                 </label>
@@ -975,7 +975,7 @@ export default function CustomBuilderComp() {
             <>
               <div className="row">
                 <label>
-                  Use FuturePass
+                  Use Pass
                   <select
                     value={useFuturePass.toString()}
                     className="w-full builder-input"
@@ -986,9 +986,9 @@ export default function CustomBuilderComp() {
                       );
                     }}
                   >
-                    <option value={'true'}>Use FuturePass</option>
+                    <option value="true">Use Pass</option>
                     {shouldShowEoa && (
-                      <option value={'false'}>Do Not Use FuturePass</option>
+                      <option value="false">Do Not Use Pass</option>
                     )}
                   </select>
                 </label>

@@ -36,7 +36,7 @@ import { EvmCollectionInfo } from '../EvmCollectionInfo';
 export default function FpassErc1155MintSingle() {
   const { userSession } = useAuth();
 
-  const fromWallet = 'fpass';
+  const fromWallet = 'pass';
 
   const [collectionId, setCollectionId] = useState(834660);
   const [collectionContract, setCollectionContract] = useState<\`0x$\{string}\`>(
@@ -196,7 +196,7 @@ export default function FpassErc1155MintSingle() {
               }}
               disabled={buttonDisabled}
             >
-              Start FuturePass Proxy Single Mint
+              Start Pass Proxy Single Mint
             </button>
           </div>
         </div>
@@ -225,7 +225,7 @@ export default function FpassErc1155MintSingle() {
 export default function FpassErc1155MintSingle() {
   const { userSession } = useAuth();
 
-  const fromWallet = 'fpass';
+  const fromWallet = 'pass';
 
   const [collectionId, setCollectionId] = useState(834660);
   const [collectionContract, setCollectionContract] = useState<`0x${string}`>(
@@ -385,7 +385,7 @@ export default function FpassErc1155MintSingle() {
               }}
               disabled={buttonDisabled}
             >
-              Start FuturePass Proxy Single Mint
+              Start Pass Proxy Single Mint
             </button>
           </div>
         </div>

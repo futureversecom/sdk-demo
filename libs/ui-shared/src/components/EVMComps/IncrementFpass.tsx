@@ -89,7 +89,7 @@ export default function IncrementFPass() {
     <div>
       <div className="inner">
         <CodeView code={codeString}>
-          <h3>Increment Counter From FuturePass</h3>
+          <h3>Increment Counter From Pass</h3>
           <span
               style={{ display: 'inline-block', fontSize: '0.8rem' }}
             >{shortAddress(userSession?.futurepass ?? '')}</span>
@@ -183,7 +183,7 @@ export default function IncrementFPass() {
     <div className={`card ${disable ? 'disabled' : ''}`}>
       <div className="inner">
         <CodeView code={codeString}>
-          <h3>Increment Counter From FuturePass</h3>
+          <h3>Increment Counter From Pass</h3>
           <span style={{ display: 'inline-block', fontSize: '0.8rem' }}>
             {shortAddress(userSession?.futurepass ?? '')}
           </span>

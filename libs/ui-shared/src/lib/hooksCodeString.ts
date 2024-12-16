@@ -803,7 +803,7 @@ export function useEvmSimulateTx({
   feeAssetId = 2,
   slippage,
 }: {
-  fromWallet: 'eoa' | 'fpass';
+  fromWallet: 'eoa' | 'pass';
   account: Address;
   address: Address;
   abi: Abi;
@@ -915,7 +915,7 @@ export function useEvmSimulateTx({
     if (fromWallet === 'eoa' && feeAssetId === 2 && !eoaIsLoaded) {
       fetchEoa();
     }
-    if (fromWallet === 'fpass' && !fpassIsLoaded) {
+    if (fromWallet === 'pass' && !fpassIsLoaded) {
       fetchFpass();
     }
     if (fromWallet === 'eoa' && feeAssetId !== 2 && !feeProxyIsLoaded) {
@@ -1045,7 +1045,7 @@ export function useEvmTx() {
         throw new Error('Address is required');
       }
 
-      if (fromWallet === 'fpass' && gasToken === 2) {
+      if (fromWallet === 'pass' && gasToken === 2) {
         const futurePassCall = encodeFunctionData({
           abi,
           functionName,

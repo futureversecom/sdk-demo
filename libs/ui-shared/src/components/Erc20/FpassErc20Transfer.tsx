@@ -45,7 +45,7 @@ export default function FpassErc20Transfer() {
   const { userSession } = useAuth();
   const shouldShowEoa = useShouldShowEoa();
 
-  const fromWallet = 'fpass';
+  const fromWallet = 'pass';
 
   const [assetId, setAssetId] = useState(1);
   const [assetContract, setAssetContract] = useState<\`0x\${string}\`>(
@@ -191,7 +191,7 @@ export default function FpassErc20Transfer() {
               }}
               disabled={buttonDisabled}
             >
-              Start FuturePass Proxy Transfer
+              Start Pass Proxy Transfer
             </button>
           </div>
         </div>
@@ -225,7 +225,7 @@ export default function FpassErc20Transfer() {
   const { userSession } = useAuth();
   const shouldShowEoa = useShouldShowEoa();
 
-  const fromWallet = 'fpass';
+  const fromWallet = 'pass';
 
   const [assetId, setAssetId] = useState(1);
   const [assetContract, setAssetContract] = useState<`0x${string}`>(
@@ -371,7 +371,7 @@ export default function FpassErc20Transfer() {
               }}
               disabled={buttonDisabled}
             >
-              Start FuturePass Proxy Transfer
+              Start Pass Proxy Transfer
             </button>
           </div>
         </div>

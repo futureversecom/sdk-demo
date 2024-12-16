@@ -41,7 +41,7 @@ const formatter = new Intl.NumberFormat('en-US', options);
 
 type AccountCardProps = {
   title: string;
-  type: 'eoa' | 'futurepass';
+  type: 'eoa' | 'pass';
 };
 
 export function AccountCard({ title, type }: AccountCardProps) {
@@ -205,7 +205,7 @@ const formatter = new Intl.NumberFormat('en-US', options);
 
 type AccountCardProps = {
   title: string;
-  type: 'eoa' | 'futurepass';
+  type: 'eoa' | 'pass';
 };
 
 export function AccountCard({ title, type }: AccountCardProps) {

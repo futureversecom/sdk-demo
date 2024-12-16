@@ -379,6 +379,7 @@ export const AuthUiCustomiser = () => {
                 themeConfig={themeConfig}
                 onBack={() => console.log('')}
                 connectAndSignIn={async () => console.log('connectAndSignIn')}
+                onSignPass={async () => console.log('onSignPass')}
               ></Modal>
             </AuthThemeProvider>
           </div>

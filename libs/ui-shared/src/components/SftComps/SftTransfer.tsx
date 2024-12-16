@@ -58,8 +58,8 @@ export default function NftTransfer() {
   const [collectionId, setCollectionId] = useState<number>(834660);
   const collectionIdDebounced = useDebounce(collectionId, 500);
 
-  const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
-    shouldShowEoa ? 'eoa' : 'fpass'
+  const [fromWallet, setFromWallet] = useState<'eoa' | 'pass'>(
+    shouldShowEoa ? 'eoa' : 'pass'
   );
 
   const [feeAssetId, setFeeAssetId] = useState<number>(2);
@@ -114,7 +114,7 @@ export default function NftTransfer() {
       })),
     });
 
-    if (fromWallet === 'fpass') {
+    if (fromWallet === 'pass') {
       if (feeAssetId === 2) {
         await nft.addFuturePass(userSession.futurepass);
       }
@@ -359,8 +359,8 @@ export default function NftTransfer() {
   const [collectionId, setCollectionId] = useState<number>(834660);
   const collectionIdDebounced = useDebounce(collectionId, 500);
 
-  const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
-    shouldShowEoa ? 'eoa' : 'fpass'
+  const [fromWallet, setFromWallet] = useState<'eoa' | 'pass'>(
+    shouldShowEoa ? 'eoa' : 'pass'
   );
 
   const [feeAssetId, setFeeAssetId] = useState<number>(2);
@@ -415,7 +415,7 @@ export default function NftTransfer() {
       })),
     });
 
-    if (fromWallet === 'fpass') {
+    if (fromWallet === 'pass') {
       if (feeAssetId === 2) {
         await nft.addFuturePass(userSession.futurepass);
       }

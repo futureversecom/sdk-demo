@@ -57,8 +57,8 @@ export default function NftTransfer() {
   const [collectionId, setCollectionId] = useState<number>(709732);
   const debouncedCollectionId = useDebounce(collectionId, 500);
 
-  const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
-    shouldShowEoa ? 'eoa' : 'fpass'
+  const [fromWallet, setFromWallet] = useState<'eoa' | 'pass'>(
+    shouldShowEoa ? 'eoa' : 'pass'
   );
 
   const {
@@ -67,7 +67,7 @@ export default function NftTransfer() {
     isLoading,
   } = useGetTokens(
     userSession
-      ? fromWallet === 'fpass'
+      ? fromWallet === 'pass'
         ? userSession?.futurepass
         : userSession?.eoa
       : '',
@@ -116,7 +116,7 @@ export default function NftTransfer() {
       serialNumbers: [Number(serialNumber)],
     });
 
-    if (fromWallet === 'fpass') {
+    if (fromWallet === 'pass') {
       if (feeAssetId === 2) {
         await nft.addFuturePass(userSession.futurepass);
       }
@@ -295,8 +295,8 @@ export default function NftTransfer() {
   const [collectionId, setCollectionId] = useState<number>(709732);
   const debouncedCollectionId = useDebounce(collectionId, 500);
 
-  const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
-    shouldShowEoa ? 'eoa' : 'fpass'
+  const [fromWallet, setFromWallet] = useState<'eoa' | 'pass'>(
+    shouldShowEoa ? 'eoa' : 'pass'
   );
 
   const {
@@ -305,7 +305,7 @@ export default function NftTransfer() {
     isLoading,
   } = useGetTokens(
     userSession
-      ? fromWallet === 'fpass'
+      ? fromWallet === 'pass'
         ? userSession?.futurepass
         : userSession?.eoa
       : '',
@@ -354,7 +354,7 @@ export default function NftTransfer() {
       serialNumbers: [Number(serialNumber)],
     });
 
-    if (fromWallet === 'fpass') {
+    if (fromWallet === 'pass') {
       if (feeAssetId === 2) {
         await nft.addFuturePass(userSession.futurepass);
       }

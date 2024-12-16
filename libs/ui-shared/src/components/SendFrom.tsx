@@ -5,8 +5,8 @@ import React from 'react';
 
 type SendFromProps = {
   shouldShowEoa?: boolean;
-  fromWallet: 'eoa' | 'fpass';
-  setFromWallet: (wallet: 'eoa' | 'fpass') => void;
+  fromWallet: 'eoa' | 'pass';
+  setFromWallet: (wallet: 'eoa' | 'pass') => void;
   resetState?: () => void;
   disable?: boolean;
   setAddressToSend?: (address: string) => void;
@@ -35,7 +35,7 @@ export default function SendFrom({
         disabled={disable}
         onChange={e => {
           resetState && resetState();
-          setFromWallet(e.target.value as 'eoa' | 'fpass');
+          setFromWallet(e.target.value as 'eoa' | 'pass');
           setAddressToSend &&
             setAddressToSend(
               userSession
@@ -48,7 +48,7 @@ export default function SendFrom({
         }}
       >
         {shouldShowEoa && <option value="eoa">EOA</option>}
-        <option value="fpass">FuturePass</option>
+        <option value="pass">Pass</option>
       </select>
     </label>
   );
