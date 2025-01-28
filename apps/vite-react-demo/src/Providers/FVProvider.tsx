@@ -35,20 +35,25 @@ export default function Providers({
 }) {
   return (
     <QueryClientProvider client={queryClient}>
-      <FutureverseWagmiProvider
-        getWagmiConfig={getWagmiConfig}
-        initialState={initialWagmiState}
-      >
-        <TrnApiProvider network={network}>
-          <RootStoreProvider>
-            <FutureverseAuthProvider authClient={authClient}>
-              <AuthUiProvider themeConfig={customTheme} authClient={authClient}>
-                {children}
-              </AuthUiProvider>
-            </FutureverseAuthProvider>
-          </RootStoreProvider>
-        </TrnApiProvider>
-      </FutureverseWagmiProvider>
+      <TrnApiProvider network={network}>
+        <FutureverseWagmiProvider
+          getWagmiConfig={getWagmiConfig}
+          initialState={initialWagmiState}
+        >
+          <TrnApiProvider network={network}>
+            <RootStoreProvider>
+              <FutureverseAuthProvider authClient={authClient}>
+                <AuthUiProvider
+                  themeConfig={customTheme}
+                  authClient={authClient}
+                >
+                  {children}
+                </AuthUiProvider>
+              </FutureverseAuthProvider>
+            </RootStoreProvider>
+          </TrnApiProvider>
+        </FutureverseWagmiProvider>
+      </TrnApiProvider>
     </QueryClientProvider>
   );
 }
