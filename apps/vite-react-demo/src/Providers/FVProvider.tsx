@@ -14,8 +14,9 @@ import {
   DefaultTheme,
   AuthUiProvider,
 } from '@futureverse/auth-ui';
-import { RootStoreProvider, TrnApiProvider } from '@fv-sdk-demos/ui-shared';
+import { RootStoreProvider } from '@fv-sdk-demos/ui-shared';
 import type { NetworkName } from '@therootnetwork/api';
+import { TrnApiProvider } from '@futureverse/transact-react';
 
 const customTheme: ThemeConfig = {
   ...DefaultTheme,
@@ -40,18 +41,13 @@ export default function Providers({
           getWagmiConfig={getWagmiConfig}
           initialState={initialWagmiState}
         >
-          <TrnApiProvider network={network}>
-            <RootStoreProvider>
-              <FutureverseAuthProvider authClient={authClient}>
-                <AuthUiProvider
-                  themeConfig={customTheme}
-                  authClient={authClient}
-                >
-                  {children}
-                </AuthUiProvider>
-              </FutureverseAuthProvider>
-            </RootStoreProvider>
-          </TrnApiProvider>
+          <RootStoreProvider>
+            <FutureverseAuthProvider authClient={authClient}>
+              <AuthUiProvider themeConfig={customTheme} authClient={authClient}>
+                {children}
+              </AuthUiProvider>
+            </FutureverseAuthProvider>
+          </RootStoreProvider>
         </FutureverseWagmiProvider>
       </TrnApiProvider>
     </QueryClientProvider>
