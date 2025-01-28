@@ -33,7 +33,7 @@ import { CurrentChainSwap } from '../CurrentChainSwap';
 import { EvmModal } from '../EvmModal';
 import { EvmCollectionInfo } from '../EvmCollectionInfo';
 
-export default function FpassErc721Mint() {
+export default function PassErc721Mint() {
   const { userSession } = useAuth();
 
   const [collectionId, setCollectionId] = useState(709732);
@@ -192,7 +192,7 @@ export default function FpassErc721Mint() {
 }
 `;
 
-export default function FpassErc721Mint() {
+export default function PassErc721Mint() {
   const { userSession } = useAuth();
 
   const [collectionId, setCollectionId] = useState(709732);

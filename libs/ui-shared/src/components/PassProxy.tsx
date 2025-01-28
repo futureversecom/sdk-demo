@@ -5,10 +5,10 @@ import React, { useEffect } from 'react';
 import { useIsMounted } from '../hooks';
 import { useAuth } from '@futureverse/auth-react';
 import { useRootStore } from '../hooks/useRootStore';
-import { FpassErc1155Mint, FpassErc1155MintSingle } from './Erc1155';
-import { FpassErc20Transfer } from './Erc20';
-import { FpassErc721Mint } from './Erc721';
-export default function FuturePassProxy() {
+import { PassErc1155Mint, PassErc1155MintSingle } from './Erc1155';
+import { PassErc20Transfer } from './Erc20';
+import { PassErc721Mint } from './Erc721';
+export default function PassProxy() {
   const isMounted = useIsMounted();
 
   const { userSession } = useAuth();
@@ -33,10 +33,10 @@ export default function FuturePassProxy() {
       <h1>EVM Pass.Online Proxy Demo</h1>
 
       <div className="auto-grid">
-        <FpassErc20Transfer />
-        <FpassErc721Mint />
-        <FpassErc1155MintSingle />
-        <FpassErc1155Mint />
+        <PassErc20Transfer />
+        <PassErc721Mint />
+        <PassErc1155MintSingle />
+        <PassErc1155Mint />
       </div>
     </>
   );

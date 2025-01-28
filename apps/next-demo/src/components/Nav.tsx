@@ -165,7 +165,7 @@ const EvmMenu = ({
         <li>
           <Link
             onClick={() => setIsOpen && setIsOpen(false)}
-            href="/evm/futurePass-proxy"
+            href="/evm/pass-proxy"
           >
             Pass Proxy
           </Link>

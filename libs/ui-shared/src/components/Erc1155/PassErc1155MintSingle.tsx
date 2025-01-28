@@ -33,7 +33,7 @@ import { CurrentChainSwap } from '../CurrentChainSwap';
 import { EvmModal } from '../EvmModal';
 import { EvmCollectionInfo } from '../EvmCollectionInfo';
 
-export default function FpassErc1155MintSingle() {
+export default function PassErc1155MintSingle() {
   const { userSession } = useAuth();
 
   const fromWallet = 'pass';
@@ -222,7 +222,7 @@ export default function FpassErc1155MintSingle() {
 }
 `;
 
-export default function FpassErc1155MintSingle() {
+export default function PassErc1155MintSingle() {
   const { userSession } = useAuth();
 
   const fromWallet = 'pass';

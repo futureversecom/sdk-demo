@@ -41,7 +41,7 @@ import { AddressToSend } from '../AddressToSend';
 import { CurrentChainSwap } from '../CurrentChainSwap';
 import { EvmModal } from '../EvmModal';
 
-export default function FpassErc20Transfer() {
+export default function PassErc20Transfer() {
   const { userSession } = useAuth();
   const shouldShowEoa = useShouldShowEoa();
 
@@ -221,7 +221,7 @@ export default function FpassErc20Transfer() {
 }
 `;
 
-export default function FpassErc20Transfer() {
+export default function PassErc20Transfer() {
   const { userSession } = useAuth();
   const shouldShowEoa = useShouldShowEoa();
 

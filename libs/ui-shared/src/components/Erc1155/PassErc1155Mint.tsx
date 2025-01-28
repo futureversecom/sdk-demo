@@ -34,7 +34,7 @@ import { EvmModal } from '../EvmModal';
 import { EvmCollectionInfo } from '../EvmCollectionInfo';
 
 
-export default function FpassErc1155Mint() {
+export default function PassErc1155Mint() {
   const { userSession } = useAuth();
 
   const fromWallet = 'pass';
@@ -260,7 +260,7 @@ export default function FpassErc1155Mint() {
 }
 `;
 
-export default function FpassErc1155Mint() {
+export default function PassErc1155Mint() {
   const { userSession } = useAuth();
 
   const fromWallet = 'pass';
