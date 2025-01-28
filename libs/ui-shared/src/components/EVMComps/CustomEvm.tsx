@@ -19,7 +19,7 @@ export default function CustomEvm() {
   const [evmContractAddress, setEvmContractAddress] = useState(
     '0xb271a5C4e7628fA6F9b9A55EC889a8072e8E0E62'
   );
-  const [evmUseFuturePass, setEvmUseFuturePass] = useState(false);
+  const [evmUsePass, setEvmUsePass] = useState(false);
   const [evmArgs, setEvmArgs] = useState('');
   const [evmFunctionName, setEvmFunctionName] = useState('increment');
   const [slippage, setSlippage] = useState('5');
@@ -135,7 +135,7 @@ export default function CustomEvm() {
       abi: JSON.parse(evmAbi),
       functionName: evmFunctionName,
       args: evmArgs.length > 0 ? evmArgs.split(',') : undefined,
-      fromFuturePass: evmUseFuturePass,
+      fromFuturePass: evmUsePass,
     });
 
     if (assetId !== 2) {
@@ -155,7 +155,7 @@ export default function CustomEvm() {
     evmFunctionName,
     evmAbi,
     evmArgs,
-    evmUseFuturePass,
+    evmUsePass,
     assetId,
     getExtrinsic,
     setCurrentBuilder,
@@ -248,13 +248,11 @@ export default function CustomEvm() {
               <label>
                 Use Pass
                 <select
-                  value={evmUseFuturePass.toString()}
+                  value={evmUsePass.toString()}
                   className="w-full builder-input"
                   onChange={e => {
                     resetState();
-                    setEvmUseFuturePass(
-                      e.target.value === 'true' ? true : false
-                    );
+                    setEvmUsePass(e.target.value === 'true' ? true : false);
                   }}
                 >
                   <option value={'true'}>Use Pass</option>
