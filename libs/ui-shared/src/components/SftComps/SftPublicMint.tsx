@@ -38,8 +38,8 @@ export default function NftBurn() {
 
   const shouldShowEoa = useShouldShowEoa();
 
-  const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
-    shouldShowEoa ? 'eoa' : 'fpass'
+  const [fromWallet, setFromWallet] = useState<'eoa' | 'pass'>(
+    shouldShowEoa ? 'eoa' : 'pass'
   );
 
   const {
@@ -48,7 +48,7 @@ export default function NftBurn() {
     isLoading,
   } = useGetTokens(
     userSession
-      ? fromWallet === 'fpass'
+      ? fromWallet === 'pass'
         ? userSession?.futurepass
         : userSession?.eoa
       : '',
@@ -85,7 +85,7 @@ export default function NftBurn() {
       serialNumber: Number(serialNumber),
     });
 
-    if (fromWallet === 'fpass') {
+    if (fromWallet === 'pass') {
       if (feeAssetId === 2) {
         await nft.addFuturePass(userSession.futurepass);
       }

@@ -50,7 +50,7 @@ export function EvmModal({
   callback,
 }: {
   setShowDialog: (value: boolean) => void;
-  fromWallet: 'eoa' | 'fpass';
+  fromWallet: 'eoa' | 'pass';
   contract: Address;
   abi: Abi;
   functionName: string;
@@ -139,7 +139,7 @@ export function EvmModal({
       chainId === userSession.chainId &&
       !!contract &&
       !!evmData &&
-      fromWallet === 'fpass' &&
+      fromWallet === 'pass' &&
       !isSimulateError,
   });
 

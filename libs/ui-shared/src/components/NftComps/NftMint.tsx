@@ -53,8 +53,8 @@ export default function NftMint() {
 
   const shouldShowEoa = useShouldShowEoa();
 
-  const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
-    shouldShowEoa ? 'eoa' : 'fpass'
+  const [fromWallet, setFromWallet] = useState<'eoa' | 'pass'>(
+    shouldShowEoa ? 'eoa' : 'pass'
   );
 
   const [collectionId, setCollectionId] = useState<number>(709732);
@@ -86,7 +86,7 @@ export default function NftMint() {
       quantity: mintQty,
     });
 
-    if (fromWallet === 'fpass') {
+    if (fromWallet === 'pass') {
       if (feeAssetId === 2) {
         await nft.addFuturePass(userSession.futurepass);
       }
@@ -250,8 +250,8 @@ export default function NftMint() {
 
   const shouldShowEoa = useShouldShowEoa();
 
-  const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
-    shouldShowEoa ? 'eoa' : 'fpass'
+  const [fromWallet, setFromWallet] = useState<'eoa' | 'pass'>(
+    shouldShowEoa ? 'eoa' : 'pass'
   );
 
   const [collectionId, setCollectionId] = useState<number>(709732);
@@ -283,7 +283,7 @@ export default function NftMint() {
       quantity: mintQty,
     });
 
-    if (fromWallet === 'fpass') {
+    if (fromWallet === 'pass') {
       if (feeAssetId === 2) {
         await nft.addFuturePass(userSession.futurepass);
       }

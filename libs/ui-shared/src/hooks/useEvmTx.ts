@@ -80,7 +80,7 @@ export function useEvmTx() {
         throw new Error('Address is required');
       }
 
-      if (fromWallet === 'fpass' && gasToken === 2) {
+      if (fromWallet === 'pass' && gasToken === 2) {
         const futurePassCall = encodeFunctionData({
           abi,
           functionName,

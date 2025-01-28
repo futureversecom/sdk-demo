@@ -11,14 +11,15 @@ import { authClient, getWagmiConfig, queryClient } from './config';
 import { State } from 'wagmi';
 import {
   type ThemeConfig,
-  DarkTheme,
+  DefaultTheme,
   AuthUiProvider,
 } from '@futureverse/auth-ui';
-import { RootStoreProvider, TrnApiProvider } from '@fv-sdk-demos/ui-shared';
+import { RootStoreProvider } from '@fv-sdk-demos/ui-shared';
 import type { NetworkName } from '@therootnetwork/api';
+import { TrnApiProvider } from '@futureverse/transact-react';
 
 const customTheme: ThemeConfig = {
-  ...DarkTheme,
+  ...DefaultTheme,
   defaultAuthOption: 'web3',
 };
 
@@ -35,11 +36,11 @@ export default function Providers({
 }) {
   return (
     <QueryClientProvider client={queryClient}>
-      <FutureverseWagmiProvider
-        getWagmiConfig={getWagmiConfig}
-        initialState={initialWagmiState}
-      >
-        <TrnApiProvider network={network}>
+      <TrnApiProvider network={network}>
+        <FutureverseWagmiProvider
+          getWagmiConfig={getWagmiConfig}
+          initialState={initialWagmiState}
+        >
           <RootStoreProvider>
             <FutureverseAuthProvider authClient={authClient}>
               <AuthUiProvider themeConfig={customTheme} authClient={authClient}>
@@ -47,8 +48,8 @@ export default function Providers({
               </AuthUiProvider>
             </FutureverseAuthProvider>
           </RootStoreProvider>
-        </TrnApiProvider>
-      </FutureverseWagmiProvider>
+        </FutureverseWagmiProvider>
+      </TrnApiProvider>
     </QueryClientProvider>
   );
 }

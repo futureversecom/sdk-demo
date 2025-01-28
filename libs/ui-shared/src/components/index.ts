@@ -16,7 +16,7 @@ import EvmErc20 from './EvmErc20';
 import EvmErc721 from './EvmErc721';
 import EvmErc1155 from './EvmErc1155';
 import FeeProxy from './FeeProxy';
-import FuturePassProxy from './FuturePassProxy';
+import PassProxy from './PassProxy';
 import AuthUiSdk from './AuthUiSdk';
 import AuthReactSdk from './AuthReactSdk';
 import AuthUiSdkCustomiser from './AuthUiSdkCustomiser';
@@ -95,7 +95,7 @@ export {
   EvmErc721,
   EvmErc1155,
   FeeProxy,
-  FuturePassProxy,
+  PassProxy,
   AuthUiSdk,
   AuthReactSdk,
   AuthUiSdkCustomiser,

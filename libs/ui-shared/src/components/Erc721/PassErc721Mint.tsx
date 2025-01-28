@@ -2,12 +2,12 @@
 
 import React, { useMemo, useState } from 'react';
 import { useAuth } from '@futureverse/auth-react';
-import { useDebounce, useEvmCollectionInfoSft } from '../../hooks';
+import { useDebounce, useEvmCollectionInfo } from '../../hooks';
 import { erc721AddressToCollectionId, shortAddress } from '../../lib/utils';
 import { parseAbi } from 'viem';
 import {
-  collectionIdToERC1155Address,
-  ERC1155_PRECOMPILE_ABI,
+  collectionIdToERC721Address,
+  ERC721_PRECOMPILE_ABI,
 } from '@therootnetwork/evm';
 
 import CodeView from '../CodeView';
@@ -19,12 +19,12 @@ import { EvmCollectionInfo } from '../EvmCollectionInfo';
 const codeString = `
 import { useMemo, useState } from 'react';
 import { useAuth } from '@futureverse/auth-react';
-import { useDebounce, useEvmCollectionInfoSft } from '../../hooks';
+import { useDebounce, useEvmCollectionInfo } from '../../hooks';
 import { erc721AddressToCollectionId, shortAddress } from '../../lib/utils';
 import { parseAbi } from 'viem';
 import {
-  collectionIdToERC1155Address,
-  ERC1155_PRECOMPILE_ABI,
+  collectionIdToERC721Address,
+  ERC721_PRECOMPILE_ABI,
 } from '@therootnetwork/evm';
 
 import CodeView from '../CodeView';
@@ -33,27 +33,22 @@ import { CurrentChainSwap } from '../CurrentChainSwap';
 import { EvmModal } from '../EvmModal';
 import { EvmCollectionInfo } from '../EvmCollectionInfo';
 
-export default function FpassErc1155MintSingle() {
+export default function PassErc721Mint() {
   const { userSession } = useAuth();
 
-  const fromWallet = 'fpass';
-
-  const [collectionId, setCollectionId] = useState(834660);
+  const [collectionId, setCollectionId] = useState(709732);
   const [collectionContract, setCollectionContract] = useState<\`0x$\{string}\`>(
-    '0xbbbBBbbb000CBc64000000000000000000000000'
+    '0xAaAAAaAa000ad464000000000000000000000000'
   );
-
   const contractDebounced = useDebounce(collectionContract ?? '', 500);
 
-  const [tokenId, setTokenId] = useState(0);
-  const [tokenQty, setTokenQty] = useState(1);
-
+  const [qty, setQty] = useState(1);
   const [addressToMint, setAddressToMint] = useState<string>(
     userSession?.futurepass ?? ''
   );
 
-  const { data: collectionOwner, isFetching } =
-    useEvmCollectionInfoSft(contractDebounced);
+  const { data: collectionInfo, isFetching } =
+    useEvmCollectionInfo(contractDebounced);
 
   const [addressInputError, setAddressInputError] = useState('');
 
@@ -63,26 +58,23 @@ export default function FpassErc1155MintSingle() {
     return (
       addressInputError !== '' ||
       addressToMint === '' ||
-      tokenQty <= 0 ||
-      tokenQty > 1000 ||
-      tokenId < 0 ||
+      qty <= 0 ||
+      qty > 1000 ||
       !contractDebounced ||
       isFetching ||
-      (!isFetching && !collectionOwner)
+      (!isFetching && !collectionInfo)
     );
   }, [
     addressInputError,
     addressToMint,
-    tokenQty,
-    tokenId,
+    qty,
     contractDebounced,
     isFetching,
-    collectionOwner,
+    collectionInfo,
   ]);
 
   const resetState = () => {
-    setTokenId(0);
-    setTokenQty(1);
+    setQty(1);
     setAddressInputError('');
   };
 
@@ -92,7 +84,7 @@ export default function FpassErc1155MintSingle() {
         <div className="inner">
           <div className="row">
             <CodeView code={codeString}>
-              <h3>Single Mint ERC-1155 Token: Pass.Online</h3>
+              <h3>Mint ERC-721 Token: Pass.Online</h3>
               <h4>
                 Current Chain: <CurrentChainSwap />
               </h4>
@@ -112,7 +104,7 @@ export default function FpassErc1155MintSingle() {
                 onChange={e => {
                   setCollectionId(Number(e.target.value));
                   setCollectionContract(
-                    collectionIdToERC1155Address(
+                    collectionIdToERC721Address(
                       Number(e.target.value)
                     ) as \`0x$\{string}\`
                   );
@@ -134,7 +126,7 @@ export default function FpassErc1155MintSingle() {
             </label>
           </div>
           <EvmCollectionInfo
-            collectionOwner={collectionOwner as string}
+            collectionInfo={collectionInfo as string}
             isFetching={isFetching as boolean}
           />
           <div className="row">
@@ -146,40 +138,18 @@ export default function FpassErc1155MintSingle() {
               label="Address to Mint"
             />
           </div>
-          <div
-            className="row"
-            style={{
-              display: 'grid',
-              gap: '8px',
-              gridTemplateColumns: '3fr 3fr',
-              marginTop: '8px',
-            }}
-          >
-            <label>
-              Token ID
-              <input
-                type="number"
-                value={tokenId}
-                min={0}
-                className="w-full builder-input"
-                style={{ marginTop: '4px' }}
-                onChange={e => {
-                  setTokenId(Number(e.target.value));
-                }}
-              />
-            </label>
+          <div className="row">
             <label>
               Quantity
               <input
                 type="number"
-                value={tokenQty}
+                value={qty}
                 min={1}
                 max={1000}
                 className="w-full builder-input"
-                style={{ marginTop: '4px' }}
                 onChange={e => {
                   if (parseInt(e.target.value) <= 1000) {
-                    setTokenQty(Number(e.target.value));
+                    setQty(Number(e.target.value));
                   }
                 }}
               />
@@ -196,7 +166,7 @@ export default function FpassErc1155MintSingle() {
               }}
               disabled={buttonDisabled}
             >
-              Start FuturePass Proxy Single Mint
+              Start Pass Proxy Mint
             </button>
           </div>
         </div>
@@ -204,11 +174,11 @@ export default function FpassErc1155MintSingle() {
       {showDialog && (
         <EvmModal
           setShowDialog={setShowDialog}
-          fromWallet={fromWallet}
+          fromWallet={'pass'}
           contract={contractDebounced}
           functionName="mint"
-          abi={parseAbi(ERC1155_PRECOMPILE_ABI)}
-          args={[addressToMint, tokenId, tokenQty]}
+          abi={parseAbi(ERC721_PRECOMPILE_ABI)}
+          args={[addressToMint, qty]}
           feeAssetId={2}
           slippage={'0'}
           callback={() => {
@@ -222,27 +192,22 @@ export default function FpassErc1155MintSingle() {
 }
 `;
 
-export default function FpassErc1155MintSingle() {
+export default function PassErc721Mint() {
   const { userSession } = useAuth();
 
-  const fromWallet = 'fpass';
-
-  const [collectionId, setCollectionId] = useState(834660);
+  const [collectionId, setCollectionId] = useState(709732);
   const [collectionContract, setCollectionContract] = useState<`0x${string}`>(
-    '0xbbbBBbbb000CBc64000000000000000000000000'
+    '0xAaAAAaAa000ad464000000000000000000000000'
   );
-
   const contractDebounced = useDebounce(collectionContract ?? '', 500);
 
-  const [tokenId, setTokenId] = useState(0);
-  const [tokenQty, setTokenQty] = useState(1);
-
+  const [qty, setQty] = useState(1);
   const [addressToMint, setAddressToMint] = useState<string>(
     userSession?.futurepass ?? ''
   );
 
-  const { data: collectionOwner, isFetching } =
-    useEvmCollectionInfoSft(contractDebounced);
+  const { data: collectionInfo, isFetching } =
+    useEvmCollectionInfo(contractDebounced);
 
   const [addressInputError, setAddressInputError] = useState('');
 
@@ -252,26 +217,23 @@ export default function FpassErc1155MintSingle() {
     return (
       addressInputError !== '' ||
       addressToMint === '' ||
-      tokenQty <= 0 ||
-      tokenQty > 1000 ||
-      tokenId < 0 ||
+      qty <= 0 ||
+      qty > 1000 ||
       !contractDebounced ||
       isFetching ||
-      (!isFetching && !collectionOwner)
+      (!isFetching && !collectionInfo)
     );
   }, [
     addressInputError,
     addressToMint,
-    tokenQty,
-    tokenId,
+    qty,
     contractDebounced,
     isFetching,
-    collectionOwner,
+    collectionInfo,
   ]);
 
   const resetState = () => {
-    setTokenId(0);
-    setTokenQty(1);
+    setQty(1);
     setAddressInputError('');
   };
 
@@ -281,7 +243,7 @@ export default function FpassErc1155MintSingle() {
         <div className="inner">
           <div className="row">
             <CodeView code={codeString}>
-              <h3>Single Mint ERC-1155 Token: Pass.Online</h3>
+              <h3>Mint ERC-721 Token: Pass.Online</h3>
               <h4>
                 Current Chain: <CurrentChainSwap />
               </h4>
@@ -301,7 +263,7 @@ export default function FpassErc1155MintSingle() {
                 onChange={e => {
                   setCollectionId(Number(e.target.value));
                   setCollectionContract(
-                    collectionIdToERC1155Address(
+                    collectionIdToERC721Address(
                       Number(e.target.value)
                     ) as `0x${string}`
                   );
@@ -323,7 +285,7 @@ export default function FpassErc1155MintSingle() {
             </label>
           </div>
           <EvmCollectionInfo
-            collectionOwner={collectionOwner as string}
+            collectionInfo={collectionInfo as string}
             isFetching={isFetching as boolean}
           />
           <div className="row">
@@ -335,40 +297,18 @@ export default function FpassErc1155MintSingle() {
               label="Address to Mint"
             />
           </div>
-          <div
-            className="row"
-            style={{
-              display: 'grid',
-              gap: '8px',
-              gridTemplateColumns: '3fr 3fr',
-              marginTop: '8px',
-            }}
-          >
-            <label>
-              Token ID
-              <input
-                type="number"
-                value={tokenId}
-                min={0}
-                className="w-full builder-input"
-                style={{ marginTop: '4px' }}
-                onChange={e => {
-                  setTokenId(Number(e.target.value));
-                }}
-              />
-            </label>
+          <div className="row">
             <label>
               Quantity
               <input
                 type="number"
-                value={tokenQty}
+                value={qty}
                 min={1}
                 max={1000}
                 className="w-full builder-input"
-                style={{ marginTop: '4px' }}
                 onChange={e => {
                   if (parseInt(e.target.value) <= 1000) {
-                    setTokenQty(Number(e.target.value));
+                    setQty(Number(e.target.value));
                   }
                 }}
               />
@@ -385,7 +325,7 @@ export default function FpassErc1155MintSingle() {
               }}
               disabled={buttonDisabled}
             >
-              Start FuturePass Proxy Single Mint
+              Start Pass Proxy Mint
             </button>
           </div>
         </div>
@@ -393,11 +333,11 @@ export default function FpassErc1155MintSingle() {
       {showDialog && (
         <EvmModal
           setShowDialog={setShowDialog}
-          fromWallet={fromWallet}
+          fromWallet={'pass'}
           contract={contractDebounced}
           functionName="mint"
-          abi={parseAbi(ERC1155_PRECOMPILE_ABI)}
-          args={[addressToMint, tokenId, tokenQty]}
+          abi={parseAbi(ERC721_PRECOMPILE_ABI)}
+          args={[addressToMint, qty]}
           feeAssetId={2}
           slippage={'0'}
           callback={() => {

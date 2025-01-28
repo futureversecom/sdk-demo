@@ -49,8 +49,8 @@ export default function Decrement() {
 
   const shouldShowEoa = useShouldShowEoa();
 
-  const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
-    shouldShowEoa ? 'eoa' : 'fpass'
+  const [fromWallet, setFromWallet] = useState<'eoa' | 'pass'>(
+    shouldShowEoa ? 'eoa' : 'pass'
   );
 
   const [feeAssetId, setFeeAssetId] = useState<number>(1);
@@ -236,8 +236,8 @@ export default function Decrement() {
 
   const shouldShowEoa = useShouldShowEoa();
 
-  const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
-    shouldShowEoa ? 'eoa' : 'fpass'
+  const [fromWallet, setFromWallet] = useState<'eoa' | 'pass'>(
+    shouldShowEoa ? 'eoa' : 'pass'
   );
 
   const [feeAssetId, setFeeAssetId] = useState<number>(1);

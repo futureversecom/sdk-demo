@@ -52,7 +52,7 @@ export default function Home({ title }: { title: string }) {
           </div>
           <div className="auto-grid " style={{ marginTop: '16px' }}>
             {shouldShowEoa && <AccountCard type="eoa" title="EOA" />}
-            <AccountCard type="futurepass" title="Pass.Online" />
+            <AccountCard type="pass" title="Pass.Online" />
           </div>
         </div>
       )}

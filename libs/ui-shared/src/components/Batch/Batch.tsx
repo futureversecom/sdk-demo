@@ -93,8 +93,8 @@ export default function Batch() {
 
   const getExtrinsic = useGetExtrinsic();
 
-  const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
-    shouldShowEoa ? 'eoa' : 'fpass'
+  const [fromWallet, setFromWallet] = useState<'eoa' | 'pass'>(
+    shouldShowEoa ? 'eoa' : 'pass'
   );
 
   const [feeAssetId, setFeeAssetId] = useState<number>(2);
@@ -125,7 +125,7 @@ export default function Batch() {
 
     await builder.batchAllWithExtrinsics(extrinsics);
 
-    if (fromWallet === 'fpass') {
+    if (fromWallet === 'pass') {
       if (feeAssetId === 2) {
         await builder.addFuturePass(userSession.futurepass);
       }
@@ -387,8 +387,8 @@ export default function Batch() {
 
   const getExtrinsic = useGetExtrinsic();
 
-  const [fromWallet, setFromWallet] = useState<'eoa' | 'fpass'>(
-    shouldShowEoa ? 'eoa' : 'fpass'
+  const [fromWallet, setFromWallet] = useState<'eoa' | 'pass'>(
+    shouldShowEoa ? 'eoa' : 'pass'
   );
 
   const [feeAssetId, setFeeAssetId] = useState<number>(2);
@@ -419,7 +419,7 @@ export default function Batch() {
 
     await builder.batchAllWithExtrinsics(extrinsics);
 
-    if (fromWallet === 'fpass') {
+    if (fromWallet === 'pass') {
       if (feeAssetId === 2) {
         await builder.addFuturePass(userSession.futurepass);
       }
