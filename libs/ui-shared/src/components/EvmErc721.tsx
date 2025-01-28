@@ -9,7 +9,7 @@ import {
   EoaErc721Mint,
   Erc721Mint,
   FeeProxyErc721Mint,
-  FpassErc721Mint,
+  PassErc721Mint,
 } from './Erc721';
 
 export default function EvmErc721() {
@@ -38,7 +38,7 @@ export default function EvmErc721() {
 
       <div className="auto-grid">
         <EoaErc721Mint />
-        <FpassErc721Mint />
+        <PassErc721Mint />
         <FeeProxyErc721Mint />
         <Erc721Mint />
       </div>

@@ -11,8 +11,8 @@ import {
   Erc1155Mint,
   FeeProxyErc1155Mint,
   FeeProxyErc1155MintSingle,
-  FpassErc1155Mint,
-  FpassErc1155MintSingle,
+  PassErc1155Mint,
+  PassErc1155MintSingle,
 } from './Erc1155';
 
 export default function EvmErc1155() {
@@ -42,8 +42,8 @@ export default function EvmErc1155() {
       <div className="auto-grid">
         <EoaErc1155MintSingle />
         <EoaErc1155Mint />
-        <FpassErc1155MintSingle />
-        <FpassErc1155Mint />
+        <PassErc1155MintSingle />
+        <PassErc1155Mint />
         <FeeProxyErc1155MintSingle />
         <FeeProxyErc1155Mint />
         <Erc1155Mint />

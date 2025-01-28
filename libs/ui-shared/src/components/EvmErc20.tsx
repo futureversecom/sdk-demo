@@ -9,7 +9,7 @@ import {
   EoaErc20Transfer,
   Erc20Transfer,
   FeeProxyErc20Transfer,
-  FpassErc20Transfer,
+  PassErc20Transfer,
 } from './Erc20';
 
 export default function EvmErc20() {
@@ -38,7 +38,7 @@ export default function EvmErc20() {
 
       <div className="auto-grid">
         <EoaErc20Transfer />
-        <FpassErc20Transfer />
+        <PassErc20Transfer />
         <FeeProxyErc20Transfer />
         <Erc20Transfer />
       </div>
