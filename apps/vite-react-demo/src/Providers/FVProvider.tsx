@@ -11,14 +11,14 @@ import { authClient, getWagmiConfig, queryClient } from './config';
 import { State } from 'wagmi';
 import {
   type ThemeConfig,
-  DarkTheme,
+  DefaultTheme,
   AuthUiProvider,
 } from '@futureverse/auth-ui';
 import { RootStoreProvider, TrnApiProvider } from '@fv-sdk-demos/ui-shared';
 import type { NetworkName } from '@therootnetwork/api';
 
 const customTheme: ThemeConfig = {
-  ...DarkTheme,
+  ...DefaultTheme,
   defaultAuthOption: 'web3',
 };
 
