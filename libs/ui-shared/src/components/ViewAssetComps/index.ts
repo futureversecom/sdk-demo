@@ -1,0 +1,1 @@
+export { ViewAssets } from './ViewAssets';

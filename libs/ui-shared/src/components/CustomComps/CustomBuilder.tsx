@@ -345,7 +345,7 @@ export default function CustomBuilderComp() {
     <div className={\`card $\{disable ? 'disabled' : ''}\`}>
       <div className="inner">
         <CodeView code={codeString}>
-          <h3>Custom Extrinsic Builder</h3>
+          <h3>Extrinsic Builder</h3>
         </CodeView>
         <div className="row">
           <label>
@@ -852,7 +852,7 @@ export default function CustomBuilderComp() {
     <div className={`card ${disable ? 'disabled' : ''}`}>
       <div className="inner">
         <CodeView code={codeString}>
-          <h3>Custom Extrinsic Builder</h3>
+          <h3>Extrinsic Builder</h3>
         </CodeView>
         <div className="row">
           <label>

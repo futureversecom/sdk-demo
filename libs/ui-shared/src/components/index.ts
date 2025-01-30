@@ -21,6 +21,8 @@ import AuthUiSdk from './AuthUiSdk';
 import AuthReactSdk from './AuthReactSdk';
 import AuthUiSdkCustomiser from './AuthUiSdkCustomiser';
 
+import ViewAssetsComp from './ViewAssets';
+
 export { Dialog } from './Dialog/Dialog';
 export { AddressInput } from './AddressInput';
 export { URLInput } from './UrlInput';
@@ -99,4 +101,5 @@ export {
   AuthUiSdk,
   AuthReactSdk,
   AuthUiSdkCustomiser,
+  ViewAssetsComp,
 };

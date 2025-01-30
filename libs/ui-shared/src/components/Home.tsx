@@ -45,16 +45,43 @@ export default function Home({ title }: { title: string }) {
       )}
 
       {userSession && (
-        <div className="row">
-          <div className="auto-grid">
-            <ConnectorInfo />
-            {/* <SignerDebug /> */}
+        <>
+          <div className="row mb-4">
+            <div
+              className="auto-grid "
+              style={{ marginBottom: '32px', width: '100%', columnSpan: 'all' }}
+            >
+              <div className="card">
+                <div className="inner">
+                  <p>
+                    Here you will find code snippets for some of our SDKs. The
+                    snippets are in the context of this SDK Playground, so you
+                    can run them and see the results in real-time, using the
+                    code in our{' '}
+                    <a
+                      href="https://github.com/futureversecom/sdk-demo/"
+                      target="_blank"
+                      rel="noreferrer nofollow"
+                    >
+                      public GitHub repository
+                    </a>
+                    .
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="auto-grid " style={{ marginTop: '16px' }}>
-            {shouldShowEoa && <AccountCard type="eoa" title="EOA" />}
-            <AccountCard type="futurepass" title="Pass.Online" />
+          <div className="row">
+            <div className="auto-grid">
+              <ConnectorInfo />
+              {/* <SignerDebug /> */}
+            </div>
+            <div className="auto-grid " style={{ marginTop: '16px' }}>
+              {shouldShowEoa && <AccountCard type="eoa" title="EOA" />}
+              <AccountCard type="futurepass" title="Pass.Online" />
+            </div>
           </div>
-        </div>
+        </>
       )}
     </>
   );
