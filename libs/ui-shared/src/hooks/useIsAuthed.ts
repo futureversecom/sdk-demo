@@ -1,3 +1,5 @@
+'use client';
+
 import { useAuth } from '@futureverse/auth-react';
 import { useRouter, usePathname } from 'next/navigation';
 

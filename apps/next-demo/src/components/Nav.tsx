@@ -206,6 +206,22 @@ const AuthMenu = ({
           </Link>
         </li>
         <li>
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/auth/verify"
+          >
+            Auth Verify User
+          </Link>
+        </li>
+        <li>
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/auth/verify/rsc"
+          >
+            Auth RSC
+          </Link>
+        </li>
+        <li>
           <a
             onClick={() => setIsOpen && setIsOpen(false)}
             href="https://login.futureverse.cloud/manageclients"

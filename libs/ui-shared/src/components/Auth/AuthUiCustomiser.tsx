@@ -72,7 +72,6 @@ const renderInput = (
   value: unknown,
   handleChange: (key: string, value: unknown) => void
 ) => {
-  console.log('key', key, 'value', value);
   if (key === 'defaultAuthOption') {
     return (
       <div className="row" key={key}>
@@ -151,8 +150,6 @@ export const AuthUiCustomiser = () => {
 
   const connectors = useConnectors();
 
-  console.log('connectors', connectors);
-
   const web3AuthOptions: Web3Options[] = connectors
     .filter(conn => !conn.type.startsWith('FutureverseCustodial'))
     .filter(connector => connector.id !== 'io.metamask')
@@ -165,8 +162,6 @@ export const AuthUiCustomiser = () => {
         installed: false,
       } as Web3Options;
     });
-
-  console.log('web3AuthOptions', web3AuthOptions);
 
   const custodialAuthOptions: CustodialOptions[] = connectors
     .filter(conn => conn.type.startsWith('FutureverseCustodial'))
@@ -379,6 +374,7 @@ export const AuthUiCustomiser = () => {
                 themeConfig={themeConfig}
                 onBack={() => console.log('')}
                 connectAndSignIn={async () => console.log('connectAndSignIn')}
+                onSignPass={async () => console.log('onSignPass')}
               ></Modal>
             </AuthThemeProvider>
           </div>

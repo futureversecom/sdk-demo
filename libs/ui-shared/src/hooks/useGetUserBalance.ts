@@ -1,3 +1,5 @@
+'use client';
+
 import { getBalance } from '../lib/utils';
 import { useTransactQuery } from './useTransactQuery';
 import { useQuery } from '@tanstack/react-query';

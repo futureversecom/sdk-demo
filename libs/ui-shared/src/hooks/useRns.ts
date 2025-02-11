@@ -1,3 +1,5 @@
+'use client';
+
 import type { FutureverseAuthClient } from '@futureverse/auth';
 import { getAddressFromRns, getRnsFromAddress } from '../lib/rns';
 import { useQuery } from '@tanstack/react-query';

@@ -1,3 +1,5 @@
+'use client';
+
 import { useMutation } from '@tanstack/react-query';
 import { simulateFuturePassProxy } from '../lib/utils';
 import {

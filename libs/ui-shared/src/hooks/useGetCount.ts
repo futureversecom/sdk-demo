@@ -1,3 +1,5 @@
+'use client';
+
 import { decodeFunctionResult, encodeFunctionData } from 'viem';
 import { useQuery } from '@tanstack/react-query';
 import { useAuth, useFutureverseSigner } from '@futureverse/auth-react';

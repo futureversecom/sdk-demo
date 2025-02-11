@@ -1,3 +1,5 @@
+'use client';
+
 import { useMutation } from '@tanstack/react-query';
 import type { Abi, Account, Address, ContractFunctionArgs } from 'viem';
 import { writeContract } from '@wagmi/core';

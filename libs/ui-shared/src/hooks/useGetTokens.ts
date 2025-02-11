@@ -1,3 +1,4 @@
+'use client';
 import '@therootnetwork/api-types';
 
 import { useQuery } from '@tanstack/react-query';

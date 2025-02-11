@@ -1,3 +1,5 @@
+'use client';
+
 import { TransactionBuilder } from '@futureverse/transact';
 import type { Signer } from '@futureverse/signer';
 import { ApiPromise } from '@polkadot/api';
