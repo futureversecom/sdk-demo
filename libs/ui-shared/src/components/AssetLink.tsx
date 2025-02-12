@@ -30,7 +30,7 @@ export default function AssetLink() {
 
   return (
     <>
-      <h1>Asset Link Equip Demo</h1>
+      <h1>Asset Register</h1>
       <div className="auto-grid">
         <AssetLinkEquip />
       </div>

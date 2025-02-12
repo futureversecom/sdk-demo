@@ -23,6 +23,7 @@ import AuthUiSdkCustomiser from './AuthUiSdkCustomiser';
 
 import AuthVerifyUser from './AuthVerifyUser';
 import CodeView from './CodeView';
+import ViewAssetsComp from './ViewAssets';
 
 export { Dialog } from './Dialog/Dialog';
 export { AddressInput } from './AddressInput';
@@ -104,4 +105,5 @@ export {
   AuthReactSdk,
   AuthUiSdkCustomiser,
   CodeView,
+  ViewAssetsComp,
 };

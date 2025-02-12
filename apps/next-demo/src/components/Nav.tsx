@@ -111,9 +111,17 @@ const AssetRegisterMenu = ({
         <li>
           <Link
             onClick={() => setIsOpen && setIsOpen(false)}
-            href="/asset-link"
+            href="/asset-register/view"
           >
-            Asset Link
+            View Assets
+          </Link>
+        </li>
+        <li>
+          <Link
+            onClick={() => setIsOpen && setIsOpen(false)}
+            href="/asset-register/link"
+          >
+            Link/Unlink Assets
           </Link>
         </li>
       </ul>
@@ -226,7 +234,7 @@ const AuthMenu = ({
             onClick={() => setIsOpen && setIsOpen(false)}
             href="https://login.futureverse.cloud/manageclients"
             target="_blank"
-            rel="nofollow"
+            rel="nofollow noopener noreferrer"
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -245,6 +253,29 @@ const AuthMenu = ({
   );
 };
 
+const TransactionsMenu = ({
+  setIsOpen,
+}: {
+  setIsOpen?: Dispatch<SetStateAction<boolean>>;
+}) => {
+  return (
+    <>
+      <ul className="">
+        <li className="grid cols-2 no-gap dropdown-content-wrapper">
+          <div className="col ">
+            <div className="subtitle">Native API</div>
+            <TransactMenu setIsOpen={setIsOpen} />
+          </div>
+          <div className="col">
+            <div className="subtitle">EVM API</div>
+            <EvmMenu setIsOpen={setIsOpen} />
+          </div>
+        </li>
+      </ul>
+    </>
+  );
+};
+
 const SwappablesMenu = () => {
   return (
     <>
@@ -255,6 +286,7 @@ const SwappablesMenu = () => {
     </>
   );
 };
+
 export const Menu: React.FC<MenuProps> = ({ setIsOpen }) => {
   const { signOut, userSession } = useAuth();
   const { disconnect, isConnected } = useConnector();
@@ -292,13 +324,13 @@ export const Menu: React.FC<MenuProps> = ({ setIsOpen }) => {
         </ul>
         <DocumentationLink links={polkadotLinks} navName="polkadot" />
       </DropDownMenu> */}
-      <DropDownMenu title="EVM">
+      {/* <DropDownMenu title="EVM">
         <EvmMenu setIsOpen={setIsOpen} />
+      </DropDownMenu> */}
+      <DropDownMenu title="Transactions">
+        <TransactionsMenu setIsOpen={setIsOpen} />
       </DropDownMenu>
-      <DropDownMenu title="Transact">
-        <TransactMenu setIsOpen={setIsOpen} />
-      </DropDownMenu>
-      <DropDownMenu title="Asset Register SDK">
+      <DropDownMenu title="Asset Register">
         <AssetRegisterMenu setIsOpen={setIsOpen} />
       </DropDownMenu>
       <DropDownMenu title="Swappables">
@@ -384,16 +416,16 @@ export const MobileMenu: React.FC<MenuProps> = ({ setIsOpen }) => {
           </ul>
           <DocumentationLink links={polkadotLinks} navName="polkadot" />
         </li> */}
-        <li>
+        {/* <li>
           <div className="sectionTitle">EVM</div>
           <EvmMenu setIsOpen={setIsOpen} />
-        </li>
+        </li> */}
         <li>
           <div className="sectionTitle">Transact</div>
-          <TransactMenu setIsOpen={setIsOpen} />
+          <TransactionsMenu setIsOpen={setIsOpen} />
         </li>
         <li>
-          <div className="sectionTitle">Asset Register SDK</div>
+          <div className="sectionTitle">Asset Register</div>
           <AssetRegisterMenu setIsOpen={setIsOpen} />
         </li>
         <li>
