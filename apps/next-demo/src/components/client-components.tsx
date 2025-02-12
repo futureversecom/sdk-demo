@@ -36,6 +36,7 @@ import {
   AuthUiSdk,
   AuthUiSdkCustomiser,
   AuthVerifyUser,
+  ViewAssetsComp,
 } from '@fv-sdk-demos/ui-shared';
 
 export {
@@ -70,4 +71,5 @@ export {
   AuthUiSdk,
   AuthUiSdkCustomiser,
   AuthVerifyUser,
+  ViewAssetsComp,
 };
