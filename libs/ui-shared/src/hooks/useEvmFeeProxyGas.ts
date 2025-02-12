@@ -1,3 +1,5 @@
+'use client';
+
 import { useCallback } from 'react';
 import { Address, getAddress, parseAbi } from 'viem';
 import { estimateFeesPerGas, estimateGas, readContract } from '@wagmi/core';

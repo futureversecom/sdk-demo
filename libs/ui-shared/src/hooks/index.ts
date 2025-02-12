@@ -7,7 +7,6 @@ export { useGetTokens } from './useGetTokens';
 export { useGetSftUserTokens } from './useGetSftUserTokens';
 export { useGetNftPublicMint } from './useGetNftPublicMint';
 export { useIsMobile } from './useIsMobile';
-export { useCurrentPath } from './useCurrentPath';
 export { useShouldShowEoa } from './useShouldShowEoa';
 export { useCopyToClipboard } from './useCopyToClipboard';
 export { useLocalStorage } from './useLocalStorage';

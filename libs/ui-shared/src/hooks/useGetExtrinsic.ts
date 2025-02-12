@@ -1,3 +1,5 @@
+'use client';
+
 import { RootTransactionBuilder } from '@futureverse/transact';
 import { useRootStore } from './useRootStore';
 

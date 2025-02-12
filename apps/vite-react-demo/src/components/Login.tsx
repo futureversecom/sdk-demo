@@ -1,3 +1,5 @@
+'use client';
+
 import { UserSession } from '@futureverse/auth';
 import { useAuth } from '@futureverse/auth-react';
 import { LogIn } from '@fv-sdk-demos/ui-shared';

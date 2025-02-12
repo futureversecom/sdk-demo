@@ -1,3 +1,4 @@
+'use client';
 import { useCallback } from 'react';
 import { useAccount, useConfig, useWriteContract } from 'wagmi';
 //import { useEvmFuturePassProxy } from './useEvmFuturePassProxy';

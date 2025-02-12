@@ -1,3 +1,5 @@
+'use client';
+
 import { useAuth } from '@futureverse/auth-react';
 import { ERC1155_PRECOMPILE_ABI } from '@therootnetwork/evm';
 import { parseAbi } from 'viem';

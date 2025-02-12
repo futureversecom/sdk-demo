@@ -21,6 +21,8 @@ import AuthUiSdk from './AuthUiSdk';
 import AuthReactSdk from './AuthReactSdk';
 import AuthUiSdkCustomiser from './AuthUiSdkCustomiser';
 
+import AuthVerifyUser from './AuthVerifyUser';
+import CodeView from './CodeView';
 import ViewAssetsComp from './ViewAssets';
 
 export { Dialog } from './Dialog/Dialog';
@@ -82,6 +84,7 @@ export {
   Evm,
   Home,
   Transfer,
+  AuthVerifyUser,
   Result,
   TransactionDetails,
   Spinner,
@@ -101,5 +104,6 @@ export {
   AuthUiSdk,
   AuthReactSdk,
   AuthUiSdkCustomiser,
+  CodeView,
   ViewAssetsComp,
 };

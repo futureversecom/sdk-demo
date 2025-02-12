@@ -1,3 +1,5 @@
+'use client';
+
 import '@therootnetwork/api-types';
 
 import { useInfiniteQuery } from '@tanstack/react-query';

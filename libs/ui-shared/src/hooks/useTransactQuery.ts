@@ -1,3 +1,4 @@
+'use client';
 import { useMemo } from 'react';
 import { RootQueryBuilder } from '@futureverse/transact';
 import { useAuth } from '@futureverse/auth-react';

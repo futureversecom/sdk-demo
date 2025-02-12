@@ -1,3 +1,5 @@
+'use client';
+
 import { useAuth } from '@futureverse/auth-react';
 import { FUTUREPASS_PRECOMPILE_ABI } from '@therootnetwork/evm';
 import { useMemo } from 'react';
