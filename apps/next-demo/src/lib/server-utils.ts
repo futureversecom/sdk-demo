@@ -68,6 +68,32 @@ export async function verifyUser(cookieStore: ReadonlyRequestCookies) {
   return user;
 }
 
+export async function verifyUserFail(cookieStore: ReadonlyRequestCookies) {
+  const cookieName = encodeURIComponent(
+    `${env.AUTH_COOKIE_NAME}:${env.FUTUREPASS_PASS_IDP_URL}:${env.NEXT_PUBLIC_CLIENT_ID}`
+  );
+  const cookie = cookieStore.get(cookieName);
+
+  if (!cookie) {
+    return null;
+  }
+
+  const parsed = JSON.parse(cookie.value);
+  const res = await fetch(`${parsed.profile.iss}/me`, {
+    headers: {
+      authorization: `Bearer 6677CGU9F5dpvbkw3-utQcavAseX3Yvt7F5DT-E4IdH`,
+    },
+  });
+
+  if (!res.ok) throw new Error(`Failed to fetch user: ${res.statusText}`);
+  const json = await res.json();
+  const user = await meResponseSchema.parseAsync(json, {
+    async: true,
+  });
+
+  return user;
+}
+
 export async function verifyUserByAccessToken(token: string) {
   const res = await fetch(`${env.FUTUREPASS_PASS_IDP_URL}/me`, {
     headers: { authorization: `Bearer ${token}` },
