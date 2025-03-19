@@ -5,6 +5,7 @@ import { useIsMounted, useShouldShowEoa } from '../hooks';
 import { LogIn } from './Navigation';
 import { AccountCard } from './AccountCard';
 import { ConnectorInfo } from './ConnectorInfo';
+import { TokenInfo } from './TokenInfo';
 
 export default function Home({ title }: { title: string }) {
   const isMounted = useIsMounted();
@@ -72,11 +73,12 @@ export default function Home({ title }: { title: string }) {
             </div>
           </div>
           <div className="row">
-            <div className="auto-grid">
+            <div className="grid cols-3">
               <ConnectorInfo />
+              <TokenInfo />
               {/* <SignerDebug /> */}
             </div>
-            <div className="auto-grid " style={{ marginTop: '16px' }}>
+            <div className="grid cols-3" style={{ marginTop: '16px' }}>
               {shouldShowEoa && <AccountCard type="eoa" title="EOA" />}
               <AccountCard type="futurepass" title="Pass.Online" />
             </div>
