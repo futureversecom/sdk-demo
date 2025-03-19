@@ -248,7 +248,7 @@ pre {
 }
 
 .grid.cols-3 {
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
 }
 
 .grid.cols-4 {
@@ -474,6 +474,12 @@ input:disabled {
   grid-column: span 1;
 }
 
+@media screen and (min-width: 768px) {
+  .grid.cols-3 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 @media screen and (min-width: 992px) {
   .custom-evm {
     grid-template-columns: 1fr 1fr;
@@ -482,11 +488,17 @@ input:disabled {
   .col-2 {
     grid-column: span 2;
   }
+
+
 }
 
 @media screen and (min-width: 1200px) {
   .custom-evm {
     grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
+  .grid.cols-3 {
+    grid-template-columns: 1fr 1fr 1fr;
   }
 
   .col-2 {
