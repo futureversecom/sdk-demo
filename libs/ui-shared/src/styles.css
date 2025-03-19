@@ -2106,8 +2106,8 @@ button.fvaui-button-secondary:hover .fvaui-iconWrapper {
   cursor: pointer;
 
   &:after {
+
     position: absolute;
-    content: '';
     display: block;
     width: 100%;
     height: 100%;
@@ -2117,6 +2117,7 @@ button.fvaui-button-secondary:hover .fvaui-iconWrapper {
 
   &.hide {
     &:after {
+      content: '';
       background: rgba(0, 0, 0, 0);
       backdrop-filter: blur(8px);
       border-radius: 8px;

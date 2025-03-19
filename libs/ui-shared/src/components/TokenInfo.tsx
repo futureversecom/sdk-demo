@@ -1,7 +1,8 @@
 'use client';
-
+import React from 'react';
 import { useAuth } from '@futureverse/auth-react';
 import { useState } from 'react';
+import { CopyText } from './CopyText';
 
 export function TokenInfo() {
   const { userSession } = useAuth();
@@ -40,9 +41,16 @@ export function TokenInfo() {
                 }`}
                 onClick={toggleAccess}
               >
-                {hideAccess
-                  ? 'ThIsaRaNdOmStRiNgToMaKeThIsLoOkReAlBeHiNdThEbLuR='
-                  : userSession?.user?.access_token}
+                {hideAccess ? (
+                  'ThIsaRaNdOmStRiNgToMaKeThIsLoOkReAlBeHiNdThEbLuR='
+                ) : (
+                  <CopyText
+                    text={userSession?.user?.access_token || ''}
+                    fullWidthFlex={true}
+                  >
+                    {userSession?.user?.access_token}
+                  </CopyText>
+                )}
               </div>
               <div className="title" style={{ marginTop: '8px' }}>
                 Refresh Token{' '}
@@ -56,9 +64,16 @@ export function TokenInfo() {
                 }`}
                 onClick={toggleRefresh}
               >
-                {hideRefresh
-                  ? 'ThIsaRaNdOmStRiNgToMaKeThIsLoOkReAlBeHiNdThEbLuR='
-                  : userSession?.user?.refresh_token}
+                {hideRefresh ? (
+                  'ThIsaRaNdOmStRiNgToMaKeThIsLoOkReAlBeHiNdThEbLuR='
+                ) : (
+                  <CopyText
+                    text={userSession?.user?.refresh_token || ''}
+                    fullWidthFlex={true}
+                  >
+                    {userSession?.user?.refresh_token}
+                  </CopyText>
+                )}
               </div>
             </div>
           </div>
