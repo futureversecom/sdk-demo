@@ -335,37 +335,34 @@ export default function Batch() {
   const preSetTransactions = useMemo(() => {
     return [
       {
-        section: 'assetsExt',
+        section: 'nft',
         method: 'transfer',
         args: [
-          '1',
+          709732,
+          [1, 2],
           shouldShowEoa ? userSession?.eoa : userSession?.futurepass,
-          '1000000',
-          true,
         ],
       },
       {
         section: 'nft',
-        method: 'mint',
+        method: 'transfer',
         args: [
           709732,
-          '1',
+          [3, 4],
           shouldShowEoa ? userSession?.eoa : userSession?.futurepass,
         ],
       },
       {
         section: 'sft',
-        method: 'mint',
+        method: 'transfer',
         args: [
           834660,
-          [[1, 1]],
+          [
+            [1, 1],
+            [2, 1],
+          ],
           shouldShowEoa ? userSession?.eoa : userSession?.futurepass,
         ],
-      },
-      {
-        section: 'system',
-        method: 'remark',
-        args: ['Hello World'],
       },
     ];
   }, [shouldShowEoa, userSession?.eoa, userSession?.futurepass]);

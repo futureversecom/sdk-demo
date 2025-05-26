@@ -6,17 +6,21 @@ import { cookieStorage, createStorage } from 'wagmi';
 import { http, Storage } from '@wagmi/core';
 import { porcini } from '@futureverse/auth';
 
-const clientId = process.env.NEXT_PUBLIC_CLIENT_ID as string;
+const authority = process.env.NEXT_PUBLIC_AUTHORITY as string;
 const walletConnectProjectId = process.env.NEXT_PUBLIC_WALLET_CONNECT as string;
 const xamanAPIKey = process.env.NEXT_PUBLIC_XAMAN_API as string;
 
 export const authClient = new FutureverseAuthClient({
-  clientId,
+  // clientId,
+  clientId: 'IO84YuZD41wzPjnoz6Oq6',
+  // clientId: 'ONsEcSaCvPiW_DCnLf5Sj',
   environment: 'staging',
   redirectUri: `${
     typeof window !== 'undefined' ? `${window.location.origin}/login` : ''
   }`,
   signInFlow: 'redirect',
+  signerAuthority: 'https://signer.passonline.dev',
+  authority,
 });
 export const queryClient = new QueryClient();
 

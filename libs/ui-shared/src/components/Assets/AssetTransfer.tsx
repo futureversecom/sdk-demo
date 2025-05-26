@@ -364,7 +364,7 @@ export default function AssetTransfer() {
 
     const builder = await TransactionBuilder.asset(
       trnApi,
-      signer,
+      signer as any,
       userSession.eoa,
       assetId
     ).transfer({
