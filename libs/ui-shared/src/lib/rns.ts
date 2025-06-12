@@ -11,10 +11,10 @@ import { namehash } from 'viem';
 
 export const getRnsUrl = (hash: string, chain: Chain) => {
   const network = (
-    networks[chain.id === 7672 ? 'root' : 'porcini'] as { name: string }
+    networks[chain.id !== 7672 ? 'root' : 'porcini'] as { name: string }
   ).name;
   const nameWrapper =
-    chain.id === 7672
+    chain.id !== 7672
       ? '0x44640d662a423d738d5ebf8b51e57afc0f2cf4df'
       : '0xBDC394b7704d3E0DC963a6Cb0Db92cBA2054da23';
   return `https://rns-metadata.fly.dev/${network}/${nameWrapper}/${hash}`;
@@ -31,7 +31,7 @@ export const getRnsFromAddress = async (
         url: 'https://subgraph.rootnameservice.com/subgraphs/name/graphprotocol/ens/graphql',
       },
     },
-    testnet: chain.id === 7668 ? true : false,
+    testnet: chain.id !== 7668 ? true : false,
   });
 
   const publicClient = createPublicClient({

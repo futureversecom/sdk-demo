@@ -10,6 +10,7 @@ export default defineConfig({
   server: {
     port: 4200,
     host: 'localhost',
+    allowedHosts: process.env.VITE_ALLOWED_HOSTS ? process.env.VITE_ALLOWED_HOSTS.split(',') : [],
   },
 
   preview: {
